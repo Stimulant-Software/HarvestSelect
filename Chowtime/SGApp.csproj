@@ -47,6 +47,10 @@
       <HintPath>..\packages\FluentValidation.5.0.0.1\lib\Net40\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MoreLinq, Version=1.1.18418.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\morelinq.1.1.1\lib\net35\MoreLinq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
@@ -373,6 +377,7 @@
     <Content Include="Site\ct-reports.html" />
     <Content Include="Site\footer.html" />
     <Content Include="Site\login.html" />
+    <Content Include="Site\reports-menu.html" />
     <Content Include="Site\scripts\admin-functions.js" />
     <Content Include="Site\scripts\at-functions.js" />
     <Content Include="Site\scripts\ct-functions.js" />
@@ -380,7 +385,9 @@
     <Content Include="Site\scripts\functions.js" />
     <Content Include="Site\scripts\highcharts.js" />
     <Content Include="Site\scripts\jquery-1.10.2.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -433,7 +440,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>50167</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:61595/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
