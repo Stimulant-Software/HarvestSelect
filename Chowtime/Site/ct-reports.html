@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Airtime</title>
+    <link href="content/global.css" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>ChowTime</h1>
+        <nav>
+            <ol>
+                <li><a href="ct-entry.html">Enter Feed Data</a></li>
+                <li><a href="ct-reports.html">Reports</a></li>
+                <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+    </header>
+
+    <section id="main_content">
+        <header class="farm">
+            <h2>Current Farm: <span id="currentFarm"></span></h2>
+            <label>Farm: </label><select id="changeFarm"></select>
+            <label>Week Ending: </label><input type="date" id="reportEndDate" />
+            <p><a href="#" id="viewSwitch">Switch page view</a></p>
+        </header>
+        <section id="farmContainer"></section>
+
+        <section id="tablePrintOnly">
+            <h2>Current Farm: <span id="currentFarmPrint"></span></h2>
+            <table>
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </section>
+    </section>
+
+    <footer></footer>
+
+    <section id="alertBox" class="modal">
+        <i class="fa fa-exclamation-circle"></i>
+        <div id="alertMessage"></div>
+        <fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+    </section>
+    
+    <script type="text/javascript" src="scripts/functions.js"></script>
+    <script type="text/javascript" src="scripts/ct-functions.js"></script>
+    <script type="text/javascript" src="scripts/highcharts.js"></script>
+    <script type="text/javascript" src="scripts/exporting.js"></script>
+</body>
+</html>

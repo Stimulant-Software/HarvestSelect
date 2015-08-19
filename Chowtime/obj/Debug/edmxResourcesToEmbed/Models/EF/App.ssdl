@@ -1,0 +1,406 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AppModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AppModelStoreContainer">
+    <EntitySet Name="Companies" EntityType="AppModel.Store.Companies" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Farms" EntityType="AppModel.Store.Farms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Feedings" EntityType="AppModel.Store.Feedings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Harvests" EntityType="AppModel.Store.Harvests" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HealthStatuses" EntityType="AppModel.Store.HealthStatuses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="O2Readings" EntityType="AppModel.Store.O2Readings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Ponds" EntityType="AppModel.Store.Ponds" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Roles" EntityType="AppModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Statuses" EntityType="AppModel.Store.Statuses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserFarms" EntityType="AppModel.Store.UserFarms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserRoles" EntityType="AppModel.Store.UserRoles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="AppModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Farms_Companies" Association="AppModel.Store.FK_Farms_Companies">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="Farms" EntitySet="Farms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Farms_Statuses" Association="AppModel.Store.FK_Farms_Statuses">
+      <End Role="Statuses" EntitySet="Statuses" />
+      <End Role="Farms" EntitySet="Farms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Feedings_Ponds" Association="AppModel.Store.FK_Feedings_Ponds">
+      <End Role="Ponds" EntitySet="Ponds" />
+      <End Role="Feedings" EntitySet="Feedings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Feedings_UserFarms" Association="AppModel.Store.FK_Feedings_UserFarms">
+      <End Role="UserFarms" EntitySet="UserFarms" />
+      <End Role="Feedings" EntitySet="Feedings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Harvests_Ponds" Association="AppModel.Store.FK_Harvests_Ponds">
+      <End Role="Ponds" EntitySet="Ponds" />
+      <End Role="Harvests" EntitySet="Harvests" />
+    </AssociationSet>
+    <AssociationSet Name="FK_O2Readings_Ponds" Association="AppModel.Store.FK_O2Readings_Ponds">
+      <End Role="Ponds" EntitySet="Ponds" />
+      <End Role="O2Readings" EntitySet="O2Readings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_O2Readings_UsersFarms" Association="AppModel.Store.FK_O2Readings_UsersFarms">
+      <End Role="UserFarms" EntitySet="UserFarms" />
+      <End Role="O2Readings" EntitySet="O2Readings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ponds_Farms" Association="AppModel.Store.FK_Ponds_Farms">
+      <End Role="Farms" EntitySet="Farms" />
+      <End Role="Ponds" EntitySet="Ponds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ponds_HealthStatuses" Association="AppModel.Store.FK_Ponds_HealthStatuses">
+      <End Role="HealthStatuses" EntitySet="HealthStatuses" />
+      <End Role="Ponds" EntitySet="Ponds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Ponds_Statuses" Association="AppModel.Store.FK_Ponds_Statuses">
+      <End Role="Statuses" EntitySet="Statuses" />
+      <End Role="Ponds" EntitySet="Ponds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserFarms_Farms" Association="AppModel.Store.FK_UserFarms_Farms">
+      <End Role="Farms" EntitySet="Farms" />
+      <End Role="UserFarms" EntitySet="UserFarms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserFarms_Statuses" Association="AppModel.Store.FK_UserFarms_Statuses">
+      <End Role="Statuses" EntitySet="Statuses" />
+      <End Role="UserFarms" EntitySet="UserFarms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserFarms_Users" Association="AppModel.Store.FK_UserFarms_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserFarms" EntitySet="UserFarms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRoles_Roles" Association="AppModel.Store.FK_UserRoles_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="UserRoles" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserRoles_User" Association="AppModel.Store.FK_UserRoles_User">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="UserRoles" EntitySet="UserRoles" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Companies" Association="AppModel.Store.FK_Users_Companies">
+      <End Role="Companies" EntitySet="Companies" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Status" Association="AppModel.Store.FK_Users_Status">
+      <End Role="Statuses" EntitySet="Statuses" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Companies">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+    </Key>
+    <Property Name="CompanyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Address1" Type="varchar" MaxLength="50" />
+    <Property Name="Address2" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="State" Type="varchar" MaxLength="20" />
+    <Property Name="Zip" Type="varchar" MaxLength="15" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <EntityType Name="Farms">
+    <Key>
+      <PropertyRef Name="FarmId" />
+    </Key>
+    <Property Name="FarmId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="FarmName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="CompanyId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Feedings">
+    <Key>
+      <PropertyRef Name="FeedingId" />
+    </Key>
+    <Property Name="FeedingId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PondId" Type="int" Nullable="false" />
+    <Property Name="FeedDate" Type="datetime" Nullable="false" />
+    <Property Name="PoundsFed" Type="int" Nullable="false" />
+    <Property Name="UsersFarmId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Harvests">
+    <Key>
+      <PropertyRef Name="HarvestId" />
+    </Key>
+    <Property Name="HarvestId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PondId" Type="int" Nullable="false" />
+    <Property Name="HarvestDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HealthStatuses">
+    <Key>
+      <PropertyRef Name="HealthStatusId" />
+    </Key>
+    <Property Name="HealthStatusId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="O2Readings">
+    <Key>
+      <PropertyRef Name="ReadingId" />
+    </Key>
+    <Property Name="ReadingId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PondId" Type="int" Nullable="false" />
+    <Property Name="ReadingDate" Type="datetime" Nullable="false" />
+    <Property Name="O2Level" Type="decimal" Nullable="false" />
+    <Property Name="PortableCount" Type="int" Nullable="false" />
+    <Property Name="StaticCount" Type="int" Nullable="false" />
+    <Property Name="UsersFarmId" Type="int" Nullable="false" />
+    <Property Name="Note" Type="varchar" MaxLength="250" />
+    <Property Name="DayPeriod" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ponds">
+    <Key>
+      <PropertyRef Name="PondId" />
+    </Key>
+    <Property Name="PondId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FarmId" Type="int" Nullable="false" />
+    <Property Name="PondName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+    <Property Name="Size" Type="decimal" Nullable="false" />
+    <Property Name="NoFeed" Type="bit" Nullable="false" />
+    <Property Name="HealthStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="varchar" Nullable="false" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="Statuses">
+    <Key>
+      <PropertyRef Name="StatusId" />
+    </Key>
+    <Property Name="StatusId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="StatusName" Type="varchar" Nullable="false" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="UserFarms">
+    <Key>
+      <PropertyRef Name="UserFarmId" />
+    </Key>
+    <Property Name="UserFarmId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="FarmId" Type="int" Nullable="false" />
+    <Property Name="StatusId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="EmailAddress" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="StatusId" Type="int" />
+    <Property Name="Password" Type="binary" MaxLength="16" />
+  </EntityType>
+  <Association Name="FK_Farms_Companies">
+    <End Role="Companies" Type="AppModel.Store.Companies" Multiplicity="1" />
+    <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Farms">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Farms_Statuses">
+    <End Role="Statuses" Type="AppModel.Store.Statuses" Multiplicity="1" />
+    <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statuses">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="Farms">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Feedings_Ponds">
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+    <End Role="Feedings" Type="AppModel.Store.Feedings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ponds">
+        <PropertyRef Name="PondId" />
+      </Principal>
+      <Dependent Role="Feedings">
+        <PropertyRef Name="PondId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Feedings_UserFarms">
+    <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="1" />
+    <End Role="Feedings" Type="AppModel.Store.Feedings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserFarms">
+        <PropertyRef Name="UserFarmId" />
+      </Principal>
+      <Dependent Role="Feedings">
+        <PropertyRef Name="UsersFarmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Harvests_Ponds">
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+    <End Role="Harvests" Type="AppModel.Store.Harvests" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ponds">
+        <PropertyRef Name="PondId" />
+      </Principal>
+      <Dependent Role="Harvests">
+        <PropertyRef Name="PondId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_O2Readings_Ponds">
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+    <End Role="O2Readings" Type="AppModel.Store.O2Readings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ponds">
+        <PropertyRef Name="PondId" />
+      </Principal>
+      <Dependent Role="O2Readings">
+        <PropertyRef Name="PondId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_O2Readings_UsersFarms">
+    <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="1" />
+    <End Role="O2Readings" Type="AppModel.Store.O2Readings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserFarms">
+        <PropertyRef Name="UserFarmId" />
+      </Principal>
+      <Dependent Role="O2Readings">
+        <PropertyRef Name="UsersFarmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ponds_Farms">
+    <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="1" />
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Farms">
+        <PropertyRef Name="FarmId" />
+      </Principal>
+      <Dependent Role="Ponds">
+        <PropertyRef Name="FarmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ponds_HealthStatuses">
+    <End Role="HealthStatuses" Type="AppModel.Store.HealthStatuses" Multiplicity="1" />
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HealthStatuses">
+        <PropertyRef Name="HealthStatusId" />
+      </Principal>
+      <Dependent Role="Ponds">
+        <PropertyRef Name="HealthStatus" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Ponds_Statuses">
+    <End Role="Statuses" Type="AppModel.Store.Statuses" Multiplicity="1" />
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statuses">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="Ponds">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserFarms_Farms">
+    <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="1" />
+    <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Farms">
+        <PropertyRef Name="FarmId" />
+      </Principal>
+      <Dependent Role="UserFarms">
+        <PropertyRef Name="FarmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserFarms_Statuses">
+    <End Role="Statuses" Type="AppModel.Store.Statuses" Multiplicity="1" />
+    <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statuses">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="UserFarms">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserFarms_Users">
+    <End Role="Users" Type="AppModel.Store.Users" Multiplicity="1" />
+    <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserFarms">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRoles_Roles">
+    <End Role="Roles" Type="AppModel.Store.Roles" Multiplicity="1" />
+    <End Role="UserRoles" Type="AppModel.Store.UserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleId" />
+      </Principal>
+      <Dependent Role="UserRoles">
+        <PropertyRef Name="RoleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserRoles_User">
+    <End Role="Users" Type="AppModel.Store.Users" Multiplicity="1" />
+    <End Role="UserRoles" Type="AppModel.Store.UserRoles" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="UserRoles">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Companies">
+    <End Role="Companies" Type="AppModel.Store.Companies" Multiplicity="0..1" />
+    <End Role="Users" Type="AppModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Companies">
+        <PropertyRef Name="CompanyId" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="CompanyId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Status">
+    <End Role="Statuses" Type="AppModel.Store.Statuses" Multiplicity="0..1" />
+    <End Role="Users" Type="AppModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Statuses">
+        <PropertyRef Name="StatusId" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

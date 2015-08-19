@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Airtime</title>
+    <link href="content/global.css" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Admin</h1>
+        <nav>
+            <ol>
+                <li><a href="admin-pond.html">Pond Admin</a></li>
+                <li><a href="admin-farm.html">Farm Admin</a></li>
+                <li><a href="admin-user.html">User Admin</a></li>
+                <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+    </header>
+
+    <section id="main_content">
+        <header class="admin">
+            <h2>Pond Administration</h2>
+            <button id="addNewPond" class="add-new">+ Create New Pond</button>
+        </header>
+        
+        <form>
+            <fieldset><label>Administer ponds for: </label><select id="changeFarm"></select></fieldset>
+            <ol class="active">
+                <li class="header">ACTIVE PONDS</li>
+                <li><span>There are no active ponds</span></li>
+            </ol> 
+            <ol class="inactive">
+                <li class="header">INACTIVE PONDS</li>
+                <li><span>There are no inactive ponds</span></li>
+            </ol>  
+        </form>
+    </section>
+
+    <footer></footer>
+        
+    <section id="addNewPondModal" class="admin-modal modal">
+        <form>
+            <header>New Pond</header>
+            <fieldset>
+                <label>Pond Name</label><input type="text" id="PondName" placeholder="Pond Name" required />                
+                <input type="hidden" id="StatusId" value="1" />
+                <input type="hidden" id="PondId" value="-1" />
+                <input type="hidden" id="NoFeed" value="False" />
+                <input type="hidden" id="HealthStatus" value="1" />
+            </fieldset>
+            <fieldset><label>Pond Size (acres)</label><input type="text" id="Size" placeholder="Pond Size" required /></fieldset>
+            <fieldset><label>Farm Location</label><select id="FarmId" required></select></fieldset>
+            <fieldset class="buttons"><button id="submitPond" class="submit">Submit</button><button class="cancel">Cancel</button></fieldset>
+        </form>
+    </section>
+
+    <section id="alertBox" class="modal">
+        <i class="fa fa-exclamation-circle"></i>
+        <div id="alertMessage"></div>
+        <fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+    </section>
+    
+    <script type="text/javascript" src="scripts/functions.js"></script>
+    <script type="text/javascript" src="scripts/admin-functions.js"></script>
+</body>
+</html>

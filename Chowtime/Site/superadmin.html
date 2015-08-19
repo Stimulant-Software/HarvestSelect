@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Airtime</title>
+    <link href="content/global.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Admin</h1>
+        <nav>
+            <ol>
+                <li><a href="admin-pond.html">Pond Admin</a></li>
+                <li><a href="admin-farm.html">Farm Admin</a></li>
+                <li><a href="admin-user.html">User Admin</a></li>
+                <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+    </header>
+
+    <section id="main_content">
+        <header class="admin">
+            <h2>User Administration</h2>
+            <button id="addNewUser" class="add-new">+ Create New User</button>
+        </header>
+        <form>
+            <ol class="active">
+                <li class="header">ACTIVE USERS</li>
+                <li><span>There are no active users</span></li>
+            </ol> 
+            <ol class="inactive">
+                <li class="header">INACTIVE USERS</li>
+                <li><span>There are no inactive users</span></li>
+            </ol>  
+        </form>
+    </section>
+
+    <footer></footer>
+        
+    <section id="addNewUserModal" class="admin-modal modal">
+        <form>
+            <header>New User</header>
+            <fieldset>
+                <label>First Name</label><input type="text" id="firstName" placeholder="First Name" required />                
+                <input type="hidden" id="statusID" value="1" />
+                <input type="hidden" id="userID" value="-1" />
+            </fieldset>
+            <fieldset><label>Last Name</label><input type="text" id="lastName" placeholder="Last Name" required /></fieldset>
+            <fieldset><label>Phone</label><input type="text" id="phone" placeholder="xxx-xxx-xxxx" required /></fieldset>
+            <fieldset><label>Email Address</label><input type="text" id="emailAddress" placeholder="contact@server.com" required /></fieldset>
+            <section id="passwordFields">    
+                <fieldset><label>Password</label><input type="password" id="password" /></fieldset>
+                <fieldset><label>Confirm Password</label><input type="password" id="passConfirm" /></fieldset>
+            </section>
+            <fieldset class="buttons"><button id="Button1" class="submit">Submit</button><button class="cancel">Cancel</button></fieldset>
+        </form>
+    </section>
+
+    <section id="modifyUserRolesAndFarms" class="admin-modal modal">
+        <form>
+            <header>Edit Roles and Farms</header>
+            <p>For <span id="userFirstLast"></span><input type="hidden" id="Hidden1" value="" /></p>
+            <section id="userFarmsList">
+                <label>Farms:</label>
+                <fieldset id="adminUserFarmsList"></fieldset>
+            </section>
+            <section id="userRolesList">
+                <label>Roles:</label>
+                <fieldset id="adminUserRolesList"></fieldset>
+            </section>
+            <fieldset class="buttons"><button class="cancel">Finished</button></fieldset>
+        </form>
+    </section>
+
+    <section id="alertBox" class="modal">
+        <i class="fa fa-exclamation-circle"></i>
+        <div id="alertMessage"></div>
+        <fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+    </section>
+    
+    <script type="text/javascript" src="scripts/functions.js"></script>
+    <script type="text/javascript" src="scripts/admin-functions.js"></script>
+</body>
+</html>

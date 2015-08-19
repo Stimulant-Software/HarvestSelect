@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') {
+            document.write(unescape("%3Cscript src='js/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E"));
+        }
+    </script>
+    <style>
+        body { padding: 20px; }
+        fieldset { border: none; padding: 0; margin: 0 0 10px; }
+        input[type="text"] { width: 250px; }
+        label { display: inline-block; margin: 0 7px 0 0; }
+        #resultsApi { padding: 10px; width: 600px; border: 1px solid #000; }
+    </style>
+</head>
+<body>
+	<form>
+        <fieldset><label><strong>API:</strong> <em>e.g., ../api/utilities/userInfo</em></label><br /><input type="text" id="apiUrl" placeholder="API to call" /></fieldset>
+		<fieldset><label><strong>keys:</strong> <em>e.g., userID, companyID</em></label><br /><input type="text" id="dataKeys" placeholder="data keys, separated by comma" /></fieldset>
+		<fieldset><label><strong>values:</strong> <em>e.g., userID-value, companyID-value</em></label><br /><input type="text" id="dataValues" placeholder="data values, separated by comma" /></fieldset>
+        <fieldset>
+            <label for="post">POST</label><input type="radio" name="type" id="post" value="post" checked/>
+            <label for="put">PUT</label><input type="radio" name="type" id="put" value="put" />
+        </fieldset>
+		<button id="testAPI">Test API</button>
+	</form>
+    <h4>RESULTS:</h4>
+	<p id="resultsApi"></p>
+	<script>
+		$("#testAPI").click(function(e){
+			e.preventDefault();
+			var data = {}, color, results, apiUrl = $("#apiUrl").val();
+			var dataKeys = $("#dataKeys").val().split(",");
+			var dataValues = $("#dataValues").val().split(",");
+			for(var i=0; i < dataKeys.length; i++) {
+				data[dataKeys[i]] = dataValues[i];
+			}
+			var callType = $('#post').is(':checked') ? 'POST' : 'PUT';
+			queryAPI = JSON.stringify(data);
+			$.ajax(apiUrl, {
+			    type: callType,
+			    data: queryAPI,
+			    complete: function (msg) {
+			        console.log(msg);
+			        switch (msg.status) {
+			            case 200:
+			                results = msg.status + ": " + msg.statusText;
+			                $('#resultsApi').empty().html(results).css("border", "1px solid green");
+			                break;
+			            case 404:
+			                results = msg.status + ": " + msg.statusText;
+			                $('#resultsApi').empty().html(results).css("border", "1px solid red");
+			                break;
+                        case 405:
+                            results = msg.status + ": " + msg.statusText;
+                            $('#resultsApi').empty().html(results).css("border", "1px solid red");
+                            break;
+			            case 500:
+			                results = msg.status + ": " + msg.statusText + " (" + msg.responseJSON.ExceptionType + " - " + msg.responseJSON.ExceptionMessage + ")<br /><br />" + msg.responseJSON.StackTrace;
+			                $('#resultsApi').empty().html(results).css("border", "1px solid red");
+			                break;
+			            default:
+			                results = msg.status + ": " + msg.statusText + " (Unexpected Error)";
+			                $('#resultsApi').empty().html(results).css("border", "1px solid red");
+			                break;
+			        }
+			    }
+			});
+		});
+	</script>
+</body>
+</html>

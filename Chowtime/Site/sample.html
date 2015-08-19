@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><title>
+	ChowTime Fish Food Tracker
+</title><link href="Styles/style.css" rel="stylesheet" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript" src="Scripts/functions.js"></script>
+    </head>
+<body>
+    <form method="post" action="user_admin.aspx" id="ctl01">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTY5NDA5MTU0Mg9kFgJmD2QWAgIDD2QWBgIBDxYCHgdWaXNpYmxlZ2QCAw8PFgIeBFRleHQFDUphc29uIFNpbW1vbnNkZAIHD2QWBgIFDxYCHgtfIUl0ZW1Db3VudAISFiZmD2QWBgIBDw8WAh8BBQE5ZGQCAw8PFgIfAQUKTWlrZSBPd2Vuc2RkAgUPDxYCHwEFBUFkbWluZGQCAQ9kFgYCAQ8PFgIfAQUCMTFkZAIDDw8WAh8BBQtUZXN0IEZlZWRlcmRkAgUPDxYCHwEFCFN0YW5kYXJkZGQCAg9kFgYCAQ8PFgIfAQUCMTJkZAIDDw8WAh8BBQhBbCBTbWl0aGRkAgUPDxYCHwEFCFN0YW5kYXJkZGQCAw9kFgYCAQ8PFgIfAQUCMTNkZAIDDw8WAh8BBQpKaW1ibyBIYWxsZGQCBQ8PFgIfAQUIU3RhbmRhcmRkZAIED2QWBgIBDw8WAh8BBQIxNWRkAgMPDxYCHwEFClJ5YW4gQ2xhcnlkZAIFDw8WAh8BBQVBZG1pbmRkAgUPZBYGAgEPDxYCHwEFAjE2ZGQCAw8PFgIfAQUMUmFuZHkgUmhvZGVzZGQCBQ8PFgIfAQUIU3RhbmRhcmRkZAIGD2QWBgIBDw8WAh8BBQIxN2RkAgMPDxYCHwEFDUphc29uIFNpbW1vbnNkZAIFDw8WAh8BBQVBZG1pbmRkAgcPZBYGAgEPDxYCHwEFAjE4ZGQCAw8PFgIfAQUOSW52ZXJuZXNzIFVzZXJkZAIFDw8WAh8BBQhTdGFuZGFyZGRkAggPZBYGAgEPDxYCHwEFAjE5ZGQCAw8PFgIfAQUQSG9sbGFuZGFsZTEgVXNlcmRkAgUPDxYCHwEFCFN0YW5kYXJkZGQCCQ9kFgYCAQ8PFgIfAQUCMjBkZAIDDw8WAh8BBRBIb2xsYW5kYWxlMiBVc2VyZGQCBQ8PFgIfAQUIU3RhbmRhcmRkZAIKD2QWBgIBDw8WAh8BBQIyMWRkAgMPDxYCHwEFDUJlbnQgT2FrIFVzZXJkZAIFDw8WAh8BBQhTdGFuZGFyZGRkAgsPZBYGAgEPDxYCHwEFAjIyZGQCAw8PFgIfAQUMQnJ5YW50MSBVc2VyZGQCBQ8PFgIfAQUIU3RhbmRhcmRkZAIMD2QWBgIBDw8WAh8BBQIyM2RkAgMPDxYCHwEFDEJyeWFudDIgVXNlcmRkAgUPDxYCHwEFCFN0YW5kYXJkZGQCDQ9kFgYCAQ8PFgIfAQUCMjRkZAIDDw8WAh8BBRVBbm5hIExhdXJpZSBNY0tpYmJlbnNkZAIFDw8WAh8BBQhTdGFuZGFyZGRkAg4PZBYGAgEPDxYCHwEFAjI1ZGQCAw8PFgIfAQULRGViYmllIERlZXNkZAIFDw8WAh8BBQVBZG1pbmRkAg8PZBYGAgEPDxYCHwEFAjI2ZGQCAw8PFgIfAQUMRGFuaWVsIFdhdHRzZGQCBQ8PFgIfAQUFQWRtaW5kZAIQD2QWBgIBDw8WAh8BBQIyN2RkAgMPDxYCHwEFDlJ1c3MgTWNQaGVyc29uZGQCBQ8PFgIfAQUFQWRtaW5kZAIRD2QWBgIBDw8WAh8BBQIyOGRkAgMPDxYCHwEFDVNvbG9tb24xIFVzZXJkZAIFDw8WAh8BBQhTdGFuZGFyZGRkAhIPZBYCAgEPDxYCHwBoZGQCBw8WAh8CAgMWCGYPZBYGAgEPDxYCHwEFAThkZAIDDw8WAh8BBQpEcmV3IENvYmxlZGQCBQ8PFgIfAQUIU3RhbmRhcmRkZAIBD2QWBgIBDw8WAh8BBQIxMGRkAgMPDxYCHwEFDEdhcnJldHQgUG93ZWRkAgUPDxYCHwEFBUFkbWluZGQCAg9kFgYCAQ8PFgIfAQUCMTRkZAIDDw8WAh8BBQ1DaGFybGVzIE1vdWR5ZGQCBQ8PFgIfAQUIU3RhbmRhcmRkZAIDD2QWAgIBDw8WAh8AaGRkAgkPZBYCAgEPZBYIAg0PEA8WBh4NRGF0YVRleHRGaWVsZAUIUm9sZU5hbWUeDkRhdGFWYWx1ZUZpZWxkBQZSb2xlSUQeC18hRGF0YUJvdW5kZ2QQFQIIU3RhbmRhcmQFQWRtaW4VAgExATIUKwMCZ2dkZAIPDxAPFgYfAwUIRmFybU5hbWUfBAUGRmFybUlEHwVnZBAVBwNBQ0kIQmVudCBPYWsMQnJ5YW50IEJha2VyDEJyeWFudCBEYWlyeQpIb2xsYW5kYWxlCUludmVybmVzcwdTb2xvbW9uFQcBOQIxMAIxMwIxNAIxMgIxMQIxNRQrAwdnZ2dnZ2dnZGQCFQ8QDxYGHwMFCEZhcm1OYW1lHwQFBkZhcm1JRB8FZ2QQFQAVABQrAwBkZAIXDw8WAh8BZWRkGAEFHl9fQ29udHJvbHNSZXF1aXJlUG9zdEJhY2tLZXlfXxYEBS5jdGwwMCRNYWluQ29udGVudCRhZGRVc2VyQXZhaWxhYmxlRmFybXNMaXN0Qm94BSpjdGwwMCRNYWluQ29udGVudCRhZGRVc2VyQXNzaWduZWRUb0xpc3RCb3gFL2N0bDAwJE1haW5Db250ZW50JGVkaXRVc2VyQXZhaWxhYmxlRmFybXNMaXN0Qm94BStjdGwwMCRNYWluQ29udGVudCRlZGl0VXNlckFzc2lnbmVkVG9MaXN0Qm94eN0IAVtE19c0djfXJkAvltj2ito/sKtX/Y4/8MPE90o=">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['ctl01'];
+if (!theForm) {
+    theForm = document.ctl01;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=-bTkTO-iADAtgfo7lOM_4g2&amp;t=634733794643593750" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbByGbNroI5EJLqyfTynV2CVNdBkB8ed2__3bAM6wq09U0&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script type="text/javascript">
+//<![CDATA[
+if (typeof(Sys) === 'undefined') throw new Error('ASP.NET Ajax client-side framework failed to load.');
+//]]>
+</script>
+
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbByGbNroI5EJLqyfTynV2CVMvinC-u_MzirmQfbT6j8qqJrIvMUeQ11A4Q4e0vaBRA2&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbEBxUbDV3Qr6gj98igMQBkreizqD4FoIM_8xHaERO8_b0&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbGBfknZjmDzhAspmPvlYWdI1tpnQh-gyrkkck-qVNwNgdsxrktxyjAptEOdDup1ubQ2&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbH6QeA6R-B6jyGitmsgAzJIgqZoxotu3gqOKCruHjY4ZSKYO8fzuqZ54wwP-pbGAEpAxAvmLZGOXty42Y3KVllI1&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbKeNQ7vhjGrHDMGcpacS0_pAbXTpBwfdg9Rz7X_YPkHOLg-aD7J2SQo6cE6LLJCOnA2&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbNrhAANRXWtxriKcwwbL6vFS6GqE2Zy8L6DPIvNF_6fMjYVB_gGAPEqfE7M9O6FLBg2&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbAA4Y9auyLlwM8NvVR7bVgFmxL6ooV3RNRSY74LgCYXeAV71t00uYPRm5yr84I-RiA2&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbI3QcAX3Q62VdyRaJyk2S2f53vsjBWfOwnu0LjNGk9sOmZrjK3CLMyNA-xwDwUzzPmPzCJxa6qF1muo69ar17gs1&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbCFU7IDKukAcKziDUZVklxQ1dBlE74VrtrkeM8ioKta_WelsMyKOup-dbqL2Z3M3tQ2&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=z4EnwQTrG9OCTgAhWARvbBnzzWJdRljZdSOay86PxGuqQURHZIIN-twnC5ADo0ivxooB0_8lLIRQ0CUA_nqzRQ2&amp;t=ffffffffbd2983fc" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWTAKVr7bVCQKRgcnqCwKg1Mv7BAK/ksjqCALPhYLvAwLs+9SICgK2jfX0BgK59b+RCgKxjtnnCwL+nZz5DALAzN3DDQL70rKFCgLz5ebiAgKI49eDAQLKreilCQKVhLG+BwKFuK31DALq8amPBQLkzvl0Aued2p8DApef7vAIArTtjEUC/rCh7QwCu9vl/QoCv4X+9AUC6MTymwwCpo3x+ggCtb7dpAwCoY7V7Q0C+ua5jA8CsMzZyQ8C95vQmAwC4+Xi6AQChKz1lgMCuq3kqwsCkc3O0QkC9bep+w4C5rrHogcC1M71+gICrpOjjgMCmtOQugMC/uyR6AMC68S8ugMCldDTzAUCkK+0ugMCsvmJogEC3cex6gQC552D9gMCgIvgrwQCwZen3AkCga+y0gQCkMbC/AwCkcbC/AwCvZqgwAcCpZrgwwcCpZrUwwcCpZrQwwcCpZrowwcCpZrswwcCpZrcwwcC/v7msQYCx6L17AgCwafajwgCpqLYuwUCvtvOng8CkeqBjQ4Ci5+10wEC4oOrgwICyr3L8woClaKSwwgCtrD01wYC9Ob7NAKO1/T4CAL76/oIAszSz/oIAszSo4gNIPtjHFtucYRSy+G8sbqjCCS5ZQXbj80Iu8Sl7tgdIxc=">
+</div>
+    
+        <div class="header">
+            <div class="container">
+                <h1>ChowTime Fish Food Tracker</h1>
+                <img src="Images/logo.png" alt="Chowtime Logo">
+            </div>
+            <div class="navigation">
+                <div class="container">
+                    <ul>
+                        <li class="menuIndex"><a href="index.aspx">Enter Feed Data</a></li>
+                        
+                            <li class="menuReports"><a href="reporting.aspx">Reports</a></li>
+                            <li class="menuPond"><a href="pond_admin.aspx">Pond Admin</a></li>
+                            <li class="menuFarm"><a href="farm_admin.aspx">Farm Admin</a></li>
+                            <li class="menuUser activePage"><a href="user_admin.aspx">User Admin</a></li>
+                        
+                        <li class="username">Logged in as <span id="userName">Jason Simmons</span> (<a id="logoutButton" href="javascript:__doPostBack('ctl00$logoutButton','')">logout</a>)</li>
+                    </ul>
+                </div>
+            </div>
+            
+        </div>
+        <div class="main_content">
+            
+    <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$MainContent$ScriptManager1', 'ctl01', [], [], [], 0, 'ctl00');
+//]]>
+</script>
+
+
+    <div class="container">
+        <div class="entry_panel">
+            <h2 class="panel_header">User Administration<a id="MainContent_addUserButton" class="create_new" href="javascript:__doPostBack('ctl00$MainContent$addUserButton','')">Create New User</a>
+            </h2>
+            <div class="admin-active">
+                <h3 class="panel_subhead lt_blue">Active Users</h3>
+                <div class="admin_list">
+                    
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_0">Mike Owens</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_0" class="admin_user_role">Admin</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_0" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl00$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_0" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl00$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_1">Test Feeder</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_1" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_1" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl01$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_1" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl01$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_2">Al Smith</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_2" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_2" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl02$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_2" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl02$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_3">Jimbo Hall</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_3" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_3" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl03$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_3" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl03$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_4">Ryan Clary</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_4" class="admin_user_role">Admin</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_4" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl04$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_4" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl04$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_5">Randy Rhodes</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_5" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_5" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl05$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_5" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl05$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_6">Jason Simmons</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_6" class="admin_user_role">Admin</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_6" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl06$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_6" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl06$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_7">Inverness User</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_7" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_7" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl07$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_7" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl07$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_8">Hollandale1 User</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_8" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_8" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl08$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_8" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl08$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_9">Hollandale2 User</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_9" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_9" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl09$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_9" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl09$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_10">Bent Oak User</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_10" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_10" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl10$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_10" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl10$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_11">Bryant1 User</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_11" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_11" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl11$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_11" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl11$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_12">Bryant2 User</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_12" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_12" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl12$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_12" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl12$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_13">Anna Laurie McKibbens</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_13" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_13" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl13$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_13" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl13$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_14">Debbie Dees</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_14" class="admin_user_role">Admin</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_14" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl14$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_14" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl14$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_15">Daniel Watts</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_15" class="admin_user_role">Admin</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_15" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl15$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_15" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl15$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_16">Russ McPherson</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_16" class="admin_user_role">Admin</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_16" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl16$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_16" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl16$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_activeUsersRepeater_userNameLabel_17">Solomon1 User</span>
+                                    (<span id="MainContent_activeUsersRepeater_userRoleLabel_17" class="admin_user_role">Standard</span> User)
+                                </span>                   
+                                <a id="MainContent_activeUsersRepeater_changeStatusLinkButton_17" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl17$changeStatusLinkButton','')">Deactivate</a>
+                                <a id="MainContent_activeUsersRepeater_editUserButton_17" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$activeUsersRepeater$ctl17$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            
+                                                
+                </div>
+            </div>
+            <div class="admin-inactive">
+                <h3 class="panel_subhead lt_blue">Inactive Users</h3>
+                <div class="admin_list">
+                    
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_inactiveUsersRepeater_userNameLabel_0">Drew Coble</span>
+                                    (<span id="MainContent_inactiveUsersRepeater_userRoleLabel_0" class="admin_user_role">Standard</span> User)
+                                </span>
+                                <a id="MainContent_inactiveUsersRepeater_changeStatusLinkButton_0" class="badge_activate" href="javascript:__doPostBack('ctl00$MainContent$inactiveUsersRepeater$ctl00$changeStatusLinkButton','')">Activate</a>
+                                <a id="MainContent_inactiveUsersRepeater_editUserButton_0" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$inactiveUsersRepeater$ctl00$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_inactiveUsersRepeater_userNameLabel_1">Garrett Powe</span>
+                                    (<span id="MainContent_inactiveUsersRepeater_userRoleLabel_1" class="admin_user_role">Admin</span> User)
+                                </span>
+                                <a id="MainContent_inactiveUsersRepeater_changeStatusLinkButton_1" class="badge_activate" href="javascript:__doPostBack('ctl00$MainContent$inactiveUsersRepeater$ctl01$changeStatusLinkButton','')">Activate</a>
+                                <a id="MainContent_inactiveUsersRepeater_editUserButton_1" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$inactiveUsersRepeater$ctl01$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                            <div class="ctl_grp">
+                                
+                                <span class="name_label">
+                                    <span id="MainContent_inactiveUsersRepeater_userNameLabel_2">Charles Moudy</span>
+                                    (<span id="MainContent_inactiveUsersRepeater_userRoleLabel_2" class="admin_user_role">Standard</span> User)
+                                </span>
+                                <a id="MainContent_inactiveUsersRepeater_changeStatusLinkButton_2" class="badge_activate" href="javascript:__doPostBack('ctl00$MainContent$inactiveUsersRepeater$ctl02$changeStatusLinkButton','')">Activate</a>
+                                <a id="MainContent_inactiveUsersRepeater_editUserButton_2" class="badge_edit" href="javascript:__doPostBack('ctl00$MainContent$inactiveUsersRepeater$ctl02$editUserButton','')">Edit User</a>
+                                <div class="clear"></div>
+                            </div>
+                        
+                                
+                                                
+                </div>
+            </div>
+        </div>
+
+        <div id="MainContent_addUserDiv" style="position: fixed; display: none;">
+            <div id="MainContent_addUserPanel" class="modalPopup" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'MainContent_submitNewButton')">
+	
+                
+                <h2 class="panel_header">New User</h2>
+                <div class="user-info">
+                    <fieldset><label>First Name</label> <input name="ctl00$MainContent$addUserFirstNameTextBox" type="text" maxlength="50" id="MainContent_addUserFirstNameTextBox" autofocus="" placeholder="First Name"></fieldset>
+                    <fieldset><label>Last Name</label> <input name="ctl00$MainContent$addUserLastNameTextBox" type="text" maxlength="50" id="MainContent_addUserLastNameTextBox" placeholder="Last Name"></fieldset>
+                    <fieldset><label>Phone Number</label> <input name="ctl00$MainContent$addUserPhoneNumberTextBox" type="text" maxlength="50" id="MainContent_addUserPhoneNumberTextBox" placeholder="555-555-5555"></fieldset>
+                    <fieldset><label>Email Address</label> <input name="ctl00$MainContent$addUserEmailTextBox" type="text" maxlength="100" id="MainContent_addUserEmailTextBox" placeholder="me@me.com"></fieldset>
+                    <fieldset><label>Password</label> <input name="ctl00$MainContent$addUserPasswordTextBox" type="password" maxlength="50" id="MainContent_addUserPasswordTextBox" placeholder="Password"></fieldset>
+                    <fieldset><label>Confirm Password</label> <input name="ctl00$MainContent$addUserConfirmPasswordTextBox" type="password" maxlength="50" id="MainContent_addUserConfirmPasswordTextBox" placeholder="Confirm Password"></fieldset>
+                    <fieldset><label>User Role</label><select name="ctl00$MainContent$addUserRoleDDL" id="MainContent_addUserRoleDDL">
+		<option selected="selected" value="1">Standard</option>
+		<option value="2">Admin</option>
+
+	</select></fieldset>
+                </div>
+                <div class="user-roles">
+                    <fieldset class="available"><label>Available Farms</label><select size="10" name="ctl00$MainContent$addUserAvailableFarmsListBox" multiple="multiple" id="MainContent_addUserAvailableFarmsListBox">
+		<option value="9">ACI</option>
+		<option value="10">Bent Oak</option>
+		<option value="13">Bryant Baker</option>
+		<option value="14">Bryant Dairy</option>
+		<option value="12">Hollandale</option>
+		<option value="11">Inverness</option>
+		<option value="15">Solomon</option>
+
+	</select></fieldset>
+                    <fieldset class="buttons">
+                        <input type="submit" name="ctl00$MainContent$addUserAddFarmButton" value=" &gt;&gt;" id="MainContent_addUserAddFarmButton" style="width:70px;"><br>
+                        <input type="submit" name="ctl00$MainContent$addUserRemoveFarmButton" value=" &lt;&lt;" id="MainContent_addUserRemoveFarmButton" style="width:70px;">
+                    </fieldset>
+                    <fieldset class="assigned"><label>Currently Assigned Farms</label><select size="10" name="ctl00$MainContent$addUserAssignedToListBox" multiple="multiple" id="MainContent_addUserAssignedToListBox">
+
+	</select></fieldset>
+                </div>
+                <span id="MainContent_addUserErrorLabel" class="validation-error"></span>
+                <fieldset class="buttons">
+                    <a id="MainContent_submitNewButton" class="badge_activate" href="javascript:__doPostBack('ctl00$MainContent$submitNewButton','')">Submit</a>
+                    <a id="MainContent_cancelNewButton" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$cancelNewButton','')">Cancel</a>
+                </fieldset>
+                
+            
+</div>
+        </div>
+        
+         
+        <div id="MainContent_editUserDiv" style="position: fixed; display: none;">
+            <div id="MainContent_editUserPanel" class="modalPopup" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'MainContent_submitEditButton')">
+	
+                <h2 class="panel_header">Edit User</h2>
+                <div class="user-info">
+                    <fieldset><label>First Name</label> <input name="ctl00$MainContent$editUserFirstNameTextBox" type="text" maxlength="50" id="MainContent_editUserFirstNameTextBox" autofocus="" placeholder="First Name"></fieldset>
+                    <fieldset><label>Last Name</label> <input name="ctl00$MainContent$editUserLastNameTextBox" type="text" maxlength="50" id="MainContent_editUserLastNameTextBox" placeholder="Last Name"></fieldset>
+                    <fieldset><label>Phone Number</label> <input name="ctl00$MainContent$editUserPhoneNumberTextBox" type="text" maxlength="50" id="MainContent_editUserPhoneNumberTextBox" placeholder="555-555-5555"></fieldset>
+                    <fieldset><label>Email Address</label> <input name="ctl00$MainContent$editUserEmailTextBox" type="text" maxlength="100" id="MainContent_editUserEmailTextBox" placeholder="me@me.com"></fieldset>
+                    <fieldset><label>Password</label> <input name="ctl00$MainContent$editUserPasswordTextBox" type="password" maxlength="50" id="MainContent_editUserPasswordTextBox" placeholder="Password"></fieldset>
+                    <fieldset><label>Confirm Password</label> <input name="ctl00$MainContent$editUserConfirmPasswordTextBox" type="password" maxlength="50" id="MainContent_editUserConfirmPasswordTextBox"></fieldset>
+                    <fieldset><label>User Role</label><select name="ctl00$MainContent$editUserRoleDDL" id="MainContent_editUserRoleDDL">
+
+	</select></fieldset>
+                </div>
+                <div class="user-roles">
+                    <fieldset class="available"><label>Available Farms</label><select size="10" name="ctl00$MainContent$editUserAvailableFarmsListBox" multiple="multiple" id="MainContent_editUserAvailableFarmsListBox">
+
+	</select></fieldset>
+                    <fieldset class="buttons">
+                        <input type="submit" name="ctl00$MainContent$editUserAddFarmButton" value=" &gt;&gt;" id="MainContent_editUserAddFarmButton" style="width:70px;"><br>
+                        <input type="submit" name="ctl00$MainContent$editUserRemoveFarmButton" value=" &lt;&lt;" id="MainContent_editUserRemoveFarmButton" style="width:70px;">
+                    </fieldset>
+                    <fieldset class="assigned"><label>Currently Assigned Farms</label><select size="10" name="ctl00$MainContent$editUserAssignedToListBox" multiple="multiple" id="MainContent_editUserAssignedToListBox">
+
+	</select></fieldset>
+                </div>
+                
+                <span id="MainContent_editUserErrorLabel" class="validation-error"></span>
+                <div class="buttons">                            
+                    <a id="MainContent_submitEditButton" class="badge_activate" href="javascript:__doPostBack('ctl00$MainContent$submitEditButton','')" style="display:inline-block;width:65px;">Submit</a>
+                    <a id="MainContent_cancelEditButton" class="badge_deactivate" href="javascript:__doPostBack('ctl00$MainContent$cancelEditButton','')">Cancel</a>
+                </div>
+            
+</div>
+        </div>
+        
+        
+        <div style="display: none">
+            <input type="submit" name="ctl00$MainContent$dummy" value="dummy" id="MainContent_dummy">
+        </div>
+        <div style="display: none">
+            <input type="submit" name="ctl00$MainContent$dummy1" value="dummy" id="MainContent_dummy1">
+        </div>
+    <div id="MainContent_mpeAddUser_backgroundElement" class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px;"></div><div id="MainContent_mpeEditUser_backgroundElement" class="modalBackground" style="display: none; position: fixed; left: 0px; top: 0px;"></div></div>
+    <script type="text/javascript">
+        Sys.Application.add_load(FirejQuery);
+
+        $(document).ready(function () {
+
+        });
+
+        function FirejQuery() {
+            $('#MainContent_editUserDiv .user-info input').each(function () {
+                var temp = $(this).attr('title');
+                $(this).attr('placeholder', temp);
+                $(this).val('');
+            });
+        }
+    </script>
+
+        </div></form>
+        <div class="clear">
+        </div>    
+    <div class="footer">
+        
+    </div>
+    
+
+<script type="text/javascript">
+//<![CDATA[
+;(function() {var fn = function() {Sys.Extended.UI.ModalPopupBehavior.invokeViaServer('MainContent_mpeAddUser', false); Sys.Application.remove_load(fn);};Sys.Application.add_load(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"MainContent_addUserDiv","dynamicServicePath":"/user_admin.aspx","id":"MainContent_mpeAddUser"}, null, null, $get("MainContent_dummy"));
+});
+Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"MainContent_editUserDiv","dynamicServicePath":"/user_admin.aspx","id":"MainContent_mpeEditUser"}, null, null, $get("MainContent_dummy1"));
+});
+//]]>
+</script>
+
+    <script>
+        pageLabel();
+    </script>
+
+
+<div id="window-resizer-tooltip" style="display: none;"><a href="#" title="Edit settings" style="background-image: url(chrome-extension://kkelicaakdanhinjdeammmilcgefonfh/images/icon_19.png);"></a><span class="tooltipTitle">Window size: </span><span class="tooltipWidth" id="winWidth">1366</span> x <span class="tooltipHeight" id="winHeight">728</span><br><span class="tooltipTitle">Viewport size: </span><span class="tooltipWidth" id="vpWidth">1366</span> x <span class="tooltipHeight" id="vpHeight">305</span></div></body></html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>ChowTime Fish Food Tracker</title>
+    <link href="content/global.css" rel="stylesheet" type="text/css">
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+    </script>
+    </head>
+<body class="login">
+    <header>
+        <h1></h1>
+        <nav>
+            <ol>
+                <li class="menuIndex"><a href="index.aspx">Enter Feed Data</a></li>
+                <li class="menuReports"><a href="reporting.aspx">Reports</a></li>
+                <li class="menuPond"><a href="pond_admin.aspx">Pond Admin</a></li>
+                <li class="menuFarm"><a href="farm_admin.aspx">Farm Admin</a></li>
+                <li class="menuUser activePage"><a href="user_admin.aspx">User Admin</a></li>
+                <li class="username">Logged in as <span id="userName">Jason Simmons</span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+    </header>
+
+    <section id="main_content">
+        <form>
+            <header>Login</header>
+            <fieldset><input type="text" id="username" placeholder="username" /></fieldset>
+            <fieldset><input type="password" id="password" placeholder="password" /></fieldset>
+            <fieldset><input type="checkbox" id="rememberMe"><label>Remember me</label></fieldset>
+            <fieldset class="buttons"><button id="submitLogin">Login</button></fieldset>
+        </form>
+    </section>
+
+    <section id="alertBox" class="modal">
+        <i class="fa fa-exclamation-circle"></i>
+        <div id="alertMessage"></div>
+        <fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+    </section>
+
+    <script type="text/javascript" src="scripts/functions.js"></script>
+</body>
+</html>

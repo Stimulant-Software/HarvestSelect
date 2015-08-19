@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Airtime</title>
+    <link href="content/global.css" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>AirTime</h1>
+        <nav>
+            <ol>
+                <li><a href="at-entry.html">Enter Aerator Data</a></li>
+                <li><a href="at-reports.html">3 Day Report</a></li>
+
+                <li><a href="at-7dayreport.html">7 Day Report</a></li>
+                <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+    </header>
+
+    <section id="main_content">
+        <header class="farm">
+            <h2>Current Farm: <span id="currentFarm"></span></h2>
+            <select id="changeFarm"></select>
+        </header>
+        <section id="farmPonds"></section>
+    </section>
+
+    <footer></footer>
+        
+    <section id="editEntryModal" class="admin-modal modal">
+        <form>
+            <header>New Farm</header>
+            <fieldset><label>Date/Time</label>
+                <input type="datetime" id="readingDateEdit" />
+                <input type="hidden" id="pondIDEdit" value="" />
+                <input type="hidden" id="readingIDEdit" value="" />
+            </fieldset>
+            <fieldset><label>Current O2:</label><input type="number" step=".1" value="" min="0" max="15" id="currentO2Edit" placeholder="0" /></fieldset><fieldset><label>Active Stationary Aerators:</label><input type="number" step="1" value="" min="0" max="15" placeholder="0" id="currentStationaryAeratorsEdit" /></fieldset><fieldset><label>Active Portable Aerators:</label><input type="number" step="1" value="" min="0" max="15" placeholder="0" id="currentPortableAeratorsEdit" /></fieldset>
+            <fieldset><label>Note: </label><input type="text" id="readingNoteEdit" /></fieldset>
+            <fieldset class="buttons"><button id="submitEntry" class="submit">Submit</button><button class="cancel">Cancel</button></fieldset>
+        </form>
+    </section>
+
+    <section id="alertBox" class="modal">
+        <i class="fa fa-exclamation-circle"></i>
+        <div id="alertMessage"></div>
+        <fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+    </section>
+    
+    <script type="text/javascript" src="scripts/functions.js"></script>
+    <script type="text/javascript" src="scripts/highcharts.js"></script>
+    <script type="text/javascript" src="scripts/at-functions.js"></script>
+</body>
+</html>

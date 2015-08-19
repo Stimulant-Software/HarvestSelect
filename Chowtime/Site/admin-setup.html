@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Airtime</title>
+    <link href="content/global.css" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Admin</h1>
+        <nav>
+            <ol>
+                <li><a href="admin-pond.html">Pond Admin</a></li>
+                <li><a href="admin-farm.html">Farm Admin</a></li>
+                <li><a href="admin-user.html">User Admin</a></li>
+                <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+    </header>
+
+    <section id="main_content">
+        <header class="admin">
+            <h2>Initial SetUp</h2>
+        </header>
+
+        <form id="newCompany" class="wizard">
+            <header>New Company</header>
+            <fieldset>
+                <label>Company Name</label><input type="text" id="companyName" placeholder="Company Name" required />                
+                <input type="hidden" id="CompanyID" value="-1" />
+            </fieldset>
+            <fieldset><label>Address 1</label><input type="text" id="Address1" placeholder="Address" /></fieldset>
+            <fieldset><label>Address 2</label><input type="text" id="Address2" placeholder="Address 2" /></fieldset>
+            <fieldset><label>City</label><input type="text" id="City" placeholder="City" /></fieldset>
+            <fieldset><label>State</label><input type="text" id="State" placeholder="State" /></fieldset>
+            <fieldset><label>Zip Code</label><input type="text" id="Zip" placeholder="Zip Code" /></fieldset>
+            <fieldset><label>Phone</label><input type="text" id="Phone" placeholder="xxx-xxx-xxxx" /></fieldset>
+            <fieldset class="buttons"><button id="submitCompany" class="submit">Next</button></fieldset>
+        </form>
+        
+        <form id="newUser" class="wizard">
+            <header>New User</header>
+            <fieldset>
+                <label>First Name</label><input type="text" id="firstName" placeholder="First Name" required />                
+                <input type="hidden" id="statusID" value="1" />
+                <input type="hidden" id="userID" value="-1" />
+            </fieldset>
+            <fieldset><label>Last Name</label><input type="text" id="lastName" placeholder="Last Name" required /></fieldset>
+            <fieldset><label>Phone</label><input type="text" id="phone" placeholder="xxx-xxx-xxxx" required /></fieldset>
+            <fieldset><label>Email Address</label><input type="text" id="emailAddress" placeholder="contact@server.com" required /></fieldset>
+            <section id="passwordFields">    
+                <fieldset><label>Password</label><input type="password" id="password" /></fieldset>
+                <fieldset><label>Confirm Password</label><input type="password" id="passConfirm" /></fieldset>
+            </section>
+            <fieldset class="buttons"><button id="submitUser" class="submit">Next</button></fieldset>
+        </form>
+
+        <form id="newFarm" class="wizard">
+            <header>New Farm</header>
+            <fieldset><label>Farm Name</label>
+                <input type="text" id="farmName" placeholder="Farm Name" required />
+                <input type="hidden" id="farmStatusID" value="1" />
+                <input type="hidden" id="farmID" value="-1" />
+            </fieldset>
+            <fieldset class="buttons"><button id="submitFarm" class="submit">Next</button></fieldset>
+        </form>
+
+        <form id="newPond" class="wizard">
+            <header>New Pond</header>
+            <fieldset>
+                <label>Pond Name</label><input type="text" id="PondName" placeholder="Pond Name" required />                
+                <input type="hidden" id="pondStatusID" value="1" />
+                <input type="hidden" id="PondId" value="-1" />
+                <input type="hidden" id="NoFeed" value="False" />
+                <input type="hidden" id="HealthStatus" value="1" />
+            </fieldset>
+            <fieldset><label>Pond Size (acres)</label><input type="text" id="Size" placeholder="Pond Size" required /></fieldset>
+            <!-- <fieldset><label>Farm Location</label><select id="Select1" required></select></fieldset> -->
+            <fieldset class="buttons"><button id="submitPond" class="submit">Finish</button></fieldset>
+        </form>
+    </section>
+
+    <footer></footer>
+
+    <section id="alertBox" class="modal">
+        <i class="fa fa-exclamation-circle"></i>
+        <div id="alertMessage"></div>
+        <fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+    </section>
+    
+    <script type="text/javascript" src="scripts/functions.js"></script>
+    <script type="text/javascript" src="scripts/admin-functions.js"></script>
+</body>
+</html>

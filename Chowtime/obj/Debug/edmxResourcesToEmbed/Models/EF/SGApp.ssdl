@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AppModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="AppModelStoreContainer">
+    <EntitySet Name="Companies" EntityType="AppModel.Store.Companies" store:Type="Tables" store:Schema="dbo" store:Name="Companies">
+      <DefiningQuery>SELECT 
+      [Companies].[CompanyId] AS [CompanyId], 
+      [Companies].[CompanyName] AS [CompanyName], 
+      [Companies].[Address1] AS [Address1], 
+      [Companies].[Address2] AS [Address2], 
+      [Companies].[City] AS [City], 
+      [Companies].[State] AS [State], 
+      [Companies].[Zip] AS [Zip], 
+      [Companies].[Phone] AS [Phone]
+      FROM [dbo].[Companies] AS [Companies]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Roles" EntityType="AppModel.Store.Roles" store:Type="Tables" store:Schema="dbo" store:Name="Roles">
+      <DefiningQuery>SELECT 
+      [Roles].[RoleId] AS [RoleId], 
+      [Roles].[RoleName] AS [RoleName]
+      FROM [dbo].[Roles] AS [Roles]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Statuses" EntityType="AppModel.Store.Statuses" store:Type="Tables" store:Schema="dbo" store:Name="Statuses">
+      <DefiningQuery>SELECT 
+      [Statuses].[StatusId] AS [StatusId], 
+      [Statuses].[StatusName] AS [StatusName]
+      FROM [dbo].[Statuses] AS [Statuses]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="UserRoles" EntityType="AppModel.Store.UserRoles" store:Type="Tables" store:Schema="dbo" store:Name="UserRoles">
+      <DefiningQuery>SELECT 
+      [UserRoles].[UserRoleId] AS [UserRoleId], 
+      [UserRoles].[UserId] AS [UserId], 
+      [UserRoles].[RoleId] AS [RoleId]
+      FROM [dbo].[UserRoles] AS [UserRoles]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="Users" EntityType="AppModel.Store.Users" store:Type="Tables" store:Schema="dbo" store:Name="Users">
+      <DefiningQuery>SELECT 
+      [Users].[UserId] AS [UserId], 
+      [Users].[EmailAddress] AS [EmailAddress], 
+      [Users].[FirstName] AS [FirstName], 
+      [Users].[LastName] AS [LastName], 
+      [Users].[Phone] AS [Phone], 
+      [Users].[CompanyId] AS [CompanyId], 
+      [Users].[StatusId] AS [StatusId], 
+      [Users].[Password] AS [Password]
+      FROM [dbo].[Users] AS [Users]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'App.dbo.Companies' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="Companies">
+    <Key>
+      <PropertyRef Name="CompanyId" />
+      <PropertyRef Name="CompanyName" />
+    </Key>
+    <Property Name="CompanyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="CompanyName" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Address1" Type="varchar" MaxLength="50" />
+    <Property Name="Address2" Type="varchar" MaxLength="50" />
+    <Property Name="City" Type="varchar" MaxLength="50" />
+    <Property Name="State" Type="varchar" MaxLength="20" />
+    <Property Name="Zip" Type="varchar" MaxLength="15" />
+    <Property Name="Phone" Type="varchar" MaxLength="15" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'App.dbo.Roles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleId" />
+      <PropertyRef Name="RoleName" />
+    </Key>
+    <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="varchar" Nullable="false" MaxLength="25" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'App.dbo.Statuses' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="Statuses">
+    <Key>
+      <PropertyRef Name="StatusId" />
+      <PropertyRef Name="StatusName" />
+    </Key>
+    <Property Name="StatusId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="StatusName" Type="varchar" Nullable="false" MaxLength="25" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'App.dbo.UserRoles' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="UserRoles">
+    <Key>
+      <PropertyRef Name="UserRoleId" />
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="RoleId" />
+    </Key>
+    <Property Name="UserRoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="RoleId" Type="int" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'App.dbo.Users' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+      <PropertyRef Name="EmailAddress" />
+      <PropertyRef Name="Password" />
+    </Key>
+    <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="EmailAddress" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="FirstName" Type="varchar" MaxLength="50" />
+    <Property Name="LastName" Type="varchar" MaxLength="50" />
+    <Property Name="Phone" Type="varchar" MaxLength="50" />
+    <Property Name="CompanyId" Type="int" />
+    <Property Name="StatusId" Type="int" />
+    <Property Name="Password" Type="binary" Nullable="false" MaxLength="16" />
+  </EntityType>
+</Schema>

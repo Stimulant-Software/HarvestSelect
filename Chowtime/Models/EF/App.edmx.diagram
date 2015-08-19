@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fc14307dfb524359ad527ca392d78ad7" Name="Diagram1">
+        <EntityTypeShape EntityType="AppModel.Company" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AppModel.Role" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AppModel.Status" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AppModel.UserRole" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <AssociationConnector Association="AppModel.FK_UserRoles_Roles" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="AppModel.Farm" Width="1.5" PointX="10.719464381560433" PointY="22.79483983982114" />
+        <EntityTypeShape EntityType="AppModel.Feeding" Width="1.5" PointX="4.52457688773264" PointY="3.3219840393038393" />
+        <EntityTypeShape EntityType="AppModel.Harvest" Width="1.5" PointX="4.00111550092749" PointY="21.732155899392513" />
+        <EntityTypeShape EntityType="AppModel.UserFarm" Width="1.5" PointX="8.9031974100057028" PointY="22.286012138373223" />
+        <AssociationConnector Association="AppModel.FK_Farms_Companies" />
+        <AssociationConnector Association="AppModel.FK_Farms_Statuses" />
+        <AssociationConnector Association="AppModel.FK_UserFarms_Farms" />
+        <AssociationConnector Association="AppModel.FK_Feedings_UserFarms" />
+        <AssociationConnector Association="AppModel.FK_UserFarms_Statuses" />
+        <EntityTypeShape EntityType="AppModel.User" Width="1.5" PointX="2.6376459852967624" PointY="24.823863085742975" />
+        <AssociationConnector Association="AppModel.FK_Users_Companies" />
+        <AssociationConnector Association="AppModel.FK_Users_Status" />
+        <AssociationConnector Association="AppModel.FK_UserFarms_Users" />
+        <AssociationConnector Association="AppModel.FK_UserRoles_User" />
+        <EntityTypeShape EntityType="AppModel.HealthStatus" Width="1.5" PointX="11.471278857193552" PointY="2.4709011178793858" />
+        <EntityTypeShape EntityType="AppModel.Pond" Width="1.5" PointX="6.2407925064865459" PointY="23.583023007764957" />
+        <AssociationConnector Association="AppModel.FK_Ponds_Farms" />
+        <AssociationConnector Association="AppModel.FK_Feedings_Ponds" />
+        <AssociationConnector Association="AppModel.FK_Harvests_Ponds" />
+        <AssociationConnector Association="AppModel.FK_Ponds_HealthStatuses" />
+        <AssociationConnector Association="AppModel.FK_Ponds_Statuses" />
+        <EntityTypeShape EntityType="AppModel.O2Reading" Width="1.5" PointX="0.32785070516534648" PointY="11.129513417896588" />
+        <AssociationConnector Association="AppModel.FK_O2Readings_Ponds" />
+        <AssociationConnector Association="AppModel.FK_O2Readings_UsersFarms" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
