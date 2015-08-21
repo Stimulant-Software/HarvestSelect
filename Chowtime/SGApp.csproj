@@ -140,6 +140,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\FarmController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\JMremoteController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PondController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="DTOs\FeedingDTO.cs" />
     <Compile Include="DTOs\GenericDTO.cs" />
     <Compile Include="DTOs\HarvestDTO.cs" />
+    <Compile Include="DTOs\InnovaDto.cs" />
     <Compile Include="DTOs\KeyDTO.cs" />
     <Compile Include="DTOs\LoginDTO.cs" />
     <Compile Include="DTOs\O2ReadingDTO.cs" />
@@ -385,6 +387,9 @@
     <Content Include="Site\scripts\functions.js" />
     <Content Include="Site\scripts\highcharts.js" />
     <Content Include="Site\scripts\jquery-1.10.2.min.js" />
+    <Content Include="Site\scripts\underscore.js" />
+    <Content Include="Site\scripts\underscore.min.js" />
+    <None Include="Site\scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -414,6 +419,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Site\scripts\underscore.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

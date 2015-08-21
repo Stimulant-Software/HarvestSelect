@@ -8,12 +8,61 @@
     <script type="text/javascript">
         if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
     </script>
+    <script src="scripts/underscore.min.js"></script>
 </head>
 <body>
     Hello
+    <div id="headerDiv">
+        <table>
+            <thead>
+                <tr>
+                    <th>size</th>
+                    <th>code</th>
+                    <th>name</th>
+                    <th>shname</th>
+                    <th>extcode</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+    <div id="resultsDiv">
+        <table id="resultsTable">
+            <tbody></tbody>
+        </table>
+    </div>
+    <button id="getDataButton">Get Data</button>
     <footer></footer>
         <script type="text/javascript" src="scripts/functions.js"></script>
     <script type="text/javascript" src="scripts/highcharts.js"></script>
     <script type="text/javascript" src="scripts/at-functions.js"></script>
+    <script>
+    $(document).ready(function () {
+        var $button = $("#getDataButton");
+        $button.on("click", function () {
+            var qry = {
+                "Key": "Hello World"
+            };
+            var address = "../api/JMremote/GetRemoteData";
+            var data = JSON.stringify(qry),
+                dta = {};
+            $.ajax(address, {
+                type: 'POST',
+                data: data,
+                success: function (msg) {
+                    dta = JSON.parse(msg);
+                    var value = dta[0]
+                    var html = "";
+                    var $resultsTable = $("#resultsTable");
+                    $resultsTable.find("tbody").empty();
+                    //_(dta[0]).each(function (value) {
+                    html += '<tr><td>' + value.size + '</td><td>' + value.code + '</td><td>' + value.name + '</td><td>' + value.shname + '</td><td>' + value.extcode + '</td></tr>'
+                    //});
+                    $resultsTable.find("tbody").html(html);
+                }
+            });
+        });
+    })
+    </script>
+
 </body>
 </html>

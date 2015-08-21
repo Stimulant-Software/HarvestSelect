@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="innova01ModelStoreContainer" CdmEntityContainer="innova01Entities">
+    <EntitySetMapping Name="proc_sizes">
+      <EntityTypeMapping TypeName="innova01Model.proc_sizes">
+        <MappingFragment StoreEntitySet="proc_sizes">
+          <ScalarProperty Name="size" ColumnName="size" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="shname" ColumnName="shname" />
+          <ScalarProperty Name="extcode" ColumnName="extcode" />
+          <ScalarProperty Name="pattern" ColumnName="pattern" />
+          <ScalarProperty Name="dimension1" ColumnName="dimension1" />
+          <ScalarProperty Name="dimension2" ColumnName="dimension2" />
+          <ScalarProperty Name="dimension3" ColumnName="dimension3" />
+          <ScalarProperty Name="dimension4" ColumnName="dimension4" />
+          <ScalarProperty Name="description1" ColumnName="description1" />
+          <ScalarProperty Name="description2" ColumnName="description2" />
+          <ScalarProperty Name="description3" ColumnName="description3" />
+          <ScalarProperty Name="description4" ColumnName="description4" />
+          <ScalarProperty Name="description5" ColumnName="description5" />
+          <ScalarProperty Name="description6" ColumnName="description6" />
+          <ScalarProperty Name="description7" ColumnName="description7" />
+          <ScalarProperty Name="description8" ColumnName="description8" />
+          <ScalarProperty Name="xmldata" ColumnName="xmldata" />
+          <ScalarProperty Name="itgrsite" ColumnName="itgrsite" />
+          <ScalarProperty Name="itgrstatus" ColumnName="itgrstatus" />
+          <ScalarProperty Name="active" ColumnName="active" />
+          <ScalarProperty Name="minweight" ColumnName="minweight" />
+          <ScalarProperty Name="maxweight" ColumnName="maxweight" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

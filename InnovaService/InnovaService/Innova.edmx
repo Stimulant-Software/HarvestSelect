@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="innova01Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="proc_sizes">
+          <Key>
+            <PropertyRef Name="size" />
+          </Key>
+          <Property Name="size" Type="int" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="shname" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="extcode" Type="nvarchar" MaxLength="30" />
+          <Property Name="pattern" Type="nvarchar" MaxLength="10" />
+          <Property Name="dimension1" Type="int" />
+          <Property Name="dimension2" Type="int" />
+          <Property Name="dimension3" Type="int" />
+          <Property Name="dimension4" Type="int" />
+          <Property Name="description1" Type="nvarchar" MaxLength="80" />
+          <Property Name="description2" Type="nvarchar" MaxLength="80" />
+          <Property Name="description3" Type="nvarchar" MaxLength="80" />
+          <Property Name="description4" Type="nvarchar" MaxLength="80" />
+          <Property Name="description5" Type="nvarchar" MaxLength="80" />
+          <Property Name="description6" Type="nvarchar" MaxLength="80" />
+          <Property Name="description7" Type="nvarchar" MaxLength="80" />
+          <Property Name="description8" Type="nvarchar" MaxLength="80" />
+          <Property Name="xmldata" Type="xml" />
+          <Property Name="itgrsite" Type="int" />
+          <Property Name="itgrstatus" Type="nvarchar" MaxLength="30" />
+          <Property Name="active" Type="bit" Nullable="false" />
+          <Property Name="minweight" Type="real" />
+          <Property Name="maxweight" Type="real" />
+        </EntityType>
+        <EntityContainer Name="innova01ModelStoreContainer">
+          <EntitySet Name="proc_sizes" EntityType="Self.proc_sizes" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="innova01Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="proc_sizes">
+          <Key>
+            <PropertyRef Name="size" />
+          </Key>
+          <Property Name="size" Type="Int32" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="shname" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="extcode" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="pattern" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="dimension1" Type="Int32" />
+          <Property Name="dimension2" Type="Int32" />
+          <Property Name="dimension3" Type="Int32" />
+          <Property Name="dimension4" Type="Int32" />
+          <Property Name="description1" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="description2" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="description3" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="description4" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="description5" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="description6" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="description7" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="description8" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="xmldata" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="itgrsite" Type="Int32" />
+          <Property Name="itgrstatus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="active" Type="Boolean" Nullable="false" />
+          <Property Name="minweight" Type="Single" />
+          <Property Name="maxweight" Type="Single" />
+        </EntityType>
+        <EntityContainer Name="innova01Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="proc_sizes" EntityType="Self.proc_sizes" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="innova01ModelStoreContainer" CdmEntityContainer="innova01Entities">
+          <EntitySetMapping Name="proc_sizes">
+            <EntityTypeMapping TypeName="innova01Model.proc_sizes">
+              <MappingFragment StoreEntitySet="proc_sizes">
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="shname" ColumnName="shname" />
+                <ScalarProperty Name="extcode" ColumnName="extcode" />
+                <ScalarProperty Name="pattern" ColumnName="pattern" />
+                <ScalarProperty Name="dimension1" ColumnName="dimension1" />
+                <ScalarProperty Name="dimension2" ColumnName="dimension2" />
+                <ScalarProperty Name="dimension3" ColumnName="dimension3" />
+                <ScalarProperty Name="dimension4" ColumnName="dimension4" />
+                <ScalarProperty Name="description1" ColumnName="description1" />
+                <ScalarProperty Name="description2" ColumnName="description2" />
+                <ScalarProperty Name="description3" ColumnName="description3" />
+                <ScalarProperty Name="description4" ColumnName="description4" />
+                <ScalarProperty Name="description5" ColumnName="description5" />
+                <ScalarProperty Name="description6" ColumnName="description6" />
+                <ScalarProperty Name="description7" ColumnName="description7" />
+                <ScalarProperty Name="description8" ColumnName="description8" />
+                <ScalarProperty Name="xmldata" ColumnName="xmldata" />
+                <ScalarProperty Name="itgrsite" ColumnName="itgrsite" />
+                <ScalarProperty Name="itgrstatus" ColumnName="itgrstatus" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="minweight" ColumnName="minweight" />
+                <ScalarProperty Name="maxweight" ColumnName="maxweight" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

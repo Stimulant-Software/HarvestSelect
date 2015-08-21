@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="innova01Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="proc_sizes">
+    <Key>
+      <PropertyRef Name="size" />
+    </Key>
+    <Property Name="size" Type="int" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="shname" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="extcode" Type="nvarchar" MaxLength="30" />
+    <Property Name="pattern" Type="nvarchar" MaxLength="10" />
+    <Property Name="dimension1" Type="int" />
+    <Property Name="dimension2" Type="int" />
+    <Property Name="dimension3" Type="int" />
+    <Property Name="dimension4" Type="int" />
+    <Property Name="description1" Type="nvarchar" MaxLength="80" />
+    <Property Name="description2" Type="nvarchar" MaxLength="80" />
+    <Property Name="description3" Type="nvarchar" MaxLength="80" />
+    <Property Name="description4" Type="nvarchar" MaxLength="80" />
+    <Property Name="description5" Type="nvarchar" MaxLength="80" />
+    <Property Name="description6" Type="nvarchar" MaxLength="80" />
+    <Property Name="description7" Type="nvarchar" MaxLength="80" />
+    <Property Name="description8" Type="nvarchar" MaxLength="80" />
+    <Property Name="xmldata" Type="xml" />
+    <Property Name="itgrsite" Type="int" />
+    <Property Name="itgrstatus" Type="nvarchar" MaxLength="30" />
+    <Property Name="active" Type="bit" Nullable="false" />
+    <Property Name="minweight" Type="real" />
+    <Property Name="maxweight" Type="real" />
+  </EntityType>
+  <EntityContainer Name="innova01ModelStoreContainer">
+    <EntitySet Name="proc_sizes" EntityType="Self.proc_sizes" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>
