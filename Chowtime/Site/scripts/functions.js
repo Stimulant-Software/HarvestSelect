@@ -16,6 +16,7 @@ $(function(){
                 logoutControls();
                 if ($('#changeFarm').length) loadFarmsDDL(userID);
                 userNameFill();
+                debugger;
                 $('body > footer').load('footer.html', function () { $('body > footer').addClass(supports_html5_storage() ? localStorage['CTuserRole'] : readRemember('CTuserRole')) });
             });
         }

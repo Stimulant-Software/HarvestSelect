@@ -784,7 +784,7 @@ footer a:hover {
     text-decoration: underline;
 }
 
-.Admin #adminLink, .Airtime #airtimeLink, .Chowtime #chowtimeLink {
+.Admin #adminLink, .Airtime #airtimeLink, .Chowtime #chowtimeLink, .Operations #operationsLink {
     display: inline;
 }
 
