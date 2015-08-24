@@ -7,6 +7,7 @@ using System.Web;
 namespace InnovaServiceHost.DTOs {
     public class InnovaDto : IKey {
         public string Key { get; set; }
-
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

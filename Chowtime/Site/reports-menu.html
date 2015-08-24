@@ -16,11 +16,13 @@
         <table>
             <thead>
                 <tr>
-                    <th>size</th>
-                    <th>code</th>
-                    <th>name</th>
-                    <th>shname</th>
-                    <th>extcode</th>
+                    <th>farm</th>
+                    <th>pond</th>
+                    <th>farm pond</th>
+                    <th>date</th>
+                    <th>range</th>
+                    <th>value</th>
+                    <th>weight</th>
                 </tr>
             </thead>
         </table>
@@ -29,6 +31,12 @@
         <table id="resultsTable">
             <tbody></tbody>
         </table>
+    </div>
+    <div>
+        <span>start date:</span><input type="date" id="startDateInput" /></>
+    </div>
+    <div>
+        <span>end date:</span><input type="date" id="endDateInput" /></>
     </div>
     <button id="getDataButton">Get Data</button>
     <footer></footer>
@@ -40,7 +48,9 @@
         var $button = $("#getDataButton");
         $button.on("click", function () {
             var qry = {
-                "Key": "Hello World"
+                "Key": "Hello World",
+                "StartDate": $("#startDate").val(),
+                "EndDate": $("#endDate").val()
             };
             var address = "../api/JMremote/GetRemoteData";
             var data = JSON.stringify(qry),

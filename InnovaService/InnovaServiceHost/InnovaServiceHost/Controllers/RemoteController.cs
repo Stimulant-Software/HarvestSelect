@@ -71,8 +71,10 @@ namespace InnovaServiceHost.Controllers {
                 //    var s = "";
                 //    throw;
                 //}
-                var startDate = new DateTime(2015,7,1);
-                var endDate = new DateTime(2015,7,2);
+                //var startDate = new DateTime(2015,7,1);
+                //var endDate = new DateTime(2015,7,2);
+                var startDate = dto.StartDate;
+                var endDate = dto.EndDate;
                 return (from m in context.proc_materials
                                         .Where(x => x.shname == "Sample")
                         join p in context.proc_packs.Where(x => x.rtype != 4
