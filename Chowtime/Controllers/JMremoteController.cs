@@ -17,7 +17,7 @@ namespace SGApp.Controllers {
                 //BaseAddress = new Uri(baseAddress)                
             };
             try {
-                var response = client.PostAsJsonAsync("api/Remote/GetProcSizes", dto).Result;
+                var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
                 response.EnsureSuccessStatusCode();
                 var result = response.Content.ReadAsStringAsync().Result;
                 return result;               

@@ -4,8 +4,31 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fb6f85f993c640fd8f951f5d696f54ba" Name="Diagram1">
+      <Diagram DiagramId="fb6f85f993c640fd8f951f5d696f54ba" Name="Diagram1" ZoomLevel="85">
         <EntityTypeShape EntityType="innova01Model.proc_sizes" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="innova01Model.base_companies" Width="1.5" PointX="12.125" PointY="1.25" />
+        <EntityTypeShape EntityType="innova01Model.proc_lots" Width="1.5" PointX="9" PointY="0.625" />
+        <EntityTypeShape EntityType="innova01Model.proc_materials" Width="1.5" PointX="3.875" PointY="0.75" />
+        <EntityTypeShape EntityType="innova01Model.proc_packs" Width="1.5" PointX="6.5" PointY="0.625" />
+        <AssociationConnector Association="innova01Model.fk_base_companies_parent_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_lots_customer_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_lots_processor_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_lots_processor2_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_lots_slhouse_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_manufacturer_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_lots_sourcepack_id" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_lot_lot" />
+        <AssociationConnector Association="innova01Model.fk_proc_materials_base_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_materials_itpackaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_materials_papackaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_materials_parent_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_materials_pkpackaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_materials_recordas_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_materials_size_size" />
+        <AssociationConnector Association="innova01Model.fk_proc_materials_stpackaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_material_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_packaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_recordingmaterial_material" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

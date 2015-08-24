@@ -48,6 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="base_companies.cs">
+      <DependentUpon>Innova.tt</DependentUpon>
+    </Compile>
     <Compile Include="Class1.cs" />
     <Compile Include="IKey.cs" />
     <Compile Include="Innova.Context.cs">
@@ -66,6 +69,15 @@
       <DependentUpon>Innova.edmx</DependentUpon>
     </Compile>
     <Compile Include="PartialClasses\proc_sizes.cs" />
+    <Compile Include="proc_lots.cs">
+      <DependentUpon>Innova.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proc_materials.cs">
+      <DependentUpon>Innova.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proc_packs.cs">
+      <DependentUpon>Innova.tt</DependentUpon>
+    </Compile>
     <Compile Include="proc_sizes.cs">
       <DependentUpon>Innova.tt</DependentUpon>
     </Compile>

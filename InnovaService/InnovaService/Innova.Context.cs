@@ -26,5 +26,9 @@ namespace InnovaService
         }
     
         public virtual DbSet<proc_sizes> proc_sizes { get; set; }
+        public virtual DbSet<base_companies> base_companies { get; set; }
+        public virtual DbSet<proc_lots> proc_lots { get; set; }
+        public virtual DbSet<proc_materials> proc_materials { get; set; }
+        public virtual DbSet<proc_packs> proc_packs { get; set; }
     }
 }

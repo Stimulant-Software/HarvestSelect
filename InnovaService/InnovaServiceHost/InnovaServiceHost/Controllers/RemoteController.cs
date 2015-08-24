@@ -59,19 +59,41 @@ namespace InnovaServiceHost.Controllers {
         #endregion
 
         [HttpPost]
-        public object GetProcSizes([FromBody] InnovaDto dto) {
+        public object GetKeithsData([FromBody] InnovaDto dto) {
             //  validate the key
             //if(ValidateKey(dto.Key)) {
                 var context = new innova01Entities();
-                try {
-                    var data = context.proc_sizes.Where(x => x.size == 1).ToList();
-                    return returnPackage(Request, data);
-                }
-                catch(Exception e) {
-                    var s = "";
-                    throw;
-                }
-                
+                //try {
+                //    var data = context.proc_sizes.Where(x => x.size == 1).ToList();
+                //    return returnPackage(Request, data);
+                //}
+                //catch(Exception e) {
+                //    var s = "";
+                //    throw;
+                //}
+                var startDate = new DateTime(2015,7,1);
+                var endDate = new DateTime(2015,7,2);
+                return (from m in context.proc_materials
+                                        .Where(x => x.shname == "Sample")
+                        join p in context.proc_packs.Where(x => x.rtype != 4
+                                                            && x.regtime >= startDate
+                                                            && x.regtime <= endDate)
+                        on m.material equals p.material
+                        join l in context.proc_lots
+                        on p.lot equals l.lot
+                        join bc in context.base_companies
+                        on l.customer equals bc.company
+                                        
+                            select new {
+                                Farm = bc.name,
+                                Pond = l.shname,
+                                FarmPond =l.name,
+                                Date =p.regtime,
+                                RangeName = m.code,
+                                RangeValue = m.name,
+                                Weight = p.weight
+                            }
+                        );
                 
             //}
             return null;
