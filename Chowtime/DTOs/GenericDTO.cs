@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using SGApp.Models.Common;
-
+using System;
 namespace SGApp.DTOs
 {
     public class GenericDTO : IKey {
@@ -13,9 +13,10 @@ namespace SGApp.DTOs
 
         #endregion
 
-        public virtual ICollection<Dictionary<string, string>> ReturnData {
-            get;
-            set;
-        }
+        public virtual ICollection<Dictionary<string, string>> ReturnData { get; set; }
+        public string startDate {  get; set; }
+        public string endDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

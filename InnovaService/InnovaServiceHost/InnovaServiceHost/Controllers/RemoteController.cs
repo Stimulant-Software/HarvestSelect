@@ -89,8 +89,8 @@ namespace InnovaServiceHost.Controllers {
                             select new {
                                 Farm = bc.name,
                                 Pond = l.shname,
-                                FarmPond =l.name,
-                                Date =p.regtime,
+                                FarmPond = l.name,
+                                Date = p.regtime,
                                 RangeName = m.code,
                                 RangeValue = m.name,
                                 Weight = p.weight

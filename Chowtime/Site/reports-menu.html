@@ -18,7 +18,6 @@
                 <tr>
                     <th>farm</th>
                     <th>pond</th>
-                    <th>farm pond</th>
                     <th>date</th>
                     <th>range</th>
                     <th>value</th>
@@ -49,8 +48,8 @@
         $button.on("click", function () {
             var qry = {
                 "Key": "Hello World",
-                "StartDate": $("#startDate").val(),
-                "EndDate": $("#endDate").val()
+                "startDate": $("#startDateInput").val(),
+                "endDate": $("#endDateInput").val()
             };
             var address = "../api/JMremote/GetRemoteData";
             var data = JSON.stringify(qry),
@@ -59,14 +58,30 @@
                 type: 'POST',
                 data: data,
                 success: function (msg) {
+                    var a = [];
                     dta = JSON.parse(msg);
-                    var value = dta[0];
+                    var groups = _(dta).groupBy(function (value) {
+                        return value.farmPond + value.rangeName;
+                    });
+                    if (groups !== undefined) {
+                        _(groups).each(function (value) {
+                            var tot = _(value).reduce(function (memo, val) {
+                                return memo + val.weight;
+                            }, 0);
+                            var obj = {
+                                farmPond: value[0].farmPond,
+                                rangeName: value[0].rangeValue,
+                                weight: tot
+                            };
+                            a.push(obj);
+                        });
+                    }
                     var html = "";
                     var $resultsTable = $("#resultsTable");
                     $resultsTable.find("tbody").empty();
-                    //_(dta[0]).each(function (value) {
-                    html += '<tr><td>' + value.farm + '</td><td>' + value.pond + '</td><td>' + value.farmPond + '</td><td>' + value.date + '</td><td>' + value.rangeName + '</td><td>' + value.rangeValue + '</td><td>' + value.weight + '</td></tr>'
-                    //});
+                    _(a).each(function (value) {
+                        html += '<tr><td>' + value.farmPond + '</td><td>' + value.rangeName + '</td><td>' + value.weight + '</td></tr>';
+                    });
                     $resultsTable.find("tbody").html(html);
                 }
             });
