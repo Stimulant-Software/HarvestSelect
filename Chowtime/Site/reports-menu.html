@@ -37,6 +37,7 @@
     <div>
         <span>end date:</span><input type="date" id="endDateInput" />
     </div>
+    <div id="keithsDataDiv"></div>
     <button id="getDataButton">Get Data</button>
     <footer></footer>
         <script type="text/javascript" src="scripts/functions.js"></script>
@@ -59,6 +60,8 @@
                 data: data,
                 success: function (msg) {
                     var a = [];
+                    var categories = [];
+                    var weights = [];
                     dta = JSON.parse(msg);
                     var groups = _(dta).groupBy(function (value) {
                         return value.farmPond + value.rangeName;
@@ -73,10 +76,24 @@
                                 rangeName: value[0].rangeValue,
                                 weight: tot
                             };
+                            weights.push(obj.weight);
                             a.push(obj);
+                            categories.push(obj.farmPond + ' ' + obj.rangeName);
                         });
                     }
                     var html = "";
+                    var $keithsDataDiv = $("#keithsDataDiv");
+                    console.log(categories);
+                    $keithsDataDiv.highcharts({
+                        chart: {
+                            zoomType: 'xy', alignTicks: false, type: "column"
+                        },
+                        title: { text: "Keith's Data" },
+                        xAxis: [{ categories: categories, labels: { enabled: false } }],
+                        yAxis: [{ labels: { format: '{value}', style: { color: '#89A54E' } }, title: { text: "weight" } }],
+                        plotOptions: { column: { stacking: null } },
+                        series: [{ name: 'Farm Ponds', data:  weights}]
+                    });
                     var $resultsTable = $("#resultsTable");
                     $resultsTable.find("tbody").empty();
                     _(a).each(function (value) {
