@@ -10,35 +10,32 @@
     </script>
     <script src="scripts/underscore.min.js"></script>
 </head>
-<body>
-    Hello
-    <div id="headerDiv">
-        <table>
-            <thead>
-                <tr>
-                    <th>farm</th>
-                    <th>pond</th>
-                    <th>date</th>
-                    <th>range</th>
-                    <th>value</th>
-                    <th>weight</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <div id="resultsDiv">
-        <table id="resultsTable">
-            <tbody></tbody>
-        </table>
-    </div>
-    <div>
-        <span>start date:</span><input type="date" id="startDateInput" />
-    </div>
-    <div>
-        <span>end date:</span><input type="date" id="endDateInput" />
-    </div>
+<body class="ct">
+    <header>
+        <h1>Operations</h1>
+        <nav>
+            <ol>
+                <li><a href="reports-menu.html">Samplings</a></li>
+                <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+    </header>
+    <section id="main_content">
+        <header class="farm">
+            <label>Start: </label><input type="date" id="startDateInput" />
+            <label>End: </label><input type="date" id="endDateInput" />
+            <button id="getDataButton">Submit</button>
+        </header>
+        <header class="farm">
+               <div id="fpDDLdiv"></div>
+        </header>
+
+ <section class="pond">
+    
     <div id="keithsDataDiv"></div>
-    <button id="getDataButton">Get Data</button>
+        <div id="pieChart"></div>
+     </section>
+     </section>
     <footer></footer>
         <script type="text/javascript" src="scripts/functions.js"></script>
     <script type="text/javascript" src="scripts/highcharts.js"></script>
@@ -62,49 +59,111 @@
                     var a = [];
                     var categories = [];
                     var weights = [];
+                    var fpDDLhtml = "<select id='ddlFarmPonds'>";
                     dta = JSON.parse(msg);
-                    var groups = _(dta).groupBy(function (value) {
-                        return value.farmPond + value.rangeName;
+                    var farmPonds = _(dta).groupBy(function (value) {
+                        return value.farmPond;
                     });
-                    if (groups !== undefined) {
-                        _(groups).each(function (value) {
-                            var tot = _(value).reduce(function (memo, val) {
-                                return memo + val.weight;
-                            }, 0);
+                    
+                    if (farmPonds !== undefined) {
+                        _(farmPonds).each(function (value) {
+                            var fp = _(value).reduce(function (memo, val) {
+                                return val;
+                            }, 0).farmPond;
+                            fpDDLhtml += "<option value='" + fp + "'>" + fp + "</option>";
+                        })
+                    };
+                    fpDDLhtml += "</select>";
+                    $("#fpDDLdiv").append(fpDDLhtml);
+                    //var groups = _(dta).groupBy(function (value) {
+                    //    return value.farmPond + value.rangeName;
+                    //});
+                    //if (groups !== undefined) {
+                    //    _(groups).each(function (value) {
+                    //        var tot = _(value).reduce(function (memo, val) {
+                    //            return memo + val.weight;
+                    //        }, 0);
+                    //        var obj = {
+                    //            farmPond: value[0].farmPond,
+                    //            rangeName: value[0].rangeValue,
+                    //            weight: tot
+                    //        };
+                    //        weights.push(obj.weight);
+                    //        a.push(obj);
+                    //        categories.push(obj.farmPond + ' ' + obj.rangeName);
+                    //    });
+                    //}
+                    var ranges = _(dta).groupBy(function (value) {
+                        return value.rangeName;
+                    });
+                    if (ranges !== undefined) {
+                        _(ranges).each(function (value) {
+                            var tot = 0;
+                            _(value).each(function (x) {
+                                
+                                tot += _(x).reduce(function (memo, val) {
+                                    return val;
+                                }, 0);
+                            });
+                            //var tot = _(value).reduce(function (memo, val) {
+                            //    return val.weight;
+                            //}, 1);
                             var obj = {
-                                farmPond: value[0].farmPond,
-                                rangeName: value[0].rangeValue,
-                                weight: tot
+                                name: value[0].rangeValue,
+                                y: tot,
+                                drilldown: value[0].rangeValue
                             };
-                            weights.push(obj.weight);
+                            weights.push(obj.y);
                             a.push(obj);
-                            categories.push(obj.farmPond + ' ' + obj.rangeName);
+                            categories.push(obj.name);
                         });
                     }
                     var html = "";
                     var $keithsDataDiv = $("#keithsDataDiv");
+                    var pieChart = $("#pieChart");
                     console.log(categories);
                     $keithsDataDiv.highcharts({
                         chart: {
                             zoomType: 'xy', alignTicks: false, type: "column"
                         },
-                        title: { text: "Keith's Data" },
-                        xAxis: [{ categories: categories, labels: { enabled: false } }],
+                        title: { text: "Live Fish Sampling" },
+                        xAxis: [{ categories: categories, labels: { enabled: true } }],
                         yAxis: [{ labels: { format: '{value}', style: { color: '#89A54E' } }, title: { text: "weight" } }],
                         plotOptions: { column: { stacking: null } },
                         series: [{ name: 'Farm Ponds', data:  weights}]
                     });
-                    var $resultsTable = $("#resultsTable");
-                    $resultsTable.find("tbody").empty();
-                    _(a).each(function (value) {
-                        html += '<tr><td>' + value.farmPond + '</td><td>' + value.rangeName + '</td><td>' + value.weight + '</td></tr>';
+                    pieChart.highcharts({
+                        chart: {plotBackgroundColor: null, plotBorderWidth: null, plotShadow: false, type: 'pie'},
+                        title: {text: 'Sampling Percentages'},
+                        tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
+                        plotOptions: {
+                            pie: {
+                                allowPointSelect: true,
+                                cursor: 'pointer',
+                                dataLabels: {
+                                    enabled: false
+                                },
+                                showInLegend: true
+                            }
+                        },
+                        series: [{
+                            name: "Ranges",
+                            colorByPoint: true,
+                            data: a
+                        }]
                     });
-                    $resultsTable.find("tbody").html(html);
+                    //var $resultsTable = $("#resultsTable");
+                    //$resultsTable.find("tbody").empty();
+                    //_(a).each(function (value) {
+                    //    html += '<tr><td>' + value.farmPond + '</td><td>' + value.rangeName + '</td><td>' + value.weight + '</td></tr>';
+                    //});
+                    //$resultsTable.find("tbody").html(html);
                 }
             });
         });
     })
     </script>
+       
 
 </body>
 </html>
