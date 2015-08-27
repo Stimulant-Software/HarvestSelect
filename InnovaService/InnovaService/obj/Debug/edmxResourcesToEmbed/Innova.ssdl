@@ -1,5 +1,325 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="innova01Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="base_companies">
+    <Key>
+      <PropertyRef Name="company" />
+    </Key>
+    <Property Name="company" Type="int" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="shname" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="extcode" Type="nvarchar" MaxLength="30" />
+    <Property Name="pattern" Type="nvarchar" MaxLength="10" />
+    <Property Name="dimension1" Type="int" />
+    <Property Name="dimension2" Type="int" />
+    <Property Name="dimension3" Type="int" />
+    <Property Name="dimension4" Type="int" />
+    <Property Name="description1" Type="nvarchar" MaxLength="80" />
+    <Property Name="description2" Type="nvarchar" MaxLength="80" />
+    <Property Name="description3" Type="nvarchar" MaxLength="80" />
+    <Property Name="description4" Type="nvarchar" MaxLength="80" />
+    <Property Name="description5" Type="nvarchar" MaxLength="80" />
+    <Property Name="description6" Type="nvarchar" MaxLength="80" />
+    <Property Name="description7" Type="nvarchar" MaxLength="80" />
+    <Property Name="description8" Type="nvarchar" MaxLength="80" />
+    <Property Name="xmldata" Type="xml" />
+    <Property Name="itgrsite" Type="int" />
+    <Property Name="itgrstatus" Type="nvarchar" MaxLength="30" />
+    <Property Name="active" Type="bit" Nullable="false" />
+    <Property Name="address1" Type="nvarchar" MaxLength="80" />
+    <Property Name="address2" Type="nvarchar" MaxLength="80" />
+    <Property Name="postcode" Type="nvarchar" MaxLength="80" />
+    <Property Name="city" Type="nvarchar" MaxLength="80" />
+    <Property Name="state" Type="nvarchar" MaxLength="80" />
+    <Property Name="country" Type="int" />
+    <Property Name="telephone" Type="nvarchar" MaxLength="80" />
+    <Property Name="fax" Type="nvarchar" MaxLength="80" />
+    <Property Name="mobile" Type="nvarchar" MaxLength="80" />
+    <Property Name="email" Type="nvarchar" MaxLength="80" />
+    <Property Name="website" Type="nvarchar" MaxLength="256" />
+    <Property Name="cultureid" Type="int" />
+    <Property Name="issupplier" Type="bit" Nullable="false" />
+    <Property Name="isowner" Type="bit" Nullable="false" />
+    <Property Name="isproducer" Type="bit" Nullable="false" />
+    <Property Name="isprocessor" Type="bit" Nullable="false" />
+    <Property Name="isstorage" Type="bit" Nullable="false" />
+    <Property Name="istransporter" Type="bit" Nullable="false" />
+    <Property Name="isentryport" Type="bit" Nullable="false" />
+    <Property Name="iscustomer" Type="bit" Nullable="false" />
+    <Property Name="isagent" Type="bit" Nullable="false" />
+    <Property Name="islicenseholder" Type="bit" Nullable="false" />
+    <Property Name="rmarea" Type="int" />
+    <Property Name="parent" Type="int" />
+    <Property Name="prlicense" Type="nvarchar" MaxLength="80" />
+    <Property Name="prlogo" Type="varbinary(max)" />
+    <Property Name="pklicense" Type="nvarchar" MaxLength="80" />
+    <Property Name="pklogo" Type="varbinary(max)" />
+    <Property Name="ssccprefix" Type="nvarchar" MaxLength="18" />
+  </EntityType>
+  <EntityType Name="proc_lots">
+    <Key>
+      <PropertyRef Name="lot" />
+    </Key>
+    <Property Name="lot" Type="int" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="shname" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="extcode" Type="nvarchar" MaxLength="30" />
+    <Property Name="pattern" Type="nvarchar" MaxLength="10" />
+    <Property Name="dimension1" Type="int" />
+    <Property Name="dimension2" Type="int" />
+    <Property Name="dimension3" Type="int" />
+    <Property Name="dimension4" Type="int" />
+    <Property Name="description1" Type="nvarchar" MaxLength="80" />
+    <Property Name="description2" Type="nvarchar" MaxLength="80" />
+    <Property Name="description3" Type="nvarchar" MaxLength="80" />
+    <Property Name="description4" Type="nvarchar" MaxLength="80" />
+    <Property Name="description5" Type="nvarchar" MaxLength="80" />
+    <Property Name="description6" Type="nvarchar" MaxLength="80" />
+    <Property Name="description7" Type="nvarchar" MaxLength="80" />
+    <Property Name="description8" Type="nvarchar" MaxLength="80" />
+    <Property Name="xmldata" Type="xml" />
+    <Property Name="itgrsite" Type="int" />
+    <Property Name="itgrstatus" Type="nvarchar" MaxLength="30" />
+    <Property Name="active" Type="bit" Nullable="false" />
+    <Property Name="lotstatus" Type="smallint" Nullable="false" />
+    <Property Name="validfrom" Type="datetime" />
+    <Property Name="validto" Type="datetime" />
+    <Property Name="brcountry" Type="int" />
+    <Property Name="ricountry" Type="int" />
+    <Property Name="ricountry2" Type="int" />
+    <Property Name="ricountry3" Type="int" />
+    <Property Name="ricountry4" Type="int" />
+    <Property Name="ricountry5" Type="int" />
+    <Property Name="slhouse" Type="int" />
+    <Property Name="slday" Type="datetime" />
+    <Property Name="slsequence" Type="int" />
+    <Property Name="processor" Type="int" />
+    <Property Name="processor2" Type="int" />
+    <Property Name="customer" Type="int" />
+    <Property Name="bom" Type="int" />
+    <Property Name="reftime" Type="datetime" />
+    <Property Name="expectedcount" Type="int" />
+    <Property Name="currentcount" Type="int" />
+    <Property Name="qamark1" Type="int" />
+    <Property Name="qamark2" Type="int" />
+    <Property Name="qamark3" Type="int" />
+    <Property Name="qamark4" Type="int" />
+    <Property Name="startpos" Type="nvarchar" MaxLength="40" />
+    <Property Name="endpos" Type="nvarchar" MaxLength="40" />
+    <Property Name="startrmarea" Type="int" />
+    <Property Name="endrmarea" Type="int" />
+    <Property Name="group" Type="int" />
+    <Property Name="subgroup" Type="int" />
+    <Property Name="killmethod" Type="int" />
+    <Property Name="begtime" Type="datetime" />
+    <Property Name="endtime" Type="datetime" />
+    <Property Name="qamark1code" Type="nvarchar" MaxLength="30" />
+    <Property Name="qamark2code" Type="nvarchar" MaxLength="30" />
+    <Property Name="qamark3code" Type="nvarchar" MaxLength="30" />
+    <Property Name="qamark4code" Type="nvarchar" MaxLength="30" />
+    <Property Name="sourcepack" Type="int" />
+    <Property Name="sourcepallet" Type="int" />
+    <Property Name="topflockid" Type="int" />
+    <Property Name="flocknumber" Type="int" />
+  </EntityType>
+  <EntityType Name="proc_materials">
+    <Key>
+      <PropertyRef Name="material" />
+    </Key>
+    <Property Name="material" Type="int" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="30" Nullable="false" />
+    <Property Name="shname" Type="nvarchar" MaxLength="10" Nullable="false" />
+    <Property Name="extcode" Type="nvarchar" MaxLength="30" />
+    <Property Name="pattern" Type="nvarchar" MaxLength="10" />
+    <Property Name="dimension1" Type="int" />
+    <Property Name="dimension2" Type="int" />
+    <Property Name="dimension3" Type="int" />
+    <Property Name="dimension4" Type="int" />
+    <Property Name="description1" Type="nvarchar" MaxLength="80" />
+    <Property Name="description2" Type="nvarchar" MaxLength="80" />
+    <Property Name="description3" Type="nvarchar" MaxLength="80" />
+    <Property Name="description4" Type="nvarchar" MaxLength="80" />
+    <Property Name="description5" Type="nvarchar" MaxLength="80" />
+    <Property Name="description6" Type="nvarchar" MaxLength="80" />
+    <Property Name="description7" Type="nvarchar" MaxLength="80" />
+    <Property Name="description8" Type="nvarchar" MaxLength="80" />
+    <Property Name="xmldata" Type="xml" />
+    <Property Name="itgrsite" Type="int" />
+    <Property Name="itgrstatus" Type="nvarchar" MaxLength="30" />
+    <Property Name="active" Type="bit" Nullable="false" />
+    <Property Name="systemtype" Type="smallint" Nullable="false" />
+    <Property Name="um" Type="smallint" Nullable="false" />
+    <Property Name="condition" Type="int" />
+    <Property Name="quality" Type="int" />
+    <Property Name="conservation" Type="int" />
+    <Property Name="size" Type="int" />
+    <Property Name="materialtype" Type="int" />
+    <Property Name="base" Type="int" />
+    <Property Name="parent" Type="int" />
+    <Property Name="stdyield" Type="real" />
+    <Property Name="minyield" Type="real" />
+    <Property Name="maxyield" Type="real" />
+    <Property Name="invkeepmin" Type="int" />
+    <Property Name="invkeepmax" Type="int" />
+    <Property Name="invkeepmethod" Type="int" />
+    <Property Name="prdaymin" Type="int" />
+    <Property Name="prdaymax" Type="int" />
+    <Property Name="expire1" Type="int" />
+    <Property Name="expire1method" Type="int" />
+    <Property Name="expire1min" Type="int" />
+    <Property Name="expire1max" Type="int" />
+    <Property Name="expire2" Type="int" />
+    <Property Name="expire2method" Type="int" />
+    <Property Name="expire2min" Type="int" />
+    <Property Name="expire2max" Type="int" />
+    <Property Name="expire3" Type="int" />
+    <Property Name="expire3method" Type="int" />
+    <Property Name="expire3min" Type="int" />
+    <Property Name="expire3max" Type="int" />
+    <Property Name="itpackaging" Type="int" />
+    <Property Name="pkpackaging" Type="int" />
+    <Property Name="stpackaging" Type="int" />
+    <Property Name="papackaging" Type="int" />
+    <Property Name="fabcode1" Type="nvarchar" MaxLength="30" />
+    <Property Name="fabcode2" Type="nvarchar" MaxLength="30" />
+    <Property Name="fabcode3" Type="nvarchar" MaxLength="30" />
+    <Property Name="pkweight" Type="real" />
+    <Property Name="coolant" Type="real" />
+    <Property Name="itlayout" Type="int" />
+    <Property Name="itlabels" Type="int" />
+    <Property Name="pklayout" Type="int" />
+    <Property Name="pklabels" Type="int" />
+    <Property Name="stlayout" Type="int" />
+    <Property Name="stlabels" Type="int" />
+    <Property Name="palayout" Type="int" />
+    <Property Name="palabels" Type="int" />
+    <Property Name="packsize" Type="real" />
+    <Property Name="packsizeum" Type="smallint" Nullable="false" />
+    <Property Name="stacksize" Type="real" />
+    <Property Name="stacksizeum" Type="smallint" Nullable="false" />
+    <Property Name="palletpsize" Type="real" />
+    <Property Name="palletpsizeum" Type="smallint" Nullable="false" />
+    <Property Name="palletssize" Type="real" />
+    <Property Name="palletssizeum" Type="smallint" Nullable="false" />
+    <Property Name="value" Type="real" />
+    <Property Name="currency" Type="int" />
+    <Property Name="price" Type="real" />
+    <Property Name="fprice" Type="real" />
+    <Property Name="dprice" Type="real" />
+    <Property Name="fdprice" Type="real" />
+    <Property Name="barcode" Type="nvarchar" MaxLength="30" />
+    <Property Name="itcontentspecs" Type="int" />
+    <Property Name="pkcontentspecs" Type="int" />
+    <Property Name="bom" Type="int" />
+    <Property Name="pklength" Type="real" />
+    <Property Name="pkheight" Type="real" />
+    <Property Name="pkwidth" Type="real" />
+    <Property Name="idealyieldgroup" Type="int" />
+    <Property Name="pieceweight" Type="real" />
+    <Property Name="recordas" Type="int" />
+    <Property Name="defaultinventory" Type="int" />
+  </EntityType>
+  <EntityType Name="proc_packs">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="site" Type="int" Nullable="false" />
+    <Property Name="number" Type="int" Nullable="false" />
+    <Property Name="sscc" Type="nchar" MaxLength="18" Nullable="false" />
+    <Property Name="conum" Type="int" />
+    <Property Name="productnum" Type="int" />
+    <Property Name="processnum" Type="int" />
+    <Property Name="ordernum" Type="int" />
+    <Property Name="invnum" Type="int" />
+    <Property Name="fixedcode" Type="nvarchar" MaxLength="30" />
+    <Property Name="extnum" Type="int" />
+    <Property Name="extcode" Type="nvarchar" MaxLength="80" />
+    <Property Name="prperiod" Type="int" />
+    <Property Name="sprperiod" Type="int" />
+    <Property Name="shift" Type="int" />
+    <Property Name="po" Type="int" />
+    <Property Name="poline" Type="int" />
+    <Property Name="cday" Type="int" />
+    <Property Name="batch" Type="int" />
+    <Property Name="lot" Type="int" />
+    <Property Name="plot" Type="int" />
+    <Property Name="rmarea" Type="int" />
+    <Property Name="prday" Type="datetime" />
+    <Property Name="exday" Type="datetime" />
+    <Property Name="exday2" Type="datetime" />
+    <Property Name="origin" Type="int" />
+    <Property Name="employee" Type="int" />
+    <Property Name="device" Type="int" />
+    <Property Name="station" Type="int" />
+    <Property Name="manufacturer" Type="int" />
+    <Property Name="invkeepmin" Type="datetime" />
+    <Property Name="invkeepmax" Type="datetime" />
+    <Property Name="expire1" Type="datetime" />
+    <Property Name="expire2" Type="datetime" />
+    <Property Name="expire3" Type="datetime" />
+    <Property Name="order" Type="int" />
+    <Property Name="orderline" Type="int" />
+    <Property Name="rorder" Type="int" />
+    <Property Name="rsequence" Type="int" />
+    <Property Name="porder" Type="int" />
+    <Property Name="porderline" Type="int" />
+    <Property Name="inventory" Type="int" />
+    <Property Name="invlocation" Type="int" />
+    <Property Name="invtime" Type="datetime" />
+    <Property Name="invstatus" Type="smallint" Nullable="false" />
+    <Property Name="stack" Type="int" />
+    <Property Name="pallet" Type="int" />
+    <Property Name="container" Type="int" />
+    <Property Name="shipment" Type="int" />
+    <Property Name="material" Type="int" Nullable="false" />
+    <Property Name="packaging" Type="int" />
+    <Property Name="layout" Type="int" />
+    <Property Name="weight" Type="real" />
+    <Property Name="curweight" Type="real" />
+    <Property Name="nominal" Type="real" />
+    <Property Name="curnominal" Type="real" />
+    <Property Name="nominall" Type="nvarchar" MaxLength="10" />
+    <Property Name="nominalu" Type="smallint" Nullable="false" />
+    <Property Name="gross" Type="real" />
+    <Property Name="target" Type="real" />
+    <Property Name="tare" Type="real" />
+    <Property Name="taretype" Type="smallint" Nullable="false" />
+    <Property Name="extra" Type="real" />
+    <Property Name="vgiveaway" Type="real" />
+    <Property Name="fgiveaway" Type="real" />
+    <Property Name="fat" Type="real" />
+    <Property Name="value" Type="real" />
+    <Property Name="curvalue" Type="real" />
+    <Property Name="currency" Type="int" />
+    <Property Name="price" Type="real" />
+    <Property Name="basisprice" Type="real" />
+    <Property Name="dprice" Type="real" />
+    <Property Name="basisdprice" Type="real" />
+    <Property Name="pieces" Type="int" />
+    <Property Name="curpieces" Type="int" />
+    <Property Name="piecesl" Type="int" />
+    <Property Name="checkstatus" Type="smallint" Nullable="false" />
+    <Property Name="aseconds" Type="int" />
+    <Property Name="curamount" Type="real" />
+    <Property Name="maxamount" Type="real" />
+    <Property Name="amountum" Type="smallint" Nullable="false" />
+    <Property Name="itemtype" Type="smallint" Nullable="false" />
+    <Property Name="status" Type="smallint" Nullable="false" />
+    <Property Name="nregs" Type="int" Nullable="false" />
+    <Property Name="regtime" Type="datetime" Nullable="false" />
+    <Property Name="xacttime" Type="datetime" Nullable="false" />
+    <Property Name="alibi" Type="int" />
+    <Property Name="rtype" Type="smallint" Nullable="false" />
+    <Property Name="rstat" Type="int" />
+    <Property Name="recordedby" Type="int" />
+    <Property Name="extbatchcode" Type="nvarchar" MaxLength="30" />
+    <Property Name="qamark" Type="int" />
+    <Property Name="recordingmaterial" Type="int" />
+    <Property Name="rorderline" Type="int" />
+  </EntityType>
   <EntityType Name="proc_sizes">
     <Key>
       <PropertyRef Name="size" />
@@ -29,7 +349,315 @@
     <Property Name="minweight" Type="real" />
     <Property Name="maxweight" Type="real" />
   </EntityType>
+  <Association Name="fk_base_companies_parent_company">
+    <End Role="base_companies" Type="Self.base_companies" Multiplicity="0..1" />
+    <End Role="base_companies1" Type="Self.base_companies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="base_companies">
+        <PropertyRef Name="company" />
+      </Principal>
+      <Dependent Role="base_companies1">
+        <PropertyRef Name="parent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_lots_customer_company">
+    <End Role="base_companies" Type="Self.base_companies" Multiplicity="0..1" />
+    <End Role="proc_lots" Type="Self.proc_lots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="base_companies">
+        <PropertyRef Name="company" />
+      </Principal>
+      <Dependent Role="proc_lots">
+        <PropertyRef Name="customer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_lots_processor_company">
+    <End Role="base_companies" Type="Self.base_companies" Multiplicity="0..1" />
+    <End Role="proc_lots" Type="Self.proc_lots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="base_companies">
+        <PropertyRef Name="company" />
+      </Principal>
+      <Dependent Role="proc_lots">
+        <PropertyRef Name="processor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_lots_processor2_company">
+    <End Role="base_companies" Type="Self.base_companies" Multiplicity="0..1" />
+    <End Role="proc_lots" Type="Self.proc_lots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="base_companies">
+        <PropertyRef Name="company" />
+      </Principal>
+      <Dependent Role="proc_lots">
+        <PropertyRef Name="processor2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_lots_slhouse_company">
+    <End Role="base_companies" Type="Self.base_companies" Multiplicity="0..1" />
+    <End Role="proc_lots" Type="Self.proc_lots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="base_companies">
+        <PropertyRef Name="company" />
+      </Principal>
+      <Dependent Role="proc_lots">
+        <PropertyRef Name="slhouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_lots_sourcepack_id">
+    <End Role="proc_packs" Type="Self.proc_packs" Multiplicity="0..1" />
+    <End Role="proc_lots" Type="Self.proc_lots" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_packs">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="proc_lots">
+        <PropertyRef Name="sourcepack" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_materials_base_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_materials1" Type="Self.proc_materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_materials1">
+        <PropertyRef Name="base" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_materials_itpackaging_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_materials1" Type="Self.proc_materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_materials1">
+        <PropertyRef Name="itpackaging" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_materials_papackaging_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_materials1" Type="Self.proc_materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_materials1">
+        <PropertyRef Name="papackaging" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_materials_parent_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_materials1" Type="Self.proc_materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_materials1">
+        <PropertyRef Name="parent" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_materials_pkpackaging_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_materials1" Type="Self.proc_materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_materials1">
+        <PropertyRef Name="pkpackaging" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_materials_recordas_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_materials1" Type="Self.proc_materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_materials1">
+        <PropertyRef Name="recordas" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_materials_size_size">
+    <End Role="proc_sizes" Type="Self.proc_sizes" Multiplicity="0..1" />
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_sizes">
+        <PropertyRef Name="size" />
+      </Principal>
+      <Dependent Role="proc_materials">
+        <PropertyRef Name="size" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_materials_stpackaging_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_materials1" Type="Self.proc_materials" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_materials1">
+        <PropertyRef Name="stpackaging" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_packs_lot_lot">
+    <End Role="proc_lots" Type="Self.proc_lots" Multiplicity="0..1" />
+    <End Role="proc_packs" Type="Self.proc_packs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_lots">
+        <PropertyRef Name="lot" />
+      </Principal>
+      <Dependent Role="proc_packs">
+        <PropertyRef Name="lot" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_packs_manufacturer_company">
+    <End Role="base_companies" Type="Self.base_companies" Multiplicity="0..1" />
+    <End Role="proc_packs" Type="Self.proc_packs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="base_companies">
+        <PropertyRef Name="company" />
+      </Principal>
+      <Dependent Role="proc_packs">
+        <PropertyRef Name="manufacturer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_packs_material_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="1" />
+    <End Role="proc_packs" Type="Self.proc_packs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_packs">
+        <PropertyRef Name="material" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_packs_packaging_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_packs" Type="Self.proc_packs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_packs">
+        <PropertyRef Name="packaging" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_proc_packs_recordingmaterial_material">
+    <End Role="proc_materials" Type="Self.proc_materials" Multiplicity="0..1" />
+    <End Role="proc_packs" Type="Self.proc_packs" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="proc_materials">
+        <PropertyRef Name="material" />
+      </Principal>
+      <Dependent Role="proc_packs">
+        <PropertyRef Name="recordingmaterial" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="innova01ModelStoreContainer">
+    <EntitySet Name="base_companies" EntityType="Self.base_companies" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="proc_lots" EntityType="Self.proc_lots" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="proc_materials" EntityType="Self.proc_materials" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="proc_packs" EntityType="Self.proc_packs" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="proc_sizes" EntityType="Self.proc_sizes" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_base_companies_parent_company" Association="Self.fk_base_companies_parent_company">
+      <End Role="base_companies" EntitySet="base_companies" />
+      <End Role="base_companies1" EntitySet="base_companies" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_lots_customer_company" Association="Self.fk_proc_lots_customer_company">
+      <End Role="base_companies" EntitySet="base_companies" />
+      <End Role="proc_lots" EntitySet="proc_lots" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_lots_processor_company" Association="Self.fk_proc_lots_processor_company">
+      <End Role="base_companies" EntitySet="base_companies" />
+      <End Role="proc_lots" EntitySet="proc_lots" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_lots_processor2_company" Association="Self.fk_proc_lots_processor2_company">
+      <End Role="base_companies" EntitySet="base_companies" />
+      <End Role="proc_lots" EntitySet="proc_lots" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_lots_slhouse_company" Association="Self.fk_proc_lots_slhouse_company">
+      <End Role="base_companies" EntitySet="base_companies" />
+      <End Role="proc_lots" EntitySet="proc_lots" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_lots_sourcepack_id" Association="Self.fk_proc_lots_sourcepack_id">
+      <End Role="proc_packs" EntitySet="proc_packs" />
+      <End Role="proc_lots" EntitySet="proc_lots" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_materials_base_material" Association="Self.fk_proc_materials_base_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_materials1" EntitySet="proc_materials" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_materials_itpackaging_material" Association="Self.fk_proc_materials_itpackaging_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_materials1" EntitySet="proc_materials" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_materials_papackaging_material" Association="Self.fk_proc_materials_papackaging_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_materials1" EntitySet="proc_materials" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_materials_parent_material" Association="Self.fk_proc_materials_parent_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_materials1" EntitySet="proc_materials" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_materials_pkpackaging_material" Association="Self.fk_proc_materials_pkpackaging_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_materials1" EntitySet="proc_materials" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_materials_recordas_material" Association="Self.fk_proc_materials_recordas_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_materials1" EntitySet="proc_materials" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_materials_size_size" Association="Self.fk_proc_materials_size_size">
+      <End Role="proc_sizes" EntitySet="proc_sizes" />
+      <End Role="proc_materials" EntitySet="proc_materials" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_materials_stpackaging_material" Association="Self.fk_proc_materials_stpackaging_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_materials1" EntitySet="proc_materials" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_packs_lot_lot" Association="Self.fk_proc_packs_lot_lot">
+      <End Role="proc_lots" EntitySet="proc_lots" />
+      <End Role="proc_packs" EntitySet="proc_packs" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_packs_manufacturer_company" Association="Self.fk_proc_packs_manufacturer_company">
+      <End Role="base_companies" EntitySet="base_companies" />
+      <End Role="proc_packs" EntitySet="proc_packs" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_packs_material_material" Association="Self.fk_proc_packs_material_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_packs" EntitySet="proc_packs" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_packs_packaging_material" Association="Self.fk_proc_packs_packaging_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_packs" EntitySet="proc_packs" />
+    </AssociationSet>
+    <AssociationSet Name="fk_proc_packs_recordingmaterial_material" Association="Self.fk_proc_packs_recordingmaterial_material">
+      <End Role="proc_materials" EntitySet="proc_materials" />
+      <End Role="proc_packs" EntitySet="proc_packs" />
+    </AssociationSet>
   </EntityContainer>
 </Schema>
