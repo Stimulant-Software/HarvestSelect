@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title></title>
-        <link href="content/global.css" rel="stylesheet" type="text/css">
+    <link href="content/global.css" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript">
@@ -27,143 +27,27 @@
             <button id="getDataButton">Submit</button>
         </header>
         <header class="farm">
-               <div id="fpDDLdiv"></div>
+            <div id="fpDDLdiv">
+                <select id="ddlFarmPonds"></select>
+            </div>
         </header>
 
- <section class="pond">
-    
-    <div id="keithsDataDiv"></div>
-        <div id="pieChart"></div>
-     </section>
-     </section>
+        <section class="pond">
+
+            <div id="keithsDataDiv"></div>
+            <div id="pieChart"></div>
+        </section>
+    </section>
     <footer></footer>
-        <script type="text/javascript" src="scripts/functions.js"></script>
+    <script type="text/javascript" src="scripts/functions.js"></script>
     <script type="text/javascript" src="scripts/highcharts.js"></script>
     <script type="text/javascript" src="scripts/at-functions.js"></script>
     <script>
-    $(document).ready(function () {
-        var $button = $("#getDataButton");
-        $button.on("click", function () {
-            var qry = {
-                "Key": "Hello World",
-                "startDate": $("#startDateInput").val(),
-                "endDate": $("#endDateInput").val()
-            };
-            var address = "../api/JMremote/GetRemoteData";
-            var data = JSON.stringify(qry),
-                dta = {};
-            $.ajax(address, {
-                type: 'POST',
-                data: data,
-                success: function (msg) {
-                    var a = [];
-                    var categories = [];
-                    var weights = [];
-                    var fpDDLhtml = "<select id='ddlFarmPonds'>";
-                    dta = JSON.parse(msg);
-                    var farmPonds = _(dta).groupBy(function (value) {
-                        return value.farmPond;
-                    });
-                    
-                    if (farmPonds !== undefined) {
-                        _(farmPonds).each(function (value) {
-                            var fp = _(value).reduce(function (memo, val) {
-                                return val;
-                            }, 0).farmPond;
-                            fpDDLhtml += "<option value='" + fp + "'>" + fp + "</option>";
-                        })
-                    };
-                    fpDDLhtml += "</select>";
-                    $("#fpDDLdiv").append(fpDDLhtml);
-                    //var groups = _(dta).groupBy(function (value) {
-                    //    return value.farmPond + value.rangeName;
-                    //});
-                    //if (groups !== undefined) {
-                    //    _(groups).each(function (value) {
-                    //        var tot = _(value).reduce(function (memo, val) {
-                    //            return memo + val.weight;
-                    //        }, 0);
-                    //        var obj = {
-                    //            farmPond: value[0].farmPond,
-                    //            rangeName: value[0].rangeValue,
-                    //            weight: tot
-                    //        };
-                    //        weights.push(obj.weight);
-                    //        a.push(obj);
-                    //        categories.push(obj.farmPond + ' ' + obj.rangeName);
-                    //    });
-                    //}
-                    var ranges = _(dta).groupBy(function (value) {
-                        return value.rangeName;
-                    });
-                    if (ranges !== undefined) {
-                        _(ranges).each(function (value) {
-                            var tot = 0;
-                            _(value).each(function (x) {
-                                
-                                tot += _(x).reduce(function (memo, val) {
-                                    return val;
-                                }, 0);
-                            });
-                            //var tot = _(value).reduce(function (memo, val) {
-                            //    return val.weight;
-                            //}, 1);
-                            var obj = {
-                                name: value[0].rangeValue,
-                                y: tot,
-                                drilldown: value[0].rangeValue
-                            };
-                            weights.push(obj.y);
-                            a.push(obj);
-                            categories.push(obj.name);
-                        });
-                    }
-                    var html = "";
-                    var $keithsDataDiv = $("#keithsDataDiv");
-                    var pieChart = $("#pieChart");
-                    console.log(categories);
-                    $keithsDataDiv.highcharts({
-                        chart: {
-                            zoomType: 'xy', alignTicks: false, type: "column"
-                        },
-                        title: { text: "Live Fish Sampling" },
-                        xAxis: [{ categories: categories, labels: { enabled: true } }],
-                        yAxis: [{ labels: { format: '{value}', style: { color: '#89A54E' } }, title: { text: "weight" } }],
-                        plotOptions: { column: { stacking: null } },
-                        series: [{ name: 'Farm Ponds', data:  weights}]
-                    });
-                    pieChart.highcharts({
-                        chart: {plotBackgroundColor: null, plotBorderWidth: null, plotShadow: false, type: 'pie'},
-                        title: {text: 'Sampling Percentages'},
-                        tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
-                        plotOptions: {
-                            pie: {
-                                allowPointSelect: true,
-                                cursor: 'pointer',
-                                dataLabels: {
-                                    enabled: false
-                                },
-                                showInLegend: true
-                            }
-                        },
-                        series: [{
-                            name: "Ranges",
-                            colorByPoint: true,
-                            data: a
-                        }]
-                    });
-                    //var $resultsTable = $("#resultsTable");
-                    //$resultsTable.find("tbody").empty();
-                    //_(a).each(function (value) {
-                    //    html += '<tr><td>' + value.farmPond + '</td><td>' + value.rangeName + '</td><td>' + value.weight + '</td></tr>';
-                    //});
-                    //$resultsTable.find("tbody").html(html);
-                }
-            });
-        });
-    })
+        $(document).ready(function () {
+            $.getScript("scripts/reports-menu.js");
+        })
     </script>
-       
+
 
 </body>
 </html>

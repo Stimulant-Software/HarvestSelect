@@ -1,5 +1,5 @@
 if (!_key) { var _key = supports_html5_storage() ? localStorage['CT_key'] : readRemember('CT_key'); }
-
+var SGApp = {};
 var userID = supports_html5_storage() ? localStorage['CTuserID'] : readRemember('CTuserID');
 if (!data) { var data; }
 $.support.cors = true;

@@ -387,6 +387,7 @@
     <Content Include="Site\scripts\functions.js" />
     <Content Include="Site\scripts\highcharts.js" />
     <Content Include="Site\scripts\jquery-1.10.2.min.js" />
+    <Content Include="Site\scripts\reports-menu.js" />
     <Content Include="Site\scripts\underscore.js" />
     <Content Include="Site\scripts\underscore.min.js" />
     <None Include="Site\scripts\_references.js" />
