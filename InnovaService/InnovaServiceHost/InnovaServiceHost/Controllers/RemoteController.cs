@@ -76,7 +76,7 @@ namespace InnovaServiceHost.Controllers {
                 var startDate = dto.StartDate;
                 var endDate = dto.EndDate;
                 return (from m in context.proc_materials
-                                        .Where(x => x.shname == "Sample")
+                                        .Where(x => x.shname == "Sample")                                        
                         join p in context.proc_packs.Where(x => x.rtype != 4
                                                             && x.regtime >= startDate
                                                             && x.regtime <= endDate)
@@ -87,6 +87,7 @@ namespace InnovaServiceHost.Controllers {
                         on l.customer equals bc.company
                                         
                             select new {
+                                m.code,
                                 Farm = bc.name,
                                 Pond = l.shname,
                                 FarmPond = l.name,
@@ -95,7 +96,7 @@ namespace InnovaServiceHost.Controllers {
                                 RangeValue = m.name,
                                 Weight = p.weight
                             }
-                        );
+                        ).OrderBy(x => x.code);
                 
             //}
             return null;
