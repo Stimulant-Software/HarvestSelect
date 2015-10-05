@@ -20,10 +20,15 @@ SGApp.reportsMenu = (function(){
         var pondSelected = $ddlFarmPonds.val(),
             dataArray = [],
             drillDownSeries = [];
+        
         if (ranges !== undefined) {
             rangeNames = _(ranges).keys();
+            
             switch (pondSelected) {
                 case "All":
+                    var totWt = 1;
+                    var totPondWt = _(allData).reduce(function (memo, num) { return memo + num.weight; }, 0);
+                    if (totPondWt > 0) { totWt = totPondWt };
                     _(rangeNames).each(function (value) {
                         var wt = _(allData).reduce(function (memo, valu) {
                             if (valu.rangeName === value) {
@@ -32,12 +37,14 @@ SGApp.reportsMenu = (function(){
                                 return memo;
                             }
                         }, 0);
+                        var wtper = Math.round((wt / totWt) * 100);
                         var obj = {
                             name: value,
-                            y: wt,
+                            y: wtper,
                             drilldown: value.toLowerCase()
                         }
                         dataArray.push(obj);
+                        dataArray = _.sortBy(dataArray, "name");
                         var ddObjArray = [];
                         _(farmPondNames).each(function (val) {
                             var arr = _(allData).filter(function (valu) {
@@ -68,7 +75,7 @@ SGApp.reportsMenu = (function(){
                         },
                         title: { text: "Live Fish Sampling" },
                         xAxis: [{ categories: categories, labels: { enabled: true } }],
-                        yAxis: [{ labels: { format: '{value}', style: { color: '#89A54E' } }, title: { text: "weight" } }],
+                        yAxis: [{ labels: { format: '{value}%', style: { color: '#89A54E' } }, title: { text: "Percent" } }],
                         plotOptions: { column: { stacking: null } },
                         series: [{
                             name: 'Farm Ponds',
@@ -85,6 +92,7 @@ SGApp.reportsMenu = (function(){
                         if (selectedFP === "All") {
                             _(value).each(function (x) {
                                 tot += _(x).reduce(function (memo, val) {
+                                    categories.push(val.farmPond);
                                     return val;
                                 }, 0);
                             });
@@ -95,7 +103,7 @@ SGApp.reportsMenu = (function(){
                             };
                             weights.push(obj.y);
                             a.push(obj);
-                            categories.push(obj.name);
+                            //
                         } else {
                             _(value).each(function (x) {
                                 if (x.farmPond === selectedFP) {
@@ -111,7 +119,7 @@ SGApp.reportsMenu = (function(){
                             };
                             weights.push(obj.y);
                             a.push(obj);
-                            categories.push(obj.name);
+                            //categories.push(obj.drilldown);
                         }
                     });
 
@@ -140,6 +148,15 @@ SGApp.reportsMenu = (function(){
                     });
                     break;
                 default:
+                    var totWt = 1;
+                    var totPondWt = _(allData).reduce(function (memo, num) {
+                        if (num.farmPond === pondSelected) {
+                            return memo + num.weight;
+                        } else {
+                            return memo;
+                        }
+                    }, 0);
+                    if (totPondWt > 0) { totWt = totPondWt };
                     _(rangeNames).each(function (value) {
                         var wt = _(allData).reduce(function (memo, valu) {
                             if (valu.rangeName === value && valu.farmPond === pondSelected) {
@@ -148,11 +165,13 @@ SGApp.reportsMenu = (function(){
                                 return memo;
                             }
                         }, 0);
+                        var wtper = Math.round((wt / totWt) * 100);
                         var obj = {
                             name: value,
-                            y: wt
+                            y: wtper
                         }
                         dataArray.push(obj);
+                        dataArray = _.sortBy(dataArray, "name");
                         
                         $keithsDataDiv.highcharts({
                             chart: {
@@ -160,7 +179,7 @@ SGApp.reportsMenu = (function(){
                             },
                             title: { text: "Live Fish Sampling" },
                             xAxis: [{ categories: categories, labels: { enabled: true } }],
-                            yAxis: [{ labels: { format: '{value}', style: { color: '#89A54E' } }, title: { text: "weight" } }],
+                            yAxis: [{ labels: { format: '{value} %', style: { color: '#89A54E' } }, title: { text: "Percent" } }],
                             plotOptions: { column: { stacking: null } },
                             series: [{
                                 name: 'Farm Ponds',
@@ -288,6 +307,31 @@ SGApp.reportsMenu = (function(){
         });
         $ddlFarmPonds.off("change").on("change", function () {
             loadHighCharts();
+        });
+        $("#rangeCW").on("click", function () {
+            
+            $("#startDateInput").val(moment().startOf("week").format("YYYY-MM-DD"));
+            $("#endDateInput").val(moment().endOf("week").format("YYYY-MM-DD"));
+        });
+        $("#rangeLW").on("click", function () {            
+            $("#startDateInput").val(moment().startOf("week").subtract(1, "weeks").format("YYYY-MM-DD"));
+            $("#endDateInput").val(moment().startOf("week").subtract(1, "weeks").endOf("week").format("YYYY-MM-DD"));
+        });
+        $("#rangeCM").on("click", function () {
+            $("#startDateInput").val(moment().startOf("month").format("YYYY-MM-DD"));
+            $("#endDateInput").val(moment().endOf("month").format("YYYY-MM-DD"));
+        });
+        $("#rangeLM").on("click", function () {
+            $("#startDateInput").val(moment().startOf("month").subtract(1, 'months').format("YYYY-MM-DD"));
+            $("#endDateInput").val(moment().startOf("month").subtract(1, 'months').endOf("month").format("YYYY-MM-DD"));
+        });
+        $("#rangeLQ").on("click", function () {
+            $("#startDateInput").val(moment().subtract(1, 'quarters').startOf("quarter").format("YYYY-MM-DD"));
+            $("#endDateInput").val(moment().subtract(1, 'quarters').endOf("quarter").format("YYYY-MM-DD"));
+        });
+        $("#rangeYTD").on("click", function () {
+            $("#startDateInput").val(moment().startOf("year").format("YYYY-MM-01"));
+            $("#endDateInput").val(moment().format("YYYY-MM-DD"));
         });
     }
     (function(){

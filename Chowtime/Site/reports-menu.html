@@ -9,6 +9,7 @@
         if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
     </script>
     <script src="scripts/underscore.min.js"></script>
+    <script src="scripts/moment.js"></script>
 </head>
 <body class="ct">
     <header>
@@ -22,9 +23,16 @@
     </header>
     <section id="main_content">
         <header class="farm">
-            <label>Start: </label><input type="date" id="startDateInput" />
+            <div><button id="rangeCW">Current Week</button>
+                <button id="rangeLW">Last Week</button>
+                <button id="rangeCM">Current Month</button>
+                <button id="rangeLM">Last Month</button>
+                <button id="rangeLQ">Last Quarter</button>
+                <button id="rangeYTD">YTD</button>
+                </div>
+            <div><label>Start: </label><input type="date" id="startDateInput" />
             <label>End: </label><input type="date" id="endDateInput" />
-            <button id="getDataButton">Submit</button>
+            <button id="getDataButton">Submit</button></div>
         </header>
         <header class="farm">
             <div id="fpDDLdiv">
