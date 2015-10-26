@@ -139,10 +139,13 @@
     <Compile Include="BusinessLogic\BusinessDomainBase.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\FarmController.cs" />
+    <Compile Include="Controllers\FarmYieldController.cs" />
+    <Compile Include="Controllers\FarmYieldHeaderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JMremoteController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PondController.cs" />
+    <Compile Include="Controllers\ShiftEndController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -150,6 +153,8 @@
     <Compile Include="DTOs\FarmDTO.cs" />
     <Compile Include="DTOs\FarmFeedDTO.cs" />
     <Compile Include="DTOs\FarmO2DTO.cs" />
+    <Compile Include="DTOs\FarmYieldDTO.cs" />
+    <Compile Include="DTOs\FarmYieldHeaderDTO.cs" />
     <Compile Include="DTOs\FeedingDTO.cs" />
     <Compile Include="DTOs\GenericDTO.cs" />
     <Compile Include="DTOs\HarvestDTO.cs" />
@@ -159,6 +164,7 @@
     <Compile Include="DTOs\O2ReadingDTO.cs" />
     <Compile Include="DTOs\PondDTO.cs" />
     <Compile Include="DTOs\ReturnDTO.cs" />
+    <Compile Include="DTOs\ShiftEndDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="DTOs\UserFarmDTO.cs" />
     <Compile Include="DTOs\UserQueryDTO.cs" />
@@ -191,6 +197,12 @@
     <Compile Include="Models\EF\Farm.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\FarmYield.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\FarmYieldHeader.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\Feeding.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
@@ -200,13 +212,16 @@
     <Compile Include="Models\EF\HealthStatus.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EF\O2Readings.cs">
+    <Compile Include="Models\EF\O2Reading.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Pond.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Role.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\ShiftEnd.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Status.cs">
@@ -223,22 +238,28 @@
     </Compile>
     <Compile Include="Models\Partials\Company.Partial.cs" />
     <Compile Include="Models\Partials\Farm.Partial.cs" />
+    <Compile Include="Models\Partials\FarmYield.Partial.cs" />
+    <Compile Include="Models\Partials\FarmYieldHeader.Partial.cs" />
     <Compile Include="Models\Partials\Feeding.Partial.cs" />
     <Compile Include="Models\Partials\Harvest.Partial.cs" />
     <Compile Include="Models\Partials\O2Reading.Partial.cs" />
     <Compile Include="Models\Partials\Pond.Partial.cs" />
     <Compile Include="Models\Partials\Role.Partial.cs" />
+    <Compile Include="Models\Partials\ShiftEnd.Partial.cs" />
     <Compile Include="Models\Partials\Status.Partial.cs" />
     <Compile Include="Models\Partials\User.Partial.cs" />
     <Compile Include="Models\Partials\UserFarm.Partial.cs" />
     <Compile Include="Models\Partials\UserRole.Partial.cs" />
     <Compile Include="Models\Validation\Company_Metadata.cs" />
+    <Compile Include="Models\Validation\FarmYieldHeader_Metadata.cs" />
+    <Compile Include="Models\Validation\FarmYield_Metadata.cs" />
     <Compile Include="Models\Validation\Farm_Metadata.cs" />
     <Compile Include="Models\Validation\Feeding_Metatdata.cs" />
     <Compile Include="Models\Validation\Harvest_Metadata.cs" />
     <Compile Include="Models\Validation\O2Reading_Metadata.cs" />
     <Compile Include="Models\Validation\Pond_Metadata.cs" />
     <Compile Include="Models\Validation\Role_Metadata.cs" />
+    <Compile Include="Models\Validation\ShiftEnd_Metadata.cs" />
     <Compile Include="Models\Validation\Status_Metadata.cs" />
     <Compile Include="Models\Validation\User_Metadata.cs" />
     <Compile Include="Models\Validation\ValidationCodes.cs" />
@@ -250,11 +271,14 @@
     <Compile Include="Repositories\Application\AppUserRoleRepository.cs" />
     <Compile Include="Repositories\Application\CompanyRepository.cs" />
     <Compile Include="Repositories\Application\FarmRepository.cs" />
+    <Compile Include="Repositories\Application\FarmYieldHeaderRepository.cs" />
+    <Compile Include="Repositories\Application\FarmYieldRepository.cs" />
     <Compile Include="Repositories\Application\FeedingRepository.cs" />
     <Compile Include="Repositories\Application\HarvestRepository.cs" />
     <Compile Include="Repositories\Application\O2ReadingRepository.cs" />
     <Compile Include="Repositories\Application\PondRepository.cs" />
     <Compile Include="Repositories\Application\RoleRepository.cs" />
+    <Compile Include="Repositories\Application\ShiftEndRepository.cs" />
     <Compile Include="Repositories\Application\Status_Repository.cs" />
     <Compile Include="Repositories\Application\UserFarmRepository.cs" />
     <Compile Include="Repositories\Application\UserRepository.cs" />
@@ -367,6 +391,7 @@
     <Content Include="Site\ChowTime Fish Food Tracker pond admin.png" />
     <Content Include="Site\ChowTime Fish Food Tracker reports.png" />
     <Content Include="Site\content\global.css" />
+    <Content Include="Site\content\HarvestSelectDashboards.css" />
     <Content Include="Site\content\images\alt-logo.png" />
     <Content Include="Site\content\images\at_body_bg.jpg" />
     <Content Include="Site\content\images\body_bg.jpg" />
@@ -377,8 +402,11 @@
     <Content Include="Site\content\images\yellow_body_bg.jpg" />
     <Content Include="Site\ct-entry.html" />
     <Content Include="Site\ct-reports.html" />
+    <Content Include="Site\farm-yields.html" />
     <Content Include="Site\footer.html" />
+    <Content Include="Site\index.html" />
     <Content Include="Site\login.html" />
+    <Content Include="Site\op-sampling.html" />
     <Content Include="Site\reports-menu.html" />
     <Content Include="Site\scripts\admin-functions.js" />
     <Content Include="Site\scripts\at-functions.js" />
@@ -386,12 +414,15 @@
     <Content Include="Site\scripts\drilldown.js" />
     <Content Include="Site\scripts\exporting.js" />
     <Content Include="Site\scripts\functions.js" />
+    <Content Include="Site\scripts\HarvestSelectDashboards.js" />
     <Content Include="Site\scripts\highcharts.js" />
     <Content Include="Site\scripts\jquery-1.10.2.min.js" />
+    <Content Include="Site\scripts\moment.js" />
     <Content Include="Site\scripts\reports-menu.js" />
     <Content Include="Site\scripts\underscore.js" />
     <Content Include="Site\scripts\underscore.min.js" />
     <None Include="Site\scripts\_references.js" />
+    <Content Include="Site\shift-times.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

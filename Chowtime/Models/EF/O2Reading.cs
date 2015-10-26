@@ -21,9 +21,8 @@ namespace SGApp.Models.EF
         public int PortableCount { get; set; }
         public int StaticCount { get; set; }
         public int UsersFarmId { get; set; }
-        public DateTime DayPeriod {get; set;}
-
         public string Note { get; set; }
+        public System.DateTime DayPeriod { get; set; }
     
         public virtual Pond Pond { get; set; }
         public virtual UserFarm UserFarm { get; set; }

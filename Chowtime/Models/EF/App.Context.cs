@@ -37,5 +37,8 @@ namespace SGApp.Models.EF
         public DbSet<HealthStatus> HealthStatuses { get; set; }
         public DbSet<Pond> Ponds { get; set; }
         public DbSet<O2Reading> O2Readings { get; set; }
+        public DbSet<FarmYieldHeader> FarmYieldHeaders { get; set; }
+        public DbSet<FarmYield> FarmYields { get; set; }
+        public DbSet<ShiftEnd> ShiftEnds { get; set; }
     }
 }

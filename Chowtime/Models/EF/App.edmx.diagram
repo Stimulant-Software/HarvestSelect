@@ -34,6 +34,10 @@
         <EntityTypeShape EntityType="AppModel.O2Reading" Width="1.5" PointX="0.32785070516534648" PointY="11.129513417896588" />
         <AssociationConnector Association="AppModel.FK_O2Readings_Ponds" />
         <AssociationConnector Association="AppModel.FK_O2Readings_UsersFarms" />
+        <EntityTypeShape EntityType="AppModel.FarmYieldHeader" Width="1.5" PointX="2.3746493730576006" PointY="13.826792857529034" />
+        <EntityTypeShape EntityType="AppModel.FarmYield" Width="1.5" PointX="4.5960419609192957" PointY="28.020461900169245" />
+        <EntityTypeShape EntityType="AppModel.ShiftEnd" Width="1.5" PointX="6.2300682860566621" PointY="7.9319052435140618" />
+        <AssociationConnector Association="AppModel.FK_FarmYields_Ponds" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

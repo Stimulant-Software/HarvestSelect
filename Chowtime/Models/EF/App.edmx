@@ -8,12 +8,15 @@
         <EntityContainer Name="AppModelStoreContainer">
           <EntitySet Name="Companies" EntityType="AppModel.Store.Companies" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Farms" EntityType="AppModel.Store.Farms" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FarmYieldHeaders" EntityType="AppModel.Store.FarmYieldHeaders" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FarmYields" EntityType="AppModel.Store.FarmYields" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Feedings" EntityType="AppModel.Store.Feedings" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Harvests" EntityType="AppModel.Store.Harvests" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="HealthStatuses" EntityType="AppModel.Store.HealthStatuses" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="O2Readings" EntityType="AppModel.Store.O2Readings" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Ponds" EntityType="AppModel.Store.Ponds" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="AppModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ShiftEnd" EntityType="AppModel.Store.ShiftEnd" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Statuses" EntityType="AppModel.Store.Statuses" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserFarms" EntityType="AppModel.Store.UserFarms" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserRoles" EntityType="AppModel.Store.UserRoles" store:Type="Tables" Schema="dbo" />
@@ -25,6 +28,10 @@
           <AssociationSet Name="FK_Farms_Statuses" Association="AppModel.Store.FK_Farms_Statuses">
             <End Role="Statuses" EntitySet="Statuses" />
             <End Role="Farms" EntitySet="Farms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FarmYields_Ponds" Association="AppModel.Store.FK_FarmYields_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="FarmYields" EntitySet="FarmYields" />
           </AssociationSet>
           <AssociationSet Name="FK_Feedings_Ponds" Association="AppModel.Store.FK_Feedings_Ponds">
             <End Role="Ponds" EntitySet="Ponds" />
@@ -109,6 +116,28 @@
           <Property Name="FarmName" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="FarmYieldHeaders">
+          <Key>
+            <PropertyRef Name="FarmYieldHeaderID" />
+          </Key>
+          <Property Name="FarmYieldHeaderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="YieldDate" Type="datetime" Nullable="false" />
+          <Property Name="PlantWeight" Type="decimal" Scale="2" />
+          <Property Name="WeighBacks" Type="decimal" Scale="2" />
+        </EntityType>
+        <EntityType Name="FarmYields">
+          <Key>
+            <PropertyRef Name="YieldID" />
+          </Key>
+          <Property Name="YieldID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="YieldDate" Type="datetime" Nullable="false" />
+          <Property Name="PondID" Type="int" Nullable="false" />
+          <Property Name="PoundsYielded" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="PoundsPlant" Type="decimal" Scale="2" />
+          <Property Name="PoundsHeaded" Type="decimal" Scale="2" />
+          <Property Name="PercentYield" Type="decimal" Scale="2" />
+          <Property Name="PercentYield2" Type="decimal" Scale="2" />
+        </EntityType>
         <EntityType Name="Feedings">
           <Key>
             <PropertyRef Name="FeedingId" />
@@ -141,7 +170,7 @@
           <Property Name="ReadingId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="PondId" Type="int" Nullable="false" />
           <Property Name="ReadingDate" Type="datetime" Nullable="false" />
-          <Property Name="O2Level" Type="decimal" Nullable="false" />
+          <Property Name="O2Level" Type="decimal" Nullable="false" Scale="4" />
           <Property Name="PortableCount" Type="int" Nullable="false" />
           <Property Name="StaticCount" Type="int" Nullable="false" />
           <Property Name="UsersFarmId" Type="int" Nullable="false" />
@@ -159,6 +188,7 @@
           <Property Name="Size" Type="decimal" Nullable="false" />
           <Property Name="NoFeed" Type="bit" Nullable="false" />
           <Property Name="HealthStatus" Type="int" Nullable="false" />
+          <Property Name="SortOrder" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -166,6 +196,29 @@
           </Key>
           <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="varchar" Nullable="false" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="ShiftEnd">
+          <Key>
+            <PropertyRef Name="ShiftEndID" />
+          </Key>
+          <Property Name="ShiftEndID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShiftDate" Type="datetime" Nullable="false" />
+          <Property Name="RegEmpLate" Type="int" />
+          <Property Name="RegEmpOut" Type="int" />
+          <Property Name="RegEmplLeftEarly" Type="int" />
+          <Property Name="TempEmpOut" Type="int" />
+          <Property Name="InmateLeftEarly" Type="int" />
+          <Property Name="FinishedKill" Type="datetime" />
+          <Property Name="FinishedFillet" Type="datetime" />
+          <Property Name="FinishedSkinning" Type="datetime" />
+          <Property Name="DayFinishedFreezing" Type="datetime" />
+          <Property Name="NightFinishedFreezing" Type="datetime" />
+          <Property Name="DayShiftFroze" Type="decimal" Scale="2" />
+          <Property Name="NightShiftFroze" Type="decimal" Scale="2" />
+          <Property Name="FilletScaleReading" Type="decimal" Scale="2" />
+          <Property Name="DowntimeMinutes" Type="int" />
+          <Property Name="InLateOut" Type="int" />
+          <Property Name="EmployeesOnVacation" Type="int" />
         </EntityType>
         <EntityType Name="Statuses">
           <Key>
@@ -225,6 +278,18 @@
             </Principal>
             <Dependent Role="Farms">
               <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FarmYields_Ponds">
+          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+          <End Role="FarmYields" Type="AppModel.Store.FarmYields" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ponds">
+              <PropertyRef Name="PondId" />
+            </Principal>
+            <Dependent Role="FarmYields">
+              <PropertyRef Name="PondID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -493,6 +558,13 @@
             <End Role="UserFarm" EntitySet="UserFarms" />
             <End Role="O2Readings" EntitySet="O2Readings" />
           </AssociationSet>
+          <EntitySet Name="FarmYieldHeaders" EntityType="AppModel.FarmYieldHeader" />
+          <EntitySet Name="FarmYields" EntityType="AppModel.FarmYield" />
+          <EntitySet Name="ShiftEnds" EntityType="AppModel.ShiftEnd" />
+          <AssociationSet Name="FK_FarmYields_Ponds" Association="AppModel.FK_FarmYields_Ponds">
+            <End Role="Pond" EntitySet="Ponds" />
+            <End Role="FarmYield" EntitySet="FarmYields" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -748,6 +820,8 @@
           <NavigationProperty Name="HealthStatus1" Relationship="AppModel.FK_Ponds_HealthStatuses" FromRole="Pond" ToRole="HealthStatus" />
           <NavigationProperty Name="Status" Relationship="AppModel.FK_Ponds_Statuses" FromRole="Pond" ToRole="Status" />
           <NavigationProperty Name="O2Readings" Relationship="AppModel.FK_O2Readings_Ponds" FromRole="Pond" ToRole="O2Readings" />
+          <Property Type="Int32" Name="SortOrder" Nullable="false" />
+          <NavigationProperty Name="FarmYields" Relationship="AppModel.FK_FarmYields_Ponds" FromRole="Pond" ToRole="FarmYield" />
         </EntityType>
         <Association Name="FK_Ponds_Farms">
           <End Type="AppModel.Farm" Role="Farm" Multiplicity="1" />
@@ -816,7 +890,7 @@
           <Property Type="Int32" Name="ReadingId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="PondId" Nullable="false" />
           <Property Type="DateTime" Name="ReadingDate" Nullable="false" Precision="3" />
-          <Property Type="Decimal" Name="O2Level" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="O2Level" Nullable="false" Precision="18" Scale="4" />
           <Property Type="Int32" Name="PortableCount" Nullable="false" />
           <Property Type="Int32" Name="StaticCount" Nullable="false" />
           <Property Type="Int32" Name="UsersFarmId" Nullable="false" />
@@ -846,6 +920,64 @@
             </Principal>
             <Dependent Role="O2Readings">
               <PropertyRef Name="UsersFarmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FarmYieldHeader">
+          <Key>
+            <PropertyRef Name="FarmYieldHeaderID" />
+          </Key>
+          <Property Type="Int32" Name="FarmYieldHeaderID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="YieldDate" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="PlantWeight" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="WeighBacks" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="FarmYield">
+          <Key>
+            <PropertyRef Name="YieldID" />
+          </Key>
+          <Property Type="Int32" Name="YieldID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="YieldDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="PondID" Nullable="false" />
+          <Property Type="Decimal" Name="PoundsYielded" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PoundsPlant" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PoundsHeaded" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PercentYield" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PercentYield2" Precision="18" Scale="2" />
+          <NavigationProperty Name="Pond" Relationship="AppModel.FK_FarmYields_Ponds" FromRole="FarmYield" ToRole="Pond" />
+        </EntityType>
+        <EntityType Name="ShiftEnd">
+          <Key>
+            <PropertyRef Name="ShiftEndID" />
+          </Key>
+          <Property Type="Int32" Name="ShiftEndID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="ShiftDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="RegEmpLate" />
+          <Property Type="Int32" Name="RegEmpOut" />
+          <Property Type="Int32" Name="RegEmplLeftEarly" />
+          <Property Type="Int32" Name="TempEmpOut" />
+          <Property Type="Int32" Name="InmateLeftEarly" />
+          <Property Type="DateTime" Name="FinishedKill" Precision="3" />
+          <Property Type="DateTime" Name="FinishedFillet" Precision="3" />
+          <Property Type="DateTime" Name="FinishedSkinning" Precision="3" />
+          <Property Type="DateTime" Name="DayFinishedFreezing" Precision="3" />
+          <Property Type="DateTime" Name="NightFinishedFreezing" Precision="3" />
+          <Property Type="Decimal" Name="DayShiftFroze" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="NightShiftFroze" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="FilletScaleReading" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="DowntimeMinutes" />
+          <Property Type="Int32" Name="InLateOut" />
+          <Property Type="Int32" Name="EmployeesOnVacation" />
+        </EntityType>
+        <Association Name="FK_FarmYields_Ponds">
+          <End Type="AppModel.Pond" Role="Pond" Multiplicity="1" />
+          <End Type="AppModel.FarmYield" Role="FarmYield" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pond">
+              <PropertyRef Name="PondId" />
+            </Principal>
+            <Dependent Role="FarmYield">
+              <PropertyRef Name="PondID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -959,6 +1091,7 @@
           <EntitySetMapping Name="Ponds">
             <EntityTypeMapping TypeName="AppModel.Pond">
               <MappingFragment StoreEntitySet="Ponds">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="HealthStatus" ColumnName="HealthStatus" />
                 <ScalarProperty Name="NoFeed" ColumnName="NoFeed" />
                 <ScalarProperty Name="Size" ColumnName="Size" />
@@ -981,6 +1114,54 @@
                 <ScalarProperty Name="ReadingDate" ColumnName="ReadingDate" />
                 <ScalarProperty Name="PondId" ColumnName="PondId" />
                 <ScalarProperty Name="ReadingId" ColumnName="ReadingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FarmYieldHeaders">
+            <EntityTypeMapping TypeName="AppModel.FarmYieldHeader">
+              <MappingFragment StoreEntitySet="FarmYieldHeaders">
+                <ScalarProperty Name="WeighBacks" ColumnName="WeighBacks" />
+                <ScalarProperty Name="PlantWeight" ColumnName="PlantWeight" />
+                <ScalarProperty Name="YieldDate" ColumnName="YieldDate" />
+                <ScalarProperty Name="FarmYieldHeaderID" ColumnName="FarmYieldHeaderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FarmYields">
+            <EntityTypeMapping TypeName="AppModel.FarmYield">
+              <MappingFragment StoreEntitySet="FarmYields">
+                <ScalarProperty Name="PercentYield2" ColumnName="PercentYield2" />
+                <ScalarProperty Name="PercentYield" ColumnName="PercentYield" />
+                <ScalarProperty Name="PoundsHeaded" ColumnName="PoundsHeaded" />
+                <ScalarProperty Name="PoundsPlant" ColumnName="PoundsPlant" />
+                <ScalarProperty Name="PoundsYielded" ColumnName="PoundsYielded" />
+                <ScalarProperty Name="PondID" ColumnName="PondID" />
+                <ScalarProperty Name="YieldDate" ColumnName="YieldDate" />
+                <ScalarProperty Name="YieldID" ColumnName="YieldID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShiftEnds">
+            <EntityTypeMapping TypeName="AppModel.ShiftEnd">
+              <MappingFragment StoreEntitySet="ShiftEnd">
+                <ScalarProperty Name="EmployeesOnVacation" ColumnName="EmployeesOnVacation" />
+                <ScalarProperty Name="InLateOut" ColumnName="InLateOut" />
+                <ScalarProperty Name="DowntimeMinutes" ColumnName="DowntimeMinutes" />
+                <ScalarProperty Name="FilletScaleReading" ColumnName="FilletScaleReading" />
+                <ScalarProperty Name="NightShiftFroze" ColumnName="NightShiftFroze" />
+                <ScalarProperty Name="DayShiftFroze" ColumnName="DayShiftFroze" />
+                <ScalarProperty Name="NightFinishedFreezing" ColumnName="NightFinishedFreezing" />
+                <ScalarProperty Name="DayFinishedFreezing" ColumnName="DayFinishedFreezing" />
+                <ScalarProperty Name="FinishedSkinning" ColumnName="FinishedSkinning" />
+                <ScalarProperty Name="FinishedFillet" ColumnName="FinishedFillet" />
+                <ScalarProperty Name="FinishedKill" ColumnName="FinishedKill" />
+                <ScalarProperty Name="InmateLeftEarly" ColumnName="InmateLeftEarly" />
+                <ScalarProperty Name="TempEmpOut" ColumnName="TempEmpOut" />
+                <ScalarProperty Name="RegEmplLeftEarly" ColumnName="RegEmplLeftEarly" />
+                <ScalarProperty Name="RegEmpOut" ColumnName="RegEmpOut" />
+                <ScalarProperty Name="RegEmpLate" ColumnName="RegEmpLate" />
+                <ScalarProperty Name="ShiftDate" ColumnName="ShiftDate" />
+                <ScalarProperty Name="ShiftEndID" ColumnName="ShiftEndID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

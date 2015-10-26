@@ -19,6 +19,7 @@ namespace SGApp.Models.EF
             this.Feedings = new HashSet<Feeding>();
             this.Harvests = new HashSet<Harvest>();
             this.O2Readings = new HashSet<O2Reading>();
+            this.FarmYields = new HashSet<FarmYield>();
         }
     
         public int PondId { get; set; }
@@ -28,12 +29,14 @@ namespace SGApp.Models.EF
         public decimal Size { get; set; }
         public bool NoFeed { get; set; }
         public int HealthStatus { get; set; }
+        public int SortOrder { get; set; }
     
         public virtual Farm Farm { get; set; }
         public virtual ICollection<Feeding> Feedings { get; set; }
         public virtual ICollection<Harvest> Harvests { get; set; }
         public virtual HealthStatus HealthStatus1 { get; set; }
-        public virtual ICollection<O2Reading> O2Readings { get; set; }
         public virtual Status Status { get; set; }
+        public virtual ICollection<O2Reading> O2Readings { get; set; }
+        public virtual ICollection<FarmYield> FarmYields { get; set; }
     }
 }
