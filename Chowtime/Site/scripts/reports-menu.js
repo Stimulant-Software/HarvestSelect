@@ -257,6 +257,7 @@ SGApp.reportsMenu = (function(){
 
     function wireUpEvents(){
         $getDataButton.on("click", function () {
+            showProgress('#main_content');
             var qry = {
                 "Key": "Hello World",
                 "startDate": $("#startDateInput").val(),
@@ -302,6 +303,7 @@ SGApp.reportsMenu = (function(){
                     //    });
                     //}
                     loadHighCharts();
+                    hideProgress('body');
                 }
             });
         });

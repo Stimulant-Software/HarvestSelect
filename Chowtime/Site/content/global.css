@@ -865,7 +865,7 @@ body > #lightboxBG {
 
 /* Progress graphic */
 .windows8 {
-    position: fixed;
+    position: absolute;
     width: 90px;
     height: 90px;
     margin: 0 auto;
