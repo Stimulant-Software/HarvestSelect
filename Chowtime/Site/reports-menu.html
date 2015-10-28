@@ -15,7 +15,9 @@
         <h1>Operations</h1>
         <nav>
             <ol>
-                <li><a href="reports-menu.html">Samplings</a></li>
+                <li class="col-xs-12 col-sm-6 col-md-3 yields"><a href="farm-yields.html">Farm Yields</a></li>
+                <li class="col-xs-12 col-sm-6 col-md-3 shift"><a href="shift-times.html">Shift-end Times</a></li>
+                <li class="col-xs-12 col-sm-6 col-md-3 sample"><a href="op-sampling.html">Live Fish Sampling</a></li>
                 <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
             </ol>
         </nav>
@@ -38,14 +40,8 @@
     <script type="text/javascript" src="scripts/at-functions.js"></script>
     <!--<script src="scripts/drilldown.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
-        <script src="scripts/HarvestSelectDashboards.js"></script>
-    <script>
-        $(document).ready(function () {
-            $.getScript("scripts/reports-menu.js");
-        })
-    </script>
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="scripts/HarvestSelectDashboards.js"></script>
+    <script src="scripts/reports-menu.js"></script>
 </body>
 </html>

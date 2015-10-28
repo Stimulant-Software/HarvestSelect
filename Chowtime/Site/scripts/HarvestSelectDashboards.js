@@ -119,7 +119,7 @@ function hideProgress(classIdentifier) { var bgElement = "#lightboxBG." + classI
 function centerProgress(container) { if (container == 'body') { container = window }; var containerHeight = $(container).innerHeight(), containerWidth = $(container).innerWidth(), modalHeight = $('#progressBar').innerHeight(), modalWidth = $('#progressBar').innerWidth(); var modalTop = (containerHeight - modalHeight) / 2, modalLeft = (containerWidth - modalWidth) / 2; $('#progressBar').css({ 'top': modalTop, 'left': modalLeft }); }
 
 function getTodaysMonth() {
-    $('.row.buttons').hide();
+    $('.row.buttons').css('opacity', 0);
     var today = new Date(), todaysMonth = today.getMonth() + 1, todaysYear = today.getFullYear();
     if (todaysMonth < 10) todaysMonth = "0" + todaysMonth;
     var tdate = new Object();

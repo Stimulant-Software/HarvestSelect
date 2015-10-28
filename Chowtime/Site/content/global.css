@@ -628,7 +628,7 @@ header.admin {
     width: 80%;
 }
 
-.ct button { background-color: #698591; color: #000; }
+.ct button { /* background-color: #698591;*/ color: #000; }
 .at-button { background-color: #156f23; }
 
 .ct #main_content .pond {
@@ -783,6 +783,8 @@ footer a {
 footer a:hover {
     text-decoration: underline;
 }
+
+footer span { float: right; }
 
 .Admin #adminLink, .Airtime #airtimeLink, .Chowtime #chowtimeLink, .Operations #operationsLink {
     display: inline;

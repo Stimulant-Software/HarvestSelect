@@ -1,64 +1,61 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en">
 <head>
-    <title></title>
+    <title>Harvest Select Dashboards</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css">
+    <link href="content/HarvestSelectDashboards.css" rel="stylesheet" type="text/css">
     <link href="content/global.css" rel="stylesheet" type="text/css">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
-    </script>
-    <script src="scripts/underscore.min.js"></script>
-    <script src="scripts/moment.js"></script>
 </head>
-<body class="ct">
+<body class="op">
     <header>
         <h1>Operations</h1>
         <nav>
             <ol>
-                <li><a href="reports-menu.html">Samplings</a></li>
+                <li class="yields"><a href="farm-yields.html">Farm Yields</a></li>
+                <li class="shift"><a href="shift-times.html">Shift-end Times</a></li>
+                <li class="sample"><a href="op-sampling.html">Live Fish Sampling</a></li>
                 <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
             </ol>
         </nav>
     </header>
-    <section id="main_content">
-        <header class="farm">
+    <section id="main_content" class="container">
+        <header class="row">
             <div><button id="rangeCW">Current Week</button>
                 <button id="rangeLW">Last Week</button>
                 <button id="rangeCM">Current Month</button>
                 <button id="rangeLM">Last Month</button>
                 <button id="rangeLQ">Last Quarter</button>
                 <button id="rangeYTD">YTD</button>
-                </div>
+            </div>
             <div><label>Start: </label><input type="date" id="startDateInput" />
             <label>End: </label><input type="date" id="endDateInput" />
             <button id="getDataButton">Submit</button></div>
         </header>
-        <header class="farm">
+        <header class="row">
             <div id="fpDDLdiv">
-                <select id="ddlFarmPonds"></select>
+                <label>Pond: </label><select id="ddlFarmPonds"></select>
             </div>
         </header>
-
-        <section class="pond">
-
+        <section class="row">
             <div id="keithsDataDiv"></div>
             <div id="pieChart"></div>
         </section>
     </section>
     <footer></footer>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+    </script>
+    <script src="scripts/underscore.min.js"></script>
+    <script src="scripts/moment.js"></script>
     <script type="text/javascript" src="scripts/functions.js"></script>
-    <!--<script type="text/javascript" src="scripts/highcharts.js"></script>-->
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/modules/drilldown.js"></script>
     <script type="text/javascript" src="scripts/at-functions.js"></script>
-    <!--<script src="scripts/drilldown.js"></script>-->
-    <script>
-        $(document).ready(function () {
-            $.getScript("scripts/reports-menu.js");
-        })
-    </script>
-
-
+    <script src="scripts/reports-menu.js"></script>
 </body>
 </html>

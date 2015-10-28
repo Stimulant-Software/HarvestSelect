@@ -1,7 +1,5 @@
 ﻿body { box-sizing: border-box; }
 header { padding: 15px 0; margin-bottom: 20px; }
-header img { height: 150px; }
-header span { font-weight: bold; font-size: 1.5em; text-transform: uppercase; }
 
 .login .form-group { width: 400px; margin: 10px auto; }
 .login .help-block { display: none; }
@@ -9,6 +7,11 @@ header span { font-weight: bold; font-size: 1.5em; text-transform: uppercase; }
 .login #remember, .login #login, .login #pass { opacity: 0; }
 
 #logout { background: #020057; color: #fff; font-weight: bold; padding: 10px 20px; border-radius: 5px; box-shadow: 2px 2px 4px rgba(0,0,0,0.7); }
+
+.op nav { background-color: #380A0A; }
+.op nav a:hover { background-color: #fff; color:  #380A0A; text-decoration: none; }
+.op .btn, .op button { background: #380A0A; color: #fff; text-shadow: none; }
+.op #main_content header { background-color: #566c76; width: 850px; text-align: center; margin: 10px auto; padding: 10px 20px; border-radius: 4px; }
 
 .portal ul li  { text-align: center; margin-bottom: 20px; }
 .portal ul li a { padding: 110px 0 30px; height: 140px; width: 180px; display: inline-block; border: 3px solid #020057; color: #020057; border-radius: 30px; text-transform: uppercase; background-repeat: no-repeat; background-position: center 15px; }
@@ -32,6 +35,10 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .buttons .btn { font-size: 1.5em; padding: 20px; }
 .btn.reset { background-color: lightcoral; color: darkred; }
 .btn.save { background-color: darkgreen; color: lightgreen; }
+
+.op header select { font-size: initial; padding: initial; background-color: #fff; min-width: 200px;  }
+.op header label { width: initial; font-size: initial; margin-bottom: initial; }
+.op header input[type="text"], .op header input[type="time"], .op header input[type="number"] { width: initial; font-size: initial; margin-bottom: initial; background-color: initial; }
 
 .fc-event { cursor: pointer; }
 
