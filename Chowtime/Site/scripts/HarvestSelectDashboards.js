@@ -451,7 +451,8 @@ function shiftEnd() {
                     }
                 })).then(function () {
                     $('#calendarModal').modal('hide');
-                    $('.row.fields, .row.buttons').css('opacity',1);
+                    $('.row.fields, .row.buttons').css('opacity', 1);                   
+                    $('.shiftForm').css('opacity', 1);
                 });
             },
             dayClick: function () {
@@ -462,6 +463,7 @@ function shiftEnd() {
                 addOrEdit = "-1";
                 $('#calendarModal').modal('hide');
                 $('.row.fields, .row.buttons').css('opacity', 1);
+                $('.shiftForm').css('opacity', 1);
             }
         });
     }

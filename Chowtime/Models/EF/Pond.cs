@@ -30,6 +30,7 @@ namespace SGApp.Models.EF
         public bool NoFeed { get; set; }
         public int HealthStatus { get; set; }
         public int SortOrder { get; set; }
+        public int OldPondID { get; set; }
     
         public virtual Farm Farm { get; set; }
         public virtual ICollection<Feeding> Feedings { get; set; }

@@ -23,7 +23,7 @@ namespace SGApp.Controllers {
             dto.EndDate= new DateTime(yr, mon, day);
             var client = new HttpClient {
                 //BaseAddress = new Uri("http://323-booth-svr2:3030/")
-                BaseAddress = new Uri("http://localhost:51888/")
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
                 //BaseAddress = new Uri(baseAddress)                
             };
             try {

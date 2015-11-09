@@ -3,12 +3,15 @@
   <EntityContainer Name="AppModelStoreContainer">
     <EntitySet Name="Companies" EntityType="AppModel.Store.Companies" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Farms" EntityType="AppModel.Store.Farms" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FarmYieldHeaders" EntityType="AppModel.Store.FarmYieldHeaders" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FarmYields" EntityType="AppModel.Store.FarmYields" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Feedings" EntityType="AppModel.Store.Feedings" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Harvests" EntityType="AppModel.Store.Harvests" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HealthStatuses" EntityType="AppModel.Store.HealthStatuses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="O2Readings" EntityType="AppModel.Store.O2Readings" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Ponds" EntityType="AppModel.Store.Ponds" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Roles" EntityType="AppModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShiftEnd" EntityType="AppModel.Store.ShiftEnd" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Statuses" EntityType="AppModel.Store.Statuses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserFarms" EntityType="AppModel.Store.UserFarms" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserRoles" EntityType="AppModel.Store.UserRoles" store:Type="Tables" Schema="dbo" />
@@ -20,6 +23,10 @@
     <AssociationSet Name="FK_Farms_Statuses" Association="AppModel.Store.FK_Farms_Statuses">
       <End Role="Statuses" EntitySet="Statuses" />
       <End Role="Farms" EntitySet="Farms" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FarmYields_Ponds" Association="AppModel.Store.FK_FarmYields_Ponds">
+      <End Role="Ponds" EntitySet="Ponds" />
+      <End Role="FarmYields" EntitySet="FarmYields" />
     </AssociationSet>
     <AssociationSet Name="FK_Feedings_Ponds" Association="AppModel.Store.FK_Feedings_Ponds">
       <End Role="Ponds" EntitySet="Ponds" />
@@ -103,6 +110,29 @@
     <Property Name="StatusId" Type="int" Nullable="false" />
     <Property Name="FarmName" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="CompanyId" Type="int" Nullable="false" />
+    <Property Name="OldFarmId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FarmYieldHeaders">
+    <Key>
+      <PropertyRef Name="FarmYieldHeaderID" />
+    </Key>
+    <Property Name="FarmYieldHeaderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="YieldDate" Type="datetime" Nullable="false" />
+    <Property Name="PlantWeight" Type="decimal" Scale="2" />
+    <Property Name="WeighBacks" Type="decimal" Scale="2" />
+  </EntityType>
+  <EntityType Name="FarmYields">
+    <Key>
+      <PropertyRef Name="YieldID" />
+    </Key>
+    <Property Name="YieldID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="YieldDate" Type="datetime" Nullable="false" />
+    <Property Name="PondID" Type="int" Nullable="false" />
+    <Property Name="PoundsYielded" Type="decimal" Nullable="false" Scale="2" />
+    <Property Name="PoundsPlant" Type="decimal" Scale="2" />
+    <Property Name="PoundsHeaded" Type="decimal" Scale="2" />
+    <Property Name="PercentYield" Type="decimal" Scale="2" />
+    <Property Name="PercentYield2" Type="decimal" Scale="2" />
   </EntityType>
   <EntityType Name="Feedings">
     <Key>
@@ -136,7 +166,7 @@
     <Property Name="ReadingId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="PondId" Type="int" Nullable="false" />
     <Property Name="ReadingDate" Type="datetime" Nullable="false" />
-    <Property Name="O2Level" Type="decimal" Nullable="false" />
+    <Property Name="O2Level" Type="decimal" Nullable="false" Scale="4" />
     <Property Name="PortableCount" Type="int" Nullable="false" />
     <Property Name="StaticCount" Type="int" Nullable="false" />
     <Property Name="UsersFarmId" Type="int" Nullable="false" />
@@ -154,6 +184,8 @@
     <Property Name="Size" Type="decimal" Nullable="false" />
     <Property Name="NoFeed" Type="bit" Nullable="false" />
     <Property Name="HealthStatus" Type="int" Nullable="false" />
+    <Property Name="SortOrder" Type="int" Nullable="false" />
+    <Property Name="OldPondID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -161,6 +193,29 @@
     </Key>
     <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
     <Property Name="RoleName" Type="varchar" Nullable="false" MaxLength="25" />
+  </EntityType>
+  <EntityType Name="ShiftEnd">
+    <Key>
+      <PropertyRef Name="ShiftEndID" />
+    </Key>
+    <Property Name="ShiftEndID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ShiftDate" Type="datetime" Nullable="false" />
+    <Property Name="RegEmpLate" Type="int" />
+    <Property Name="RegEmpOut" Type="int" />
+    <Property Name="RegEmplLeftEarly" Type="int" />
+    <Property Name="TempEmpOut" Type="int" />
+    <Property Name="InmateLeftEarly" Type="int" />
+    <Property Name="FinishedKill" Type="datetime" />
+    <Property Name="FinishedFillet" Type="datetime" />
+    <Property Name="FinishedSkinning" Type="datetime" />
+    <Property Name="DayFinishedFreezing" Type="datetime" />
+    <Property Name="NightFinishedFreezing" Type="datetime" />
+    <Property Name="DayShiftFroze" Type="decimal" Scale="2" />
+    <Property Name="NightShiftFroze" Type="decimal" Scale="2" />
+    <Property Name="FilletScaleReading" Type="decimal" Scale="2" />
+    <Property Name="DowntimeMinutes" Type="int" />
+    <Property Name="InLateOut" Type="int" />
+    <Property Name="EmployeesOnVacation" Type="int" />
   </EntityType>
   <EntityType Name="Statuses">
     <Key>
@@ -220,6 +275,18 @@
       </Principal>
       <Dependent Role="Farms">
         <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FarmYields_Ponds">
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+    <End Role="FarmYields" Type="AppModel.Store.FarmYields" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ponds">
+        <PropertyRef Name="PondId" />
+      </Principal>
+      <Dependent Role="FarmYields">
+        <PropertyRef Name="PondID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

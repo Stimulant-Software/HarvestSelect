@@ -115,6 +115,7 @@
           <Property Name="StatusId" Type="int" Nullable="false" />
           <Property Name="FarmName" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
+          <Property Name="OldFarmId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FarmYieldHeaders">
           <Key>
@@ -189,6 +190,7 @@
           <Property Name="NoFeed" Type="bit" Nullable="false" />
           <Property Name="HealthStatus" Type="int" Nullable="false" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
+          <Property Name="OldPondID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -634,6 +636,7 @@
           <NavigationProperty Name="Status" Relationship="AppModel.FK_Farms_Statuses" FromRole="Farm" ToRole="Status" />
           <NavigationProperty Name="UserFarms" Relationship="AppModel.FK_UserFarms_Farms" FromRole="Farm" ToRole="UserFarm" />
           <NavigationProperty Name="Ponds" Relationship="AppModel.FK_Ponds_Farms" FromRole="Farm" ToRole="Pond" />
+          <Property Type="Int32" Name="OldFarmId" Nullable="false" />
         </EntityType>
         <EntityType Name="Feeding">
           <Key>
@@ -821,6 +824,7 @@
           <NavigationProperty Name="Status" Relationship="AppModel.FK_Ponds_Statuses" FromRole="Pond" ToRole="Status" />
           <NavigationProperty Name="O2Readings" Relationship="AppModel.FK_O2Readings_Ponds" FromRole="Pond" ToRole="O2Readings" />
           <Property Type="Int32" Name="SortOrder" Nullable="false" />
+          <Property Type="Int32" Name="OldPondID" Nullable="false" />
           <NavigationProperty Name="FarmYields" Relationship="AppModel.FK_FarmYields_Ponds" FromRole="Pond" ToRole="FarmYield" />
         </EntityType>
         <Association Name="FK_Ponds_Farms">
@@ -1029,6 +1033,7 @@
           <EntitySetMapping Name="Farms">
             <EntityTypeMapping TypeName="AppModel.Farm">
               <MappingFragment StoreEntitySet="Farms">
+                <ScalarProperty Name="OldFarmId" ColumnName="OldFarmId" />
                 <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
                 <ScalarProperty Name="FarmName" ColumnName="FarmName" />
                 <ScalarProperty Name="StatusId" ColumnName="StatusId" />
@@ -1091,6 +1096,7 @@
           <EntitySetMapping Name="Ponds">
             <EntityTypeMapping TypeName="AppModel.Pond">
               <MappingFragment StoreEntitySet="Ponds">
+                <ScalarProperty Name="OldPondID" ColumnName="OldPondID" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="HealthStatus" ColumnName="HealthStatus" />
                 <ScalarProperty Name="NoFeed" ColumnName="NoFeed" />

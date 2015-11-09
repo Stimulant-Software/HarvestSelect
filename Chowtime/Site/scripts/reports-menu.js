@@ -303,7 +303,7 @@ SGApp.reportsMenu = (function(){
                     //    });
                     //}
                     loadHighCharts();
-                    hideProgress('body');
+                    hideProgress();
                 }
             });
         });

@@ -43,6 +43,7 @@
     <EntitySetMapping Name="Farms">
       <EntityTypeMapping TypeName="AppModel.Farm">
         <MappingFragment StoreEntitySet="Farms">
+          <ScalarProperty Name="OldFarmId" ColumnName="OldFarmId" />
           <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
           <ScalarProperty Name="FarmName" ColumnName="FarmName" />
           <ScalarProperty Name="StatusId" ColumnName="StatusId" />
@@ -105,6 +106,8 @@
     <EntitySetMapping Name="Ponds">
       <EntityTypeMapping TypeName="AppModel.Pond">
         <MappingFragment StoreEntitySet="Ponds">
+          <ScalarProperty Name="OldPondID" ColumnName="OldPondID" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
           <ScalarProperty Name="HealthStatus" ColumnName="HealthStatus" />
           <ScalarProperty Name="NoFeed" ColumnName="NoFeed" />
           <ScalarProperty Name="Size" ColumnName="Size" />
@@ -127,6 +130,54 @@
           <ScalarProperty Name="ReadingDate" ColumnName="ReadingDate" />
           <ScalarProperty Name="PondId" ColumnName="PondId" />
           <ScalarProperty Name="ReadingId" ColumnName="ReadingId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FarmYieldHeaders">
+      <EntityTypeMapping TypeName="AppModel.FarmYieldHeader">
+        <MappingFragment StoreEntitySet="FarmYieldHeaders">
+          <ScalarProperty Name="WeighBacks" ColumnName="WeighBacks" />
+          <ScalarProperty Name="PlantWeight" ColumnName="PlantWeight" />
+          <ScalarProperty Name="YieldDate" ColumnName="YieldDate" />
+          <ScalarProperty Name="FarmYieldHeaderID" ColumnName="FarmYieldHeaderID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FarmYields">
+      <EntityTypeMapping TypeName="AppModel.FarmYield">
+        <MappingFragment StoreEntitySet="FarmYields">
+          <ScalarProperty Name="PercentYield2" ColumnName="PercentYield2" />
+          <ScalarProperty Name="PercentYield" ColumnName="PercentYield" />
+          <ScalarProperty Name="PoundsHeaded" ColumnName="PoundsHeaded" />
+          <ScalarProperty Name="PoundsPlant" ColumnName="PoundsPlant" />
+          <ScalarProperty Name="PoundsYielded" ColumnName="PoundsYielded" />
+          <ScalarProperty Name="PondID" ColumnName="PondID" />
+          <ScalarProperty Name="YieldDate" ColumnName="YieldDate" />
+          <ScalarProperty Name="YieldID" ColumnName="YieldID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShiftEnds">
+      <EntityTypeMapping TypeName="AppModel.ShiftEnd">
+        <MappingFragment StoreEntitySet="ShiftEnd">
+          <ScalarProperty Name="EmployeesOnVacation" ColumnName="EmployeesOnVacation" />
+          <ScalarProperty Name="InLateOut" ColumnName="InLateOut" />
+          <ScalarProperty Name="DowntimeMinutes" ColumnName="DowntimeMinutes" />
+          <ScalarProperty Name="FilletScaleReading" ColumnName="FilletScaleReading" />
+          <ScalarProperty Name="NightShiftFroze" ColumnName="NightShiftFroze" />
+          <ScalarProperty Name="DayShiftFroze" ColumnName="DayShiftFroze" />
+          <ScalarProperty Name="NightFinishedFreezing" ColumnName="NightFinishedFreezing" />
+          <ScalarProperty Name="DayFinishedFreezing" ColumnName="DayFinishedFreezing" />
+          <ScalarProperty Name="FinishedSkinning" ColumnName="FinishedSkinning" />
+          <ScalarProperty Name="FinishedFillet" ColumnName="FinishedFillet" />
+          <ScalarProperty Name="FinishedKill" ColumnName="FinishedKill" />
+          <ScalarProperty Name="InmateLeftEarly" ColumnName="InmateLeftEarly" />
+          <ScalarProperty Name="TempEmpOut" ColumnName="TempEmpOut" />
+          <ScalarProperty Name="RegEmplLeftEarly" ColumnName="RegEmplLeftEarly" />
+          <ScalarProperty Name="RegEmpOut" ColumnName="RegEmpOut" />
+          <ScalarProperty Name="RegEmpLate" ColumnName="RegEmpLate" />
+          <ScalarProperty Name="ShiftDate" ColumnName="ShiftDate" />
+          <ScalarProperty Name="ShiftEndID" ColumnName="ShiftEndID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

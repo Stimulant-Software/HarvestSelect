@@ -81,6 +81,13 @@
       <End Role="UserFarm" EntitySet="UserFarms" />
       <End Role="O2Readings" EntitySet="O2Readings" />
     </AssociationSet>
+    <EntitySet Name="FarmYieldHeaders" EntityType="AppModel.FarmYieldHeader" />
+    <EntitySet Name="FarmYields" EntityType="AppModel.FarmYield" />
+    <EntitySet Name="ShiftEnds" EntityType="AppModel.ShiftEnd" />
+    <AssociationSet Name="FK_FarmYields_Ponds" Association="AppModel.FK_FarmYields_Ponds">
+      <End Role="Pond" EntitySet="Ponds" />
+      <End Role="FarmYield" EntitySet="FarmYields" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Company">
     <Key>
@@ -150,6 +157,7 @@
     <NavigationProperty Name="Status" Relationship="AppModel.FK_Farms_Statuses" FromRole="Farm" ToRole="Status" />
     <NavigationProperty Name="UserFarms" Relationship="AppModel.FK_UserFarms_Farms" FromRole="Farm" ToRole="UserFarm" />
     <NavigationProperty Name="Ponds" Relationship="AppModel.FK_Ponds_Farms" FromRole="Farm" ToRole="Pond" />
+    <Property Type="Int32" Name="OldFarmId" Nullable="false" />
   </EntityType>
   <EntityType Name="Feeding">
     <Key>
@@ -336,6 +344,9 @@
     <NavigationProperty Name="HealthStatus1" Relationship="AppModel.FK_Ponds_HealthStatuses" FromRole="Pond" ToRole="HealthStatus" />
     <NavigationProperty Name="Status" Relationship="AppModel.FK_Ponds_Statuses" FromRole="Pond" ToRole="Status" />
     <NavigationProperty Name="O2Readings" Relationship="AppModel.FK_O2Readings_Ponds" FromRole="Pond" ToRole="O2Readings" />
+    <Property Type="Int32" Name="SortOrder" Nullable="false" />
+    <Property Type="Int32" Name="OldPondID" Nullable="false" />
+    <NavigationProperty Name="FarmYields" Relationship="AppModel.FK_FarmYields_Ponds" FromRole="Pond" ToRole="FarmYield" />
   </EntityType>
   <Association Name="FK_Ponds_Farms">
     <End Type="AppModel.Farm" Role="Farm" Multiplicity="1" />
@@ -404,7 +415,7 @@
     <Property Type="Int32" Name="ReadingId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Type="Int32" Name="PondId" Nullable="false" />
     <Property Type="DateTime" Name="ReadingDate" Nullable="false" Precision="3" />
-    <Property Type="Decimal" Name="O2Level" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="O2Level" Nullable="false" Precision="18" Scale="4" />
     <Property Type="Int32" Name="PortableCount" Nullable="false" />
     <Property Type="Int32" Name="StaticCount" Nullable="false" />
     <Property Type="Int32" Name="UsersFarmId" Nullable="false" />
@@ -434,6 +445,64 @@
       </Principal>
       <Dependent Role="O2Readings">
         <PropertyRef Name="UsersFarmId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="FarmYieldHeader">
+    <Key>
+      <PropertyRef Name="FarmYieldHeaderID" />
+    </Key>
+    <Property Type="Int32" Name="FarmYieldHeaderID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="YieldDate" Nullable="false" Precision="3" />
+    <Property Type="Decimal" Name="PlantWeight" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="WeighBacks" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="FarmYield">
+    <Key>
+      <PropertyRef Name="YieldID" />
+    </Key>
+    <Property Type="Int32" Name="YieldID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="YieldDate" Nullable="false" Precision="3" />
+    <Property Type="Int32" Name="PondID" Nullable="false" />
+    <Property Type="Decimal" Name="PoundsYielded" Nullable="false" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PoundsPlant" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PoundsHeaded" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PercentYield" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="PercentYield2" Precision="18" Scale="2" />
+    <NavigationProperty Name="Pond" Relationship="AppModel.FK_FarmYields_Ponds" FromRole="FarmYield" ToRole="Pond" />
+  </EntityType>
+  <EntityType Name="ShiftEnd">
+    <Key>
+      <PropertyRef Name="ShiftEndID" />
+    </Key>
+    <Property Type="Int32" Name="ShiftEndID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Type="DateTime" Name="ShiftDate" Nullable="false" Precision="3" />
+    <Property Type="Int32" Name="RegEmpLate" />
+    <Property Type="Int32" Name="RegEmpOut" />
+    <Property Type="Int32" Name="RegEmplLeftEarly" />
+    <Property Type="Int32" Name="TempEmpOut" />
+    <Property Type="Int32" Name="InmateLeftEarly" />
+    <Property Type="DateTime" Name="FinishedKill" Precision="3" />
+    <Property Type="DateTime" Name="FinishedFillet" Precision="3" />
+    <Property Type="DateTime" Name="FinishedSkinning" Precision="3" />
+    <Property Type="DateTime" Name="DayFinishedFreezing" Precision="3" />
+    <Property Type="DateTime" Name="NightFinishedFreezing" Precision="3" />
+    <Property Type="Decimal" Name="DayShiftFroze" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="NightShiftFroze" Precision="18" Scale="2" />
+    <Property Type="Decimal" Name="FilletScaleReading" Precision="18" Scale="2" />
+    <Property Type="Int32" Name="DowntimeMinutes" />
+    <Property Type="Int32" Name="InLateOut" />
+    <Property Type="Int32" Name="EmployeesOnVacation" />
+  </EntityType>
+  <Association Name="FK_FarmYields_Ponds">
+    <End Type="AppModel.Pond" Role="Pond" Multiplicity="1" />
+    <End Type="AppModel.FarmYield" Role="FarmYield" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pond">
+        <PropertyRef Name="PondId" />
+      </Principal>
+      <Dependent Role="FarmYield">
+        <PropertyRef Name="PondID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

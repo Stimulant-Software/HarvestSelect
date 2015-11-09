@@ -172,6 +172,12 @@ body.at > header {
     border-top: 1px solid #87ce4f;
     border-bottom: 1px solid #1a1e24;
 }
+body.op > header {
+    background-color: #6F5015;
+    background-image: -webkit-linear-gradient(top, #1a1e24, #6F5015);
+    border-top: 1px solid #6F5015;
+    border-bottom: 1px solid #6F5015;
+}
 
 body > header h1 {
     background: url(images/alt-logo.png) no-repeat left center;
@@ -186,6 +192,7 @@ nav {
 
 .ct nav { background-color: #3f8b97; background-image: -webkit-linear-gradient(top, #49a1af, #3f8b97); }
 .at nav { background-color: #156f23; }
+.op nav { background-color: #6F5015; }
 
 .login nav {display: none; }
 
@@ -218,6 +225,12 @@ nav .activePage {
     border-top: 1px solid #1a1e24;
 }
 
+.op nav .activePage {
+    border-left: 2px solid #6F5015;
+    border-right: 2px solid #1a1e24;
+    border-top: 1px solid #1a1e24;
+}
+
 nav a {
     color: #f5f5f5;
     text-decoration: none;
@@ -234,6 +247,10 @@ nav .activePage a {
 }
 
 .at nav .activePage a {
+    color: #1a1e24;
+}
+
+.op nav .activePage a {
     color: #1a1e24;
 }
 
@@ -264,6 +281,12 @@ header.farm {
 .at header.farm {
     background-color: #87CE4F;
     background-image: -webkit-linear-gradient(top, #1A1E24, #87CE4F);
+    border: 1px solid #000;
+}
+
+.op header.farm {
+    background-color: #6F5015;
+    background-image: -webkit-linear-gradient(top, #1A1E24, #6F5015);
     border: 1px solid #000;
 }
 
