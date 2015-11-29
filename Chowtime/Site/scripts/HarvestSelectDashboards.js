@@ -15,6 +15,7 @@ $(function () {
     if ($('.shift-end').length > 0) { showProgress(); shiftEnd(); }
     if ($('.live-sample').length > 0) { showProgress(); liveSample(); }
     if ($('.weekly-report').length > 0) { showProgress(); weeklyReport(); }
+    if ($('.op-report').length > 0) { showProgress(); weeklyReport(); }
 });
 
 /* Login page */
