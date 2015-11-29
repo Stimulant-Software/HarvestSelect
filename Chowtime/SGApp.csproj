@@ -145,11 +145,13 @@
     <Compile Include="Controllers\JMremoteController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PondController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ShiftEndController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
+    <Compile Include="DTOs\DailyReportDTO.cs" />
     <Compile Include="DTOs\FarmDTO.cs" />
     <Compile Include="DTOs\FarmFeedDTO.cs" />
     <Compile Include="DTOs\FarmO2DTO.cs" />
