@@ -637,79 +637,8 @@ function weeklyReport() {
     });
 
     function loadCalendar() {
-        //var searchQuery = { "Key": _key }, data = JSON.stringify(searchQuery), samplingDates = [];
-        
         $('#mainContent').hide();
         $('#calendarModal .modal-body').fullCalendar({
-            /*events: function (start, end, timezone, refetchEvents) {
-                $.when(hideProgress()).then(function () {
-                    showProgress('body');
-                    var view = $('#calendarModal .modal-body').fullCalendar('getView');
-
-                    stateDateYear = view.start._d.getFullYear();
-                    if (view.start._d.getMonth() == 11) { startDateMonth = 1; startDateYear = view.start._d.getFullYear() - 1; } // looking at January
-                    else if (view.start._d.getMonth() == 10) startDateMonth == 12; // looking at December
-                    else startDateMonth = view.start._d.getMonth() + 2; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
-
-                    var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
-                    $.when($.ajax('../api/LiveFishSampling/LiveFishSamplingList', {
-                        type: 'POST',
-                        data: data,
-                        success: function (msg) {
-                            localStorage['CT_key'] = msg['Key'];
-                            startTimer(msg.Key);
-                            sampleList = msg['ReturnData'];
-                            for (var i = 0; i < sampleList.length; i++) {
-                                var sampleDate = sampleList[i].SamplingDate.split(" ")[0];
-                                results.push(sampleDate);
-                            }
-                        }
-                    })).then(function () {
-                        hideProgress();
-                        $('#calendarModal').modal();
-                        var events = [];
-                        for (var event in results) {
-                            var obj = {
-                                title: "EDIT",
-                                start: results[event],
-                                end: results[event],
-                                allDay: true
-                            };
-                            events.push(obj);
-                        }
-                        refetchEvents(events);
-                    });
-                });
-            },
-            eventClick: function (event) {
-                date = event.start._i, searchQuery = { "Key": _key, "SamplingDate": date }, data = JSON.stringify(searchQuery);
-                $.when($.ajax('../api/LiveFishSampling/LiveFishSamplingList', {
-                    type: 'POST',
-                    data: data,
-                    success: function (msg) {
-                        localStorage['CT_key'] = msg['Key'];
-                        startTimer(msg.Key);
-                        sampleData = msg['ReturnData'][0];
-                        $('#rowContainer').empty();
-                        $('.date-select h3').remove();
-                        $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                        $('#Pct0_125').val(sampleData.Pct0_125);
-                        $('#Avg0_125').val(sampleData.Avg0_125);
-                        $('#Pct125_225').val(sampleData.Pct125_225);
-                        $('#Avg125_225').val(sampleData.Avg125_225);
-                        $('#Pct225_3').val(sampleData.Pct225_3);
-                        $('#Avg225_3').val(sampleData.Avg225_3);
-                        $('#Pct3_5').val(sampleData.Pct3_5);
-                        $('#Avg3_5').val(sampleData.Avg3_5);
-                        $('#Pct5_Up').val(sampleData.Pct5_Up);
-                        $('#Avg5_Up').val(sampleData.Avg5_Up);
-                        addOrEdit = sampleData.SamplingID;
-                    }
-                })).then(function () {
-                    $('#calendarModal').modal('hide');
-                    $('.row.fields, .row.buttons').css('opacity', 1);
-                });
-            },*/
             dayClick: function () {
                 showProgress('body');
                 $('#rowContainer').empty();
@@ -724,19 +653,8 @@ function weeklyReport() {
                     success: function (msg) {
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
-                        //console.log(msg);
-                        var $employeesHtml, $employeesData = msg.Employees[0], $finishedHtml = '<ul class="list-unstyled">', $finishedData = msg.Finish[0], $freezingsHtml = '<ul class="list-unstyled clearfix">', $freezingsData = msg.Freezing[0], $samplingsSeries = [{}], $samplingsSeriesAvg = [{}], $samplingsSeriesPct = [{}], $samplingsData = msg.Samplings[0], $headerData = msg.Header[0], $pondsData = msg.Ponds, $pondsHtml = '<ul class="list-unstyled"><li class="row header"><span class="col-xs-3 date">Farm</span><span class="col-xs-3 pond">Pond</span><span class="col-xs-3 pounds">Pounds</span><span class="col-xs-3 yield">Yield</span></li>', $totalPounds = 0, $totalPct = 0;
-                        //console.log(Date.UTC(1970, 10, 1, parseFloat($finishedData.FinishedKill.split(":")[0]), parseFloat($finishedData.FinishedKill.split(":")[1]), 1));
-                        //console.log(1970, 10, 1, parseFloat($finishedData.FinishedKill.split(":")[0]), parseFloat($finishedData.FinishedKill.split(":")[1]), 1);
-                        //console.log($finishedData.FinishedKill);
-
-                        /* SUMMARY */
-                        $('#pondWeight').empty().append($headerData.PondWeight != "" ? $headerData.PondWeight : "Not Entered");
-                        $('#weighBacks').empty().append($headerData.WeighBacks != "" ? $headerData.WeighBacks : "Not Entered");
-                        $('#plantWeight').empty().append($headerData.PlantWeight != "" ? $headerData.PlantWeight : "Not Entered");
-                        $('#totalPounds').empty().append($headerData.TotalPounds != "" ? $headerData.TotalPounds : "Not Entered");
-                        $('#difference').empty().append($headerData.Variance != "" ? $headerData.Variance : "--");
-                        $('#downTime').empty().append($headerData.DownTime != "" ? $headerData.DownTime : "Not Entered");
+                        console.log(msg);
+                        var $employeesHtml, $employeesData = msg.Employees[0], $finishedHtml = '<ul class="list-unstyled">', $finishedData = msg.Finish[0], $freezingsHtml = '<ul class="list-unstyled clearfix">', $freezingsData = msg.Freezing[0], $headerData = msg.Header[0], $pondsData = msg.Ponds, $pondsHtml = '<ul class="list-unstyled"><li class="row header"><span class="col-xs-3 date">Farm</span><span class="col-xs-3 pond">Pond</span><span class="col-xs-3 pounds">Pounds</span><span class="col-xs-3 yield">Yield</span></li>', $totalPounds = 0, $totalPct = 0;
 
                         /* EMPLOYEE DATA */
                         var regTotal = parseFloat($employeesData.RegEmpOut) + parseFloat($employeesData.RegEmpLate) + parseFloat($employeesData.RegEmplLeftEarly) + parseFloat($employeesData.EmployeesOnVacation);
@@ -744,11 +662,11 @@ function weeklyReport() {
                         var outTotal = parseFloat($employeesData.RegEmpOut) + parseFloat($employeesData.TempEmpOut) + parseFloat($employeesData.InLateOut);
                         var leftEarlyTotal = parseFloat($employeesData.RegEmplLeftEarly) + parseFloat($employeesData.InmateLeftEarly);
                         var allTotal = regTotal + inmateTotal + outTotal + leftEarlyTotal + parseFloat($employeesData.TempEmpOut) + parseFloat($employeesData.RegEmpLate) + parseFloat($employeesData.EmployeesOnVacation);
-                        $employeesHtml = '<table><tr><th></th><th>OUT</th><th>LATE</th><th>LEFT EARLY</th><th>VAC</th><th class="total">TOTAL</th></tr>';
-                        $employeesHtml += '<tr><th>REG</th><td class="tablenumbers">' + $employeesData.RegEmpOut + '</td><td class="tablenumbers">' + $employeesData.RegEmpLate + '</td><td class="tablenumbers">' + $employeesData.RegEmplLeftEarly + '</td><td class="tablenumbers">' + $employeesData.EmployeesOnVacation + '</td><td class="tablenumbers total">' + regTotal.toString() + '</td></tr>';
+                        $employeesHtml = '<table><thead><tr><th></th><th>OUT</th><th>LATE</th><th>LEFT EARLY</th><th>VAC</th><th class="total">TOTAL</th></tr></thead>';
+                        $employeesHtml += '<tbody><tr><th>REG</th><td class="tablenumbers">' + $employeesData.RegEmpOut + '</td><td class="tablenumbers">' + $employeesData.RegEmpLate + '</td><td class="tablenumbers">' + $employeesData.RegEmplLeftEarly + '</td><td class="tablenumbers">' + $employeesData.EmployeesOnVacation + '</td><td class="tablenumbers total">' + regTotal.toString() + '</td></tr>';
                         $employeesHtml += '<tr><th>TEMP</th><td class="tablenumbers">' + $employeesData.TempEmpOut + '</td><td class="tablenumbers">' + '-' + '</td><td class="tablenumbers">' + '-' + '</td><td class="tablenumbers">' + '-' + '</td><td class="tablenumbers total">' + $employeesData.TempEmpOut + '</td></tr>';
                         $employeesHtml += '<tr><th>INMATE</th><td class="tablenumbers">' + $employeesData.InLateOut + '</td><td class="tablenumbers">' + '-' + '</td><td class="tablenumbers">' + $employeesData.InmateLeftEarly + '</td><td class="tablenumbers">' + '-' + '</td><td class="tablenumbers total">' + inmateTotal.toString() + '</td></tr>';
-                        $employeesHtml += '<tr><th class="total">TOTAL</th><td class="tablenumbers total">' + outTotal.toString() + '</td><td class="tablenumbers total">' + $employeesData.RegEmpLate + '</td><td class="tablenumbers total">' + leftEarlyTotal.toString() + '</td><td class="tablenumbers total">' + $employeesData.EmployeesOnVacation + '</td><td class="tablenumbers total">' + allTotal.toString() + '</td></tr></table>';
+                        $employeesHtml += '<tr><th class="total">TOTAL</th><td class="tablenumbers total">' + outTotal.toString() + '</td><td class="tablenumbers total">' + $employeesData.RegEmpLate + '</td><td class="tablenumbers total">' + leftEarlyTotal.toString() + '</td><td class="tablenumbers total">' + $employeesData.EmployeesOnVacation + '</td><td class="tablenumbers total">' + allTotal.toString() + '</td></tr><tbody></table>';
                         $('.reports .employees .report-container').append($employeesHtml);
 
                         /* FREEZINGS */
@@ -758,82 +676,13 @@ function weeklyReport() {
                                     var result = input.replace(/([A-Z]+)/g, ",$1").replace(/^,/, "").replace(/,/g, ' ');
                                     return result;
                                 }
-                                $freezingsHtml += '<li class="col-xs-4"><div><strong>' + UpperCaseArray(key) + ':</strong><span>' + $freezingsData[key] + '</span></div></li>';
+                                $freezingsHtml += '<li class="col-xs-12"><div><strong>' + UpperCaseArray(key) + ':</strong><span>' + $freezingsData[key] + '</span></div></li>';
                             }
                         }
                         $freezingsHtml += "</ul>";
                         $('.reports .freezings .report-container').append($freezingsHtml);
 
-                        /* FINISHED */
-                        //for (var key in $finishedData) {
-                        //    if ($finishedData.hasOwnProperty(key)) {
-                        //        $finishedHtml += '<li><strong>' + key + ':</strong><span class="pull-right">' + $finishedData[key] + '</span></li>';
-                        //    }
-                        //}
-                        //$finishedHtml += "</ul>";
                         
-                        //$('#finishData').append("2015-01-01 " + $finishedData.NightFinishedFreezing + ", 1, Night Finished Freezing");
-                        //$('#finishData').append("2015-01-01 " + $finishedData.FinishedKill + ", 1, Finished Kill");
-                        //$('#finishData').append("2015-01-01 " + $finishedData.FinishedSkinning + ", 1, Finished Skinning");
-                        //$('#finishData').append("2015-01-01 " + $finishedData.FinishedFillet + ", 1, Finished Filet");
-                        //$('#finishData').append("2015-01-01 " + $finishedData.DayFinishedFreezing + ", 1, Day Finished Freezing");
-                        //$('.reports .finished .report-container').append($finishedHtml);
-
-                        //for (var obj in $samplingsData) {
-                        //    if ($samplingsData.hasOwnProperty(obj)) {
-                        //        if(obj.substring(0,3) == "Avg") {
-                        //            var newobj = [obj, parseFloat($samplingsData[obj])];
-                        //            $samplingsSeriesAvg.push(newobj);
-                        //        } else if (obj.substring(0, 3) == "Pct") {
-                        //            var newobj = [obj, parseFloat($samplingsData[obj])];
-                        //            $samplingsSeriesPct.push(newobj);
-                        //        }
-                        //    }
-                        //}
-                        //for (var i = 0; i < $samplingsSeriesPct.length; i++) {
-                        //    if (typeof $samplingsSeriesPct[i][0] !== "undefined") {
-                        //        var obj = {
-                        //            name: $samplingsSeriesPct[i][0].replace("Pct", ""),
-                        //            y: $samplingsSeriesPct[i][1],
-                        //            tooltip: $samplingsSeriesAvg[i][1]
-                        //        }
-                        //        $samplingsSeries.push(obj);
-                        //    }
-                        //}
-                        //console.log($samplingsSeries);
-                        //$(function () {
-                        //    $('.reports .samplings').highcharts({
-                        //        chart: {
-                        //            plotBackgroundColor: null,
-                        //            plotBorderWidth: null,
-                        //            plotShadow: false
-                        //        },
-                        //        title: {
-                        //            text: 'Samplings'
-                        //        },
-                        //        tooltip: {
-                        //            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                        //        },
-                        //        plotOptions: {
-                        //            pie: {
-                        //                allowPointSelect: true,
-                        //                cursor: 'pointer',
-                        //                dataLabels: {
-                        //                    enabled: true,
-                        //                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                        //                    style: {
-                        //                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                        //                    }
-                        //                }
-                        //            }
-                        //        },
-                        //        series: [{
-                        //            type: 'pie',
-                        //            name: 'Browser share',
-                        //            data: $samplingsSeries
-                        //        }]
-                        //    });
-                        //});
                          var finishcsv = "Date,Distance,Label\n2015-01-01 " + $finishedData.NightFinishedFreezing + ", 1, Night Finished Freezing\n2015-01-01 " + $finishedData.FinishedKill + ", 1, Finished Kill\n2015-01-01 " + $finishedData.FinishedSkinning + ", 1, Finished Skinning\n2015-01-01 " + $finishedData.FinishedFillet + ", 1, Finished Filet\n2015-01-01 " + $finishedData.DayFinishedFreezing + ", 1, Day Finished Freezing";
                         console.log(finishcsv);
                          $('#finishcontainer').highcharts({
@@ -888,49 +737,6 @@ function weeklyReport() {
 
 
                         });
-                        //for (var key in $samplingsData) {
-                        //    if ($samplingsData.hasOwnProperty(key)) {
-                        //        $samplingsHtml += "<li><strong>" + key + ":</strong> " + $samplingsData[key] + "</li>";
-                        //    }
-                        //}
-                        //$samplingsHtml += "</ul>";
-                        //$('.reports .samplings').append($samplingsHtml);
-                        
-                        /* SAMPLINGS */
-                        $('#samplingContainer').highcharts({
-                            chart: {
-                                plotBackgroundColor: null,
-                                plotBorderWidth: null,
-                                plotShadow: false
-                            },
-                            title: {
-                                text: ''
-                            },
-                            tooltip: {
-                                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-                            },
-                            plotOptions: {
-                                pie: {
-                                    allowPointSelect: true,
-                                    cursor: 'pointer',
-                                    dataLabels: {
-                                        enabled: false
-                                    },
-                                    showInLegend: true
-                                }
-                            },
-                            series: [{
-                                type: 'pie',
-                                name: 'Size',
-                                data: [
-                                    ['0-1.25 lbs (Avg:' + $samplingsData.Avg0_125 + ')', parseFloat($samplingsData.Pct0_125)],
-                                    ['1.25-2.25 lbs (Avg:' + $samplingsData.Avg125_225 + ')', parseFloat($samplingsData.Pct125_225)],
-                                    ['2.25-3 lbs (Avg:' + $samplingsData.Avg225_3 + ')', parseFloat($samplingsData.Pct225_3)],
-                                    ['3-5 lbs (Avg:' + $samplingsData.Avg3_5 + ')', parseFloat($samplingsData.Pct3_5)],
-                                    ['5 lbs & up (Avg:' + $samplingsData.Avg5_Up + ')', parseFloat($samplingsData.Pct5_Up)]
-                                ]
-                            }]
-                        });
                         
                         /* PONDS / FARM YIELDS */
                         for (var pond in $pondsData) {
@@ -940,9 +746,9 @@ function weeklyReport() {
                         }
                         var $avgYield = $totalPct / $pondsData.length;
                         var $whatToCallMe = $totalPounds * ($avgYield/100);
-                        $pondsHtml += '<li class="totals"><span class="col-xs-4"><strong>Total Pounds:</strong><span class="pull-right">' + $totalPounds + '</span></span>';
-                        $pondsHtml += '<span class="col-xs-4"><strong>Avg Yield:</strong><span class="pull-right">' + $avgYield + '</span></span>';
-                        $pondsHtml += '<span class="col-xs-4"><strong>Sum*Avg Yield:</strong><span class="pull-right">' + $whatToCallMe + '</span></span></li><ul>';
+                        $pondsHtml += '<li class="totals"><span class="col-xs-2 col-xs-offset-3"><strong>Total Pounds:</strong><span>' + $totalPounds + '</span></span>';
+                        $pondsHtml += '<span class="col-xs-2"><strong>Avg Yield:</strong><span>' + $avgYield + '</span></span>';
+                        $pondsHtml += '<span class="col-xs-2"><strong>Sum*Avg Yield:</strong><span>' + Math.round($whatToCallMe) + '</span></span></li><ul>';
                         $('.farm-yields').append($pondsHtml).hide();
                         $('.farm-yields-report').unbind().click(function (e) {
                             e.preventDefault();
