@@ -44,24 +44,6 @@ C:\Users\jharper\Documents\SG\SGApp\SGApp\bin\tr\FluentValidation.resources.dll
 C:\Users\jharper\Documents\SG\SGApp\SGApp\obj\Debug\SGApp.dll
 C:\Users\jharper\Documents\SG\SGApp\SGApp\obj\Debug\SGApp.pdb
 C:\Users\jharper\Documents\SG\SGApp\SGApp\obj\Debug\SGApp.csprojResolveAssemblyReference.cache
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\SGApp.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\SGApp.pdb
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\Microsoft.Web.Infrastructure.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\MoreLinq.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.Helpers.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.Razor.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.Deployment.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.Razor.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\MoreLinq.xml
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\Microsoft.Web.Infrastructure.xml
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.Helpers.xml
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.Razor.xml
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.xml
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.Deployment.xml
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.Razor.xml
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\obj\Debug\SGApp.dll
-C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\obj\Debug\SGApp.pdb
 F:\StimulantGroup\HarvestSelect\Chowtime\bin\SGApp.dll.config
 F:\StimulantGroup\HarvestSelect\Chowtime\bin\SGApp.dll
 F:\StimulantGroup\HarvestSelect\Chowtime\bin\SGApp.pdb
@@ -83,3 +65,22 @@ F:\StimulantGroup\HarvestSelect\Chowtime\bin\System.Web.WebPages.Razor.xml
 F:\StimulantGroup\HarvestSelect\Chowtime\obj\Debug\SGApp.csprojResolveAssemblyReference.cache
 F:\StimulantGroup\HarvestSelect\Chowtime\obj\Debug\SGApp.dll
 F:\StimulantGroup\HarvestSelect\Chowtime\obj\Debug\SGApp.pdb
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\SGApp.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\SGApp.pdb
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\MoreLinq.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.Helpers.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.Razor.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.Razor.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\MoreLinq.xml
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\Microsoft.Web.Infrastructure.xml
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.Helpers.xml
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.Razor.xml
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.xml
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\bin\System.Web.WebPages.Razor.xml
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\obj\Debug\SGApp.csprojResolveAssemblyReference.cache
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\obj\Debug\SGApp.dll
+C:\Users\Jeremy Harper\Documents\HarvestSelect\Chowtime\obj\Debug\SGApp.pdb
