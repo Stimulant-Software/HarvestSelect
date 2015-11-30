@@ -35,29 +35,11 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .op nav a:hover { background-color: #fff; color:  #6F5015; text-decoration: none; }
 .op .btn, .op button { background: #6F5015; color: #fff; text-shadow: none; }
 .op #main_content header { background-color: #917031; width: 850px; text-align: center; margin: 10px auto; padding: 10px 20px; border-radius: 4px; }
-.op #main_content .report-container header { color: #fff; font-weight: bold; width: auto; line-height: 26px; text-transform: uppercase; }
-.op .report-container header img { height: 24px; margin-right: 10px; position: relative; top: 6px; }
-.op header select { font-size: initial; padding: initial; background-color: #fff; min-width: 200px; }
+.op #main_content .report-container header { color: #fff; font-weight: bold; width: auto; }
+.op .report-container header img { height: 40px; }
+.op header select { font-size: initial; padding: initial; background-color: #fff; min-width: 200px;  }
 .op header label { width: initial; font-size: initial; margin-bottom: initial; }
 .op header input[type="text"], .op header input[type="time"], .op header input[type="number"] { width: initial; font-size: initial; margin-bottom: initial; background-color: initial; }
-.op .employees table { width: 100%; background-color: #fff; border: 1px solid #000; }
-.op .employees thead { background-color: #000; color: #fff; }
-.op .employees thead th { text-align: right; }
-.op .employees th { font-weight: bold; }
-.op .employees th, .op .employees td { padding: 5px; }
-.op .employees td { text-align: right; }
-.op .employees tbody tr:nth-child(even) { background-color: #efefef; }
-.op .employees tbody td:nth-child(last) { background-color: #cecece; font-weight: bold; }
-.op .freezings ul { background-color: #fff; padding: 10px 0 0; border: 1px solid #000; }
-.op .freezings li { margin-bottom: 10px; }
-.op .freezings li strong { margin-right: 7px; }
-.op #main_content .farm-yields-report .pond { border: none; background: transparent; margin: auto; text-align: left; overflow: initial; width: 25%; }
-.op #main_content .farm-yields-report .header { border-bottom: 1px solid #000; font-weight: bold; margin: 0 0 10px; }
-.op .farm-yields-report .totals { padding: 15px 0 0; }
-.op .farm-yields-report .totals strong { margin-right: 7px; }
-.op .farm-yields-report .row { margin: 0; }
-.op .farm-yields-report .totals:after { content: ''; display: block; clear: both; }
-.op .farm-yields-report ul { background-color: #fff; border: 1px solid #000; }
 
 .fc-event { cursor: pointer; }
 
