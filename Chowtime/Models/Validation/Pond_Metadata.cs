@@ -43,6 +43,18 @@ namespace SGApp.Models.Validation
             set;
         }
 
+        public string  InnovaName
+        {
+            get;
+            set;
+        }
+
+        public string InnovaCode
+        {
+            get;
+            set;
+        }
+
         [StringLength(50, ErrorMessage = Constants.Max50)]
         public int PondName
         {

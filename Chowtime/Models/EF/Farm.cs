@@ -25,6 +25,8 @@ namespace SGApp.Models.EF
         public string FarmName { get; set; }
         public int CompanyId { get; set; }
         public int OldFarmId { get; set; }
+        public string InnovaName { get; set; }
+        public string InnovaCode { get; set; }
     
         public virtual Company Company { get; set; }
         public virtual Status Status { get; set; }

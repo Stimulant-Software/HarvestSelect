@@ -75,6 +75,10 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .farm-yields .data.complete select, .farm-yields .data.complete input { background-color: lightgreen; }
 .farm-yields .data { margin-bottom: 20px; }
 .farm-yields .data img {height: 50px; }
+.farmDDLLabel {
+    font-size: 25px;
+    margin: 20px;
+}
 
 .shift-end .fields { margin: 10px 0; }
 .shiftForm { opacity: 0; }

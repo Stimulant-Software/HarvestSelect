@@ -31,6 +31,8 @@ namespace SGApp.Models.EF
         public int HealthStatus { get; set; }
         public int SortOrder { get; set; }
         public int OldPondID { get; set; }
+        public string InnovaName { get; set; }
+        public string InnovaCode { get; set; }
     
         public virtual Farm Farm { get; set; }
         public virtual ICollection<Feeding> Feedings { get; set; }

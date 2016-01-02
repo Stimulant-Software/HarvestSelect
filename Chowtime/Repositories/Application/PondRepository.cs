@@ -55,6 +55,12 @@ namespace SGApp.Repository.Application
             .OrderBy(x => x.PondName).ToList();
         }
 
+        public Pond GetPondFromInnovaName(string n)
+        {
+
+            return DbContext.Ponds.Where(x => x.InnovaName == n).FirstOrDefault();
+        }
+
         public IList<Pond> GetActivePonds(int farmID)
         {
             int activeStatusID = DbContext.Statuses.Where(x => x.StatusName == "Active").Single().StatusId;

@@ -62,6 +62,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -166,6 +167,7 @@
     <Compile Include="DTOs\O2ReadingDTO.cs" />
     <Compile Include="DTOs\PondDTO.cs" />
     <Compile Include="DTOs\ReturnDTO.cs" />
+    <Compile Include="DTOs\Samplings.cs" />
     <Compile Include="DTOs\ShiftEndDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="DTOs\UserFarmDTO.cs" />
@@ -412,6 +414,7 @@
     <Content Include="Site\content\images\plus.png" />
     <Content Include="Site\content\images\red_body_bg.jpg" />
     <Content Include="Site\content\images\reports.png" />
+    <Content Include="Site\content\images\save.png" />
     <Content Include="Site\content\images\shift-end.png" />
     <Content Include="Site\content\images\yellow_body_bg.jpg" />
     <Content Include="Site\ct-entry.html" />

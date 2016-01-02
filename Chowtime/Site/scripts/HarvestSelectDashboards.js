@@ -189,21 +189,27 @@ function farmYields() {
                     });
                 },
             dayClick: function () {
-                $('#rowContainer').empty();
-                $('.plantpounds, .yield-labels').css('opacity', 1);
-                date = $(this).data('date');
+                //$('#rowContainer').empty();
+                //$('.plantpounds, .yield-labels').css('opacity', 1);
+                //date = $(this).data('date');
 
-                var newRowHtml = '<section class="row row0 data" data-rownum="0" data-yieldid="-1"><div class="col-xs-2"><select id="farms0" class="farmDDL"></select></div><div class="col-xs-2"><select id="ponds0" class="pondsDDL"><option>(Pond)</option></select></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds0" class="pounds table-numbers" type="text"><input placeholder="(Headed Weight)" id="headedpounds0" class="headedpounds table-numbers" type="text"><input placeholder="(% Yield1)" id="pctyield1_0" class="pctyield1 table-numbers" type="text"><input placeholder="(% Yield2)" id="pctyield2_0" class="pctyield2 table-numbers" type="text"></div><div class="col-xs-2"><a href="#" class="add-row"><img src="content/images/plus.png"></a><a href="#" class="delete-row"><img src="content/images/close.png"></a></div></section>';
+                //var newRowHtml = '<section class="row row0 data" data-rownum="0" data-yieldid="-1"><div class="col-xs-2"><select id="farms0" class="farmDDL"></select></div><div class="col-xs-2"><select id="ponds0" class="pondsDDL"><option>(Pond)</option></select></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds0" class="pounds table-numbers" type="text"><input placeholder="(Headed Weight)" id="headedpounds0" class="headedpounds table-numbers" type="text"><input placeholder="(% Yield1)" id="pctyield1_0" class="pctyield1 table-numbers" type="text"><input placeholder="(% Yield2)" id="pctyield2_0" class="pctyield2 table-numbers" type="text"></div><div class="col-xs-2"><a href="#" class="add-row"><img src="content/images/plus.png"></a><a href="#" class="delete-row"><img src="content/images/close.png"></a></div></section>';
 
-                $.when($('#rowContainer').append(newRowHtml)).then(function () {
-                    loadFarmsDDL(0);
-                    $('.row.buttons').show();
+                //$.when($('#rowContainer').append(newRowHtml)).then(function () {
+                //    loadFarmsDDL(0);
+                //    $('.row.buttons').show();
+                //});
+                //i = 1;
+                //bindYieldButtons();
+                //$('.date-select h3').remove();
+                //$('.date-select').append("<h3><strong>" + date + "</strong></h3>");
+                //$('#calendarModal').modal('hide');
+
+                var chosenDate = $(this).data('date');
+                $.when(loadEditFarmYields(chosenDate)).then(function () {
+                    $('#calendarModal').modal('hide');
                 });
-                i = 1;
                 bindYieldButtons();
-                $('.date-select h3').remove();
-                $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                $('#calendarModal').modal('hide');
             },
             eventClick: function (calEvent) {
                 var chosenDate = calEvent.start._i;
@@ -237,7 +243,7 @@ function farmYields() {
                 $('#weighbacks').val(weighBacks);
             }
         });
-        $.ajax('../api/FarmYield/FarmYieldList', {
+        $.ajax('../api/FarmYield/FarmYieldsFromSamplings', {
             type: 'POST',
             data: data,
             success: function (msg) {
@@ -246,22 +252,22 @@ function farmYields() {
                 farmYieldData = msg['ReturnData'];
                 $('#rowContainer').empty();
                 $('.date-select h3').remove();
-                $('.date-select').append("<h3><strong>" + farmYieldData[0].YieldDate + "</strong></h3>");
+                $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
                 for (var i = 0; i < farmYieldData.length; i++) {
-                    var newRowHtml = '<section class="row row' + farmYieldData[i].YieldId + ' data" data-rownum="' + farmYieldData[i].YieldId + '" data-yieldid="' + farmYieldData[i].YieldId + '"><div class="col-xs-2"><select id="farms' + farmYieldData[i].YieldId + '" class="farmDDL"></select></div><div class="col-xs-2"><select id="ponds' + farmYieldData[i].YieldId + '" class="pondsDDL"><option>(Pond)</option></select></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds' + farmYieldData[i].YieldId + '" class="pounds table-numbers" type="text" value="' + farmYieldData[i].PoundsYielded + '"><input placeholder="(Headed Weight)" id="headedpounds' + farmYieldData[i].YieldId + '" class="headedpounds table-numbers" type="text" value="' + farmYieldData[i].PoundsHeaded + '"><input placeholder="(% Yield1)" id="pctyield1_' + farmYieldData[i].YieldId + '" class="pctyield1 table-numbers" type="text" value="' + farmYieldData[i].PercentYield + '"><input placeholder="(% Yield2)" id="pctyield2_' + farmYieldData[i].YieldId + '" class="pctyield2 table-numbers" type="text" value="' + farmYieldData[i].PercentYield2 + '"></div><div class="col-xs-2"><a href="#" class="add-row"><img src="content/images/plus.png"></a><a href="#" class="delete-row"><img src="content/images/close.png"></a></div></section>';
+                    //var newRowHtml = '<section class="row row' + farmYieldData[i].YieldId + ' data" data-rownum="' + farmYieldData[i].YieldId + '" data-yieldid="' + farmYieldData[i].YieldId + '"><div class="col-xs-2"><select id="farms' + farmYieldData[i].YieldId + '" class="farmDDL"></select></div><div class="col-xs-2"><select id="ponds' + farmYieldData[i].YieldId + '" class="pondsDDL"><option>(Pond)</option></select></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds' + farmYieldData[i].YieldId + '" class="pounds table-numbers" type="text" value="' + farmYieldData[i].PoundsYielded + '"><input placeholder="(Headed Weight)" id="headedpounds' + farmYieldData[i].YieldId + '" class="headedpounds table-numbers" type="text" value="' + farmYieldData[i].PoundsHeaded + '"><input placeholder="(% Yield1)" id="pctyield1_' + farmYieldData[i].YieldId + '" class="pctyield1 table-numbers" type="text" value="' + farmYieldData[i].PercentYield + '"><input placeholder="(% Yield2)" id="pctyield2_' + farmYieldData[i].YieldId + '" class="pctyield2 table-numbers" type="text" value="' + farmYieldData[i].PercentYield2 + '"></div><div class="col-xs-2"><a href="#" class="add-row"><img src="content/images/plus.png"></a><a href="#" class="delete-row"><img src="content/images/close.png"></a></div></section>';
+                    var savedOrNot = farmYieldData[i].YieldId == "-1" ? "save" : "check";
+
+                    var newRowHtml = '<section class="row row' + farmYieldData[i].YieldId + ' data" data-rownum="' + farmYieldData[i].YieldId + '" data-yieldid="' + farmYieldData[i].YieldId + '" data-pondid="' + farmYieldData[i].PondID + '"><div class="col-xs-4"><label id="farms' + farmYieldData[i].YieldId + '" class="farmDDLLabel">' + farmYieldData[i].PondName + '</label></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds' + farmYieldData[i].YieldId + '" class="pounds table-numbers" type="text" value="' + farmYieldData[i].PoundsYielded + '"><input placeholder="(Headed Weight)" id="headedpounds' + farmYieldData[i].YieldId + '" class="headedpounds table-numbers" type="text" value="' + farmYieldData[i].PoundsHeaded + '"><input placeholder="(% Yield1)" id="pctyield1_' + farmYieldData[i].YieldId + '" class="pctyield1 table-numbers" type="text" value="' + farmYieldData[i].PercentYield + '"><input placeholder="(% Yield2)" id="pctyield2_' + farmYieldData[i].YieldId + '" class="pctyield2 table-numbers" type="text" value="' + farmYieldData[i].PercentYield2 + '"></div><div class="col-xs-2"><a href="#" class="save-row"><img src="content/images/' + savedOrNot + '.png"></a></div></section>';
+
                     $.when($('#rowContainer').append(newRowHtml)).then(function () {
-                        loadFarmsDDL(farmYieldData[i].YieldId, farmYieldData[i].FarmID);
-                        loadPondsDDL(farmYieldData[i].YieldId, farmYieldData[i].FarmID, farmYieldData[i].PondID);
+                        //loadFarmsDDL(farmYieldData[i].YieldId, farmYieldData[i].FarmID);
+                        //loadPondsDDL(farmYieldData[i].YieldId, farmYieldData[i].FarmID, farmYieldData[i].PondID);
                         $('.yield-labels, .ponds, .pounds, .plantpounds, .headedpounds, .pctyield1, .pctyield2, .add-row, .delete-row').css('opacity', 1);
                     });
                 }
-                var newRowHtml = '<section class="row row0 data" data-rownum="0" data-yieldid="-1"><div class="col-xs-2"><select id="farms0" class="farmDDL"></select></div><div class="col-xs-2"><select id="ponds0" class="pondsDDL"><option>(Pond)</option></select></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds0" class="pounds table-numbers" type="text"><input placeholder="(Headed Weight)" id="headedpounds0" class="headedpounds table-numbers" type="text"><input placeholder="(% Yield1)" id="pctyield1_0" class="pctyield1 table-numbers" type="text"><input placeholder="(% Yield2)" id="pctyield2_0" class="pctyield2 table-numbers" type="text"></div><div class="col-xs-2"><a href="#" class="add-row"><img src="content/images/plus.png"></a><a href="#" class="delete-row"><img src="content/images/close.png"></a></div></section>';
 
-                $.when($('#rowContainer').append(newRowHtml)).then(function () {
-                    loadFarmsDDL(0);
-                    $('.row.buttons').show();
-                });
-                i = 1;
+                var addButton = '<section class="row row0 data" data-rownum="0" data-yieldid="-1"><div class="col-xs-2"><a href="#" class="add-new-row"><img src="content/images/plus.png"></a></div></section>';
+                $('#rowContainer').append(addButton)
                 bindYieldButtons();
             }
         });
@@ -279,6 +285,12 @@ function farmYields() {
 
         $('.pounds').unbind().focusout(function () {
             if (!$(this).val() == "") {
+                $(this).parent().parent().find('.add-row').css('opacity', 1);
+            }
+        });
+        $('.pounds').unbind().change(function () {
+            if (!$(this).val() == "") {
+                $(this).parent().parent().find('.save-row').children().attr('src', 'content/images/save.png');
                 $(this).parent().parent().find('.add-row').css('opacity', 1);
             }
         });
@@ -328,6 +340,50 @@ function farmYields() {
 			    }
 		    });
             
+        });
+        $('.data .add-new-row').unbind().click(function (e) {
+            e.preventDefault();
+            var newRowHtml = '<section class="row row0 data" data-rownum="0" data-yieldid="-1"><div class="col-xs-2"><select id="farms0" class="farmDDL"></select></div><div class="col-xs-2"><select id="ponds0" class="pondsDDL"><option>(Pond)</option></select></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds0" class="pounds table-numbers" type="text"><input placeholder="(Headed Weight)" id="headedpounds0" class="headedpounds table-numbers" type="text"><input placeholder="(% Yield1)" id="pctyield1_0" class="pctyield1 table-numbers" type="text"><input placeholder="(% Yield2)" id="pctyield2_0" class="pctyield2 table-numbers" type="text"></div><div class="col-xs-2"><a href="#" class="add-row"><img src="content/images/plus.png"></a><a href="#" class="delete-row"><img src="content/images/close.png"></a></div></section>';
+
+            $.when($('#rowContainer').append(newRowHtml)).then(function () {
+                loadFarmsDDL(0);
+                $('.row.buttons').show();
+            });
+            i = 1;
+            bindYieldButtons();
+
+        });
+        $('.data .save-row').unbind().click(function (e) {
+            e.preventDefault();
+            var remove = "0", date = $('.date-select h3 strong').text(), yieldID = $(this).parent().parent().data('yieldid'), pondID = $(this).parent().parent().data('pondid'), pondYield = $(this).parent().parent().find('.pounds').val(), headPounds = $(this).parent().parent().find('.headedpounds').val(), pctYield = $(this).parent().parent().find('.pctyield1').val(), pctYield2 = $(this).parent().parent().find('.pctyield2').val(), searchQuery = { "Key": _key, "YieldDate": date, "YieldID": yieldID, "PondID" : pondID, "PoundsYielded": pondYield, "PercentYield": pctYield, "PercentYield2": pctYield2, "PoundsHeaded": headPounds, "Remove": remove }, data = JSON.stringify(searchQuery);
+            //$(this).parent().parent().find('.add-row').css('opacity', 0);
+            //$(this).parent().parent().find('.delete-row').css('opacity', 1);
+            //i = parseInt($(this).parent().parent().attr('data-rownum')) + 1;
+            //var justadded = ".row" + (i - 1);
+            $(this).parent().parent().find('.save-row').children().attr('src', 'content/images/check.png');
+            $.when($.ajax('../api/FarmYield/FarmYieldAddOrEdit', {
+                type: 'PUT',
+                data: data,
+                success: function (msg) {
+                    localStorage['CT_key'] = msg['Key'];
+                    startTimer(msg.Key);
+                    //$(this).children().attr('src', 'content/images/check.png');
+                    //yieldID = msg['YieldID'];
+                    //$(this).parent().parent().addClass('complete');
+                    //$(justadded).attr('data-yieldid', yieldID);
+                    //if (yieldID != -1) { loadEditFarmYields(date); }
+                    //// ?? What's this? Or - is it necessary?
+                    //addOrEdit = yieldID;
+                }
+            })).then(function () {
+                if (yieldID == -1) {
+                    //newRowHtml = '<section class="row row' + i + ' data" data-rownum="' + i + '" data-yieldid="-1"><div class="col-xs-2"><select id="farms' + i + '" class="farmDDL"></select></div><div class="col-xs-2"><select id="ponds' + i + '" class="pondsDDL"><option>(Pond)</option></select></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds' + i + '" class="pounds table-numbers" type="text"><input placeholder="(Headed Weight)" id="headedpounds' + i + '" class="headedpounds table-numbers" type="text"><input placeholder="(% Yield1)" id="pctyield1_' + i + '" class="pctyield table-numbers" type="text"><input placeholder="(% Yield2)" id="pctyield2_' + i + '" class="pctyield2 table-numbers" type="text"></div><div class="col-xs-2"><a href="#" class="add-row"><img src="content/images/plus.png"></a><a href="#" class="delete-row"><img src="content/images/close.png"></a></div></section>';
+
+                    //$.when($('#rowContainer').append(newRowHtml)).then(function () { loadFarmsDDL(i); });
+                    //bindYieldButtons();
+                }
+            });
+
         });
 
         $('.data .delete-row').unbind().click(function (e) {

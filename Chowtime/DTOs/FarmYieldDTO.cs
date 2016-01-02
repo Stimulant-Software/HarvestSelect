@@ -16,6 +16,7 @@ namespace SGApp.DTOs
         public string PoundsPlant { get; set; }
         public string PoundsHeaded { get; set; }
         public string PercentYield { get; set; }
+        public string PercentYield2 { get; set; }
         public string StartDateMonth { get; set; }
         public string StartDateYear { get; set; }
 
