@@ -81,7 +81,11 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 }
 
 
-.weigh-backs .pondsDDL, .weigh-backs > .pounds, .weigh-backs .plantpounds, .weigh-backs .yield-labels, .weigh-backs .headedpounds, .weigh-backs .pctyield1, .pctyield2, .weigh-backs .add-row, .weigh-backs .delete-row { opacity: 0; }
+.weigh-backs form { text-align: left; margin: 0; padding: 0; }
+.weigh-backs form fieldset { width: 32%; }
+.weigh-backs input[type="text"] { width: 100px; }
+.weigh-backs .add-row img { height: 50px; }
+/*.weigh-backs .pondsDDL, .weigh-backs > .pounds, .weigh-backs .plantpounds, .weigh-backs .yield-labels, .weigh-backs .headedpounds, .weigh-backs .pctyield1, .pctyield2, .weigh-backs .add-row, .weigh-backs .delete-row { opacity: 0; }
 .weigh-backs .weigh-back-header { border-bottom: 1px solid #bdbdbd; margin-bottom: 20px; padding-bottom: 10px; }
 .weigh-backs label.plantpounds  { width: 130px; }
 .weigh-backs input.plantpounds { width: 100px; margin-right: 10px; }
@@ -97,11 +101,7 @@ writing-mode: bt-rl; }
 .weigh-backs .data input { width: 24%; height: 50px; padding: 0 10px; margin-left: 1%; }
 .weigh-backs .data.complete select, .weigh-backs .data.complete input { background-color: lightgreen; }
 .weigh-backs .data { margin-bottom: 20px; }
-.weigh-backs .data img {height: 50px; }
-.farmDDLLabel {
-    font-size: 25px;
-    margin: 20px;
-}
+.weigh-backs .data img {height: 50px; }*/
 
 .shift-end .fields { margin: 10px 0; }
 .shiftForm { opacity: 0; }

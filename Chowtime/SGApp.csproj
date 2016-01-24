@@ -151,7 +151,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Controllers\WeightBackController.cs" />
+    <Compile Include="Controllers\WeighBackController.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\DailyReportDTO.cs" />
     <Compile Include="DTOs\FarmDTO.cs" />
@@ -430,7 +430,7 @@
     <Content Include="Site\content\images\yellow_body_bg.jpg" />
     <Content Include="Site\ct-entry.html" />
     <Content Include="Site\ct-reports.html" />
-    <Content Include="Site\farm-yields.html" />
+    <Content Include="Site\op-farm-yields.html" />
     <Content Include="Site\footer.html" />
     <Content Include="Site\index.html" />
     <Content Include="Site\login.html" />
@@ -451,8 +451,8 @@
     <Content Include="Site\scripts\underscore.js" />
     <Content Include="Site\scripts\underscore.min.js" />
     <None Include="Site\scripts\_references.js" />
-    <Content Include="Site\shift-times.html" />
-    <Content Include="Site\weigh-backs.html" />
+    <Content Include="Site\op-shift-times.html" />
+    <Content Include="Site\op-weigh-backs.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
