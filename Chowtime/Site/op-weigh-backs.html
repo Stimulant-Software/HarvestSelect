@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
     <head>
         <title>Harvest Select Dashboards</title>
@@ -6,59 +6,52 @@
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="content/HarvestSelectDashboards.css">
         <link href="content/global.css" rel="stylesheet" type="text/css">
     </head>
-    <body class="shift-end op">
+    <body class="weigh-backs op">
         <header>
         <h1>Operations</h1>
         <nav>
             <ol>
-                <li class="yields"><a href="farm-yields.html">Farm Yields</a></li>
-                <li class="shift"><a href="shift-times.html">Shift-end Times</a></li>
+                <li class="yields"><a href="op-farm-yields.html">Farm Yields</a></li>
+                <li class="wbs"><a href="op-weigh-backs.html">Weighbacks</a></li>
+                <li class="shift"><a href="op-shift-times.html">Shift-end Times</a></li>
                 <li class="sample"><a href="op-sampling.html">Live Fish Sampling</a></li>
                 <li class="reports"><a href="op-reports.html">Weekly Reports</a></li>
                 <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
             </ol>
         </nav>
     </header>
-        <section id="main_content" class="container">
+        <section id="mainContent" class="container">
 			<section class="row date-select">
 				<!-- pull in string of dates - need range, method -->
-                <button id="shiftDate" data-toggle="modal" data-target="#calendarModal">Select a date to add or edit information</button>
+                <button id="shiftDate" class="btn" data-toggle=modal" data-target="#calendarModal">Select a date to add or edit information</button>
 			</section>
-			<section class="shiftForm pond">
-				<div class="col-xs-12 col-sm-5 input-group">
-					<label>Reg Employees Late</label><input type="number" step="any" class="table-numbers" id="regEmpLate">
-					<label>Reg Employees Out</label><input type="number" step="any" class="table-numbers" id="regEmpOut">
-					<label>Reg Employees Left Early</label><input type="number" step="any" class="table-numbers" id="regEmpLeftEarly">
-					<label>Temp Svc Employees Out</label><input type="number" step="any" class="table-numbers" id="tempEmpOut">
-					<label>Inmate Employees Left Early</label><input type="number" step="any" class="table-numbers" id="inmateEmpLeftEarly">
-                    <label>Innmate Out</label><input type="number" step="any" class="table-numbers" id="inLateOut">
-                    <label>Employees on Vacation</label><input type="number" step="any" class="table-numbers" id="empVacation">
-				</div>
-				<div class="col-xs-12 col-sm-5 input-group">
-					<label>Finished Kill</label><input type="time" class="table-numbers" id="finKill">
-					<label>Finished Fillet</label><input type="time" class="table-numbers" id="finFillet">
-					<label>Finished Skinning</label><input type="time" class="table-numbers" id="finSkinned">
-					<label>Day Shift Finished Freezing</label><input type="time" class="table-numbers" id="dayFreeze">
-					<label>Night Shift Finished Freezing</label><input type="time" class="table-numbers" id="nightFreeze">
-				</div>
-				<div class="col-xs-12 col-sm-5 input-group">
-					<label>Day Shift Froze</label><input type="number" step="any" class="table-numbers" id="dayFroze">
-					<label>Night Shift Froze</label><input type="number" step="any" class="table-numbers" id="nightFroze">
-					<label>Fillet Scale Reading</label><input type="number" step="any" class="table-numbers" id="filletScale">
-				</div>
-				<div class="col-xs-12 col-sm-5 input-group no-border">
-					<label>Downtime in Minutes</label><input type="number" step="any" class="table-numbers" id="downtimeMin">
-				</div>
-                <section class="row buttons">
-				<a href="#" class="reset btn">Clear Page</a>
-				<a href="#" class="save btn">Save</a>
-			</section>
-			</section>
-			
+            <div class="row wb-labels">
+                <div class="col-xs-4">Farm</div>
+                <!--<div class="col-xs-2">Pond</div>-->
+                <div class="col-xs-6 input-labels">
+                    <span>Turtle</span>
+                    <span>Trash</span>
+                    <span>Shad</span>
+                    <span>Carp</span>
+                    <span>Bream</span>
+                    <span>Live Disease</span>
+                    <span>Dressed Disease</span>
+                    <span>Dressed Disease @ 60% Yield</span>
+                    <span>~~Backs</span>
+                    <span>Red Fillet</span>
+                    <span>Red Fillet @ 36% Yield</span>
+                    <span>Big Fish</span>
+                    <span>DOAs</span>
+                </div>
+                <div class="col-xs-2"></div>
+            </div>
+            <section id="rowContainer" class="row"></section>
         </section>
+
         <section id="calendarModal" class="modal-body fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -76,6 +69,9 @@
         </section>
         <footer></footer>
         
+        <!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">-->
+        <script src="scripts/underscore.min.js"></script>
+        <script src="scripts/moment.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment-with-locales.min.js"></script>
