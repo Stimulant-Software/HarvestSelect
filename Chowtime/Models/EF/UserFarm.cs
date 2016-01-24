@@ -25,10 +25,10 @@ namespace SGApp.Models.EF
         public int FarmId { get; set; }
         public int StatusId { get; set; }
     
-        public virtual Farm Farm { get; set; }
         public virtual ICollection<Feeding> Feedings { get; set; }
         public virtual Status Status { get; set; }
         public virtual User User { get; set; }
         public virtual ICollection<O2Reading> O2Readings { get; set; }
+        public virtual Farm Farm { get; set; }
     }
 }

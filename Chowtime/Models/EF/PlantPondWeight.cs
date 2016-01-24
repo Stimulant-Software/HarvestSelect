@@ -12,19 +12,14 @@ namespace SGApp.Models.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class O2Reading
+    public partial class PlantPondWeight
     {
-        public int ReadingId { get; set; }
-        public int PondId { get; set; }
-        public System.DateTime ReadingDate { get; set; }
-        public decimal O2Level { get; set; }
-        public int PortableCount { get; set; }
-        public int StaticCount { get; set; }
-        public int UsersFarmId { get; set; }
-        public string Note { get; set; }
-        public System.DateTime DayPeriod { get; set; }
+        public int PlantPondWeightID { get; set; }
+        public int PondID { get; set; }
+        public System.DateTime PPWDateTime { get; set; }
+        public Nullable<decimal> PlantWeight { get; set; }
+        public Nullable<decimal> PondWeight { get; set; }
     
-        public virtual UserFarm UserFarm { get; set; }
         public virtual Pond Pond { get; set; }
     }
 }

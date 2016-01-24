@@ -3,7 +3,7 @@
  output extension=".cs"#><#
 
 const string inputFile = @"App.edmx";
-var textTransform = DynamicTextTransformation.Create(this);
+var textTransform = DynamicTextTransformation.Create(this); 
 var code = new CodeGenerationTools(this);
 var ef = new MetadataTools(this);
 var typeMapper = new TypeMapper(code, ef, textTransform.Errors);

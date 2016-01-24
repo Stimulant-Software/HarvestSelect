@@ -145,11 +145,14 @@ function farmYields() {
                     $.when(hideProgress()).then(function () {
                         showProgress('body');
                         var view = $('#calendarModal .modal-body').fullCalendar('getView');
-
-                        stateDateYear = view.start._d.getFullYear();
-                        if (view.start._d.getMonth() == 11) { startDateMonth = 1; startDateYear = view.start._d.getFullYear() - 1; } // looking at January
-                        else if (view.start._d.getMonth() == 10) startDateMonth == 12; // looking at December
-                        else startDateMonth = view.start._d.getMonth() + 2; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
+                        
+                        var startDateYear1 = view.calendar.getDate()._d.getFullYear();
+                        startDateYear = startDateYear1;
+                        //if (view.start._d.getMonth() == 11) { startDateMonth = 1; startDateYear = view.start._d.getFullYear() + 1; } // looking at January
+                        //else if (view.start._d.getMonth() == 10) startDateMonth = 12; // looking at December
+                   // else 
+                        var startDateMonth1 = view.calendar.getDate()._d.getMonth() + 1; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
+                        startDateMonth = startDateMonth1;
                         
                         var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
                         $.when($.ajax('../api/FarmYield/FarmYieldDates', {
@@ -438,11 +441,13 @@ function shiftEnd() {
                 $.when(hideProgress()).then(function () {
                     showProgress('body');
                     var view = $('#calendarModal .modal-body').fullCalendar('getView');
-
-                    stateDateYear = view.start._d.getFullYear();
-                    if (view.start._d.getMonth() == 11) { startDateMonth = 1; startDateYear = view.start._d.getFullYear() - 1; } // looking at January
-                    else if (view.start._d.getMonth() == 10) startDateMonth == 12; // looking at December
-                    else startDateMonth = view.start._d.getMonth() + 2; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
+                    var startDateYear1 = view.calendar.getDate()._d.getFullYear();
+                    startDateYear = startDateYear1;
+                    //if (view.start._d.getMonth() == 11) { startDateMonth = 1; startDateYear = view.start._d.getFullYear() + 1; } // looking at January
+                    //else if (view.start._d.getMonth() == 10) startDateMonth = 12; // looking at December
+                    // else 
+                    var startDateMonth1 = view.calendar.getDate()._d.getMonth() + 1; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
+                    startDateMonth = startDateMonth1;
 
                     var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
                     $.when($.ajax('../api/ShiftEnd/ShiftEndList', {

@@ -16,18 +16,18 @@ namespace SGApp.Models.EF
     {
         public Status()
         {
-            this.Farms = new HashSet<Farm>();
             this.UserFarms = new HashSet<UserFarm>();
             this.Users = new HashSet<User>();
+            this.Farms = new HashSet<Farm>();
             this.Ponds = new HashSet<Pond>();
         }
     
         public int StatusId { get; set; }
         public string StatusName { get; set; }
     
-        public virtual ICollection<Farm> Farms { get; set; }
         public virtual ICollection<UserFarm> UserFarms { get; set; }
         public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<Farm> Farms { get; set; }
         public virtual ICollection<Pond> Ponds { get; set; }
     }
 }

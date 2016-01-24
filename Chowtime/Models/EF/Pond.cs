@@ -16,10 +16,12 @@ namespace SGApp.Models.EF
     {
         public Pond()
         {
+            this.FarmYields = new HashSet<FarmYield>();
             this.Feedings = new HashSet<Feeding>();
             this.Harvests = new HashSet<Harvest>();
             this.O2Readings = new HashSet<O2Reading>();
-            this.FarmYields = new HashSet<FarmYield>();
+            this.PlantPondWeights = new HashSet<PlantPondWeight>();
+            this.WeighBacks = new HashSet<WeighBack>();
         }
     
         public int PondId { get; set; }
@@ -35,11 +37,13 @@ namespace SGApp.Models.EF
         public string InnovaCode { get; set; }
     
         public virtual Farm Farm { get; set; }
+        public virtual ICollection<FarmYield> FarmYields { get; set; }
         public virtual ICollection<Feeding> Feedings { get; set; }
         public virtual ICollection<Harvest> Harvests { get; set; }
         public virtual HealthStatus HealthStatus1 { get; set; }
-        public virtual Status Status { get; set; }
         public virtual ICollection<O2Reading> O2Readings { get; set; }
-        public virtual ICollection<FarmYield> FarmYields { get; set; }
+        public virtual Status Status { get; set; }
+        public virtual ICollection<PlantPondWeight> PlantPondWeights { get; set; }
+        public virtual ICollection<WeighBack> WeighBacks { get; set; }
     }
 }
