@@ -270,8 +270,8 @@ namespace SGApp.Controllers
                 };
                 try
                 {
-                    var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
-                    response.EnsureSuccessStatusCode();
+                    //var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
+                    //response.EnsureSuccessStatusCode();
                     JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                     //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result); // new List<Sampling>();
                     //Sampling[] samplingResultsArray = response.Content.ReadAsAsync<Sampling[]>().Result;
@@ -326,7 +326,7 @@ namespace SGApp.Controllers
                     }
                     else
                     {
-                        dic.Add("YieldId", "-1");
+                        dic.Add("WeightBackID", "-1");
                         dic.Add("PondID", pd.PondId.ToString() != null ? pd.PondId.ToString() : "");
                         dic.Add("PondName", sam.farmPond != null ? sam.farmPond : "");
                         dic.Add("FarmID", pd.FarmId.ToString() != null ? pd.FarmId.ToString() : "");
@@ -357,7 +357,7 @@ namespace SGApp.Controllers
                     var dic = new Dictionary<string, string>();
                     if (samp == null)
                     {
-                        dic.Add("YieldId", fy.WeightBackID.ToString());
+                        dic.Add("WeightBackID", fy.WeightBackID.ToString());
                         dic.Add("PondID", fy.PondID.ToString());
                         dic.Add("PondName", fy.Pond.InnovaName != null ? fy.Pond.InnovaName : fy.Pond.PondName);
                         dic.Add("FarmID", fy.Pond.FarmId.ToString());
