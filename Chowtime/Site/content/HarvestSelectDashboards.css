@@ -81,12 +81,16 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 }
 
 
+.weigh-backs #mainContent { padding: 0 15px 40px; }
 .weigh-backs form { text-align: left; margin: 0; padding: 0; }
 .weigh-backs form fieldset { width: 32%; }
 .weigh-backs input[type="text"] { width: 100px; }
-.weigh-backs .add-row img { height: 50px; }
-/*.weigh-backs .pondsDDL, .weigh-backs > .pounds, .weigh-backs .plantpounds, .weigh-backs .yield-labels, .weigh-backs .headedpounds, .weigh-backs .pctyield1, .pctyield2, .weigh-backs .add-row, .weigh-backs .delete-row { opacity: 0; }
-.weigh-backs .weigh-back-header { border-bottom: 1px solid #bdbdbd; margin-bottom: 20px; padding-bottom: 10px; }
+.weigh-backs .add-row img, .weigh-backs .delete-row img, .weigh-backs .save-row img, .weigh-backs .add-new-row img { height: 50px; }
+.weigh-backs #rowContainer .row { border-top: 1px solid #000; padding: 10px 0; }
+.weigh-backs #rowContainer .row:first-child { border-top: none; padding: 0 0 10px; }
+.weigh-backs #rowContainer .row:nth-child(even) { background-color: #fff; border-left: 1px solid #000; border-right: 1px solid #000; }
+.weigh-backs .farmsDDL, .weigh-backs .pondsDDL, .weigh-backs #newValues, .weigh-backs #newButtons { opacity: 0; }
+/*.weigh-backs .weigh-back-header { border-bottom: 1px solid #bdbdbd; margin-bottom: 20px; padding-bottom: 10px; }
 .weigh-backs label.plantpounds  { width: 130px; }
 .weigh-backs input.plantpounds { width: 100px; margin-right: 10px; }
 .weigh-backs .wb-labels { font-weight: bold; font-size: 16px; }
@@ -164,6 +168,7 @@ writing-mode: bt-rl; }
 #lightboxBG { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999; background-color: rgba(255,255,255,0.7); }
 .windows8 { position: fixed; width: 90px; height: 90px; margin: 0 auto; z-index: 10000; }
 form .windows8 { position: absolute !important; }
+body > .windows8 { position: fixed !important; }
 .windows8 .wBall { position: absolute; width: 86px; height: 86px; opacity: 0; -moz-transform: rotate(225deg); -moz-animation: orbit 7.15s infinite; -webkit-transform: rotate(225deg); -webkit-animation: orbit 7.15s infinite; transform: rotate(225deg); animation: orbit 7.15s infinite; }
 .windows8 .wBall .wInnerBall{ position: absolute; width: 11px; height: 11px; background: #000; left:0; top:0; -moz-border-radius: 11px; -webkit-border-radius: 11px; border-radius: 11px; }
 .windows8 #wBall_1 { -moz-animation-delay: 1.56s; -webkit-animation-delay: 1.56s; animation-delay: 1.56s; }
