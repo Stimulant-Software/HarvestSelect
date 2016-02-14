@@ -120,7 +120,7 @@ namespace SGApp.Repository.Application {
 
         public override List<User> GetByPredicate(string predicate) {
             var iq = DbContext.Users.Include("UserRoles.Role").AsQueryable();
-            return predicate.Length > 0 ? iq.Where(predicate, null).Take(50).ToList() : iq.Take(50).ToList();
+            return predicate.Length > 0 ? iq.Where(predicate, null).ToList() : iq.ToList();
         }
 
         public List<User> GetAllSalesmen(int companyId) {

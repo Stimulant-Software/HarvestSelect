@@ -30,17 +30,17 @@
         <AssociationConnector Association="AppModel.FK_Farms_Companies" />
         <AssociationConnector Association="AppModel.FK_Farms_Statuses" />
         <AssociationConnector Association="AppModel.FK_UserFarms_Farms" />
-        <EntityTypeShape EntityType="AppModel.Pond" Width="1.5" PointX="3.1412235811079028" PointY="24.939576562931563" />
+        <EntityTypeShape EntityType="AppModel.PlantPondWeight" Width="1.5" PointX="0.9128556851823143" PointY="15.248653761692649" />
+        <EntityTypeShape EntityType="AppModel.WeighBack" Width="1.5" PointX="10.310571876499136" PointY="10.967794125419013" />
+        <EntityTypeShape EntityType="AppModel.Pond" Width="1.5" PointX="2.0994726876260121" PointY="4.9803445660417642" />
         <AssociationConnector Association="AppModel.FK_Ponds_Farms" />
         <AssociationConnector Association="AppModel.FK_FarmYields_Ponds" />
         <AssociationConnector Association="AppModel.FK_Feedings_Ponds" />
         <AssociationConnector Association="AppModel.FK_Harvests_Ponds" />
         <AssociationConnector Association="AppModel.FK_Ponds_HealthStatuses" />
         <AssociationConnector Association="AppModel.FK_O2Readings_Ponds" />
-        <AssociationConnector Association="AppModel.FK_Ponds_Statuses" />
-        <EntityTypeShape EntityType="AppModel.PlantPondWeight" Width="1.5" PointX="0.9128556851823143" PointY="15.248653761692649" />
         <AssociationConnector Association="AppModel.FK_PlantPondWeights_Ponds" />
-        <EntityTypeShape EntityType="AppModel.WeighBack" Width="1.5" PointX="10.310571876499136" PointY="10.967794125419013" />
+        <AssociationConnector Association="AppModel.FK_Ponds_Statuses" />
         <AssociationConnector Association="AppModel.FK_WeighBacks_Ponds" />
       </Diagram>
     </edmx:Diagrams>

@@ -607,6 +607,8 @@
             <End Role="Farm" EntitySet="Farms" />
             <End Role="UserFarm" EntitySet="UserFarms" />
           </AssociationSet>
+          <EntitySet Name="PlantPondWeights" EntityType="AppModel.PlantPondWeight" />
+          <EntitySet Name="WeighBacks" EntityType="AppModel.WeighBack" />
           <EntitySet Name="Ponds" EntityType="AppModel.Pond" />
           <AssociationSet Name="FK_Ponds_Farms" Association="AppModel.FK_Ponds_Farms">
             <End Role="Farm" EntitySet="Farms" />
@@ -632,16 +634,14 @@
             <End Role="Pond" EntitySet="Ponds" />
             <End Role="O2Reading" EntitySet="O2Readings" />
           </AssociationSet>
-          <AssociationSet Name="FK_Ponds_Statuses" Association="AppModel.FK_Ponds_Statuses">
-            <End Role="Status" EntitySet="Statuses" />
-            <End Role="Pond" EntitySet="Ponds" />
-          </AssociationSet>
-          <EntitySet Name="PlantPondWeights" EntityType="AppModel.PlantPondWeight" />
           <AssociationSet Name="FK_PlantPondWeights_Ponds" Association="AppModel.FK_PlantPondWeights_Ponds">
             <End Role="Pond" EntitySet="Ponds" />
             <End Role="PlantPondWeight" EntitySet="PlantPondWeights" />
           </AssociationSet>
-          <EntitySet Name="WeighBacks" EntityType="AppModel.WeighBack" />
+          <AssociationSet Name="FK_Ponds_Statuses" Association="AppModel.FK_Ponds_Statuses">
+            <End Role="Status" EntitySet="Statuses" />
+            <End Role="Pond" EntitySet="Ponds" />
+          </AssociationSet>
           <AssociationSet Name="FK_WeighBacks_Ponds" Association="AppModel.FK_WeighBacks_Ponds">
             <End Role="Pond" EntitySet="Ponds" />
             <End Role="WeighBack" EntitySet="WeighBacks" />
@@ -961,6 +961,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PlantPondWeight">
+          <Key>
+            <PropertyRef Name="PlantPondWeightID" />
+          </Key>
+          <Property Type="Int32" Name="PlantPondWeightID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PondID" Nullable="false" />
+          <Property Type="DateTime" Name="PPWDateTime" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="PlantWeight" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="PondWeight" Precision="10" Scale="2" />
+          <NavigationProperty Name="Pond" Relationship="AppModel.FK_PlantPondWeights_Ponds" FromRole="PlantPondWeight" ToRole="Pond" />
+        </EntityType>
+        <EntityType Name="WeighBack">
+          <Key>
+            <PropertyRef Name="WeightBackID" />
+          </Key>
+          <Property Type="Int32" Name="WeightBackID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="PondID" Nullable="false" />
+          <Property Type="DateTime" Name="WBDateTime" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="Turtle" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Trash" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Shad" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Carp" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Bream" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="LiveDisease" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="DressedDisease" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="DressedDiseasePct" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="Backs" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="RedFillet" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="RedFilletPct" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="BigFish" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="DOAs" Precision="10" Scale="2" />
+          <NavigationProperty Name="Pond" Relationship="AppModel.FK_WeighBacks_Ponds" FromRole="WeighBack" ToRole="Pond" />
+        </EntityType>
         <EntityType Name="Pond">
           <Key>
             <PropertyRef Name="PondId" />
@@ -982,8 +1015,8 @@
           <NavigationProperty Name="Harvests" Relationship="AppModel.FK_Harvests_Ponds" FromRole="Pond" ToRole="Harvest" />
           <NavigationProperty Name="HealthStatus1" Relationship="AppModel.FK_Ponds_HealthStatuses" FromRole="Pond" ToRole="HealthStatus" />
           <NavigationProperty Name="O2Readings" Relationship="AppModel.FK_O2Readings_Ponds" FromRole="Pond" ToRole="O2Reading" />
-          <NavigationProperty Name="Status" Relationship="AppModel.FK_Ponds_Statuses" FromRole="Pond" ToRole="Status" />
           <NavigationProperty Name="PlantPondWeights" Relationship="AppModel.FK_PlantPondWeights_Ponds" FromRole="Pond" ToRole="PlantPondWeight" />
+          <NavigationProperty Name="Status" Relationship="AppModel.FK_Ponds_Statuses" FromRole="Pond" ToRole="Status" />
           <NavigationProperty Name="WeighBacks" Relationship="AppModel.FK_WeighBacks_Ponds" FromRole="Pond" ToRole="WeighBack" />
         </EntityType>
         <Association Name="FK_Ponds_Farms">
@@ -1058,29 +1091,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Ponds_Statuses">
-          <End Type="AppModel.Status" Role="Status" Multiplicity="1" />
-          <End Type="AppModel.Pond" Role="Pond" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Status">
-              <PropertyRef Name="StatusId" />
-            </Principal>
-            <Dependent Role="Pond">
-              <PropertyRef Name="StatusId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="PlantPondWeight">
-          <Key>
-            <PropertyRef Name="PlantPondWeightID" />
-          </Key>
-          <Property Type="Int32" Name="PlantPondWeightID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="PondID" Nullable="false" />
-          <Property Type="DateTime" Name="PPWDateTime" Nullable="false" Precision="3" />
-          <Property Type="Decimal" Name="PlantWeight" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="PondWeight" Precision="10" Scale="2" />
-          <NavigationProperty Name="Pond" Relationship="AppModel.FK_PlantPondWeights_Ponds" FromRole="PlantPondWeight" ToRole="Pond" />
-        </EntityType>
         <Association Name="FK_PlantPondWeights_Ponds">
           <End Type="AppModel.Pond" Role="Pond" Multiplicity="1" />
           <End Type="AppModel.PlantPondWeight" Role="PlantPondWeight" Multiplicity="*" />
@@ -1093,28 +1103,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="WeighBack">
-          <Key>
-            <PropertyRef Name="WeightBackID" />
-          </Key>
-          <Property Type="Int32" Name="WeightBackID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="PondID" Nullable="false" />
-          <Property Type="DateTime" Name="WBDateTime" Nullable="false" Precision="3" />
-          <Property Type="Decimal" Name="Turtle" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="Trash" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="Shad" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="Carp" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="Bream" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="LiveDisease" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="DressedDisease" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="DressedDiseasePct" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="Backs" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="RedFillet" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="RedFilletPct" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="BigFish" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="DOAs" Precision="10" Scale="2" />
-          <NavigationProperty Name="Pond" Relationship="AppModel.FK_WeighBacks_Ponds" FromRole="WeighBack" ToRole="Pond" />
-        </EntityType>
+        <Association Name="FK_Ponds_Statuses">
+          <End Type="AppModel.Status" Role="Status" Multiplicity="1" />
+          <End Type="AppModel.Pond" Role="Pond" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="StatusId" />
+            </Principal>
+            <Dependent Role="Pond">
+              <PropertyRef Name="StatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WeighBacks_Ponds">
           <End Type="AppModel.Pond" Role="Pond" Multiplicity="1" />
           <End Type="AppModel.WeighBack" Role="WeighBack" Multiplicity="*" />
@@ -1300,23 +1300,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Ponds">
-            <EntityTypeMapping TypeName="AppModel.Pond">
-              <MappingFragment StoreEntitySet="Ponds">
-                <ScalarProperty Name="InnovaCode" ColumnName="InnovaCode" />
-                <ScalarProperty Name="InnovaName" ColumnName="InnovaName" />
-                <ScalarProperty Name="OldPondID" ColumnName="OldPondID" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="HealthStatus" ColumnName="HealthStatus" />
-                <ScalarProperty Name="NoFeed" ColumnName="NoFeed" />
-                <ScalarProperty Name="Size" ColumnName="Size" />
-                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-                <ScalarProperty Name="PondName" ColumnName="PondName" />
-                <ScalarProperty Name="FarmId" ColumnName="FarmId" />
-                <ScalarProperty Name="PondId" ColumnName="PondId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PlantPondWeights">
             <EntityTypeMapping TypeName="AppModel.PlantPondWeight">
               <MappingFragment StoreEntitySet="PlantPondWeights">
@@ -1347,6 +1330,23 @@
                 <ScalarProperty Name="WBDateTime" ColumnName="WBDateTime" />
                 <ScalarProperty Name="PondID" ColumnName="PondID" />
                 <ScalarProperty Name="WeightBackID" ColumnName="WeightBackID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ponds">
+            <EntityTypeMapping TypeName="AppModel.Pond">
+              <MappingFragment StoreEntitySet="Ponds">
+                <ScalarProperty Name="InnovaCode" ColumnName="InnovaCode" />
+                <ScalarProperty Name="InnovaName" ColumnName="InnovaName" />
+                <ScalarProperty Name="OldPondID" ColumnName="OldPondID" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="HealthStatus" ColumnName="HealthStatus" />
+                <ScalarProperty Name="NoFeed" ColumnName="NoFeed" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+                <ScalarProperty Name="PondName" ColumnName="PondName" />
+                <ScalarProperty Name="FarmId" ColumnName="FarmId" />
+                <ScalarProperty Name="PondId" ColumnName="PondId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

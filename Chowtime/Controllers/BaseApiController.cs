@@ -11,6 +11,7 @@ using SGApp.Models.EF;
 using SGApp.Models.Common;
 using SGApp.Filters;
 using SGApp.Repository.Application;
+using System.Reflection;
 
 namespace SGApp.Controllers {
     [ModelStateValidator]
@@ -72,6 +73,7 @@ namespace SGApp.Controllers {
                 if (entity.GetDataType(fieldName) == typeof(int) || entity.GetDataType(fieldName) == typeof(int?)) {
                     var nbr = 0;
                     if (!int.TryParse(inputField.GetValue(dto).ToString(), out nbr)) {
+                        
                         var dic = new Dictionary<string, string> {{inputField.Name, "Invalid data type cast"}};
                         retVal.Add(dic);
                     }

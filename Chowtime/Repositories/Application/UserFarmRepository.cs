@@ -47,7 +47,7 @@ namespace SGApp.Repository.Application
         public override List<UserFarm> GetByPredicate(string predicate)
         {
             var iq = DbContext.UserFarms.Include("User").Include("Farm").AsQueryable();
-            return predicate.Length > 0 ? iq.Where(predicate, null).Take(50).ToList() : iq.Take(50).ToList();
+            return predicate.Length > 0 ? iq.Where(predicate, null).ToList() : iq.ToList();
         }
 
 

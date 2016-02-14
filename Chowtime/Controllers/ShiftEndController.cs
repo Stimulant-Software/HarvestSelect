@@ -37,6 +37,23 @@ namespace SGApp.Controllers
             if (userId > 0 && aur.IsInRole(userId, "Data Entry"))
             {
                 var ShiftEnd = new ShiftEnd();
+                uDto.DayFinishedFreezing = uDto.DayFinishedFreezing == "" ? null : uDto.DayFinishedFreezing;
+                uDto.RegEmpLate = uDto.RegEmpLate == "" ? null : uDto.RegEmpLate;
+                uDto.RegEmpOut = uDto.RegEmpOut == "" ? null : uDto.RegEmpOut;
+                uDto.RegEmplLeftEarly = uDto.RegEmplLeftEarly == "" ? null : uDto.RegEmplLeftEarly;
+                uDto.TempEmpOut = uDto.TempEmpOut == "" ? null : uDto.TempEmpOut;
+                uDto.InmateLeftEarly = uDto.InmateLeftEarly == "" ? null : uDto.InmateLeftEarly;
+                uDto.FinishedKill = uDto.FinishedKill == "" ? null : uDto.FinishedKill;
+                uDto.FinishedFillet = uDto.FinishedFillet == "" ? null : uDto.FinishedFillet;
+                uDto.FinishedSkinning = uDto.FinishedSkinning == "" ? null : uDto.FinishedSkinning;
+                uDto.DayFinishedFreezing = uDto.DayFinishedFreezing == "" ? null : uDto.DayFinishedFreezing;
+                uDto.NightFinishedFreezing = uDto.NightFinishedFreezing == "" ? null : uDto.NightFinishedFreezing;
+                uDto.DayShiftFroze = uDto.DayShiftFroze == "" ? null : uDto.DayShiftFroze;
+                uDto.NightShiftFroze = uDto.NightShiftFroze == "" ? null : uDto.NightShiftFroze;
+                uDto.FilletScaleReading = uDto.FilletScaleReading == "" ? null : uDto.FilletScaleReading;
+                uDto.DowntimeMinutes = uDto.DowntimeMinutes == "" ? null : uDto.DowntimeMinutes;
+                uDto.InLateOut = uDto.InLateOut == "" ? null : uDto.InLateOut;
+                uDto.EmployeesOnVacation = uDto.EmployeesOnVacation == "" ? null : uDto.EmployeesOnVacation;
                 var errors = ValidateDtoData(uDto, ShiftEnd);
                 if (errors.Any())
                 {
@@ -138,23 +155,23 @@ namespace SGApp.Controllers
                     var dic = new Dictionary<string, string>();
 
                     dic.Add("ShiftEndID", item.ShiftEndID.ToString());
-                    dic.Add("DayFinishedFreezing", DateTime.Parse(item.DayFinishedFreezing.ToString()).ToString("HH:mm"));
-                    dic.Add("DayShiftFroze", item.DayShiftFroze.ToString());
-                    dic.Add("DowntimeMinutes", item.DowntimeMinutes.ToString());
-                    dic.Add("EmployeesOnVacation", item.EmployeesOnVacation.ToString());
-                    dic.Add("FilletScaleReading", item.FilletScaleReading.ToString());
-                    dic.Add("FinishedFillet", DateTime.Parse(item.FinishedFillet.ToString()).ToString("HH:mm"));
-                    dic.Add("FinishedKill", DateTime.Parse(item.FinishedKill.ToString()).ToString("HH:mm"));
-                    dic.Add("FinishedSkinning", DateTime.Parse(item.FinishedSkinning.ToString()).ToString("HH:mm"));
-                    dic.Add("InmateLeftEarly", item.InmateLeftEarly.ToString());
-                    dic.Add("InLateOut", item.InLateOut.ToString());
-                    dic.Add("NightFinishedFreezing", DateTime.Parse(item.NightFinishedFreezing.ToString()).ToString("HH:mm"));
-                    dic.Add("NightShiftFroze", item.NightShiftFroze.ToString());
-                    dic.Add("RegEmpLate", item.RegEmpLate.ToString());
-                    dic.Add("RegEmpOut", item.RegEmpOut.ToString());
-                    dic.Add("RegEmplLeftEarly", item.RegEmplLeftEarly.ToString());
-                    dic.Add("ShiftDate", item.ShiftDate.ToString());
-                    dic.Add("TempEmpOut", item.TempEmpOut.ToString());
+                    dic.Add("DayFinishedFreezing", item.DayFinishedFreezing == null ? "" : DateTime.Parse(item.DayFinishedFreezing.ToString()).ToString("HH:mm"));
+                    dic.Add("DayShiftFroze", item.DayShiftFroze == null ? "" : item.DayShiftFroze.ToString());
+                    dic.Add("DowntimeMinutes", item.DowntimeMinutes == null ? "" : item.DowntimeMinutes.ToString());
+                    dic.Add("EmployeesOnVacation", item.EmployeesOnVacation == null ? "" : item.EmployeesOnVacation.ToString());
+                    dic.Add("FilletScaleReading", item.FilletScaleReading == null ? "" : item.FilletScaleReading.ToString());
+                    dic.Add("FinishedFillet", item.FinishedFillet == null ? "" : DateTime.Parse(item.FinishedFillet.ToString()).ToString("HH:mm"));
+                    dic.Add("FinishedKill", item.FinishedKill == null ? "" : DateTime.Parse(item.FinishedKill.ToString()).ToString("HH:mm"));
+                    dic.Add("FinishedSkinning", item.FinishedSkinning == null ? "" : DateTime.Parse(item.FinishedSkinning.ToString()).ToString("HH:mm"));
+                    dic.Add("InmateLeftEarly", item.InmateLeftEarly == null ? "" : item.InmateLeftEarly.ToString());
+                    dic.Add("InLateOut", item.InLateOut == null ? "" : item.InLateOut.ToString());
+                    dic.Add("NightFinishedFreezing", item.NightFinishedFreezing == null ? "" : DateTime.Parse(item.NightFinishedFreezing.ToString()).ToString("HH:mm"));
+                    dic.Add("NightShiftFroze", item.NightShiftFroze == null ? "" : item.NightShiftFroze.ToString());
+                    dic.Add("RegEmpLate", item.RegEmpLate == null ? "" : item.RegEmpLate.ToString());
+                    dic.Add("RegEmpOut", item.RegEmpOut == null ? "" : item.RegEmpOut.ToString());
+                    dic.Add("RegEmplLeftEarly", item.RegEmplLeftEarly == null ? "" : item.RegEmplLeftEarly.ToString());
+                    dic.Add("ShiftDate", item.ShiftDate == null ? "" : item.ShiftDate.ToString());
+                    dic.Add("TempEmpOut", item.TempEmpOut == null ? "" : item.TempEmpOut.ToString());
                     col.Add(dic);
                     var ufdic = new Dictionary<string, string>();
 

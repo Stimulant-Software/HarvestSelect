@@ -45,7 +45,7 @@ namespace SGApp.Repository.Application
         public override List<Harvest> GetByPredicate(string predicate)
         {
             var iq = DbContext.Harvests.AsQueryable();
-            return predicate.Length > 0 ? iq.Where(predicate, null).Take(50).ToList() : iq.Take(50).ToList();
+            return predicate.Length > 0 ? iq.Where(predicate, null).ToList() : iq.ToList();
         }
 
         public List<Harvest> GetHarvests(int companyId)

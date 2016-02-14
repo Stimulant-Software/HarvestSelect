@@ -728,6 +728,7 @@ function shiftEnd() {
                 $('.date-select h3').remove();
                 $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
                 addOrEdit = "-1";
+                $('input').val("");
                 $('#calendarModal').modal('hide');
                 $('.row.fields, .row.buttons').css('opacity', 1);
                 $('.shiftForm').css('opacity', 1);
@@ -927,7 +928,7 @@ function weeklyReport() {
                         var inmateTotal = parseFloat($employeesData.InLateOut) + parseFloat($employeesData.InmateLeftEarly);
                         var outTotal = parseFloat($employeesData.RegEmpOut) + parseFloat($employeesData.TempEmpOut) + parseFloat($employeesData.InLateOut);
                         var leftEarlyTotal = parseFloat($employeesData.RegEmplLeftEarly) + parseFloat($employeesData.InmateLeftEarly);
-                        var allTotal = regTotal + inmateTotal + outTotal + leftEarlyTotal + parseFloat($employeesData.TempEmpOut) + parseFloat($employeesData.RegEmpLate) + parseFloat($employeesData.EmployeesOnVacation);
+                        var allTotal = regTotal + inmateTotal + parseFloat($employeesData.TempEmpOut); //+outTotal + leftEarlyTotal  + parseFloat($employeesData.RegEmpLate) + parseFloat($employeesData.EmployeesOnVacation);
                         $employeesHtml = '<table><thead><tr><th></th><th>OUT</th><th>LATE</th><th>LEFT EARLY</th><th>VAC</th><th class="total">TOTAL</th></tr></thead>';
                         $employeesHtml += '<tbody><tr><th>REG</th><td class="tablenumbers">' + $employeesData.RegEmpOut + '</td><td class="tablenumbers">' + $employeesData.RegEmpLate + '</td><td class="tablenumbers">' + $employeesData.RegEmplLeftEarly + '</td><td class="tablenumbers">' + $employeesData.EmployeesOnVacation + '</td><td class="tablenumbers total">' + regTotal.toString() + '</td></tr>';
                         $employeesHtml += '<tr><th>TEMP</th><td class="tablenumbers">' + $employeesData.TempEmpOut + '</td><td class="tablenumbers">' + '-' + '</td><td class="tablenumbers">' + '-' + '</td><td class="tablenumbers">' + '-' + '</td><td class="tablenumbers total">' + $employeesData.TempEmpOut + '</td></tr>';
