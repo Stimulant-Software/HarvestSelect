@@ -1039,7 +1039,6 @@ function weeklyReport() {
                          var finishcsv = "Date,Distance,Label\n2015-01-01 " + $finishedData.NightFinishedFreezing + ", 1, Night Finished Freezing\n2015-01-01 " + $finishedData.FinishedKill + ", 1, Finished Kill\n2015-01-01 " + $finishedData.FinishedSkinning + ", 1, Finished Skinning\n2015-01-01 " + $finishedData.FinishedFillet + ", 1, Finished Filet\n2015-01-01 " + $finishedData.DayFinishedFreezing + ", 1, Day Finished Freezing";
                         console.log(finishcsv);
                          $('#finishcontainer').highcharts({
-
                              data: {
                                  csv: finishcsv,
                                  seriesMapping: [{
@@ -1100,7 +1099,7 @@ function weeklyReport() {
                         var $avgYield = $totalPct / $pondsData.length;
                         var $whatToCallMe = $totalPounds * ($avgYield/100);
                         $pondsHtml += '<li class="totals"><span class="col-xs-2 col-xs-offset-3"><strong>Total Pounds:</strong><span>' + $totalPounds + '</span></span>';
-                        $pondsHtml += '<span class="col-xs-2"><strong>Avg Yield:</strong><span>' + $avgYield + '</span></span>';
+                        $pondsHtml += '<span class="col-xs-2"><strong>Avg Yield:</strong><span>' + $avgYield.toFixed(4) + '</span></span>';
                         $pondsHtml += '<span class="col-xs-2"><strong>Sum*Avg Yield:</strong><span>' + Math.round($whatToCallMe) + '</span></span></li><ul>';
                         $('.farm-yields').append($pondsHtml).hide();
                         $('.farm-yields-report').unbind().click(function (e) {
