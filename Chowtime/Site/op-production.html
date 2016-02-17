@@ -1,0 +1,120 @@
+﻿<!doctype html>
+<html lang="en">
+    <head>
+        <title>Harvest Select Dashboards</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css">
+        <link rel="stylesheet" type="text/css" href="content/HarvestSelectDashboards.css">
+        <link href="content/global.css" rel="stylesheet" type="text/css">
+    </head>
+    <body class="production op">
+        <header>
+        <h1>Operations</h1>
+        <nav>
+            <ol>
+                <!--<li class="yields"><a href="op-farm-yields.html">Farm Yields</a></li>
+                <li class="wbs"><a href="op-weigh-backs.html">Weighbacks</a></li>-->
+                <li class="shift"><a href="op-production.html">Production Weights</a></li>
+                <li class="shift"><a href="op-shift-times.html">Shift-end Times</a></li>
+                <li class="sample"><a href="op-sampling.html">Live Fish Sampling</a></li>
+                <!--<li class="reports"><a href="op-plant-weights.html">Plant Weights</a></li>-->
+                <li class="reports"><a href="op-reports.html">Weekly Reports</a></li>
+                <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+    </header>
+        <section id="mainContent" class="container">
+			<section class="row date-select">
+				<!-- pull in string of dates - need range, method -->
+                <button id="shiftDate" class="btn" data-toggle=modal" data-target="#calendarModal">Select a date to add or edit information</button>
+			</section>
+            <!-- Rows added dynamically via javascript -->
+            <section id="pond[0]" class="row pond-container">
+                <section class="row pond-buttons">
+                    <section class="col-md-2"><button class="btn btn-label">Pond Name</button></section>
+                    <section class="col-md-2"><button id="pond[0]_pondWeight" class="btn pond-weight btn-success">14,000</button></section>
+                    <section class="open-tab col-md-2"><button id="pond[0]_plantWeight" class="btn plant-weight btn-success">13,895</button></section>
+                    <section class="col-md-2"><button id="pond[0]_weighbacks" class="btn weighbacks btn-danger">---</button></section>
+                    <section class="col-md-2"><button id="pond[0]_yield" class="btn yield btn-danger">---</button></section>
+                    <section class="col-md-2"><button id="pond[0]_headedWeight" class="btn headed-weight btn-danger">---</button></section>
+                </section>
+                <section class="form-container container">
+                    <!-- Static for PondWeight -->
+                    <!--<header class="col-md-12">Pond Weights</header>
+                    <section id="pond-weight-[pondweightID]" class="row form-inline">
+                        <section class="col-md-2">(TIME) 6:13AM</section><section class="col-md-10"><input type="text" id="pondweightID" class="form-control" value="pondWeightValue"><button class="btn btn-primary">Edit</button></section>
+                    </section>-->
+                    <!-- END -->
+
+                    <!-- Static for PlantWeight -->
+                    <header class="col-md-12">Plant Weights</header>
+                    <section id="plant-weight-[plantweightID]" class="row form-inline">
+                        <section class="col-md-2">(TIME) 6:13AM</section><section class="col-md-10"><input type="text" id="plantweightID" class="form-control" value="plantWeightValue"><button class="btn btn-primary">Edit</button></section>
+                    </section>
+                    <!-- END -->
+                    
+                    <!-- Static for Weighbacks -->
+                    <!--<header class="col-md-12">Weighbacks</header>-->
+                    <!--<section id="plant-weight-[plantweightID]" class="row">
+                        <section class="col-md-6">(TIME) 6:13AM</section><section class="col-md-6"><input type="text" id="plantweightID" value="plantWeightValue"><button class="btn btn-primary">Edit</button></section>
+                    </section>-->
+                    <!-- END -->
+
+                    <!-- Static for FarmYields -->
+                    <!--<header class="col-md-12">Farm Yields</header>-->
+                    <!--<section id="plant-weight-[plantweightID]" class="row">
+                        <section class="col-md-6">(TIME) 6:13AM</section><section class="col-md-6"><input type="text" id="plantweightID" value="plantWeightValue"><button class="btn btn-primary">Edit</button></section>
+                    </section>-->
+                    <!-- END -->
+
+                    <section class="row text-center"><button id="addNewEntry" class="btn btn-primary">Add New Entry</button></section>
+                </section>
+            </section>
+            
+            <!-- Static for PondList Repeater" -->
+            <section id="pond[1]" class="row pond-container">
+                <section class="col-md-2"><button class="btn btn-label">Pond Name</button></section>
+                <section class="col-md-2"><button id="pond[1]_pondWeight" class="btn pond-weight btn-success">14,000</button></section>
+                <section class="col-md-2"><button id="pond[1]_plantWeight" class="btn plant-weight btn-success">13,895</button></section>
+                <section class="col-md-2"><button id="pond[1]_weighbacks" class="btn weighbacks btn-danger">---</button></section>
+                <section class="col-md-2"><button id="pond[1]_yield" class="btn yield btn-danger">---</button></section>
+                <section class="col-md-2"><button id="pond[1]_headedWeight" class="btn headed-weight btn-danger">---</button></section>
+                <!--<section id="form-container" class="container">
+                    <section class="row text-center"><button id="addNewEntry" class="btn btn-primary">Add New Entry</button></section>
+                </section>-->
+            </section>
+            <!-- End -->
+        </section>
+
+        <section id="calendarModal" class="modal-body fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Select a date to add or edit information</h4>
+                    </div>
+                    <div class="modal-body">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <footer></footer>
+        
+        <!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">-->
+        <script src="scripts/underscore.min.js"></script>
+        <script src="scripts/moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment-with-locales.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js"></script>
+        <script src="scripts/moment.js"></script>
+        <script type="text/javascript" src="scripts/functions.js"></script>
+        <script src="scripts/HarvestSelectDashboards.js"></script>
+        <script src="scripts/reports-menu.js"></script>
+    </body>
+</html>

@@ -434,6 +434,7 @@
     <Content Include="Site\footer.html" />
     <Content Include="Site\index.html" />
     <Content Include="Site\login.html" />
+    <Content Include="Site\op-production.html" />
     <Content Include="Site\op-reports.html" />
     <Content Include="Site\op-sampling.html" />
     <Content Include="Site\reports-menu.html" />
