@@ -17,7 +17,7 @@ $(function () {
     if ($('.live-sample').length > 0) { showProgress(); liveSample(); }
     if ($('.weekly-report').length > 0) { showProgress(); weeklyReport(); }
     if ($('.op-report').length > 0) { showProgress(); weeklyReport(); }
-    if ($('.op-production').length > 0 { showProgress(); production(); }
+    if ($('.production').length > 0) { showProgress(); production(); }
 });
 
 /* Login page */
@@ -782,6 +782,25 @@ function production() {
         });
     } */
 
+    bindPondButtons();
+    function bindPondButtons() {
+        $('.pond-buttons button').unbind().click(function () {
+            // RUN ERROR CHECK TO MAKE SURE THEY'RE NOT FORGETTING TO SUBMIT INFORMATION
+            var $activeButton = $(this), $activeRow = $activeButton.data('column');
+            console.log($activeRow);
+            if ($activeRow != undefined) {
+                showProgress('body');
+                $('.open-tab').removeClass('open-tab');
+                $('.form-container').slideUp(500, function () {
+                    $('.form-container > section').hide();
+                    // AJAX call to get appropriate information & populate fields goes here - $.when().then(function(){});
+                    $activeButton.parent().addClass('open-tab').parent().next('.form-container').slideDown(500).find('[data-row=' + $activeRow + ']').show();
+                });
+                // BIND NEW ENTRY BUTTON?
+            }
+        });
+    }
+    
     /* FARM YIELDS */
     function farmYields() {
         function loadEditFarmYields(date) {

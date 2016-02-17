@@ -19,7 +19,7 @@ header { padding: 15px 0; margin-bottom: 20px; }
 .portal .admin-farm a { background-image: url('../img/adminfarm.png'); background-size: 100px auto; }
 .portal .admin-pond a { background-image: url('../img/adminpond.png'); background-size: 100px auto; }
 
-input:disabled, select:disabled { background-color: #acacac; }
+/*input:disabled, select:disabled { background-color: #acacac; }
 .date-select { margin: 10px 0; text-align: center; padding: 10px; }
 select { font-size: 1.3em; padding: 10px; background-color: yellow; }
 label { width: 80%; font-size: 1.2em; margin-bottom: 10px; }
@@ -29,7 +29,7 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .buttons { margin: 10px 0; padding: 0 50px; }
 .buttons .btn { font-size: 1.5em; padding: 20px; }
 .btn.reset { background-color: lightcoral; color: darkred; }
-.btn.save { background-color: darkgreen; color: lightgreen; }
+.btn.save { background-color: darkgreen; color: lightgreen; }*/
 
 .op nav { background-color: #6F5015; }
 .op nav a:hover { background-color: #fff; color:  #6F5015; text-decoration: none; }
@@ -107,17 +107,23 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .weekly-report .row.header { padding-bottom: 10px; margin-bottom: 10px; border-bottom: 1px solid #747474;   background-color: #DDDDDD; }
 .weekly-report li.header { font-weight: bold; margin: 0; padding: 0; border-bottom: none; }
 
+.op.production .date-select { margin: 10px 0; }
 .op.production .pond-container { border: 1px solid #a2a2a2; margin-bottom: 10px; padding: 10px; }
 .op.production .pond-buttons > section { padding: 10px 0; text-align: center; }
-.op.production .open-tab { background-color: #337ab7; }
+.op.production .open-tab { background-color: #000; }
 .op.production .pond-container:nth-child(even) { background-color: #fff; }
-.op.production .pond-container:nth-child(odd) { background-color: #dedede; }
-.op.production .pond-container .btn { min-width: 100px; }
-.op.production .pond-container .btn-success { background-color: #5cb85c; }
-.op.production .pond-container .btn-danger { background-color: #d9534f; }
-.op.production .pond-container .btn-primary { background-color: #337ab7; }
-.op.production .pond-container .btn-label { background-color: initial; border-color: transparent; color: #000; font-weight: bold; text-transform: uppercase; }
-.op.production .form-container header { text-align: center; font-size: 1.5em; font-weight: bold; border-bottom: 1px solid #000; padding: 10px 15px; margin-bottom: 10px; color: #fff; background-color: #337ab7; }
+.op.production .pond-container:nth-child(odd) { background-color: #efefef; }
+.op.production .pond-container .btn { min-width: 100px; color: #333; background-color: initial; }
+.op.production .pond-container .btn-success { background-color: #5cb85c; color: #000; }
+.op.production .pond-container .btn-danger { background-color: #d9534f; color: #000; }
+.op.production .pond-container .btn-label { background-color: initial; border-color: transparent; color: #000; font-weight: bold; text-transform: uppercase; cursor: text; }
+.op.production .form-container { border: 1px solid #000; display: none; }
+.op.production .form-container header { text-align: center; font-size: 1.5em; font-weight: bold; border-bottom: 1px solid #cdcdcd; padding: 10px 15px; margin-bottom: 10px; color: #fff; background-color: #dedede; text-shadow: 2px 2px 2px rgba(0,0,0,0.8); }
+.op.production .form-container > section { padding-bottom: 10px; display: none; }
+.op.production .buttons { padding: 15px 0; background-color: #dedede;}
+.op.production header h3 { padding: 15px 0; font-weight: bold; text-transform: uppercase; font-size: 1.3em; }
+.op.production p { line-height: 34px; }
+.op.production button { margin: 0 7px !important; }
 
 /*.weekly-report .reports section { border: 1px solid #747474; min-height: 410px; } */
 .weekly-report .reports .farm-yields-report { min-height: 50px; }
