@@ -41,6 +41,8 @@
                     <section class="col-md-2"><h3>Headed Weight</h3></section>
                 </header>
             </section>
+
+            <section id="pondListContainer"></section>
             
             <!-- Rows added dynamically via javascript -->
             <section id="pond[0]" class="row pond-container">
@@ -56,7 +58,9 @@
                     <!-- Static for PondWeight -->
                     <section id="pond-weight-[pondweightID]" class="row form-inline" data-row="pond-weight">
                     <header class="col-md-12">Pond Weights</header>
-                        <section class="col-md-2"><p>(TIME) 6:13AM</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondweightID" class="form-control" value="pondWeightValue"><button class="btn btn-default">Edit</button></section>
+                        <section class="col-md-2"><p>(TIME) 6:13AM</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondweightID" class="form-control" 
+value="pondWeightValue"><button class="btn btn-default">Edit</button></section>
+                        <section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section>
                     </section>
                     <!-- END -->
 
@@ -64,6 +68,7 @@
                     <section id="plant-weight-[plantweightID]" class="row form-inline" data-row="plant-weight">
                     <header class="col-md-12">Plant Weights</header>
                         <section class="col-md-2"><p>(TIME) 6:13AM</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantweightID" class="form-control" value="plantWeightValue"><button class="btn btn-default">Edit</button></section>
+                        <section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section>
                     </section>
                     <!-- END -->
                     
@@ -71,6 +76,7 @@
                     <section id="weighbacks-[weighbacksID]" class="row" data-row="weighbacks">
                     <header class="col-md-12">Weighbacks</header>
                         <section class="col-md-6"><p>(TIME) 6:13AM</p></section><section class="col-md-6"><input type="text" id="plantweightID" value="plantWeightValue"><button class="btn btn-default">Edit</button></section>
+                        <section class="row buttons"><button id="addNewWeighback" class="btn btn-default">Add New Weighback</button></section>
                     </section>
                     <!-- END -->
 
@@ -78,10 +84,10 @@
                     <section id="farm-yields-[farm-yieldID]" class="row"  data-row="yield">
                     <header class="col-md-12">Farm Yields</header>
                         <section class="col-md-6"><p>(TIME) 6:13AM</p></section><section class="col-md-6"><input type="text" id="plantweightID" value="plantWeightValue"><button class="btn btn-default">Edit</button></section>
+                        <section class="row buttons"><button id="addNewFarmYield" class="btn btn-default">Add New Farm Yield</button></section>
                     </section>
                     <!-- END -->
 
-                    <section class="row buttons"><button id="addNewEntry" class="btn btn-default">Add New Entry</button></section>
                 </section>
             </section>
             
