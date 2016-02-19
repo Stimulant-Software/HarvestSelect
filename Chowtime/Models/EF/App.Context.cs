@@ -39,8 +39,9 @@ namespace SGApp.Models.EF
         public DbSet<FarmYield> FarmYields { get; set; }
         public DbSet<ShiftEnd> ShiftEnds { get; set; }
         public DbSet<Farm> Farms { get; set; }
-        public DbSet<Pond> Ponds { get; set; }
         public DbSet<PlantPondWeight> PlantPondWeights { get; set; }
         public DbSet<WeighBack> WeighBacks { get; set; }
+        public DbSet<Pond> Ponds { get; set; }
+        public DbSet<ProductionTotal> ProductionTotals { get; set; }
     }
 }

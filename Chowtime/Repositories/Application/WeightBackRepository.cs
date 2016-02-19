@@ -69,6 +69,12 @@ namespace SGApp.Repository.Application
             DateTime endDate = reportDate.AddDays(2);
             return DbContext.WeighBacks.Where(x => x.WBDateTime > reportDate && x.WBDateTime < endDate).ToList();
         }
+
+        public List<WeighBack> GetByDateRange(DateTime reportDate1, DateTime reportDate2)
+        {
+            DateTime endDate = reportDate2.AddDays(1);
+            return DbContext.WeighBacks.Where(x => x.WBDateTime > reportDate1 && x.WBDateTime < endDate).ToList();
+        }
     }
 
 

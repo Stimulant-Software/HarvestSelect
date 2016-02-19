@@ -16,6 +16,7 @@
           <EntitySet Name="O2Readings" EntityType="AppModel.Store.O2Readings" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PlantPondWeights" EntityType="AppModel.Store.PlantPondWeights" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Ponds" EntityType="AppModel.Store.Ponds" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProductionTotals" EntityType="AppModel.Store.ProductionTotals" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="AppModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ShiftEnd" EntityType="AppModel.Store.ShiftEnd" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Statuses" EntityType="AppModel.Store.Statuses" store:Type="Tables" Schema="dbo" />
@@ -70,6 +71,10 @@
           <AssociationSet Name="FK_Ponds_Statuses" Association="AppModel.Store.FK_Ponds_Statuses">
             <End Role="Statuses" EntitySet="Statuses" />
             <End Role="Ponds" EntitySet="Ponds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionTotals_Ponds" Association="AppModel.Store.FK_ProductionTotals_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="ProductionTotals" EntitySet="ProductionTotals" />
           </AssociationSet>
           <AssociationSet Name="FK_UserFarms_Farms" Association="AppModel.Store.FK_UserFarms_Farms">
             <End Role="Farms" EntitySet="Farms" />
@@ -199,6 +204,7 @@
           <Property Name="PPWDateTime" Type="datetime" Nullable="false" />
           <Property Name="PlantWeight" Type="decimal" Precision="10" Scale="2" />
           <Property Name="PondWeight" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TicketNumber" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Ponds">
           <Key>
@@ -215,6 +221,18 @@
           <Property Name="OldPondID" Type="int" Nullable="false" />
           <Property Name="InnovaName" Type="varchar" MaxLength="50" />
           <Property Name="InnovaCode" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="ProductionTotals">
+          <Key>
+            <PropertyRef Name="ProductionTotalID" />
+          </Key>
+          <Property Name="ProductionTotalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductionDate" Type="date" Nullable="false" />
+          <Property Name="PondId" Type="int" Nullable="false" />
+          <Property Name="PlantWeight" Type="decimal" Scale="2" />
+          <Property Name="PondWeight" Type="decimal" Scale="2" />
+          <Property Name="WeighBacks" Type="decimal" Scale="2" />
+          <Property Name="AverageYield" Type="decimal" Precision="16" Scale="4" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -448,6 +466,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductionTotals_Ponds">
+          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+          <End Role="ProductionTotals" Type="AppModel.Store.ProductionTotals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ponds">
+              <PropertyRef Name="PondId" />
+            </Principal>
+            <Dependent Role="ProductionTotals">
+              <PropertyRef Name="PondId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserFarms_Farms">
           <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="1" />
           <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="*" />
@@ -645,6 +675,11 @@
           <AssociationSet Name="FK_WeighBacks_Ponds" Association="AppModel.FK_WeighBacks_Ponds">
             <End Role="Pond" EntitySet="Ponds" />
             <End Role="WeighBack" EntitySet="WeighBacks" />
+          </AssociationSet>
+          <EntitySet Name="ProductionTotals" EntityType="AppModel.ProductionTotal" />
+          <AssociationSet Name="FK_ProductionTotals_Ponds" Association="AppModel.FK_ProductionTotals_Ponds">
+            <End Role="Pond" EntitySet="Ponds" />
+            <End Role="ProductionTotal" EntitySet="ProductionTotals" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Company">
@@ -971,6 +1006,7 @@
           <Property Type="Decimal" Name="PlantWeight" Precision="10" Scale="2" />
           <Property Type="Decimal" Name="PondWeight" Precision="10" Scale="2" />
           <NavigationProperty Name="Pond" Relationship="AppModel.FK_PlantPondWeights_Ponds" FromRole="PlantPondWeight" ToRole="Pond" />
+          <Property Type="String" Name="TicketNumber" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="WeighBack">
           <Key>
@@ -1018,6 +1054,7 @@
           <NavigationProperty Name="PlantPondWeights" Relationship="AppModel.FK_PlantPondWeights_Ponds" FromRole="Pond" ToRole="PlantPondWeight" />
           <NavigationProperty Name="Status" Relationship="AppModel.FK_Ponds_Statuses" FromRole="Pond" ToRole="Status" />
           <NavigationProperty Name="WeighBacks" Relationship="AppModel.FK_WeighBacks_Ponds" FromRole="Pond" ToRole="WeighBack" />
+          <NavigationProperty Name="ProductionTotals" Relationship="AppModel.FK_ProductionTotals_Ponds" FromRole="Pond" ToRole="ProductionTotal" />
         </EntityType>
         <Association Name="FK_Ponds_Farms">
           <End Type="AppModel.Farm" Role="Farm" Multiplicity="1" />
@@ -1124,6 +1161,31 @@
             </Principal>
             <Dependent Role="WeighBack">
               <PropertyRef Name="PondID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductionTotal">
+          <Key>
+            <PropertyRef Name="ProductionTotalID" />
+          </Key>
+          <Property Type="Int32" Name="ProductionTotalID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="ProductionDate" Nullable="false" Precision="0" />
+          <Property Type="Int32" Name="PondId" Nullable="false" />
+          <Property Type="Decimal" Name="PlantWeight" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="PondWeight" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="WeighBacks" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="AverageYield" Precision="16" Scale="4" />
+          <NavigationProperty Name="Pond" Relationship="AppModel.FK_ProductionTotals_Ponds" FromRole="ProductionTotal" ToRole="Pond" />
+        </EntityType>
+        <Association Name="FK_ProductionTotals_Ponds">
+          <End Type="AppModel.Pond" Role="Pond" Multiplicity="1" />
+          <End Type="AppModel.ProductionTotal" Role="ProductionTotal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pond">
+              <PropertyRef Name="PondId" />
+            </Principal>
+            <Dependent Role="ProductionTotal">
+              <PropertyRef Name="PondId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1303,6 +1365,7 @@
           <EntitySetMapping Name="PlantPondWeights">
             <EntityTypeMapping TypeName="AppModel.PlantPondWeight">
               <MappingFragment StoreEntitySet="PlantPondWeights">
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
                 <ScalarProperty Name="PondWeight" ColumnName="PondWeight" />
                 <ScalarProperty Name="PlantWeight" ColumnName="PlantWeight" />
                 <ScalarProperty Name="PPWDateTime" ColumnName="PPWDateTime" />
@@ -1347,6 +1410,19 @@
                 <ScalarProperty Name="PondName" ColumnName="PondName" />
                 <ScalarProperty Name="FarmId" ColumnName="FarmId" />
                 <ScalarProperty Name="PondId" ColumnName="PondId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductionTotals">
+            <EntityTypeMapping TypeName="AppModel.ProductionTotal">
+              <MappingFragment StoreEntitySet="ProductionTotals">
+                <ScalarProperty Name="AverageYield" ColumnName="AverageYield" />
+                <ScalarProperty Name="WeighBacks" ColumnName="WeighBacks" />
+                <ScalarProperty Name="PondWeight" ColumnName="PondWeight" />
+                <ScalarProperty Name="PlantWeight" ColumnName="PlantWeight" />
+                <ScalarProperty Name="PondId" ColumnName="PondId" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="ProductionTotalID" ColumnName="ProductionTotalID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

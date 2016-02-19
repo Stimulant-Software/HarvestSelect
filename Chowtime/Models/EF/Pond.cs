@@ -22,6 +22,7 @@ namespace SGApp.Models.EF
             this.O2Readings = new HashSet<O2Reading>();
             this.PlantPondWeights = new HashSet<PlantPondWeight>();
             this.WeighBacks = new HashSet<WeighBack>();
+            this.ProductionTotals = new HashSet<ProductionTotal>();
         }
     
         public int PondId { get; set; }
@@ -42,8 +43,9 @@ namespace SGApp.Models.EF
         public virtual ICollection<Harvest> Harvests { get; set; }
         public virtual HealthStatus HealthStatus1 { get; set; }
         public virtual ICollection<O2Reading> O2Readings { get; set; }
-        public virtual Status Status { get; set; }
         public virtual ICollection<PlantPondWeight> PlantPondWeights { get; set; }
+        public virtual Status Status { get; set; }
         public virtual ICollection<WeighBack> WeighBacks { get; set; }
+        public virtual ICollection<ProductionTotal> ProductionTotals { get; set; }
     }
 }

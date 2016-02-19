@@ -42,6 +42,8 @@
         <AssociationConnector Association="AppModel.FK_PlantPondWeights_Ponds" />
         <AssociationConnector Association="AppModel.FK_Ponds_Statuses" />
         <AssociationConnector Association="AppModel.FK_WeighBacks_Ponds" />
+        <EntityTypeShape EntityType="AppModel.ProductionTotal" Width="1.5" PointX="7.8653408940254437" PointY="25.076012071723124" />
+        <AssociationConnector Association="AppModel.FK_ProductionTotals_Ponds" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

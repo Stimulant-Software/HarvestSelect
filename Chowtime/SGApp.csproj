@@ -146,6 +146,7 @@
     <Compile Include="Controllers\JMremoteController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PondController.cs" />
+    <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ShiftEndController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="DTOs\LoginDTO.cs" />
     <Compile Include="DTOs\O2ReadingDTO.cs" />
     <Compile Include="DTOs\PondDTO.cs" />
+    <Compile Include="DTOs\ProductionTotalDTO.cs" />
     <Compile Include="DTOs\ReturnDTO.cs" />
     <Compile Include="DTOs\Samplings.cs" />
     <Compile Include="DTOs\ShiftEndDTO.cs" />
@@ -227,6 +229,9 @@
     <Compile Include="Models\EF\Pond.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\ProductionTotal.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\Role.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
@@ -256,6 +261,8 @@
     <Compile Include="Models\Partials\Harvest.Partial.cs" />
     <Compile Include="Models\Partials\O2Reading.Partial.cs" />
     <Compile Include="Models\Partials\Pond.Partial.cs" />
+    <Compile Include="Models\Partials\PlantPondWeight.Partial.cs" />
+    <Compile Include="Models\Partials\ProductionTotal.Partial.cs" />
     <Compile Include="Models\Partials\Role.Partial.cs" />
     <Compile Include="Models\Partials\ShiftEnd.Partial.cs" />
     <Compile Include="Models\Partials\Status.Partial.cs" />
@@ -270,7 +277,9 @@
     <Compile Include="Models\Validation\Feeding_Metatdata.cs" />
     <Compile Include="Models\Validation\Harvest_Metadata.cs" />
     <Compile Include="Models\Validation\O2Reading_Metadata.cs" />
+    <Compile Include="Models\Validation\PlantPondWeight_Metadata.cs" />
     <Compile Include="Models\Validation\Pond_Metadata.cs" />
+    <Compile Include="Models\Validation\ProductionTotal_Metadata.cs" />
     <Compile Include="Models\Validation\Role_Metadata.cs" />
     <Compile Include="Models\Validation\ShiftEnd_Metadata.cs" />
     <Compile Include="Models\Validation\Status_Metadata.cs" />
@@ -290,7 +299,9 @@
     <Compile Include="Repositories\Application\FeedingRepository.cs" />
     <Compile Include="Repositories\Application\HarvestRepository.cs" />
     <Compile Include="Repositories\Application\O2ReadingRepository.cs" />
+    <Compile Include="Repositories\Application\PlantPondWeightRepository.cs" />
     <Compile Include="Repositories\Application\PondRepository.cs" />
+    <Compile Include="Repositories\Application\ProductionTotalRepository.cs" />
     <Compile Include="Repositories\Application\RoleRepository.cs" />
     <Compile Include="Repositories\Application\ShiftEndRepository.cs" />
     <Compile Include="Repositories\Application\Status_Repository.cs" />

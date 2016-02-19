@@ -12,14 +12,15 @@ namespace SGApp.Models.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class PlantPondWeight
+    public partial class ProductionTotal
     {
-        public int PlantPondWeightID { get; set; }
-        public int PondID { get; set; }
-        public System.DateTime PPWDateTime { get; set; }
+        public int ProductionTotalID { get; set; }
+        public System.DateTime ProductionDate { get; set; }
+        public int PondId { get; set; }
         public Nullable<decimal> PlantWeight { get; set; }
         public Nullable<decimal> PondWeight { get; set; }
-        public string TicketNumber { get; set; }
+        public Nullable<decimal> WeighBacks { get; set; }
+        public Nullable<decimal> AverageYield { get; set; }
     
         public virtual Pond Pond { get; set; }
     }
