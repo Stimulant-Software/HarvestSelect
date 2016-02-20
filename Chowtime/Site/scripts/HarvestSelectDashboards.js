@@ -563,7 +563,7 @@ function production() {
                         startDateMonth = startDateMonth1;
 
                         var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
-                        $.when($.ajax('../api/FarmYield/FarmYieldDates', { /******************************************/
+                        $.when($.ajax('../api/Production/ProductionDates', { 
                             type: 'POST',
                             data: data,
                             success: function (msg) {
@@ -855,25 +855,26 @@ function production() {
         $('.date-select h3, .date-select div').remove();
 
         var searchQuery = { "Key": _key, "YieldDate": date }, data = JSON.stringify(searchQuery);
-        $.ajax('../api/FarmYield/FarmYieldsFromSamplings', { /******************/
+        $.ajax('../api/Production/ProductionTotals', { 
             type: 'POST',
             data: data,
             success: function (msg) {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
                 pondData = msg['ReturnData'];
-                $('#pondListContainer').empty();
-                $('.date-select h3').remove();
-                $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                for (var i = 0; i < farmYieldData.length; i++) {
-                    // add test to determine which buttons are green and red
-                    var $pondBtn = status ? "btn-success" : "btn-danger", $plantBtn = status ? "btn-success" : "btn-danger", $backsBtn = status ? "btn-success" : "btn-danger", $yieldsBtn = status ? "btn-success" : "btn-danger";
-                    var newRowHtml = '<section id="pond' + 0 + '" class="row pond-container"><section class="pond-buttons"><section class="col-md-2"><button class="btn btn-label">' + PondName + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_pondWeight" data-column="pond-weight" class="btn ' + $pondBtn + '">' + 14000 + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_plantWeight" class="btn ' + $plantBtn + '" data-column="' + plant-weight + '">' + 13895 + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_weighbacks" class="btn ' + $backsBtn + '" data-column="weighbacks">' + --- + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_yield" class="btn ' + $yieldsBtn + '" data-column="yield">' + --- + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_headedWeight" class="btn btn-label">' + --- + '</button></section></section><section class="form-container col-md-12"></section></section>';
+                console.log(pondData);
+                //$('#pondListContainer').empty();
+                //$('.date-select h3').remove();
+                //$('.date-select').append("<h3><strong>" + date + "</strong></h3>");
+                //for (var i = 0; i < farmYieldData.length; i++) {
+                //    // add test to determine which buttons are green and red
+                //    var $pondBtn = status ? "btn-success" : "btn-danger", $plantBtn = status ? "btn-success" : "btn-danger", $backsBtn = status ? "btn-success" : "btn-danger", $yieldsBtn = status ? "btn-success" : "btn-danger";
+                //    var newRowHtml = '<section id="pond' + 0 + '" class="row pond-container"><section class="pond-buttons"><section class="col-md-2"><button class="btn btn-label">' + PondName + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_pondWeight" data-column="pond-weight" class="btn ' + $pondBtn + '">' + 14000 + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_plantWeight" class="btn ' + $plantBtn + '" data-column="' + plant-weight + '">' + 13895 + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_weighbacks" class="btn ' + $backsBtn + '" data-column="weighbacks">' + --- + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_yield" class="btn ' + $yieldsBtn + '" data-column="yield">' + --- + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_headedWeight" class="btn btn-label">' + --- + '</button></section></section><section class="form-container col-md-12"></section></section>';
 
-                    $.when($('#pondListContainer').append(newRowHtml)).then(function () {
-                        bindPondButtons();
-                    });
-                }
+                //    $.when($('#pondListContainer').append(newRowHtml)).then(function () {
+                //        bindPondButtons();
+                //    });
+                //}
             }
         });
     }
