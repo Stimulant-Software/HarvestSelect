@@ -87,12 +87,63 @@ namespace SGApp.Controllers
             user = ur.Save(user);
             uDto.Key = key;
             uDto.YieldID = user.YieldID.ToString();
+
+
+            UpdateProductionTotalYield(uDto);
             var response = request.CreateResponse(HttpStatusCode.Created, uDto);
             response.Headers.Location = new Uri(Url.Link("Default", new
             {
                 id = user.YieldID
             }));
             return response;
+        }
+
+        private void UpdateProductionTotalYield(FarmYieldDTO uDto)
+        {
+            var pr = new ProductionTotalRepository();
+            var prod = new ProductionTotal();
+            var prodexists = pr.GetByDateAndPond(DateTime.Parse(uDto.YieldDate), int.Parse(uDto.PondID));
+            decimal ay = 0;
+            var y1 = uDto.PercentYield == null ? 0 : decimal.Parse(uDto.PercentYield);
+            var y2 = uDto.PercentYield2 == null ? 0 : decimal.Parse(uDto.PercentYield2);
+            if (y1 > 0 || y2 > 0)
+            {
+                if (y2 > 0)
+                {
+                    if (y1 > 0)
+                    {
+                        ay = (y1 + y2) / 2;
+                    }
+                    else
+                    {
+                        ay = y2;
+                    }
+                }
+                else
+                {
+                    ay = y1;
+                }
+            }
+            if (prodexists == null)
+            {
+                prod.PondId = int.Parse(uDto.PondID);
+                prod.ProductionDate = DateTime.Parse(uDto.YieldDate);
+                prod.AverageYield = ay;
+                pr.Save(prod);
+            }
+            else
+            {
+                prod = prodexists;                
+                if (prod.AverageYield == null)
+                {
+                    prod.AverageYield = ay;
+                }
+                else
+                {
+                    prod.AverageYield = (prod.AverageYield + ay) / 2;
+                }
+                pr.Save(prod);
+            }
         }
 
         private HttpResponseMessage ProcessExistingFarmYieldRecord(HttpRequestMessage request, FarmYieldDTO cqDto, int contactId, string key, int FarmYieldId, int userId)
@@ -116,7 +167,7 @@ namespace SGApp.Controllers
             {
                 ur.Save(user);
             }
-            
+            UpdateProductionTotalYield(cqDto);
             cqDto.Key = key;
             return request.CreateResponse(HttpStatusCode.Accepted, cqDto);
 

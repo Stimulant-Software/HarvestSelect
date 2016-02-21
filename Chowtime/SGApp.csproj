@@ -145,6 +145,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JMremoteController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PlantPondWeightController.cs" />
     <Compile Include="Controllers\PondController.cs" />
     <Compile Include="Controllers\ProductionController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="DTOs\KeyDTO.cs" />
     <Compile Include="DTOs\LoginDTO.cs" />
     <Compile Include="DTOs\O2ReadingDTO.cs" />
+    <Compile Include="DTOs\PlantPondWeightDTO.cs" />
     <Compile Include="DTOs\PondDTO.cs" />
     <Compile Include="DTOs\ProductionTotalDTO.cs" />
     <Compile Include="DTOs\ReturnDTO.cs" />
