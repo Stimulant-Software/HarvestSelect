@@ -600,18 +600,17 @@ function production() {
                     });
                 },
             dayClick: function () {
+                showProgress();
                 chosenDate = $(this).data('date');
                 $.when(loadPondList(chosenDate)).then(function () {
                     $('#calendarModal').modal('hide');
                 });
-                bindYieldButtons();
             },
             eventClick: function (calEvent) {
                 chosenDate = calEvent.start._i;
                 $.when(loadPondList(chosenDate)).then(function () {
                     $('#calendarModal').modal('hide');
                 });
-                bindYieldButtons();
             }
         });
     }
@@ -851,7 +850,7 @@ function production() {
     } */
 
     function loadPondList(date) {
-        $('#rowContainer').empty();
+        $('#pondListContainer').empty();
         $('.date-select h3, .date-select div').remove();
 
         var searchQuery = { "Key": _key, "ProductionDate": date }, data = JSON.stringify(searchQuery);
@@ -862,19 +861,20 @@ function production() {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
                 pondData = msg['ReturnData'];
-                console.log(pondData);
-                //$('#pondListContainer').empty();
-                //$('.date-select h3').remove();
-                //$('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                //for (var i = 0; i < farmYieldData.length; i++) {
-                //    // add test to determine which buttons are green and red
-                //    var $pondBtn = status ? "btn-success" : "btn-danger", $plantBtn = status ? "btn-success" : "btn-danger", $backsBtn = status ? "btn-success" : "btn-danger", $yieldsBtn = status ? "btn-success" : "btn-danger";
-                //    var newRowHtml = '<section id="pond' + 0 + '" class="row pond-container"><section class="pond-buttons"><section class="col-md-2"><button class="btn btn-label">' + PondName + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_pondWeight" data-column="pond-weight" class="btn ' + $pondBtn + '">' + 14000 + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_plantWeight" class="btn ' + $plantBtn + '" data-column="' + plant-weight + '">' + 13895 + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_weighbacks" class="btn ' + $backsBtn + '" data-column="weighbacks">' + --- + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_yield" class="btn ' + $yieldsBtn + '" data-column="yield">' + --- + '</button></section><section class="col-md-2"><button id="pond' + 0 + '_headedWeight" class="btn btn-label">' + --- + '</button></section></section><section class="form-container col-md-12"></section></section>';
+                $('#pondListContainer').empty();
+                $('.date-select h3').remove();
+                $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
+                for (var i = 0; i < pondData.length; i++) {
+                    // add test to determine which buttons are green and red
+                    var $pondBtn = pondData[i].PondWeight != "---" ? "btn-success" : "btn-danger", $plantBtn = pondData[i].PlantWeight != "---" ? "btn-success" : "btn-danger", $backsBtn = pondData[i].WeighBacks != "---" ? "btn-success" : "btn-danger", $yieldsBtn = pondData[i].AverageYield != "---" ? "btn-success" : "btn-danger";
+                    var newRowHtml = '<section id="pond' + pondData[i].PondID + '" class="row pond-container"><section class="pond-buttons"><section class="col-md-2"><button class="btn btn-label">' + pondData[i].PondName + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_pondWeight" data-column="pond-weight" class="btn ' + $pondBtn + '">' + pondData[i].PondWeight + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_plantWeight" class="btn ' + $plantBtn + '" data-column="plant-weight">' + pondData[i].PlantWeight + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_weighbacks" class="btn ' + $backsBtn + '" data-column="weighbacks">' + pondData[i].WeighBacks + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_yield" class="btn ' + $yieldsBtn + '" data-column="yield">' + pondData[i].AverageYield + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_headedWeight" class="btn btn-label">' + pondData[i].HeadedWeight + '</button></section></section><section class="form-container col-md-12"></section></section>';
 
-                //    $.when($('#pondListContainer').append(newRowHtml)).then(function () {
-                //        bindPondButtons();
-                //    });
-                //}
+                    $.when($('#pondListContainer').append(newRowHtml)).then(function () {
+                        bindPondButtons();
+                        $('.pondlist').show();
+                        hideProgress();
+                    });
+                }
             }
         });
     }
@@ -883,34 +883,51 @@ function production() {
     function bindPondButtons() {
         $('.pond-buttons button').unbind().click(function () {
             // RUN ERROR CHECK TO MAKE SURE THEY'RE NOT FORGETTING TO SUBMIT INFORMATION
-            var $activeButton = $(this), $activeRow = $activeButton.data('column');
-            console.log($activeRow);
+            var $status = $(this).attr('class').split("-")[1], $id = $(this).attr('id').split("d")[1].split('_')[0], $activeButton = $(this), $activeRow = $activeButton.data('column'), $formContainer = $activeButton.parent().parent().next('.form-container');
             if ($activeRow != undefined) {
                 showProgress('body');
                 $('.open-tab').removeClass('open-tab');
-                $('.form-container').slideUp(500, function () {
-                    $('.form-container > section').hide();
-                    switch ($activeRow) {
-                        case 'pond-weight': loadEditPondWeights(); break;
-                        case 'plant-weight': loadEditPlantWeights(); break;
-                        case 'weighbacks': loadEditWeighBacks(); break;
-                        case 'yield': loadEditFarmYields(date); break;
-                    }
-                    // AJAX call to get appropriate information & populate fields goes here - $.when().then(function(){});
-                    $activeButton.parent().addClass('open-tab').parent().next('.form-container').slideDown(500).find('[data-row=' + $activeRow + ']').show();
-                });
+                if ($('.form-container.active').length > 0) {
+                    $('.form-container.active').slideUp(500);
+                }
+                switch ($activeRow) {
+                    case 'pond-weight': loadEditPondWeights($id, $status); break;
+                    case 'plant-weight': loadEditPlantWeights($id, $status); break;
+                    case 'weighbacks': loadEditWeighBacks($id, $status); break;
+                    case 'yield': loadEditFarmYields($id, $status); break;
+                }
+                // AJAX call to get appropriate information & populate fields goes here - $.when().then(function(){});
+                $activeButton.parent().addClass('open-tab').parent().next('.form-container').addClass('active').slideDown(500);
                 // BIND NEW ENTRY BUTTON?
             }
         });
     }
 
-    function loadEditFarmYields(date) {
+    function loadEditPondWeights($id, $status) {
+        if ($status == "danger") {
+            var formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondweightID" class="form-control" value=""><button class="btn btn-default">Edit</button></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
+        } else {
+            var formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondweightID" class="form-control" value="pondWeightValue"><button class="btn btn-default">Edit</button></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
+        }
+        $.when($('.form-container').append(formHtml)).then(function () { hideProgress(); });
+    }
+
+    function loadEditPlantWeights($id, $status) {
+        if ($status == "danger") {
+            var formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="col-md-2"><p></p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondweightID" class="form-control" value=""><button class="btn btn-default">Edit</button></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
+        } else {
+            var formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="col-md-2"><p></p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondweightID" class="form-control" value="pondWeightValue"><button class="btn btn-default">Edit</button></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
+        }
+        $.when($('.form-container.active').empty().append(formHtml)).then(function () { hideProgress(); });
+    }
+
+    function loadEditFarmYields($id, $status) {
         $('#rowContainer').empty();
         $('.date-select h3, .date-select div').remove();
         $('#plantpounds').val();
         $('#plantPoundsID').val("-1");
         $('#weighbacks').val();
-        var searchQuery = { "Key": _key, "YieldDate": date }, data = JSON.stringify(searchQuery);
+        var searchQuery = { "Key": _key, "YieldDate": chosenDate }, data = JSON.stringify(searchQuery);
         $.ajax('../api/FarmYieldHeader/FarmYieldHeaderList', {
             type: 'POST',
             data: data,
@@ -1076,13 +1093,11 @@ function production() {
         }
     }
 
-    function loadEditWeighBacks(date) {
-        $('#rowContainer').empty();
-        $('.date-select h3, .date-select div').remove();
+    function loadEditWeighBacks($id, $status) {
         $('#plantpounds').val();
         $('#plantPoundsID').val("-1");
         $('#weighbacks').val();
-        var searchQuery = { "Key": _key, "WBDateTime": date }, data = JSON.stringify(searchQuery);
+        var searchQuery = { "Key": _key, "WBDateTime": chosenDate }, data = JSON.stringify(searchQuery);
 
         $.ajax('../api/WeighBack/WeighBacksFromSamplings', {
             type: 'POST',
@@ -1445,12 +1460,7 @@ function production() {
 /*****************************************************************
 <!-- APPEND TO FORM CONTAINER -->
 <!-- Static for PondWeight -->
-<section id="pond-weight-' + pondweightID + '" class="row form-inline" data-row="pond-weight">
-<header class="col-md-12">Pond Weights</header>
-	<section class="col-md-2"><p>(TIME) 6:13AM</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondweightID" class="form-control" 
-value="pondWeightValue"><button class="btn btn-default">Edit</button></section>
-	<section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section>
-</section>
+
 <!-- END -->
 
 <!-- Static for PlantWeight -->

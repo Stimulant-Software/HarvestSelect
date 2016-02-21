@@ -31,7 +31,7 @@
                 <button id="shiftDate" class="btn" data-toggle=modal" data-target="#calendarModal">Select a date to add or edit information</button>
 			</section>
 
-            <section class="row">
+            <section class="row pondlist">
                 <header class="text-center">
                     <section class="col-md-2"><h3>Pond</h3></section>
                     <section class="col-md-2"><h3>Pond Weight</h3></section>
@@ -42,70 +42,7 @@
                 </header>
             </section>
 
-            <section id="pondListContainer"></section>
-            
-            <!-- Rows added dynamically via javascript -->
-            <section id="pond[0]" class="row pond-container">
-                <section class="pond-buttons">
-                    <section class="col-md-2"><button class="btn btn-label">Pond Name</button></section>
-                    <section class="col-md-2"><button id="pond[0]_pondWeight" data-column="pond-weight" class="btn btn-success">14,000</button></section>
-                    <section class="col-md-2"><button id="pond[0]_plantWeight" class="btn btn-success" data-column="plant-weight">13,895</button></section>
-                    <section class="col-md-2"><button id="pond[0]_weighbacks" class="btn btn-danger" data-column="weighbacks">---</button></section>
-                    <section class="col-md-2"><button id="pond[0]_yield" class="btn btn-danger" data-column="yield">---</button></section>
-                    <section class="col-md-2"><button id="pond[0]_headedWeight" class="btn btn-label">---</button></section>
-                </section>
-                <section class="form-container col-md-12">
-                    <!-- Static for PondWeight -->
-                    <section id="pond-weight-[pondweightID]" class="row form-inline" data-row="pond-weight">
-                    <header class="col-md-12">Pond Weights</header>
-                        <section class="col-md-2"><p>(TIME) 6:13AM</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondweightID" class="form-control" 
-value="pondWeightValue"><button class="btn btn-default">Edit</button></section>
-                        <section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section>
-                    </section>
-                    <!-- END -->
-
-                    <!-- Static for PlantWeight -->
-                    <section id="plant-weight-[plantweightID]" class="row form-inline" data-row="plant-weight">
-                    <header class="col-md-12">Plant Weights</header>
-                        <section class="col-md-2"><p>(TIME) 6:13AM</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantweightID" class="form-control" value="plantWeightValue"><button class="btn btn-default">Edit</button></section>
-                        <section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section>
-                    </section>
-                    <!-- END -->
-                    
-                    <!-- Static for Weighbacks -->
-                    <section id="weighbacks-[weighbacksID]" class="row" data-row="weighbacks">
-                    <header class="col-md-12">Weighbacks</header>
-                        <section class="col-md-6"><p>(TIME) 6:13AM</p></section><section class="col-md-6"><input type="text" id="plantweightID" value="plantWeightValue"><button class="btn btn-default">Edit</button></section>
-                        <section class="row buttons"><button id="addNewWeighback" class="btn btn-default">Add New Weighback</button></section>
-                    </section>
-                    <!-- END -->
-
-                    <!-- Static for FarmYields -->
-                    <section id="farm-yields-[farm-yieldID]" class="row"  data-row="yield">
-                    <header class="col-md-12">Farm Yields</header>
-                        <section class="col-md-6"><p>(TIME) 6:13AM</p></section><section class="col-md-6"><input type="text" id="plantweightID" value="plantWeightValue"><button class="btn btn-default">Edit</button></section>
-                        <section class="row buttons"><button id="addNewFarmYield" class="btn btn-default">Add New Farm Yield</button></section>
-                    </section>
-                    <!-- END -->
-
-                </section>
-            </section>
-            
-            <!-- Static for PondList Repeater" -->
-            <section id="pond[1]" class="row pond-container">
-                <section class="pond-buttons">
-                    <section class="col-md-2"><button class="btn btn-label">Pond Name</button></section>
-                    <section class="col-md-2"><button id="pond[1]_pondWeight" data-column="pond-weight" class="btn btn-success">14,000</button></section>
-                    <section class="col-md-2"><button id="pond[1]_plantWeight" class="btn btn-success" data-column="plant-weight">13,895</button></section>
-                    <section class="col-md-2"><button id="pond[1]_weighbacks" class="btn btn-danger" data-column="weighbacks">---</button></section>
-                    <section class="col-md-2"><button id="pond[1]_yield" class="btn btn-danger" data-column="yield">---</button></section>
-                    <section class="col-md-2"><button id="pond[1]_headedWeight" class="btn btn-label">---</button></section>
-                </section>
-                <!--<section id="form-container" class="container">
-                    <section class="row text-center"><button id="addNewEntry" class="btn btn-default">Add New Entry</button></section>
-                </section>-->
-            </section>
-            <!-- End -->
+            <section id="pondListContainer" class="pondlist"></section>
         </section>
 
         <section id="calendarModal" class="modal-body fade">
