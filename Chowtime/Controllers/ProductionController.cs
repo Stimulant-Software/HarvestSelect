@@ -181,20 +181,20 @@ namespace SGApp.Controllers
                         dic.Add("AverageYield", fy.AverageYield != null ? fy.AverageYield.ToString() : "---");
                         dic.Add("HeadedWeight", fy.AverageYield != null && fy.PondWeight != null ? (fy.AverageYield * fy.PondWeight).ToString() : "---");
                     }
-                    //else
-                    //{
-                    //    dic.Add("YieldId", "-1");
-                    //    dic.Add("PondID", pd.PondId.ToString() != null ? pd.PondId.ToString() : "");
-                    //    dic.Add("PondName", sam.farmPond != null ? sam.farmPond : "");
-                    //    dic.Add("FarmID", pd.FarmId.ToString() != null ? pd.FarmId.ToString() : "");
-                    //    dic.Add("YieldDate", cqDTO.Start_YieldDate);
-                    //    dic.Add("PoundsYielded", "");
-                    //    dic.Add("PoundsPlant", "");
-                    //    dic.Add("PoundsHeaded", "");
-                    //    dic.Add("PercentYield", "");
-                    //    dic.Add("PercentYield2", "");
+                    else
+                    {
+                        dic.Add("ProductionTotalId", "-1");
+                        dic.Add("PondID", pd.PondId.ToString() != null ? pd.PondId.ToString() : "");
+                        dic.Add("PondName", sam.farmPond != null ? sam.farmPond : "");
+                        dic.Add("FarmID", pd.FarmId.ToString() != null ? pd.FarmId.ToString() : "");
+                        dic.Add("ProductionDate", cqDTO.ProductionDate);
+                        dic.Add("PlantWeight", "---");
+                        dic.Add("PondWeight", "---");
+                        dic.Add("WeighBacks", "---");
+                        dic.Add("AverageYield", "---");
+                        dic.Add("HeadedWeight", "---");
 
-                    //}
+                    }
 
                     col.Add(dic);
 

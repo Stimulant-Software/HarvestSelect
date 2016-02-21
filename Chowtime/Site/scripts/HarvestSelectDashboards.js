@@ -571,9 +571,9 @@ function production() {
                                 startTimer(msg.Key);
                                 yieldList = msg['ReturnData'];
                                 if (yieldList.length > 0) {
-                                    var lastdate = yieldList[0].YieldDate.split(" ")[0];
+                                    var lastdate = yieldList[0].ProductionDate.split(" ")[0];
                                     for (var i = 0; i < yieldList.length; i++) {
-                                        var shiftDate = yieldList[i].YieldDate.split(" ")[0];
+                                        var shiftDate = yieldList[i].ProductionDate.split(" ")[0];
                                         if (i == 0) { results.push(shiftDate); }
                                         else if (shiftDate != lastdate) {
                                             results.push(shiftDate);
@@ -854,7 +854,7 @@ function production() {
         $('#rowContainer').empty();
         $('.date-select h3, .date-select div').remove();
 
-        var searchQuery = { "Key": _key, "YieldDate": date }, data = JSON.stringify(searchQuery);
+        var searchQuery = { "Key": _key, "ProductionDate": date }, data = JSON.stringify(searchQuery);
         $.ajax('../api/Production/ProductionTotals', { 
             type: 'POST',
             data: data,
