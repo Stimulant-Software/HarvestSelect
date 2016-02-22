@@ -162,6 +162,7 @@ namespace SGApp.Controllers
                 //{
                 //    prod.WeighBacks = prod.WeighBacks + wb;
                 //}
+                if (wb != 0) { prod.WeighBacks = wb; }
                 pr.Save(prod);
             }
         }
