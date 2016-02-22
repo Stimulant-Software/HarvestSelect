@@ -548,6 +548,12 @@ function production() {
         else $('#calendarModal').modal();
     });
 
+    function getTimeStamp() {
+        var now = new Date();
+        var currentTime = now.toTimeString();
+        console.log(currentTime);
+    }
+
     function loadCalendar() {
         calFlag = "created";
         $('#calendarModal .modal-body').fullCalendar({
@@ -688,7 +694,7 @@ function production() {
             $('.editPondWeight').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, pondPounds = $(this).siblings('.pondPounds').val(), pondPoundsID = $(this).siblings('.pondPoundsID').val(), searchQuery = { "Key": _key, "ProductionDate": date, "PondWeight": pondPounds, "PlantPondWeightID": pondPoundsID }, data = JSON.stringify(searchQuery);
+                var date = chosenDate, pondPounds = $(this).siblings('.pondPounds').val(), pondPoundsID = $(this).siblings('.pondPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PondWeight": pondPounds, "PlantPondWeightID": pondPoundsID }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/PlantPondWeight/PlantPondWeightAddOrEdit', {
                     type: 'PUT',
                     data: data,
@@ -721,7 +727,7 @@ function production() {
                 PlantPondWeightData = msg['ReturnData'];
                 console.log(PlantPondWeightData);
                 var $plantPounds = PlantPondWeightData.length == 0 ? "" : "!!!", $plantPoundsID = PlantPondWeightData.length == 0 ? "-1" : "!!!";
-                var formHtml = '<section id="plant-weight-' + $id + '" class="row form-inline" data-row="plant-weight"><header class="col-md-12">Plant Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantPounds-' + $id + '" class="form-control plantPounds" value="' + $plantPounds + '"><input type="hidden" id="plantPoundsID-' + $id + '" class="plantPoundsID" value="' + $plantPoundsID + '"><button class="btn btn-default editplantWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section></section>';
+                var formHtml = '<section id="plant-weight-' + $id + '" class="row form-inline" data-row="plant-weight"><header class="col-md-12">Plant Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantPounds-' + $id + '" class="form-control plantPounds" value="' + $plantPounds + '"><input type="hidden" id="plantPoundsID-' + $id + '" class="plantPoundsID" value="' + $plantPoundsID + '"><button class="btn btn-default editPlantWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section></section>';
                 $.when($('.form-container').empty().append(formHtml)).then(function () { bindPlantWeightButtons($id); hideProgress(); });
             }
         });
@@ -730,7 +736,7 @@ function production() {
             $('.editPlantWeight').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, plantPounds = $(this).siblings('.plantPounds').val(), plantPoundsID = $(this).siblings('.plantPoundsID').val(), searchQuery = { "Key": _key, "ProductionDate": date, "PlantWeight": plantPounds, "PlantPondWeightID": plantPoundsID }, data = JSON.stringify(searchQuery);
+                var date = chosenDate, plantPounds = $(this).siblings('.plantPounds').val(), plantPoundsID = $(this).siblings('.plantPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PlantWeight": plantPounds, "PlantPondWeightID": plantPoundsID }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/PlantPondWeight/PlantPondWeightAddOrEdit', {
                     type: 'PUT',
                     data: data,
@@ -830,7 +836,7 @@ function production() {
             $('.editFarmYield').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var remove = "0", date = chosenDate; yieldID = $(this).parent().parent().data('yieldid'), pondID = $id, pctYield = $(this).siblings('.pctyield1').val(), pctYield2 = $(this).siblings('.pctyield2').val(), searchQuery = { "Key": _key, "YieldDate": date, "YieldID": yieldID, "PondID": pondID, "PercentYield": pctYield, "PercentYield2": pctYield2 }, data = JSON.stringify(searchQuery);
+                var remove = "0", date = chosenDate; yieldID = $YieldID, pondID = $id, pctYield = $(this).siblings('.pctyield1').val(), pctYield2 = $(this).siblings('.pctyield2').val(), searchQuery = { "Key": _key, "YieldDate": date, "YieldID": yieldID, "PondID": pondID, "PercentYield": pctYield, "PercentYield2": pctYield2 }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/FarmYield/FarmYieldAddOrEdit', {
                     type: 'PUT',
                     data: data,
