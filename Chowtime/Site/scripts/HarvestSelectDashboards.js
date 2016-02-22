@@ -548,6 +548,7 @@ function production() {
         else $('#calendarModal').modal();
     });
 
+    getTimeStamp();
     function getTimeStamp() {
         var now = new Date();
         var currentTime = now.toTimeString();
@@ -694,7 +695,7 @@ function production() {
             $('.editPondWeight').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, pondPounds = $(this).siblings('.pondPounds').val(), pondPoundsID = $(this).siblings('.pondPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PondWeight": pondPounds, "PlantPondWeightID": pondPoundsID }, data = JSON.stringify(searchQuery);
+                var date = chosenDate, pondPounds = $(this).siblings('.pondPounds').val(), pondPoundsID = $(this).siblings('.pondPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PondWeight": pondPounds, "PlantPondWeightID": pondPoundsID, "PondID": $id }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/PlantPondWeight/PlantPondWeightAddOrEdit', {
                     type: 'PUT',
                     data: data,
@@ -736,7 +737,7 @@ function production() {
             $('.editPlantWeight').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, plantPounds = $(this).siblings('.plantPounds').val(), plantPoundsID = $(this).siblings('.plantPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PlantWeight": plantPounds, "PlantPondWeightID": plantPoundsID }, data = JSON.stringify(searchQuery);
+                var date = chosenDate, plantPounds = $(this).siblings('.plantPounds').val(), plantPoundsID = $(this).siblings('.plantPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PlantWeight": plantPounds, "PlantPondWeightID": plantPoundsID, "PondID": $id }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/PlantPondWeight/PlantPondWeightAddOrEdit', {
                     type: 'PUT',
                     data: data,
