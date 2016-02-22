@@ -615,240 +615,6 @@ function production() {
         });
     }
 
-    /* FROM FARM YIELDS: 
-    function loadCalendar() {
-        calFlag = "created";
-        $('#calendarModal .modal-body').fullCalendar({
-            events:
-                function (start, end, timezone, refetchEvents) {
-                    $.when(hideProgress()).then(function () {
-                        showProgress('body');
-                        var view = $('#calendarModal .modal-body').fullCalendar('getView');
-                        
-                        var startDateYear1 = view.calendar.getDate()._d.getFullYear();
-                        startDateYear = startDateYear1;
-                        var startDateMonth1 = view.calendar.getDate()._d.getMonth() + 1; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
-                        startDateMonth = startDateMonth1;
-                        
-                        var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
-                        $.when($.ajax('../api/FarmYield/FarmYieldDates', {
-                            type: 'POST',
-                            data: data,
-                            success: function (msg) {
-                                localStorage['CT_key'] = msg['Key'];
-                                startTimer(msg.Key);
-                                yieldList = msg['ReturnData'];
-                                if(yieldList.length>0) {
-                                    var lastdate = yieldList[0].YieldDate.split(" ")[0];
-                                    for (var i = 0; i < yieldList.length; i++) {
-                                        var shiftDate = yieldList[i].YieldDate.split(" ")[0];
-                                        if (i == 0) { results.push(shiftDate); }
-                                        else if (shiftDate != lastdate) {
-                                            results.push(shiftDate);
-                                            lastdate = shiftDate;
-                                        }
-                                    };
-                                }
-                            }
-                        })).then(function () { 
-                            hideProgress();
-                            $('#calendarModal').modal();
-                            var events = [];
-                            for (var event in results) {
-                                var obj = {
-                                    title: "EDIT",
-                                    start: results[event],
-                                    end: results[event],
-                                    allDay: true
-                                };
-                                events.push(obj);
-                            }
-                            refetchEvents(events);
-                        });
-                    });
-                },
-            dayClick: function () {
-                var chosenDate = $(this).data('date');
-                $.when(loadEditFarmYields(chosenDate)).then(function () {
-                    $('#calendarModal').modal('hide');
-                });
-                bindYieldButtons();
-            },
-            eventClick: function (calEvent) {
-                var chosenDate = calEvent.start._i;
-                $.when(loadEditFarmYields(chosenDate)).then(function () {
-                    $('#calendarModal').modal('hide');
-                });
-                bindYieldButtons();
-            }
-        });
-    }*/
-
-    /* FROM WEIGHBACKS: 
-    function loadCalendar() {
-        calFlag = "created";
-        $('#calendarModal .modal-body').fullCalendar({
-            events:
-                function (start, end, timezone, refetchEvents) {
-                    $.when(hideProgress()).then(function () {
-                        showProgress('body');
-                        var view = $('#calendarModal .modal-body').fullCalendar('getView');
-
-                        var startDateYear1 = view.calendar.getDate()._d.getFullYear();
-                        startDateYear = startDateYear1;
-                        //if (view.start._d.getMonth() == 11) { startDateMonth = 1; startDateYear = view.start._d.getFullYear() + 1; } // looking at January
-                        //else if (view.start._d.getMonth() == 10) startDateMonth = 12; // looking at December
-                        // else 
-                        var startDateMonth1 = view.calendar.getDate()._d.getMonth() + 1; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
-                        startDateMonth = startDateMonth1;
-
-                        var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
-                        $.when($.ajax('../api/WeighBack/WeighBackDates', {
-                            type: 'POST',
-                            data: data,
-                            success: function (msg) {
-                                localStorage['CT_key'] = msg['Key'];
-                                startTimer(msg.Key);
-                                yieldList = msg['ReturnData'];
-                                if (yieldList.length > 0) {
-                                    var lastdate = yieldList[0].WBDateTime.split(" ")[0];
-                                    for (var i = 0; i < yieldList.length; i++) {
-                                        var shiftDate = yieldList[i].WBDateTime.split(" ")[0];
-                                        if (i == 0) { results.push(shiftDate); }
-                                        else if (shiftDate != lastdate) {
-                                            results.push(shiftDate);
-                                            lastdate = shiftDate;
-                                        }
-                                    };
-                                }
-                            }
-                        })).then(function () {
-                            hideProgress();
-                            $('#calendarModal').modal();
-                            var events = [];
-                            for (var event in results) {
-                                var obj = {
-                                    title: "EDIT",
-                                    start: results[event],
-                                    end: results[event],
-                                    allDay: true
-                                };
-                                events.push(obj);
-                            }
-                            refetchEvents(events);
-                        });
-                    });
-                },
-            dayClick: function () {
-                var chosenDate = $(this).data('date');
-                $.when(loadEditWeighBacks(chosenDate)).then(function () {
-                    $('#calendarModal').modal('hide');
-                });
-                bindYieldButtons();
-            },
-            eventClick: function (calEvent) {
-                var chosenDate = calEvent.start._i;
-                $.when(loadEditWeighBacks(chosenDate)).then(function () {
-                    $('#calendarModal').modal('hide');
-                });
-                bindYieldButtons();
-            }
-        });
-    } */
-
-    /* FROM PLANT WEIGHTS
-    function loadCalendar() {
-        calFlag = "created";
-
-        $('#calendarModal .modal-body').fullCalendar({
-            events: function (start, end, timezone, refetchEvents) {
-                $.when(hideProgress()).then(function () {
-                    showProgress('body');
-                    var view = $('#calendarModal .modal-body').fullCalendar('getView');
-                    var startDateYear1 = view.calendar.getDate()._d.getFullYear();
-                    startDateYear = startDateYear1;
-                    var startDateMonth1 = view.calendar.getDate()._d.getMonth() + 1; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
-                    startDateMonth = startDateMonth1;
-
-                    var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
-                    $.when($.ajax('../api/PlantPondWeight/PlantPondWeightList', {
-                        type: 'POST',
-                        data: data,
-                        success: function (msg) {
-                            localStorage['CT_key'] = msg['Key'];
-                            startTimer(msg.Key);
-                            plantPondWeightList = msg['ReturnData'];
-                            if (plantPondWeightList.length > 0) {
-                                for (var i = 0; i < plantPondWeightList.length; i++) {
-                                    var plantPondWeightDate = plantPondWeightList[i].plantPondWeightDate.split(" ")[0];
-                                    results.push(plantPondWeightDate);
-                                }
-                            }
-                        }
-                    })).then(function () {
-                        hideProgress();
-                        $('#calendarModal').modal();
-                        var events = [];
-                        for (var event in results) {
-                            var obj = {
-                                title: "EDIT",
-                                start: results[event],
-                                end: results[event],
-                                allDay: true
-                            };
-                            events.push(obj);
-                        }
-                        refetchEvents(events);
-                    });
-                });
-            },
-            eventClick: function (event) {
-                date = event.start._i, searchQuery = { "Key": _key, "plantPondWeightDate": date }, data = JSON.stringify(searchQuery);
-                $.when($.ajax('../api/plantPondWeight/plantPondWeightList', {
-                    type: 'POST',
-                    data: data,
-                    success: function (msg) {
-                        localStorage['CT_key'] = msg['Key'];
-                        startTimer(msg.Key);
-                        plantPondWeightData = msg['ReturnData'];
-                        console.log(plantPondWeightData);
-                        //$('#rowContainer').empty();
-                        //$('.date-select h3').remove();
-                        //$('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                        //for (var i = 0; i < farmYieldData.length; i++) {
-                        //    var savedOrNot = farmYieldData[i].YieldId == "-1" ? "save" : "check";
-
-                        //    var newRowHtml = '<section class="row row' + farmYieldData[i].YieldId + ' data" data-rownum="' + farmYieldData[i].YieldId + '" data-yieldid="' + farmYieldData[i].YieldId + '" data-pondid="' + farmYieldData[i].PondID + '"><div class="col-xs-3"><label id="farms' + farmYieldData[i].YieldId + '" class="farmDDLLabel">' + farmYieldData[i].PondName + '</label></div><div class="col-xs-6"><input placeholder="(Pond Weight)" id="pounds' + farmYieldData[i].YieldId + '" class="pounds table-numbers" type="text" value="' + farmYieldData[i].PoundsYielded + '"><input placeholder="(Headed Weight)" id="headedpounds' + farmYieldData[i].YieldId + '" class="headedpounds table-numbers" type="text" value="' + farmYieldData[i].PoundsHeaded + '"><input placeholder="(% Yield1)" id="pctyield1_' + farmYieldData[i].YieldId + '" class="pctyield1 table-numbers" type="text" value="' + farmYieldData[i].PercentYield + '"><input placeholder="(% Yield2)" id="pctyield2_' + farmYieldData[i].YieldId + '" class="pctyield2 table-numbers" type="text" value="' + farmYieldData[i].PercentYield2 + '"></div><div class="col-xs-2"><a href="#" class="save-row"><img src="content/images/' + savedOrNot + '.png"></a></div></section>';
-
-                        //    $.when($('#rowContainer').append(newRowHtml)).then(function () {
-                        //        $('.yield-labels, .ponds, .pounds, .plantpounds, .headedpounds, .pctyield1, .pctyield2, .add-row, .delete-row').css('opacity', 1);
-                        //    });
-                        //}
-
-                        //var addButton = '<section class="row row0 data" data-rownum="0" data-yieldid="-1"><div class="col-xs-2"><a href="#" class="add-new-row"><img src="content/images/plus.png"></a></div></section>';
-                        //$('#rowContainer').append(addButton)
-                        //bindYieldButtons();
-                    }
-                })).then(function () {
-                    $('#calendarModal').modal('hide');
-                    $('.row.fields, .row.buttons').css('opacity', 1);
-                    $('.plantWeightForm').css('opacity', 1);
-                });
-            },
-            dayClick: function () {
-                $('#rowContainer').empty();
-                date = $(this).data('date');
-                $('.date-select h3').remove();
-                $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                addOrEdit = "-1";
-                $('input').val("");
-                $('#calendarModal').modal('hide');
-                $('.row.fields, .row.buttons').css('opacity', 1);
-                $('.plantWeightForm').css('opacity', 1);
-            }
-        });
-    } */
-
     function loadPondList(date) {
         $('#pondListContainer').empty();
         $('.date-select h3, .date-select div').remove();
@@ -930,7 +696,7 @@ function production() {
                         hideProgress();
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
-                        console.log(msg);
+                        loadPondList(date);
                     }
                 })
             });
@@ -972,7 +738,7 @@ function production() {
                         hideProgress();
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
-                        console.log(msg);
+                        loadPondList(date);
                     }
                 })
             });
@@ -987,11 +753,7 @@ function production() {
     }
 
     function loadEditWeighBacks($id, $status) {
-        $('#plantpounds').val();
-        $('#plantPoundsID').val("-1");
-        $('#weighbacks').val();
         var searchQuery = { "Key": _key, "WBDateTime": chosenDate, "PondID": $id }, data = JSON.stringify(searchQuery);
-
         $.ajax('../api/WeighBack/WeighBacksFromSamplings', {
             type: 'POST',
             data: data,
@@ -1018,43 +780,26 @@ function production() {
         });
 
         function bindWeighbackButtons() {
-            $('.data .save-row').unbind().click(function (e) {
-                e.preventDefault();
-                var remove = "0", date = $('.date-select h3 strong').text(), WeightBackID = $(this).parent().parent().data('weighbackid'), pondID = $(this).parent().parent().data('pondid'), Backs = $(this).parent().parent().find('.backs').val(), BigFish = $(this).parent().parent().find('.bigfish').val(), Bream = $(this).parent().parent().find('.bream').val(), Carp = $(this).parent().parent().find('.carp').val(), DOAs = $(this).parent().parent().find('.doas').val(), DressedDisease = $(this).parent().parent().find('.dresseddisease').val(), LiveDisease = $(this).parent().parent().find('.livedisease').val(), RedFillet = $(this).parent().parent().find('.redfillet').val(), Shad = $(this).parent().parent().find('.shad').val(), Trash = $(this).parent().parent().find('.trash').val(), Turtles = $(this).parent().parent().find('.turtles').val(), searchQuery = { "Key": _key, "WBDateTime": date, "WeightBackID": WeightBackID, "PondID": pondID, "Backs": Backs, "BigFish": BigFish, "Bream": Bream, "Carp": Carp, "DOAs": DOAs, "DressedDisease": DressedDisease, "LiveDisease": LiveDisease, "RedFillet": RedFillet, "Shad": Shad, "Trash": Trash, "Turtle": Turtles, "Remove": remove }, data = JSON.stringify(searchQuery);
-                $(this).parent().parent().find('.save-row').children().attr('src', 'content/images/check.png');
-                $.when($.ajax('../api/WeighBack/WeighBackAddOrEdit', {
-                    type: 'PUT',
-                    data: data,
-                    success: function (msg) {
-                        localStorage['CT_key'] = msg['Key'];
-                        startTimer(msg.Key);
-                    }
-                })).then(function () {
-                    if (WeightBackID == -1) {
-                        console.log("!")
-                    }
-                });
-            });
             $('.editWeighback').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var remove = "0", date = chosenDate; yieldID = $(this).parent().parent().data('yieldid'), pondID = $id, pctYield = $(this).siblings('.pctyield1').val(), pctYield2 = $(this).siblings('.pctyield2').val(), searchQuery = { "Key": _key, "YieldDate": date, "YieldID": yieldID, "PondID": pondID, "PercentYield": pctYield, "PercentYield2": pctYield2 }, data = JSON.stringify(searchQuery);
-                $.ajax('../api/FarmYield/FarmYieldAddOrEdit', {
+                var WeightBackID = $WeightBackID, pondID = $id, Backs = $(this).parent().parent().find('.backs').val(), BigFish = $(this).parent().parent().find('.bigfish').val(), Bream = $(this).parent().parent().find('.bream').val(), Carp = $(this).parent().parent().find('.carp').val(), DOAs = $(this).parent().parent().find('.doas').val(), DressedDisease = $(this).parent().parent().find('.dresseddisease').val(), LiveDisease = $(this).parent().parent().find('.livedisease').val(), RedFillet = $(this).parent().parent().find('.redfillet').val(), Shad = $(this).parent().parent().find('.shad').val(), Trash = $(this).parent().parent().find('.trash').val(), Turtles = $(this).parent().parent().find('.turtles').val(), searchQuery = { "Key": _key, "WBDateTime": date, "WeightBackID": WeightBackID, "PondID": pondID, "Backs": Backs, "BigFish": BigFish, "Bream": Bream, "Carp": Carp, "DOAs": DOAs, "DressedDisease": DressedDisease, "LiveDisease": LiveDisease, "RedFillet": RedFillet, "Shad": Shad, "Trash": Trash, "Turtle": Turtles, "Remove": remove }, data = JSON.stringify(searchQuery);
+                $.ajax('../api/WeighBack/WeighBackAddOrEdit', {
                     type: 'PUT',
                     data: data,
                     success: function (msg) {
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
                         hideProgress();
-                        console.log(msg);
+                        loadPondList(date);
                     }
                 });
             });
 
             $('#addNewWeighBack').unbind().click(function (e) {
                 e.preventDefault();
-                var $currentSection = $(this).parent(), $YieldId = "-1", $PercentYield = "", $PercentYield2 = "";
-                var formHtml = '<section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>% Yield 1:</label><input placeholder="(% Yield1)" id="pctyield1_' + $YieldId + '" class="pctyield1 table-numbers" type="text" value="' + $PercentYield + '"><label>% Yield 2:</label><input placeholder="(% Yield2)" id="pctyield2_' + $YieldId + '" class="pctyield2 table-numbers" type="text" value="' + $PercentYield2 + '"><button class="btn btn-default editFarmYield">Edit</button></section></section>';
+                var $currentSection = $(this).parent(), $WeightBackID = "-1";
+                var formHtml = '<section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Turtle</label><input placeholder="Turtles" id="turtles' + $WeightBackID + '" class="turtles table-numbers" value="" type="text"></fieldset><fieldset class="form-group col-xs-4"><label>Trash</label><input placeholder="Trash" id="trash' + $WeightBackID + '" class="trash table-numbers" value="" type="text"></fieldset><fieldset class="form-group col-xs-4"><label>Shad</label><input placeholder="Shad" id="shad' + $WeightBackID + '" class="shad table-numbers" value="" type="text"></fieldset></div><div class="row"><fieldset class="form-group col-xs-4"><label>Carp</label><input placeholder="Carp" id="carp' + $WeightBackID + '" class="carp table-numbers" value="" type="text"></fieldset><fieldset class="form-group col-xs-4"><label>Bream</label><input placeholder="Bream" id="bream' + $WeightBackID + '" class="bream table-numbers" value="" type="text"></fieldset><fieldset class="form-group col-xs-4"><label>Live Disease</label><input placeholder="Live Disease" id="livedisease' + $WeightBackID + '" class="livedisease table-numbers" value="" type="text"></fieldset></div><div class="row"><fieldset class="form-group col-xs-4"><label>Dressed Disease</label><input placeholder="Dressed Disease" id="dresseddisease' + $WeightBackID + '" class="dresseddisease table-numbers" value="" type="text"></fieldset><fieldset class="form-group col-xs-4"><label>~~Backs</label><input placeholder="~~Backs" id="backs' + $WeightBackID + '" class="backs table-numbers" value="" type="text"></fieldset><fieldset class="form-group col-xs-4"><label>Red Fillet</label><input placeholder="Red Fillet" id="redfillet' + $WeightBackID + '" class="redfillet table-numbers" value="" type="text"></fieldset></div><div class="row"><fieldset class="form-group col-xs-4"><label>Big Fish</label><input placeholder="Big Fish" id="bigfish' + $WeightBackID + '" class="bigfish table-numbers" value="" type="text"></fieldset><fieldset class="form-group col-xs-4"><label>DOAs</label><input placeholder="DOAs" id="doas' + $WeightBackID + '" class="doas table-numbers" value="" type="text"></fieldset></form></div><div class="row"><fieldset class="form-group col-xs-4"><label>Red Fillet @ 36% Yield</label><input placeholder="" id="redfilletpct' + $WeightBackID + '" class="redfilletpct table-numbers" disabled></fieldset><fieldset class="form-group col-xs-4"><label>Dressed Disease @ 60% Yield</label><input placeholder="" id="dresseddiseasepct' + $WeightBackID + '" class="dresseddiseasepct table-numbers" disabled></fieldset><button class="btn btn-default editWeighBacks">Edit</button></div></section></section><section class="row buttons"><button id="addNewWeighBack" class="btn btn-default">Add New Weighback</button></section></section>';
                 $(formHtml).insertBefore($currentSection);
             });
         }
