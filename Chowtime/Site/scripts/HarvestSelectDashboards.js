@@ -837,7 +837,7 @@ function production() {
             $('.editFarmYield').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var remove = "0", date = chosenDate; yieldID = $YieldID, pondID = $id, pctYield = $(this).siblings('.pctyield1').val(), pctYield2 = $(this).siblings('.pctyield2').val(), searchQuery = { "Key": _key, "YieldDate": date, "YieldID": yieldID, "PondID": pondID, "PercentYield": pctYield, "PercentYield2": pctYield2 }, data = JSON.stringify(searchQuery);
+                var remove = "0", date = chosenDate; yieldID = $YieldId, pondID = $id, pctYield = $(this).siblings('.pctyield1').val(), pctYield2 = $(this).siblings('.pctyield2').val(), searchQuery = { "Key": _key, "YieldDate": date, "YieldID": yieldID, "PondID": pondID, "PercentYield": pctYield, "PercentYield2": pctYield2 }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/FarmYield/FarmYieldAddOrEdit', {
                     type: 'PUT',
                     data: data,
