@@ -121,7 +121,7 @@ namespace SGApp.Controllers
             {
                 prod = prodexists;
                 var ppwr = new PlantPondWeightRepository();
-                List<PlantPondWeight> ppwl = ppwr.GetByDate(DateTime.Parse(uDto.PPWDateTime));
+                List<PlantPondWeight> ppwl = ppwr.GetByDateAndPond(DateTime.Parse(uDto.PPWDateTime), int.Parse(uDto.PondID));
                 decimal plw = ppwl.Where(x => x.PlantWeight != null).Sum(x => x.PlantWeight).Value;
                 decimal pw = ppwl.Where(x => x.PondWeight != null).Sum(x => x.PondWeight).Value;
                 if (pw != 0) { prod.PondWeight = pw; }

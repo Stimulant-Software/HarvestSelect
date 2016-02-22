@@ -135,7 +135,7 @@ namespace SGApp.Controllers
             {
                 prod = prodexists;
                 var fyr = new FarmYieldRepository();
-                List<FarmYield> fyl = fyr.GetByDate(DateTime.Parse(uDto.YieldDate));
+                List<FarmYield> fyl = fyr.GetByDateAndPond(DateTime.Parse(uDto.YieldDate), int.Parse(uDto.PondID));
                 int fycount = fyl.Where(x => x.PercentYield != null).Count();
                 int fycount2 = fyl.Where(x => x.PercentYield2 != null).Count();
                 decimal fysum1 = fyl.Where(x => x.PercentYield != null).Sum(x => x.PercentYield).Value;
@@ -241,7 +241,7 @@ namespace SGApp.Controllers
                     dic.Add("PoundsPlant", item.PoundsPlant.ToString());
                     dic.Add("PoundsHeaded", item.PoundsHeaded.ToString());
                     dic.Add("PercentYield", item.PercentYield.ToString());
-                    dic.Add("PercentYield2", item.PercentYield.ToString());
+                    dic.Add("PercentYield2", item.PercentYield2.ToString());
                     col.Add(dic);
                     var ufdic = new Dictionary<string, string>();
 

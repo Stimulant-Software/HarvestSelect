@@ -71,6 +71,13 @@ namespace SGApp.Repository.Application
             return DbContext.PlantPondWeights.Where(x => x.PPWDateTime > reportDate && x.PPWDateTime < endDate).ToList();
         }
 
+        public List<PlantPondWeight> GetByDateAndPond(DateTime reportDate, int pondid)
+        {
+            DateTime endDate = reportDate.AddDays(1);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.PlantPondWeights.Where(x => x.PPWDateTime > reportDate && x.PPWDateTime < endDate && x.PondID == pondid).ToList();
+        }
+
         public List<PlantPondWeight> GetByDateRange(DateTime reportDate1, DateTime reportDate2)
         {
             DateTime endDate = reportDate2.AddDays(1);

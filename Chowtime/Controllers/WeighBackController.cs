@@ -133,7 +133,7 @@ namespace SGApp.Controllers
             {
                 prod = prodexists;
                 var wbr = new WeighBackRepository();
-                List<WeighBack> wbl = wbr.GetByDate(DateTime.Parse(uDto.WBDateTime));
+                List<WeighBack> wbl = wbr.GetByDateAndPond(DateTime.Parse(uDto.WBDateTime), int.Parse(uDto.PondID));
                 wb = wbl.Where(x => x.Backs != null).Sum(x => x.Backs).Value;
                 wb += wbl.Where(x => x.BigFish != null).Sum(x => x.BigFish).Value;
                 wb += wbl.Where(x => x.Bream != null).Sum(x => x.Bream).Value;

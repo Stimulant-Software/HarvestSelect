@@ -71,6 +71,13 @@ namespace SGApp.Repository.Application
             return DbContext.WeighBacks.Where(x => x.WBDateTime > reportDate && x.WBDateTime < endDate).ToList();
         }
 
+        public List<WeighBack> GetByDateAndPond(DateTime reportDate, int pondid)
+        {
+            DateTime endDate = reportDate.AddDays(1);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.WeighBacks.Where(x => x.WBDateTime > reportDate && x.WBDateTime < endDate && x.PondID == pondid).ToList();
+        }
+
         public List<WeighBack> GetByDateRange(DateTime reportDate1, DateTime reportDate2)
         {
             DateTime endDate = reportDate2.AddDays(1);

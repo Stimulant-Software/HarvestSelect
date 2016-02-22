@@ -75,6 +75,13 @@ namespace SGApp.Repository.Application
             reportDate = reportDate.AddSeconds(-1);
             return DbContext.FarmYields.Where(x => x.YieldDate > reportDate && x.YieldDate < endDate).ToList();
         }
+
+        public List<FarmYield> GetByDateAndPond(DateTime reportDate, int pondid)
+        {
+            DateTime endDate = reportDate.AddDays(1);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.FarmYields.Where(x => x.YieldDate > reportDate && x.YieldDate < endDate && x.PondID == pondid).ToList();
+        }
     }
 
 
