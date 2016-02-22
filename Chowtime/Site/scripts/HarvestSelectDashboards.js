@@ -684,9 +684,19 @@ function production() {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
                 PlantPondWeightData = msg['ReturnData'];
-                console.log(PlantPondWeightData);
-                var $pondPounds = PlantPondWeightData.length == 0 ? "" : "!!!", $pondPoundsID = PlantPondWeightData.length == 0 ? "-1" : "!!!";
-                var formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
+                if (PlantPondWeightData.length == 0) {
+                    var $pondPounds = "", $pondPoundsID = "-1", formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
+                } else {
+                    var formHtml;
+
+                    console.log(PlantPondWeightData.length);
+                    for (i = 0; i < PlantPondWeightData.length; i++) {
+                        console.log("!");
+                        var $pondPounds = PlantPondWeightData[i].PondWeight, $pondPoundsID = PlantPondWeightData[i].PlantPondWeightID;
+                        formHtml += '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
+                    }
+                }
+                
                 $.when($('.form-container').empty().append(formHtml)).then(function () { bindPondWeightButtons($id); hideProgress(); });
             }
         });
@@ -726,9 +736,15 @@ function production() {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
                 PlantPondWeightData = msg['ReturnData'];
-                console.log(PlantPondWeightData);
-                var $plantPounds = PlantPondWeightData.length == 0 ? "" : "!!!", $plantPoundsID = PlantPondWeightData.length == 0 ? "-1" : "!!!";
-                var formHtml = '<section id="plant-weight-' + $id + '" class="row form-inline" data-row="plant-weight"><header class="col-md-12">Plant Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantPounds-' + $id + '" class="form-control plantPounds" value="' + $plantPounds + '"><input type="hidden" id="plantPoundsID-' + $id + '" class="plantPoundsID" value="' + $plantPoundsID + '"><button class="btn btn-default editPlantWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section></section>';
+                if (PlantPondWeightData.length == 0) {
+                    var $plantPounds = "", $plantPoundsID = "-1", formHtml = '<section id="plant-weight-' + $id + '" class="row form-inline" data-row="plant-weight"><header class="col-md-12">Plant Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantPounds-' + $id + '" class="form-control plantPounds" value="' + $pondPounds + '"><input type="hidden" id="plantPoundsID-' + $id + '" class="plantPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPlantWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section></section>';
+                } else {
+                    var formHtml;
+                    for (i = 0; i < PlantPondWeightData.length; i++) {
+                        var $plantPounds = PlantPondWeightData[i].PlantWeight, $plantPoundsID = PlantPondWeightData[i].PlantPondWeightID;
+                        formHtml += '<section id="plant-weight-' + $id + '" class="row form-inline" data-row="plant-weight"><header class="col-md-12">Plant Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantPounds-' + $id + '" class="form-control plantPounds" value="' + $pondPounds + '"><input type="hidden" id="plantPoundsID-' + $id + '" class="plantPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPlantWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section></section>';
+                    }
+                }
                 $.when($('.form-container').empty().append(formHtml)).then(function () { bindPlantWeightButtons($id); hideProgress(); });
             }
         });
