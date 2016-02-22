@@ -773,7 +773,7 @@ function production() {
 
     function loadEditWeighBacks($id, $status) {
         var searchQuery = { "Key": _key, "WBDateTime": chosenDate, "PondID": $id }, data = JSON.stringify(searchQuery);
-        $.ajax('../api/WeighBack/WeighBacksFromSamplings', {
+        $.ajax('../api/WeighBack/WeighBackList', {
             type: 'POST',
             data: data,
             success: function (msg) {
@@ -826,7 +826,7 @@ function production() {
 
     function loadEditFarmYields($id, $status) {
         var searchQuery = { "Key": _key, "YieldDate": chosenDate, "PondID": $id }, data = JSON.stringify(searchQuery);
-        $.ajax('../api/FarmYield/FarmYieldsFromSamplings', {
+        $.ajax('../api/FarmYield/FarmYieldList', {
             type: 'POST',
             data: data,
             success: function (msg) {
@@ -835,17 +835,19 @@ function production() {
                 farmYieldData = msg['ReturnData'];
                 console.log(farmYieldData);
                 if (farmYieldData.length == 0) {
-                    var $FarmID = "28", $PercentYield = "", $PercentYield2 = "", $PondID = "86", $PondName = "ACI-D15", $PoundsHeaded = "", $PoundsPlant = "", $PoundsYielded = "", $YieldDate = "2/5/2016 12:00:00 AM", $YieldId = "-1";
+                    var $FarmID = "28", $PercentYield = "", $PercentYield2 = "", $PondID = "86", $PondName = "ACI-D15", $PoundsHeaded = "", $PoundsPlant = "", $PoundsYielded = "", $YieldDate = "2/5/2016 12:00:00 AM", $YieldId = "-1", formHtml = '<section id="farm-yields-' + $id + '" class="row form-inline" data-row="farm-yields"><header class="col-md-12">Farm Yields</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>% Yield 1:</label><input placeholder="(% Yield1)" id="pctyield1_' + $YieldId + '" class="pctyield1 table-numbers" type="text" value="' + $PercentYield + '"><label>% Yield 2:</label><input placeholder="(% Yield2)" id="pctyield2_' + $YieldId + '" class="pctyield2 table-numbers" type="text" value="' + $PercentYield2 + '"><button class="btn btn-default editFarmYield">Edit</button></section></section><section class="row buttons"><button id="addNewFarmYield" class="btn btn-default">Add New Farm Yield</button></section></section>';
                 } else {
-                    var $FarmID = farmYieldData.FarmID, $PercentYield = farmYieldData.PercentYield, $PercentYield2 = farmYieldData.PercentYield2, $PondID = farmYieldData.PondID, $PondName = farmYieldData.PondName, $PoundsHeaded = farmYieldData.PoundsHeaded, $PoundsPlant = farmYieldData.PoundsPlant, $PoundsYielded = farmYieldData.PoundsYielded, $YieldDate = farmYieldData.YieldDate, $YieldId = farmYieldData.YieldId;
+                    var formHtml;
+                    for (var i = o; i < farmYieldData.length; i++) {
+                        var $PercentYield = farmYieldData[i].PercentYield, $PercentYield2 = farmYieldData[i].PercentYield2, $PondID = farmYieldData[i].PondID, $YieldDate = farmYieldData[i].YieldDate, $YieldId = farmYieldData[i].YieldId;
+                        formHtml += '<section id="farm-yields-' + $id + '" class="row form-inline" data-row="farm-yields"><header class="col-md-12">Farm Yields</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>% Yield 1:</label><input placeholder="(% Yield1)" id="pctyield1_' + $YieldId + '" class="pctyield1 table-numbers" type="text" value="' + $PercentYield + '"><label>% Yield 2:</label><input placeholder="(% Yield2)" id="pctyield2_' + $YieldId + '" class="pctyield2 table-numbers" type="text" value="' + $PercentYield2 + '"><button class="btn btn-default editFarmYield">Edit</button></section></section><section class="row buttons"><button id="addNewFarmYield" class="btn btn-default">Add New Farm Yield</button></section></section>'
+                    }
                 }
-
-                var formHtml = '<section id="farm-yields-' + $id + '" class="row form-inline" data-row="farm-yields"><header class="col-md-12">Farm Yields</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>% Yield 1:</label><input placeholder="(% Yield1)" id="pctyield1_' + $YieldId + '" class="pctyield1 table-numbers" type="text" value="' + $PercentYield + '"><label>% Yield 2:</label><input placeholder="(% Yield2)" id="pctyield2_' + $YieldId + '" class="pctyield2 table-numbers" type="text" value="' + $PercentYield2 + '"><button class="btn btn-default editFarmYield">Edit</button></section></section><section class="row buttons"><button id="addNewFarmYield" class="btn btn-default">Add New Farm Yield</button></section></section>';
-                $.when($('.form-container').empty().append(formHtml)).then(function () { bindYieldButtons($id); hideProgress(); });
+                $.when($('.form-container').empty().append(formHtml)).then(function () { bindYieldButtons($id, $YieldId); hideProgress(); });
             }
         });
 
-        function bindYieldButtons($id) {
+        function bindYieldButtons($id, $YieldId) {
             $('.editFarmYield').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
@@ -857,7 +859,7 @@ function production() {
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
                         hideProgress();
-                        console.log(msg);
+                        loadPondList(date);
                     }
                 });
             });
