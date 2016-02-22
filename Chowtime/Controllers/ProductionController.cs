@@ -179,7 +179,7 @@ namespace SGApp.Controllers
                         dic.Add("PondWeight", fy.PondWeight != null ? fy.PondWeight.ToString() : "---");
                         dic.Add("WeighBacks", fy.WeighBacks != null ? fy.WeighBacks.ToString() : "---");
                         dic.Add("AverageYield", fy.AverageYield != null ? fy.AverageYield.ToString() : "---");
-                        dic.Add("HeadedWeight", fy.AverageYield != null && fy.PondWeight != null ? (fy.AverageYield * fy.PondWeight).ToString() : "---");
+                        dic.Add("HeadedWeight", fy.AverageYield != null && fy.PondWeight != null ? ((fy.AverageYield / 100) * fy.PondWeight).ToString() : "---");
                     }
                     else
                     {
