@@ -133,15 +133,22 @@ namespace SGApp.Controllers
             }
             else
             {
-                prod = prodexists;                
-                if (prod.AverageYield == null)
-                {
-                    prod.AverageYield = ay;
-                }
-                else
-                {
-                    prod.AverageYield = (prod.AverageYield + ay) / 2;
-                }
+                prod = prodexists;
+                var fyr = new FarmYieldRepository();
+                List<FarmYield> fyl = fyr.GetByDate(DateTime.Parse(uDto.YieldDate));
+                int fycount = fyl.Where(x => x.PercentYield != null).Count();
+                int fycount2 = fyl.Where(x => x.PercentYield2 != null).Count();
+                decimal fysum1 = fyl.Where(x => x.PercentYield != null).Sum(x => x.PercentYield).Value;
+                decimal fysum2 = fyl.Where(x => x.PercentYield2 != null).Sum(x => x.PercentYield2).Value;
+                prod.AverageYield = (fysum1 + fysum2) / (fycount + fycount2);
+                //if (prod.AverageYield == null)
+                //{
+                //    prod.AverageYield = ay;
+                //}
+                //else
+                //{
+                //    prod.AverageYield = (prod.AverageYield + ay) / 2;
+                //}
                 pr.Save(prod);
             }
         }

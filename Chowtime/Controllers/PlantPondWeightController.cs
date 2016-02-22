@@ -120,22 +120,29 @@ namespace SGApp.Controllers
             else
             {
                 prod = prodexists;
-                if (prod.PlantWeight == null && uDto.PlantWeight != null)
-                {
-                    prod.PlantWeight = decimal.Parse(uDto.PlantWeight);
-                }
-                else if (prod.PlantWeight != null && uDto.PlantWeight != null)
-                {
-                    prod.PlantWeight = prod.PlantWeight + decimal.Parse(uDto.PlantWeight);
-                }
-                if (prod.PondWeight == null && uDto.PondWeight != null)
-                {
-                    prod.PondWeight = decimal.Parse(uDto.PondWeight);
-                }
-                else if (prod.PondWeight != null && uDto.PondWeight != null)
-                {
-                    prod.PondWeight = prod.PondWeight + decimal.Parse(uDto.PondWeight);
-                }
+                var ppwr = new PlantPondWeightRepository();
+                List<PlantPondWeight> ppwl = ppwr.GetByDate(DateTime.Parse(uDto.PPWDateTime));
+                decimal plw = ppwl.Where(x => x.PlantWeight != null).Sum(x => x.PlantWeight).Value;
+                decimal pw = ppwl.Where(x => x.PondWeight != null).Sum(x => x.PondWeight).Value;
+                if (pw != 0) { prod.PondWeight = pw; }
+                if (plw != 0) { prod.PlantWeight = plw; }
+                
+                //if (prod.PlantWeight == null && uDto.PlantWeight != null)
+                //{
+                //    prod.PlantWeight = decimal.Parse(uDto.PlantWeight);
+                //}
+                //else if (prod.PlantWeight != null && uDto.PlantWeight != null)
+                //{
+                //    prod.PlantWeight = prod.PlantWeight + decimal.Parse(uDto.PlantWeight);
+                //}
+                //if (prod.PondWeight == null && uDto.PondWeight != null)
+                //{
+                //    prod.PondWeight = decimal.Parse(uDto.PondWeight);
+                //}
+                //else if (prod.PondWeight != null && uDto.PondWeight != null)
+                //{
+                //    prod.PondWeight = prod.PondWeight + decimal.Parse(uDto.PondWeight);
+                //}
                 pr.Save(prod);
             }
         }

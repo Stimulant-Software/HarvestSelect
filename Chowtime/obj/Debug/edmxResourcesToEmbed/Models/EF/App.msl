@@ -40,17 +40,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Farms">
-      <EntityTypeMapping TypeName="AppModel.Farm">
-        <MappingFragment StoreEntitySet="Farms">
-          <ScalarProperty Name="OldFarmId" ColumnName="OldFarmId" />
-          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
-          <ScalarProperty Name="FarmName" ColumnName="FarmName" />
-          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-          <ScalarProperty Name="FarmId" ColumnName="FarmId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Feedings">
       <EntityTypeMapping TypeName="AppModel.Feeding">
         <MappingFragment StoreEntitySet="Feedings">
@@ -100,21 +89,6 @@
         <MappingFragment StoreEntitySet="HealthStatuses">
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="HealthStatusId" ColumnName="HealthStatusId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Ponds">
-      <EntityTypeMapping TypeName="AppModel.Pond">
-        <MappingFragment StoreEntitySet="Ponds">
-          <ScalarProperty Name="OldPondID" ColumnName="OldPondID" />
-          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-          <ScalarProperty Name="HealthStatus" ColumnName="HealthStatus" />
-          <ScalarProperty Name="NoFeed" ColumnName="NoFeed" />
-          <ScalarProperty Name="Size" ColumnName="Size" />
-          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
-          <ScalarProperty Name="PondName" ColumnName="PondName" />
-          <ScalarProperty Name="FarmId" ColumnName="FarmId" />
-          <ScalarProperty Name="PondId" ColumnName="PondId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -178,6 +152,83 @@
           <ScalarProperty Name="RegEmpLate" ColumnName="RegEmpLate" />
           <ScalarProperty Name="ShiftDate" ColumnName="ShiftDate" />
           <ScalarProperty Name="ShiftEndID" ColumnName="ShiftEndID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Farms">
+      <EntityTypeMapping TypeName="AppModel.Farm">
+        <MappingFragment StoreEntitySet="Farms">
+          <ScalarProperty Name="InnovaCode" ColumnName="InnovaCode" />
+          <ScalarProperty Name="InnovaName" ColumnName="InnovaName" />
+          <ScalarProperty Name="OldFarmId" ColumnName="OldFarmId" />
+          <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+          <ScalarProperty Name="FarmName" ColumnName="FarmName" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="FarmId" ColumnName="FarmId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PlantPondWeights">
+      <EntityTypeMapping TypeName="AppModel.PlantPondWeight">
+        <MappingFragment StoreEntitySet="PlantPondWeights">
+          <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+          <ScalarProperty Name="PondWeight" ColumnName="PondWeight" />
+          <ScalarProperty Name="PlantWeight" ColumnName="PlantWeight" />
+          <ScalarProperty Name="PPWDateTime" ColumnName="PPWDateTime" />
+          <ScalarProperty Name="PondID" ColumnName="PondID" />
+          <ScalarProperty Name="PlantPondWeightID" ColumnName="PlantPondWeightID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="WeighBacks">
+      <EntityTypeMapping TypeName="AppModel.WeighBack">
+        <MappingFragment StoreEntitySet="WeighBacks">
+          <ScalarProperty Name="DOAs" ColumnName="DOAs" />
+          <ScalarProperty Name="BigFish" ColumnName="BigFish" />
+          <ScalarProperty Name="RedFilletPct" ColumnName="RedFilletPct" />
+          <ScalarProperty Name="RedFillet" ColumnName="RedFillet" />
+          <ScalarProperty Name="Backs" ColumnName="Backs" />
+          <ScalarProperty Name="DressedDiseasePct" ColumnName="DressedDiseasePct" />
+          <ScalarProperty Name="DressedDisease" ColumnName="DressedDisease" />
+          <ScalarProperty Name="LiveDisease" ColumnName="LiveDisease" />
+          <ScalarProperty Name="Bream" ColumnName="Bream" />
+          <ScalarProperty Name="Carp" ColumnName="Carp" />
+          <ScalarProperty Name="Shad" ColumnName="Shad" />
+          <ScalarProperty Name="Trash" ColumnName="Trash" />
+          <ScalarProperty Name="Turtle" ColumnName="Turtle" />
+          <ScalarProperty Name="WBDateTime" ColumnName="WBDateTime" />
+          <ScalarProperty Name="PondID" ColumnName="PondID" />
+          <ScalarProperty Name="WeightBackID" ColumnName="WeightBackID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Ponds">
+      <EntityTypeMapping TypeName="AppModel.Pond">
+        <MappingFragment StoreEntitySet="Ponds">
+          <ScalarProperty Name="InnovaCode" ColumnName="InnovaCode" />
+          <ScalarProperty Name="InnovaName" ColumnName="InnovaName" />
+          <ScalarProperty Name="OldPondID" ColumnName="OldPondID" />
+          <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+          <ScalarProperty Name="HealthStatus" ColumnName="HealthStatus" />
+          <ScalarProperty Name="NoFeed" ColumnName="NoFeed" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="StatusId" ColumnName="StatusId" />
+          <ScalarProperty Name="PondName" ColumnName="PondName" />
+          <ScalarProperty Name="FarmId" ColumnName="FarmId" />
+          <ScalarProperty Name="PondId" ColumnName="PondId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ProductionTotals">
+      <EntityTypeMapping TypeName="AppModel.ProductionTotal">
+        <MappingFragment StoreEntitySet="ProductionTotals">
+          <ScalarProperty Name="AverageYield" ColumnName="AverageYield" />
+          <ScalarProperty Name="WeighBacks" ColumnName="WeighBacks" />
+          <ScalarProperty Name="PondWeight" ColumnName="PondWeight" />
+          <ScalarProperty Name="PlantWeight" ColumnName="PlantWeight" />
+          <ScalarProperty Name="PondId" ColumnName="PondId" />
+          <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+          <ScalarProperty Name="ProductionTotalID" ColumnName="ProductionTotalID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

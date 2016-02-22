@@ -132,14 +132,36 @@ namespace SGApp.Controllers
             else
             {
                 prod = prodexists;
-                if (prod.WeighBacks == null)
-                {
-                    prod.WeighBacks = wb;
-                }
-                else
-                {
-                    prod.WeighBacks = prod.WeighBacks + wb;
-                }
+                var wbr = new WeighBackRepository();
+                List<WeighBack> wbl = wbr.GetByDate(DateTime.Parse(uDto.WBDateTime));
+                wb = wbl.Where(x => x.Backs != null).Sum(x => x.Backs).Value;
+                wb += wbl.Where(x => x.BigFish != null).Sum(x => x.BigFish).Value;
+                wb += wbl.Where(x => x.Bream != null).Sum(x => x.Bream).Value;
+                wb += wbl.Where(x => x.Carp != null).Sum(x => x.Carp).Value;
+                wb += wbl.Where(x => x.DOAs != null).Sum(x => x.DOAs).Value;
+                wb += wbl.Where(x => x.DressedDisease != null).Sum(x => x.DressedDisease).Value;
+                wb += wbl.Where(x => x.LiveDisease != null).Sum(x => x.LiveDisease).Value;
+                wb += wbl.Where(x => x.RedFillet != null).Sum(x => x.RedFillet).Value;
+                wb += wbl.Where(x => x.Shad != null).Sum(x => x.Shad).Value;
+                wb += wbl.Where(x => x.Trash != null).Sum(x => x.Trash).Value;
+                wb += wbl.Where(x => x.Turtle != null).Sum(x => x.Turtle).Value;
+                //wb += uDto.Bream == null ? 0 : decimal.Parse(uDto.Bream);
+                //wb += uDto.Carp == null ? 0 : decimal.Parse(uDto.Carp);
+                //wb += uDto.DOAs == null ? 0 : decimal.Parse(uDto.DOAs);
+                //wb += uDto.DressedDisease == null ? 0 : decimal.Parse(uDto.DressedDisease);
+                //wb += uDto.LiveDisease == null ? 0 : decimal.Parse(uDto.LiveDisease);
+                //wb += uDto.RedFillet == null ? 0 : decimal.Parse(uDto.RedFillet);
+                //wb += uDto.Shad == null ? 0 : decimal.Parse(uDto.Shad);
+                //wb += uDto.Trash == null ? 0 : decimal.Parse(uDto.Trash);
+                //wb += uDto.Turtle == null ? 0 : decimal.Parse(uDto.Turtle);
+                //if (prod.WeighBacks == null)
+                //{
+                //    prod.WeighBacks = wb;
+                //}
+                //else
+                //{
+                //    prod.WeighBacks = prod.WeighBacks + wb;
+                //}
                 pr.Save(prod);
             }
         }

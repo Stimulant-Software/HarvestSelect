@@ -9,13 +9,16 @@
     <EntitySet Name="Harvests" EntityType="AppModel.Store.Harvests" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="HealthStatuses" EntityType="AppModel.Store.HealthStatuses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="O2Readings" EntityType="AppModel.Store.O2Readings" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PlantPondWeights" EntityType="AppModel.Store.PlantPondWeights" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Ponds" EntityType="AppModel.Store.Ponds" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ProductionTotals" EntityType="AppModel.Store.ProductionTotals" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Roles" EntityType="AppModel.Store.Roles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ShiftEnd" EntityType="AppModel.Store.ShiftEnd" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Statuses" EntityType="AppModel.Store.Statuses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserFarms" EntityType="AppModel.Store.UserFarms" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="UserRoles" EntityType="AppModel.Store.UserRoles" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Users" EntityType="AppModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="WeighBacks" EntityType="AppModel.Store.WeighBacks" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="FK_Farms_Companies" Association="AppModel.Store.FK_Farms_Companies">
       <End Role="Companies" EntitySet="Companies" />
       <End Role="Farms" EntitySet="Farms" />
@@ -48,6 +51,10 @@
       <End Role="UserFarms" EntitySet="UserFarms" />
       <End Role="O2Readings" EntitySet="O2Readings" />
     </AssociationSet>
+    <AssociationSet Name="FK_PlantPondWeights_Ponds" Association="AppModel.Store.FK_PlantPondWeights_Ponds">
+      <End Role="Ponds" EntitySet="Ponds" />
+      <End Role="PlantPondWeights" EntitySet="PlantPondWeights" />
+    </AssociationSet>
     <AssociationSet Name="FK_Ponds_Farms" Association="AppModel.Store.FK_Ponds_Farms">
       <End Role="Farms" EntitySet="Farms" />
       <End Role="Ponds" EntitySet="Ponds" />
@@ -59,6 +66,10 @@
     <AssociationSet Name="FK_Ponds_Statuses" Association="AppModel.Store.FK_Ponds_Statuses">
       <End Role="Statuses" EntitySet="Statuses" />
       <End Role="Ponds" EntitySet="Ponds" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductionTotals_Ponds" Association="AppModel.Store.FK_ProductionTotals_Ponds">
+      <End Role="Ponds" EntitySet="Ponds" />
+      <End Role="ProductionTotals" EntitySet="ProductionTotals" />
     </AssociationSet>
     <AssociationSet Name="FK_UserFarms_Farms" Association="AppModel.Store.FK_UserFarms_Farms">
       <End Role="Farms" EntitySet="Farms" />
@@ -88,6 +99,10 @@
       <End Role="Statuses" EntitySet="Statuses" />
       <End Role="Users" EntitySet="Users" />
     </AssociationSet>
+    <AssociationSet Name="FK_WeighBacks_Ponds" Association="AppModel.Store.FK_WeighBacks_Ponds">
+      <End Role="Ponds" EntitySet="Ponds" />
+      <End Role="WeighBacks" EntitySet="WeighBacks" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Companies">
     <Key>
@@ -111,6 +126,8 @@
     <Property Name="FarmName" Type="varchar" Nullable="false" MaxLength="50" />
     <Property Name="CompanyId" Type="int" Nullable="false" />
     <Property Name="OldFarmId" Type="int" Nullable="false" />
+    <Property Name="InnovaName" Type="varchar" MaxLength="50" />
+    <Property Name="InnovaCode" Type="nchar" MaxLength="10" />
   </EntityType>
   <EntityType Name="FarmYieldHeaders">
     <Key>
@@ -173,6 +190,17 @@
     <Property Name="Note" Type="varchar" MaxLength="250" />
     <Property Name="DayPeriod" Type="date" Nullable="false" />
   </EntityType>
+  <EntityType Name="PlantPondWeights">
+    <Key>
+      <PropertyRef Name="PlantPondWeightID" />
+    </Key>
+    <Property Name="PlantPondWeightID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PondID" Type="int" Nullable="false" />
+    <Property Name="PPWDateTime" Type="datetime" Nullable="false" />
+    <Property Name="PlantWeight" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="PondWeight" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="TicketNumber" Type="varchar" MaxLength="50" />
+  </EntityType>
   <EntityType Name="Ponds">
     <Key>
       <PropertyRef Name="PondId" />
@@ -186,6 +214,20 @@
     <Property Name="HealthStatus" Type="int" Nullable="false" />
     <Property Name="SortOrder" Type="int" Nullable="false" />
     <Property Name="OldPondID" Type="int" Nullable="false" />
+    <Property Name="InnovaName" Type="varchar" MaxLength="50" />
+    <Property Name="InnovaCode" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="ProductionTotals">
+    <Key>
+      <PropertyRef Name="ProductionTotalID" />
+    </Key>
+    <Property Name="ProductionTotalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="ProductionDate" Type="date" Nullable="false" />
+    <Property Name="PondId" Type="int" Nullable="false" />
+    <Property Name="PlantWeight" Type="decimal" Scale="2" />
+    <Property Name="PondWeight" Type="decimal" Scale="2" />
+    <Property Name="WeighBacks" Type="decimal" Scale="2" />
+    <Property Name="AverageYield" Type="decimal" Precision="16" Scale="4" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -253,6 +295,27 @@
     <Property Name="CompanyId" Type="int" />
     <Property Name="StatusId" Type="int" />
     <Property Name="Password" Type="binary" MaxLength="16" />
+  </EntityType>
+  <EntityType Name="WeighBacks">
+    <Key>
+      <PropertyRef Name="WeightBackID" />
+    </Key>
+    <Property Name="WeightBackID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PondID" Type="int" Nullable="false" />
+    <Property Name="WBDateTime" Type="datetime" Nullable="false" />
+    <Property Name="Turtle" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Trash" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Shad" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Carp" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Bream" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="LiveDisease" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="DressedDisease" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="DressedDiseasePct" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="Backs" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="RedFillet" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="RedFilletPct" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="BigFish" Type="decimal" Precision="10" Scale="2" />
+    <Property Name="DOAs" Type="decimal" Precision="10" Scale="2" />
   </EntityType>
   <Association Name="FK_Farms_Companies">
     <End Role="Companies" Type="AppModel.Store.Companies" Multiplicity="1" />
@@ -350,6 +413,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_PlantPondWeights_Ponds">
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+    <End Role="PlantPondWeights" Type="AppModel.Store.PlantPondWeights" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ponds">
+        <PropertyRef Name="PondId" />
+      </Principal>
+      <Dependent Role="PlantPondWeights">
+        <PropertyRef Name="PondID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Ponds_Farms">
     <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="1" />
     <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="*" />
@@ -383,6 +458,18 @@
       </Principal>
       <Dependent Role="Ponds">
         <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductionTotals_Ponds">
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+    <End Role="ProductionTotals" Type="AppModel.Store.ProductionTotals" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ponds">
+        <PropertyRef Name="PondId" />
+      </Principal>
+      <Dependent Role="ProductionTotals">
+        <PropertyRef Name="PondId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -467,6 +554,18 @@
       </Principal>
       <Dependent Role="Users">
         <PropertyRef Name="StatusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WeighBacks_Ponds">
+    <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
+    <End Role="WeighBacks" Type="AppModel.Store.WeighBacks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ponds">
+        <PropertyRef Name="PondId" />
+      </Principal>
+      <Dependent Role="WeighBacks">
+        <PropertyRef Name="PondID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

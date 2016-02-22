@@ -79,6 +79,7 @@ namespace SGApp.Repository.Application
         public ProductionTotal GetByDateAndPond(DateTime reportDate1, int pondid)
         {
             DateTime endDate = reportDate1.AddDays(1);
+            reportDate1 = reportDate1.AddSeconds(-1);
             return DbContext.ProductionTotals.Where(x => x.ProductionDate > reportDate1 && x.ProductionDate < endDate && x.PondId == pondid).FirstOrDefault();
         }
     }
