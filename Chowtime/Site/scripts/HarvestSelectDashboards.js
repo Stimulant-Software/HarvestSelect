@@ -687,12 +687,14 @@ function production() {
                 if (PlantPondWeightData.length == 0) {
                     var $pondPounds = "", $pondPoundsID = "-1", formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
                 } else {
-                    var formHtml;
+                    var formHtml = "";
                     for (i = 0; i < PlantPondWeightData.length; i++) {
                         var $pondPounds = PlantPondWeightData[i].PondWeight, $pondPoundsID = PlantPondWeightData[i].PlantPondWeightID;
                         formHtml += '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPondWeight" class="btn btn-default">Add New Pond Weight</button></section></section>';
                     }
                 }
+                console.log(PlantPondWeightData.length);
+                console.log(formHtml);
                 $.when($('.form-container').empty().append(formHtml)).then(function () { bindPondWeightButtons($id); hideProgress(); });
             }
         });
@@ -735,7 +737,7 @@ function production() {
                 if (PlantPondWeightData.length == 0) {
                     var $plantPounds = "", $plantPoundsID = "-1", formHtml = '<section id="plant-weight-' + $id + '" class="row form-inline" data-row="plant-weight"><header class="col-md-12">Plant Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantPounds-' + $id + '" class="form-control plantPounds" value="' + $plantPounds + '"><input type="hidden" id="plantPoundsID-' + $id + '" class="plantPoundsID" value="' + $plantPoundsID + '"><button class="btn btn-default editPlantWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section></section>';
                 } else {
-                    var formHtml;
+                    var formHtml = "";
                     for (i = 0; i < PlantPondWeightData.length; i++) {
                         var $plantPounds = PlantPondWeightData[i].PlantWeight, $plantPoundsID = PlantPondWeightData[i].PlantPondWeightID;
                         formHtml += '<section id="plant-weight-' + $id + '" class="row form-inline" data-row="plant-weight"><header class="col-md-12">Plant Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Plant Weight:</label><input type="text" id="plantPounds-' + $id + '" class="form-control plantPounds" value="' + $plantPounds + '"><input type="hidden" id="plantPoundsID-' + $id + '" class="plantPoundsID" value="' + $plantPoundsID + '"><button class="btn btn-default editPlantWeight">Edit</button></section></section><section class="row buttons"><button id="addNewPlantWeight" class="btn btn-default">Add New Plant Weight</button></section></section>';
@@ -837,8 +839,8 @@ function production() {
                 if (farmYieldData.length == 0) {
                     var $FarmID = "28", $PercentYield = "", $PercentYield2 = "", $PondID = "86", $PondName = "ACI-D15", $PoundsHeaded = "", $PoundsPlant = "", $PoundsYielded = "", $YieldDate = "2/5/2016 12:00:00 AM", $YieldId = "-1", formHtml = '<section id="farm-yields-' + $id + '" class="row form-inline" data-row="farm-yields"><header class="col-md-12">Farm Yields</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>% Yield 1:</label><input placeholder="(% Yield1)" id="pctyield1_' + $YieldId + '" class="pctyield1 table-numbers" type="text" value="' + $PercentYield + '"><label>% Yield 2:</label><input placeholder="(% Yield2)" id="pctyield2_' + $YieldId + '" class="pctyield2 table-numbers" type="text" value="' + $PercentYield2 + '"><button class="btn btn-default editFarmYield">Edit</button></section></section><section class="row buttons"><button id="addNewFarmYield" class="btn btn-default">Add New Farm Yield</button></section></section>';
                 } else {
-                    var formHtml;
-                    for (var i = o; i < farmYieldData.length; i++) {
+                    var formHtml = "";
+                    for (var i = 0; i < farmYieldData.length; i++) {
                         var $PercentYield = farmYieldData[i].PercentYield, $PercentYield2 = farmYieldData[i].PercentYield2, $PondID = farmYieldData[i].PondID, $YieldDate = farmYieldData[i].YieldDate, $YieldId = farmYieldData[i].YieldId;
                         formHtml += '<section id="farm-yields-' + $id + '" class="row form-inline" data-row="farm-yields"><header class="col-md-12">Farm Yields</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>% Yield 1:</label><input placeholder="(% Yield1)" id="pctyield1_' + $YieldId + '" class="pctyield1 table-numbers" type="text" value="' + $PercentYield + '"><label>% Yield 2:</label><input placeholder="(% Yield2)" id="pctyield2_' + $YieldId + '" class="pctyield2 table-numbers" type="text" value="' + $PercentYield2 + '"><button class="btn btn-default editFarmYield">Edit</button></section></section><section class="row buttons"><button id="addNewFarmYield" class="btn btn-default">Add New Farm Yield</button></section></section>'
                     }
