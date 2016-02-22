@@ -219,11 +219,13 @@ namespace SGApp.Controllers
 
                     var dic = new Dictionary<string, string>();
 
-                    //dic.Add("WeightBackID", item.WeightBackID.ToString());
-                    //dic.Add("PondID", item.PondID.ToString());
-                    //dic.Add("PondName", item.Pond.PondName);
-                    //dic.Add("FarmID", item.Pond.FarmId.ToString());
-                    //dic.Add("PPWDateTime", item.PPWDateTime.ToShortDateString());
+                    dic.Add("PlantPondWeightID", item.PlantPondWeightID.ToString());
+                    dic.Add("PondID", item.PondID.ToString());
+                    dic.Add("PondName", item.Pond.PondName);
+                    dic.Add("FarmID", item.Pond.FarmId.ToString());
+                    dic.Add("PPWDateTime", item.PPWDateTime.ToShortDateString());
+                    dic.Add("PondWeight", item.PondWeight != null ? item.PondWeight.ToString() : "---");
+                    dic.Add("PlantWeight", item.PlantWeight != null ? item.PlantWeight.ToString() : "---");
                     //dic.Add("Turtle", item.Turtle.ToString());
                     //dic.Add("Trash", item.Trash.ToString());
                     //dic.Add("Shad", item.Shad.ToString());
