@@ -10,3 +10,19 @@ bld/
 *.suo
 *.suo
 
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/Antlr3.Runtime.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/EntityFramework.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/Microsoft.Web.Infrastructure.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/Newtonsoft.Json.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Net.Http.Formatting.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.Mvc.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.Http.WebHost.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/EntityFramework.SqlServer.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.Helpers.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.Http.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.Optimization.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.Razor.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.WebPages.Deployment.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.WebPages.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/System.Web.WebPages.Razor.dll
+InnovaService/InnovaServiceHost/InnovaServiceHost/bin/WebGrease.dll
