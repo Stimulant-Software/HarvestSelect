@@ -133,11 +133,9 @@ function getTodaysMonth() {
 
 /* SHIFT END */
 function shiftEnd() {
-    var calFlag, date, addOrEdit, date, i, tdate = getTodaysMonth(), startDateMonth = tdate.month, startDateYear = tdate.year;
+    var calFlag, date, addOrEdit, date, i, tdate = getTodaysMonth(), startDateMonth = tdate.month, startDateYear = tdate.year, chosenDate;
     $('#shiftDate').unbind().click(function () {
-        console.log("clicked");
         if (calFlag != "created") loadCalendar(startDateMonth, startDateYear);
-        //else  { $('#calendarModal').modal(); return; }
     });
 
     function loadCalendar() {
@@ -151,14 +149,11 @@ function shiftEnd() {
                     var view = $('#calendarModal .modal-body').fullCalendar('getView');
                     var startDateYear1 = view.calendar.getDate()._d.getFullYear();
                     startDateYear = startDateYear1;
-                    //if (view.start._d.getMonth() == 11) { startDateMonth = 1; startDateYear = view.start._d.getFullYear() + 1; } // looking at January
-                    //else if (view.start._d.getMonth() == 10) startDateMonth = 12; // looking at December
-                    // else 
                     var startDateMonth1 = view.calendar.getDate()._d.getMonth() + 1; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
                     startDateMonth = startDateMonth1;
 
                     var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
-                    $.when($.ajax('../api/ShiftEnd/ShiftEndList', {
+                    $.when($.ajax('../api/Department/DepartmentDates', {
                         type: 'POST',
                         data: data,
                         success: function (msg) {
@@ -190,51 +185,49 @@ function shiftEnd() {
                 });
             },
             eventClick: function (event) {
-                date = event.start._i, searchQuery = { "Key": _key, "ShiftDate": date }, data = JSON.stringify(searchQuery);
-                $.when($.ajax('../api/ShiftEnd/ShiftEndList', {
-                    type: 'POST',
-                    data: data,
-                    success: function (msg) {
-                        localStorage['CT_key'] = msg['Key'];
-                        startTimer(msg.Key);
-                        shiftEndData = msg['ReturnData'][0];
-                        $('#rowContainer').empty();
-                        $('.date-select h3').remove();
-                        $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                        $('#regEmpLate').val(shiftEndData.RegEmpLate);
-                        $('#regEmpOut').val(shiftEndData.RegEmpOut);
-                        $('#regEmpLeftEarly').val(shiftEndData.RegEmplLeftEarly);
-                        $('#tempEmpOut').val(shiftEndData.TempEmpOut);
-                        $('#inmateEmpLeftEarly').val(shiftEndData.InmateLeftEarly);
-                        $('#empVacation').val(shiftEndData.EmployeesOnVacation);
-                        $('#inLateOut').val(shiftEndData.InLateOut);
-                        $('#finKill').val(shiftEndData.FinishedKill);
-                        $('#finFillet').val(shiftEndData.FinishedFillet);
-                        $('#finSkinned').val(shiftEndData.FinishedSkinning);
-                        $('#dayFreeze').val(shiftEndData.DayFinishedFreezing);
-                        $('#nightFreeze').val(shiftEndData.NightFinishedFreezing);
-                        $('#dayFroze').val(shiftEndData.DayShiftFroze);
-                        $('#nightFroze').val(shiftEndData.NightShiftFroze);
-                        $('#filletScale').val(shiftEndData.FilletScaleReading);
-                        $('#downtimeMin').val(shiftEndData.DowntimeMinutes);
-                        addOrEdit = shiftEndData.ShiftEndID;
-                    }
-                })).then(function () {
+                chosenDate = calEvent.start._i;
+                $.when(loadDepartmentList(chosenDate)).then(function () {
+                    hideProgress();
                     $('#calendarModal').modal('hide');
-                    $('.row.fields, .row.buttons').css('opacity', 1);                   
-                    $('.shiftForm').css('opacity', 1);
                 });
             },
             dayClick: function () {
-                $('#rowContainer').empty();
-                date = $(this).data('date');
+                showProgress('body');
+                chosenDate = $(this).data('date');
+                $.when(loadDepartmentList(chosenDate)).then(function () {
+                    $('#calendarModal').modal('hide');
+                });
+            }
+        });
+    }
+
+    function loadDepartmentList(date) {
+        $('#deptListContainer').empty();
+        $('.date-select h3, .date-select div').remove();
+
+        var searchQuery = { "Key": _key, "ProductionDate": date }, data = JSON.stringify(searchQuery);
+        $.ajax('../api/Department/DepartmentTotals', {
+            type: 'POST',
+            data: data,
+            success: function (msg) {
+                localStorage['CT_key'] = msg['Key'];
+                startTimer(msg.Key);
+                deptData = msg['ReturnData'];
+                var deptList = '';
+                $('#deptListContainer').empty();
                 $('.date-select h3').remove();
                 $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                addOrEdit = "-1";
-                $('input').val("");
-                $('#calendarModal').modal('hide');
-                $('.row.fields, .row.buttons').css('opacity', 1);
-                $('.shiftForm').css('opacity', 1);
+                conosle.log(deptData;)
+                //for (var i = 0; i < deptData.length; i++) {
+                //    // add test to determine which buttons are green and red
+                //    var $deptBtn = deptData[i].DeptWeight != "---" ? "btn-success" : "btn-danger", $plantBtn = deptData[i].PlantWeight != "---" ? "btn-success" : "btn-danger", $backsBtn = deptData[i].WeighBacks != "---" ? "btn-success" : "btn-danger", $yieldsBtn = deptData[i].AverageYield != "---" ? "btn-success" : "btn-danger";
+                //    deptList += '<section id="dept' + deptData[i].DeptID + '" class="row dept-container"><section class="dept-buttons"><section class="col-md-2"><button class="btn btn-label">' + deptData[i].DeptName + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DeptID + '_deptWeight" data-column="dept-weight" class="btn ' + $deptBtn + '">' + deptData[i].DeptWeight + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DeptID + '_plantWeight" class="btn ' + $plantBtn + '" data-column="plant-weight">' + deptData[i].PlantWeight + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DeptID + '_weighbacks" class="btn ' + $backsBtn + '" data-column="weighbacks">' + deptData[i].WeighBacks + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DeptID + '_yield" class="btn ' + $yieldsBtn + '" data-column="yield">' + deptData[i].AverageYield + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DeptID + '_headedWeight" class="btn btn-label">' + deptData[i].HeadedWeight + '</button></section></section><section class="form-container col-md-12"></section></section>';
+                //}
+                //$.when($('#deptListContainer').append(deptList)).then(function () {
+                //    bindDeptButtons();
+                //    $('.deptlist').show();
+                //    hideProgress();
+                //});
             }
         });
     }
@@ -261,6 +254,28 @@ function shiftEnd() {
             }
         })).then(function () { $('input').val(""); $('.row.fields, .row.buttons').css('opacity', 0); });
     });
+
+//<div class="col-xs-12 input-group">
+//    <label>Reg Employees Late</label><input type="number" step="any" class="table-numbers" id="regEmpLate">
+//    <label>Reg Employees Out</label><input type="number" step="any" class="table-numbers" id="regEmpOut">
+//    <label>Reg Employees Left Early</label><input type="number" step="any" class="table-numbers" id="regEmpLeftEarly">
+//    <label>Temp Svc Late</label><input type="number" step="any" class="table-numbers" id="tempEmpLate">
+//    <label>Temp Svc Out</label><input type="number" step="any" class="table-numbers" id="tempEmpOut">
+//    <label>Temp Svc Left Early</label><input type="number" step="any" class="table-numbers" id="tempEmpLeftEarly">
+//    <label>Inmate Left Early</label><input type="number" step="any" class="table-numbers" id="inmateEmpLeftEarly">
+//    <label>Innmate Out</label><input type="number" step="any" class="table-numbers" id="inLateOut">
+//    <label>Employees on Vacation</label><input type="number" step="any" class="table-numbers" id="empVacation">
+//</div>
+//<div class="col-xs-12 input-group">
+//    <label>Finished Time</label><input type="time" class="table-numbers" id="finTime">
+//</div>
+//<div class="col-xs-12 input-group">
+//    <label>Downtime</label><input type="number" step="any" class="table-numbers" id="downtimeMin"><select id="DTType"></select><input type="text" id="DTNotes">
+//</div>
+//<section class="row buttons">
+//    <a href="#" class="reset btn">Clear Page</a>
+//    <a href="#" class="save btn">Save</a>
+//</section>
 }
 
 /* LIVE FISH SAMPLING */
@@ -548,7 +563,6 @@ function production() {
         else $('#calendarModal').modal();
     });
 
-    getTimeStamp();
     function getTimeStamp() {
         var now = new Date();
         var currentTime = now.toTimeString();

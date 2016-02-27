@@ -26,42 +26,24 @@
         </nav>
     </header>
         <section id="main_content" class="container">
-			<section class="row date-select">
+			<section class="row date-select text-center">
 				<!-- pull in string of dates - need range, method -->
                 <button id="shiftDate" data-toggle="modal" data-target="#calendarModal">Select a date to add or edit information</button>
 			</section>
-			<section class="shiftForm pond">
-				<div class="col-xs-12 col-sm-5 input-group">
-					<label>Reg Employees Late</label><input type="number" step="any" class="table-numbers" id="regEmpLate">
-					<label>Reg Employees Out</label><input type="number" step="any" class="table-numbers" id="regEmpOut">
-					<label>Reg Employees Left Early</label><input type="number" step="any" class="table-numbers" id="regEmpLeftEarly">
-					<label>Temp Svc Employees Out</label><input type="number" step="any" class="table-numbers" id="tempEmpOut">
-					<label>Inmate Employees Left Early</label><input type="number" step="any" class="table-numbers" id="inmateEmpLeftEarly">
-                    <label>Innmate Out</label><input type="number" step="any" class="table-numbers" id="inLateOut">
-                    <label>Employees on Vacation</label><input type="number" step="any" class="table-numbers" id="empVacation">
-				</div>
-				<div class="col-xs-12 col-sm-5 input-group">
-					<label>Finished Kill</label><input type="time" class="table-numbers" id="finKill">
-					<label>Finished Fillet</label><input type="time" class="table-numbers" id="finFillet">
-					<label>Finished Skinning</label><input type="time" class="table-numbers" id="finSkinned">
-					<label>Day Shift Finished Freezing</label><input type="time" class="table-numbers" id="dayFreeze">
-					<label>Night Shift Finished Freezing</label><input type="time" class="table-numbers" id="nightFreeze">
-				</div>
-				<div class="col-xs-12 col-sm-5 input-group">
-					<label>Day Shift Froze</label><input type="number" step="any" class="table-numbers" id="dayFroze">
-					<label>Night Shift Froze</label><input type="number" step="any" class="table-numbers" id="nightFroze">
-					<label>Fillet Scale Reading</label><input type="number" step="any" class="table-numbers" id="filletScale">
-				</div>
-				<div class="col-xs-12 col-sm-5 input-group no-border">
-					<label>Downtime in Minutes</label><input type="number" step="any" class="table-numbers" id="downtimeMin">
-				</div>
-                <section class="row buttons">
-				    <a href="#" class="reset btn">Clear Page</a>
-				    <a href="#" class="save btn">Save</a>
-			    </section>
-			</section>
-			
+
+            <section class="row deptlist">
+                <header class="text-center">
+                    <section class="col-md-4"><h3>Dept</h3></section>
+                    <section class="col-md-2"><h3>Absences</h3></section>
+                    <section class="col-md-2"><h3>Down Time</h3></section>
+                    <section class="col-md-2"><h3>Finish TIme</h3></section>
+                    <section class="col-md-2"><h3>Shift Weight</h3></section>
+                </header>
+            </section>
+
+            <section id="deptListContainer" class="deptlist"></section>
         </section>
+
         <section id="calendarModal" class="modal-body fade">
             <div class="modal-dialog">
                 <div class="modal-content">
