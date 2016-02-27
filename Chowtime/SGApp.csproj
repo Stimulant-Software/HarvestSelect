@@ -139,7 +139,9 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="BusinessLogic\Application\AppUserDomain.cs" />
     <Compile Include="BusinessLogic\BusinessDomainBase.cs" />
+    <Compile Include="Controllers\AbsenceController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
+    <Compile Include="Controllers\DepartmentTotalController.cs" />
     <Compile Include="Controllers\FarmController.cs" />
     <Compile Include="Controllers\FarmYieldController.cs" />
     <Compile Include="Controllers\FarmYieldHeaderController.cs" />
@@ -155,8 +157,12 @@
     <Compile Include="Controllers\UtilitiesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WeighBackController.cs" />
+    <Compile Include="DTOs\AbsenceDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\DailyReportDTO.cs" />
+    <Compile Include="DTOs\DepartmentDTO.cs" />
+    <Compile Include="DTOs\DepartmentTotalDTO.cs" />
+    <Compile Include="DTOs\DownTimeDTO.cs" />
     <Compile Include="DTOs\FarmDTO.cs" />
     <Compile Include="DTOs\FarmFeedDTO.cs" />
     <Compile Include="DTOs\FarmO2DTO.cs" />
@@ -187,6 +193,9 @@
     </Compile>
     <Compile Include="Models\Common\EntityBase.cs" />
     <Compile Include="Models\Common\IKey.cs" />
+    <Compile Include="Models\EF\Absence.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\App.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -203,6 +212,18 @@
       <DependentUpon>App.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Company.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Department.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\DepartmentTotal.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\DownTime.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\DownTimeType.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Farm.cs">
@@ -256,7 +277,12 @@
     <Compile Include="Models\EF\WeighBack.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Partials\Absence.Partial.cs" />
     <Compile Include="Models\Partials\Company.Partial.cs" />
+    <Compile Include="Models\Partials\Department.Partial.cs" />
+    <Compile Include="Models\Partials\DepartmentTotal.Partial.cs" />
+    <Compile Include="Models\Partials\DownTime.Partial.cs" />
+    <Compile Include="Models\Partials\DownTimeType.Partial.cs" />
     <Compile Include="Models\Partials\Farm.Partial.cs" />
     <Compile Include="Models\Partials\FarmYield.Partial.cs" />
     <Compile Include="Models\Partials\FarmYieldHeader.Partial.cs" />
@@ -273,7 +299,12 @@
     <Compile Include="Models\Partials\UserFarm.Partial.cs" />
     <Compile Include="Models\Partials\UserRole.Partial.cs" />
     <Compile Include="Models\Partials\Weighback.Partial.cs" />
+    <Compile Include="Models\Validation\Absence_Metadata.cs" />
     <Compile Include="Models\Validation\Company_Metadata.cs" />
+    <Compile Include="Models\Validation\DepartmentTotal_Metadata.cs" />
+    <Compile Include="Models\Validation\Department_Metadata.cs" />
+    <Compile Include="Models\Validation\DownTimeType_Metadata.cs" />
+    <Compile Include="Models\Validation\DownTime_Metadata.cs" />
     <Compile Include="Models\Validation\FarmYieldHeader_Metadata.cs" />
     <Compile Include="Models\Validation\FarmYield_Metadata.cs" />
     <Compile Include="Models\Validation\Farm_Metadata.cs" />
@@ -293,9 +324,14 @@
     <Compile Include="Models\Validation\ValidationType.cs" />
     <Compile Include="Models\Validation\WeighBack_Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Application\AbsenceRepository.cs" />
     <Compile Include="Repositories\Application\AppUserRepository.cs" />
     <Compile Include="Repositories\Application\AppUserRoleRepository.cs" />
     <Compile Include="Repositories\Application\CompanyRepository.cs" />
+    <Compile Include="Repositories\Application\DepartmentRepository.cs" />
+    <Compile Include="Repositories\Application\DepartmentTotalRepository.cs" />
+    <Compile Include="Repositories\Application\DownTimeRepository.cs" />
+    <Compile Include="Repositories\Application\DownTimeTypeRepository.cs" />
     <Compile Include="Repositories\Application\FarmRepository.cs" />
     <Compile Include="Repositories\Application\FarmYieldHeaderRepository.cs" />
     <Compile Include="Repositories\Application\FarmYieldRepository.cs" />

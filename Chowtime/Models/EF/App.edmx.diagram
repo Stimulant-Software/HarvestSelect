@@ -44,6 +44,15 @@
         <AssociationConnector Association="AppModel.FK_WeighBacks_Ponds" />
         <EntityTypeShape EntityType="AppModel.ProductionTotal" Width="1.5" PointX="2.3191465727608405" PointY="20.740823770286898" />
         <AssociationConnector Association="AppModel.FK_ProductionTotals_Ponds" />
+        <EntityTypeShape EntityType="AppModel.Absence" Width="1.5" PointX="5.8877261531947767" PointY="18.247728937420867" />
+        <EntityTypeShape EntityType="AppModel.Department" Width="1.5" PointX="2.7296219499454004" PointY="3.2369496092372341" />
+        <EntityTypeShape EntityType="AppModel.DepartmentTotal" Width="1.5" PointX="8.2565062941315155" PointY="20.742387170317762" />
+        <AssociationConnector Association="AppModel.FK_Absences_Departments" />
+        <AssociationConnector Association="AppModel.FK_DepartmentTotals_Departments" />
+        <EntityTypeShape EntityType="AppModel.DownTimeType" Width="1.5" PointX="6.780632065041285" PointY="16.91024827254482" />
+        <AssociationConnector Association="AppModel.FK_DownTimeTypes_Departments" />
+        <EntityTypeShape EntityType="AppModel.DownTime" Width="1.5" PointX="10.412050019210227" PointY="30.664160891745315" />
+        <AssociationConnector Association="AppModel.FK_DownTimes_DownTimeTypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
