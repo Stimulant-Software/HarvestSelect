@@ -142,9 +142,12 @@
     <Compile Include="Controllers\AbsenceController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\DepartmentTotalController.cs" />
+    <Compile Include="Controllers\DowntimeController.cs" />
     <Compile Include="Controllers\FarmController.cs" />
     <Compile Include="Controllers\FarmYieldController.cs" />
     <Compile Include="Controllers\FarmYieldHeaderController.cs" />
+    <Compile Include="Controllers\FilletScaleReadingController.cs" />
+    <Compile Include="Controllers\FinishTimeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\JMremoteController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -169,6 +172,8 @@
     <Compile Include="DTOs\FarmYieldDTO.cs" />
     <Compile Include="DTOs\FarmYieldHeaderDTO.cs" />
     <Compile Include="DTOs\FeedingDTO.cs" />
+    <Compile Include="DTOs\FilletScaleReadingDTO.cs" />
+    <Compile Include="DTOs\FinishTimeDTO.cs" />
     <Compile Include="DTOs\GenericDTO.cs" />
     <Compile Include="DTOs\HarvestDTO.cs" />
     <Compile Include="DTOs\InnovaDto.cs" />
@@ -238,6 +243,12 @@
     <Compile Include="Models\EF\Feeding.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\FilletScaleReading.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\FinishTime.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\Harvest.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
@@ -287,6 +298,8 @@
     <Compile Include="Models\Partials\FarmYield.Partial.cs" />
     <Compile Include="Models\Partials\FarmYieldHeader.Partial.cs" />
     <Compile Include="Models\Partials\Feeding.Partial.cs" />
+    <Compile Include="Models\Partials\FilletScaleReading.Partial.cs" />
+    <Compile Include="Models\Partials\FinishTime.Partial.cs" />
     <Compile Include="Models\Partials\Harvest.Partial.cs" />
     <Compile Include="Models\Partials\O2Reading.Partial.cs" />
     <Compile Include="Models\Partials\Pond.Partial.cs" />
@@ -309,6 +322,8 @@
     <Compile Include="Models\Validation\FarmYield_Metadata.cs" />
     <Compile Include="Models\Validation\Farm_Metadata.cs" />
     <Compile Include="Models\Validation\Feeding_Metatdata.cs" />
+    <Compile Include="Models\Validation\FilletScaleReading_Metadata.cs" />
+    <Compile Include="Models\Validation\FinishTime_Metadata.cs" />
     <Compile Include="Models\Validation\Harvest_Metadata.cs" />
     <Compile Include="Models\Validation\O2Reading_Metadata.cs" />
     <Compile Include="Models\Validation\PlantPondWeight_Metadata.cs" />
@@ -336,6 +351,8 @@
     <Compile Include="Repositories\Application\FarmYieldHeaderRepository.cs" />
     <Compile Include="Repositories\Application\FarmYieldRepository.cs" />
     <Compile Include="Repositories\Application\FeedingRepository.cs" />
+    <Compile Include="Repositories\Application\FilletScaleReadingRepository.cs" />
+    <Compile Include="Repositories\Application\FinishTimeRepository.cs" />
     <Compile Include="Repositories\Application\HarvestRepository.cs" />
     <Compile Include="Repositories\Application\O2ReadingRepository.cs" />
     <Compile Include="Repositories\Application\PlantPondWeightRepository.cs" />

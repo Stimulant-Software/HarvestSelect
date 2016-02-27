@@ -17,15 +17,17 @@ namespace SGApp.Models.EF
         public Department()
         {
             this.Absences = new HashSet<Absence>();
-            this.DepartmentTotals = new HashSet<DepartmentTotal>();
             this.DownTimeTypes = new HashSet<DownTimeType>();
+            this.FinishTimes = new HashSet<FinishTime>();
+            this.DepartmentTotals = new HashSet<DepartmentTotal>();
         }
     
         public int DepartmentID { get; set; }
         public string DepartmentName { get; set; }
     
         public virtual ICollection<Absence> Absences { get; set; }
-        public virtual ICollection<DepartmentTotal> DepartmentTotals { get; set; }
         public virtual ICollection<DownTimeType> DownTimeTypes { get; set; }
+        public virtual ICollection<FinishTime> FinishTimes { get; set; }
+        public virtual ICollection<DepartmentTotal> DepartmentTotals { get; set; }
     }
 }

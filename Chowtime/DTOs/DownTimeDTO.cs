@@ -15,5 +15,6 @@ namespace SGApp.DTOs
         public string DownTimeNote { get; set; }
         public string StartDateMonth { get; set; }
         public string StartDateYear { get; set; }
+        public string DepartmentID { get; set; }
     }
 }

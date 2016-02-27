@@ -14,6 +14,7 @@ namespace SGApp.Models.Validation
         public int DownTime { get; set; }
         public decimal ShiftWeight { get; set; }
         public int Absences { get; set; }
+        public decimal FilletScaleReading { get; set; }
 
 
 

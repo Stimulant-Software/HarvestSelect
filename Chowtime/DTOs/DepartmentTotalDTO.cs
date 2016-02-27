@@ -16,5 +16,6 @@ namespace SGApp.DTOs
         public string Absences { get; set; }
         public string StartDateMonth { get; set; }
         public string StartDateYear { get; set; }
+        public string FilletScaleReading { get; set; }
     }
 }

@@ -60,6 +60,8 @@ namespace SGApp.Repository.Application
             return DbContext.DownTimeTypes.Where(x => x.DownTimeTypeID == id).SingleOrDefault();
         }
 
+
+
     }
 
 
