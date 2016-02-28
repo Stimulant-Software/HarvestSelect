@@ -332,7 +332,7 @@ function shiftEnd() {
     }
 
     function loadEditDeptDownTimes($id, $status) {
-        var searchQuery = { "Key": _key, "DTDate": chosenDate, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+        var searchQuery = { "Key": _key, "DownTimeDate": chosenDate, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
         $.ajax('../api/Downtime/DownTimeList', {
             type: 'POST',
             data: data,
@@ -361,7 +361,7 @@ function shiftEnd() {
             $('.editDeptDowntimes').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, DownTimeNote = $(this).parent().parent().find('.notes').val(), DownTimeID = $(this).parent().parent().find('.downtimeID').val(), Minutes = $(this).parent().parent().find('.minutes').val(), DownTimeType = $(this).parent().parent().find('.downtime-type').val(), searchQuery = { "Key": _key, "DTDate": date, "Minutes": Minutes, "DownTimeType": DownTimeType, "DownTimeNote": DownTimeNote, "DownTimeID": pondPoundsID, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+                var date = chosenDate, DownTimeNote = $(this).parent().parent().find('.notes').val(), DownTimeID = $(this).parent().parent().find('.downtimeID').val(), Minutes = $(this).parent().parent().find('.minutes').val(), DownTimeType = $(this).parent().parent().find('.downtime-type').val(), searchQuery = { "Key": _key, "DownTimeDate": date, "Minutes": Minutes, "DownTimeType": DownTimeType, "DownTimeNote": DownTimeNote, "DownTimeID": pondPoundsID, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/Downtime/DownTimeAddOrEdit', {
                     type: 'PUT',
                     data: data,
