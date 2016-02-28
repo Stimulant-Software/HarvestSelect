@@ -218,11 +218,22 @@ namespace SGApp.Controllers
 
 
                 }
+                var dttr = new DownTimeTypeRepository();
+                var dtts = dttr.GetDownTimeTypesByDept(int.Parse(cqDTO.DepartmentID));
+                var col2 = new Collection<Dictionary<string, string>>();
+                foreach (var dtt in dtts)
+                {
+                    var dic = new Dictionary<string, string>();
+                    dic.Add("DownTimeTypeID", dtt.DownTimeTypeID.ToString());
+                    dic.Add("DownTypeName", dtt.DownTimeName);
+                    col2.Add(dic);
+                }
 
                 var retVal = new GenericDTO
                 {
                     Key = key,
-                    ReturnData = col
+                    ReturnData = col,
+                    ReturnData1 = col2
                 };
                 return Request.CreateResponse(HttpStatusCode.OK, retVal);
             }

@@ -53,7 +53,11 @@ namespace SGApp.Repository.Application
 
             return DbContext.DownTimeTypes.ToList();
         }
+        public List<DownTimeType> GetDownTimeTypesByDept(int deptid)
+        {
 
+            return DbContext.DownTimeTypes.Where(x => x.DepartmentID == deptid).ToList();
+        }
 
         public override DownTimeType GetById(int id)
         {
