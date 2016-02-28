@@ -211,7 +211,6 @@ function shiftEnd() {
             data: data,
             success: function (msg) {
                 localStorage['CT_key'] = msg['Key'];
-                startTimer(msg.Key);
                 deptData = msg['ReturnData'];
                 var deptList = '';
                 $('#deptListContainer').empty();
@@ -222,10 +221,22 @@ function shiftEnd() {
                     var $downTimeBtn = deptData[i].DownTime != "---" ? "btn-success" : "btn-danger", $absencesBtn = deptData[i].Absences != "---" ? "btn-success" : "btn-danger", $finishTimeBtn = deptData[i].FinishTime != "---" ? "btn-success" : "btn-danger";
                     deptList += '<section id="dept' + deptData[i].DepartmentID + '" class="row dept-container"><section class="dept-buttons"><section class="col-md-4"><button class="btn btn-label">' + deptData[i].DepartmentName + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DepartmentID + '_absences" data-column="absences" class="btn ' + $absencesBtn + '">' + deptData[i].Absences + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DepartmentID + '_downtime" class="btn ' + $downTimeBtn + '" data-column="downtime">' + deptData[i].DownTime + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DepartmentID + '_finishtime" class="btn ' + $finishTimeBtn + '" data-column="finishtime">' + deptData[i].FinishTime + '</button></section><section class="col-md-2"><button id="dept' + deptData[i].DepartmentID + '_shiftWeight" class="btn btn-label">' + deptData[i].ShiftWeight + '</button></section></section><section class="form-container col-md-12"></section></section>';
                 }
-                $.when($('#deptListContainer').append(deptList)).then(function () {
-                    bindDeptButtons();
-                    $('.deptlist').show();
-                    hideProgress();
+                searchQuery = { "Key": _key, "FSRDateTime": date }, data = JSON.stringify(searchQuery);
+                $.ajax('../api/FilletScaleReading/FilletScaleReadingList', {
+                    type: 'POST',
+                    data: data,
+                    success: function (msg) {
+                        localStorage['CT_key'] = msg['Key'];
+                        startTimer(msg.Key);
+                        readingData = msg['ReturnData'];
+                        console.log(readingData);
+                        /**** PLACE THAT VALUE INTO AN INPUT ABOVE ALL THE ROWS SOMEWHERE *****/
+                        $.when($('#deptListContainer').append(deptList)).then(function () {
+                            bindDeptButtons();
+                            $('.deptlist').show();
+                            hideProgress();
+                        });
+                    }
                 });
             }
         });
