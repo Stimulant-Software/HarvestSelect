@@ -389,7 +389,7 @@ function shiftEnd() {
     }
 
     function loadEditDeptFinishTime($id, $status) {
-        var searchQuery = { "Key": _key, "DTDate": chosenDate, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+        var searchQuery = { "Key": _key, "FinishDateTime": chosenDate, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
         $.ajax('../api/FinishTime/FinishTimeList', {
             type: 'POST',
             data: data,
@@ -399,11 +399,11 @@ function shiftEnd() {
                 var deptFinishTimeData = msg['ReturnData'];
                 console.log(deptFinishTimeData);
                 if (deptFinishTimeData.length == 0) {
-                    var $finishtimeID = "-1", formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header><section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="text" class="table-numbers form-control minutes" id="finishtime-' + $id + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + $finishtimeID + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    var $finishtimeID = "-1", formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header><section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="text" class="table-numbers form-control finishtime" id="finishtime-' + $id + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + $finishtimeID + '"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 } else {
                     var formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header>';
                     for (i = 0; i < deptFinishTimeData.length; i++) {
-                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="text" class="table-numbers form-control finishtime" id="finishtime-' + $id + '" value="' + deptFinishTimeData[i].FinishTime + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + deptFinishTimeData[i].FinishTimeID + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section>'
+                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="text" class="table-numbers form-control finishtime" id="finishtime-' + $id + '" value="' + deptFinishTimeData[i].FinishTime + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + deptFinishTimeData[i].FinishTimeID + '"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section>'
                     }
                     formHtml += '<section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 }
@@ -415,7 +415,7 @@ function shiftEnd() {
             $('.editDeptFinishTime').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, FinishTime = $(this).parent().parent().find('.finishtime').val(), FinshTimeID = $(this).parent().parent().find('.finishtimeID').val(), searchQuery = { "Key": _key, "DTDate": date, "FinishTime": FinishTime, "FinishTimeID": FinishTimeID, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+                var date = chosenDate, FinishTime = $(this).parent().find('.finishtime').val(), FinishTimeID = $(this).parent().find('.finishtimeID').val(), searchQuery = { "Key": _key, "FinishDateTime": date, "FinishTime": FinishTime, "FinishTimeID": FinishTimeID, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/FinishTime/FinishTimeAddOrEdit', {
                     type: 'PUT',
                     data: data,
