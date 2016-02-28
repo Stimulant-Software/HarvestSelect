@@ -230,7 +230,7 @@ function shiftEnd() {
                         startTimer(msg.Key);
                         readingData = msg['ReturnData'];
                         console.log(readingData);
-                        /**** PLACE THAT VALUE INTO AN INPUT ABOVE ALL THE ROWS SOMEWHERE *****/
+                        $('FSReading').val(readingData);
                         $.when($('#deptListContainer').append(deptList)).then(function () {
                             bindDeptButtons();
                             $('.deptlist').show();
@@ -245,7 +245,7 @@ function shiftEnd() {
     function bindDeptButtons() {
         $('.dept-buttons button').unbind().click(function () {
             // RUN ERROR CHECK TO MAKE SURE THEY'RE NOT FORGETTING TO SUBMIT INFORMATION
-            var $status = $(this).attr('class').split("-")[1], $id = $(this).attr('id').split("d")[1].split('_')[0], $activeButton = $(this), $activeRow = $activeButton.data('column'), $formContainer = $activeButton.parent().parent().next('.form-container');
+            var $status = $(this).attr('class').split("-")[1], $id = $(this).attr('id').split("t")[1].split('_')[0], $activeButton = $(this), $activeRow = $activeButton.data('column'), $formContainer = $activeButton.parent().parent().next('.form-container');
             if ($activeRow != undefined) {
                 showProgress('body');
                 $('.open-tab').removeClass('open-tab');
@@ -263,21 +263,22 @@ function shiftEnd() {
     }
 
     function loadEditDeptAbsences($id, $status) {
-        /************/var searchQuery = { "Key": _key, "PPWDateTime": chosenDate, "PondID": $id }, data = JSON.stringify(searchQuery); 
-        /************/$.ajax('../api/PlantPondWeight/PlantPondWeightList', {
+        var searchQuery = { "Key": _key, "AbsenceDate": chosenDate, "DepartmentID": $id }, data = JSON.stringify(searchQuery); 
+        $.ajax('../api/Absence/AbsenceList', {
             type: 'POST',
             data: data,
             success: function (msg) {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
                 var deptAbsenceData = msg['ReturnData'];
+                console.log(deptAbsenceData);
                 if (deptAbsenceData.length == 0) {
-                    var $absences = "", $absencesID = "-1", formHtml = '<section id="absences-' + $id + '" class="row form-inline" data-row="absences"><header class="col-md-12">Department Absences</header><section class="row"><section class="col-xs-12 form-group"><label>Reg Employees Late</label><input type="text"class="table-numbers form-control regEmpLate" id="regEmpLate-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Reg Employees Out</label><input type="text" class="table-numbers form-control regEmpOut" id="regEmpOut-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Reg Employees Left Early</label><input type="text" class="table-numbers form-contrl regEmpLeftEarly" id="regEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Temp Svc Late</label><input type="text" class="table-numbers form-contrl tempEmpLate" id="tempEmpLate-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Temp Svc Out</label><input type="text" class="table-numbers form-control tempEmpOut" id="tempEmpOut-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Temp Svc Left Early</label><input type="text" class="table-numbers form-control tempEmpLeftEarly" id="tempEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Inmate Left Early</label><input type="text" class="table-numbers form-control inmateEmpLeftEarly" id="inmateEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Innmate Out</label><input type="text" class="table-numbers form-control inLateOut" id="inLateOut-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Employees on Vacation</label><input type="text" class="table-numbers form-control empVacation" id="empVacation-' + $id + '"><input type="hidden" id="absencesID-' + $id + '" class="absencesID" value="' + $absencesID + '"></section><button class="btn btn-default editDeptAbsences">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    var $absenceID = "-1", formHtml = '<section id="absences-' + $id + '" class="row form-inline" data-row="absences"><header class="col-md-12">Department Absences</header><section class="row"><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Late</label><input type="text"class="table-numbers form-control regEmpLate" id="regEmpLate-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Out</label><input type="text" class="table-numbers form-control regEmpOut" id="regEmpOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Left Early</label><input type="text" class="table-numbers form-control regEmpLeftEarly" id="regEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Late</label><input type="text" class="table-numbers form-control tempEmpLate" id="tempEmpLate-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Out</label><input type="text" class="table-numbers form-control tempEmpOut" id="tempEmpOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Left Early</label><input type="text" class="table-numbers form-control tempEmpLeftEarly" id="tempEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Left Early</label><input type="text" class="table-numbers form-control inmateLeftEarly" id="inmateLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Out</label><input type="text" class="table-numbers form-control inmateOut" id="inmateOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Employees on Vacation</label><input type="text" class="table-numbers form-control empVacation" id="empVacation-' + $id + '"><input type="hidden" id="absenceID-' + $id + '" class="absenceID" value="' + $absenceID + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptAbsences">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 } else {
-                    var formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header>';
+                    var formHtml = '<section id="absences-' + $id + '" class="row form-inline" data-row="absences"><header class="col-md-12">Department Absences</header>';
                     for (i = 0; i < deptAbsenceData.length; i++) {
-                        /******/var $pondPounds = deptAbsenceData[i].PondWeight, $pondPoundsID = deptAbsenceData[i].PlantPondWeightID;
-                        /***NEED VALUES***/formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Reg Employees Late</label><input type="text"class="table-numbers form-control regEmpLate" id="regEmpLate-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Reg Employees Out</label><input type="text" class="table-numbers form-control regEmpOut" id="regEmpOut-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Reg Employees Left Early</label><input type="text" class="table-numbers form-contrl regEmpLeftEarly" id="regEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Temp Svc Late</label><input type="text" class="table-numbers form-contrl tempEmpLate" id="tempEmpLate-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Temp Svc Out</label><input type="text" class="table-numbers form-control tempEmpOut" id="tempEmpOut-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Temp Svc Left Early</label><input type="text" class="table-numbers form-control tempEmpLeftEarly" id="tempEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Inmate Left Early</label><input type="text" class="table-numbers form-control inmateEmpLeftEarly" id="inmateEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Innmate Out</label><input type="text" class="table-numbers form-control inLateOut" id="inLateOut-' + $id + '"></section><section class="col-xs-12 col-xs-md-6 form-group"><label>Employees on Vacation</label><input type="text" class="table-numbers form-control empVacation" id="empVacation-' + $id + '"><input type="hidden" id="absencesID-' + $id + '" class="absencesID" value="' + $absencesID + '"></section><button class="btn btn-default editDeptAbsences">Edit</button></section></section>';
+                        var $absenceID = deptAbsenceData[i].AbsenceID;
+                        formHtml += '<section class="row"><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Late</label><input type="text"class="table-numbers form-control regEmpLate" id="regEmpLate-' + $id + '" value="' + deptAbsenceData[i].RegEmpLate + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Out</label><input type="text" class="table-numbers form-control regEmpOut" id="regEmpOut-' + $id + '" value="' + deptAbsenceData[i].RegEmpOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Left Early</label><input type="text" class="table-numbers form-control regEmpLeftEarly" id="regEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].RegEmpLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Late</label><input type="text" class="table-numbers form-control tempEmpLate" id="tempEmpLate-' + $id + '" value="' + deptAbsenceData[i].TempEmpLate + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Out</label><input type="text" class="table-numbers form-control tempEmpOut" id="tempEmpOut-' + $id + '" value="' + deptAbsenceData[i].TempEmpOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Left Early</label><input type="text" class="table-numbers form-control tempEmpLeftEarly" id="tempEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].TempEmpLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Left Early</label><input type="text" class="table-numbers form-control inmateLeftEarly" id="inmateEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].InmateLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Out</label><input type="text" class="table-numbers form-control inmateOut" id="inLateOut-' + $id + '" value="' + deptAbsenceData[i].InmateOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Employees on Vacation</label><input type="text" class="table-numbers form-control empVacation" id="empVacation-' + $id + '" value="' + deptAbsenceData[i].EmployeesOnVacation + '"><input type="hidden" id="absenceID-' + $id + '" class="absenceID" value="' + $absenceID + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptAbsences">Edit</button></section></section>';
                     }
                     formHtml += '<section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 }
@@ -289,17 +290,19 @@ function shiftEnd() {
             $('.editDeptAbsences').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                /****/var date = chosenDate, pondPounds = $(this).siblings('.pondPounds').val(), pondPoundsID = $(this).siblings('.pondPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PondWeight": pondPounds, "PlantPondWeightID": pondPoundsID, "PondID": $id }, data = JSON.stringify(searchQuery);
-                /****/$.ajax('../api/PlantPondWeight/PlantPondWeightAddOrEdit', {
+                var date = chosenDate, absenceID = $(this).parent().parent().find('.absenceID').val(), regEmpOut = $(this).parent().parent().find('.regEmpOut').val(), regEmpLate = $(this).parent().parent().find('.regEmpLate').val(), regEmpLeftEarly = $(this).parent().parent().find('.regEmpLeftEarly').val(), tempEmpOut = $(this).parent().parent().find('.tempEmpOut').val(), tempEmpLate = $(this).parent().parent().find('.tempEmpLate').val(), tempEmpLeftEarly = $(this).parent().parent().find('.tempEmpLeftEarly').val(), inmateLeftEarly = $(this).parent().parent().find('.inmateLeftEarly').val(), inmateOut = $(this).parent().parent().find('.inmateOut').val(), employeesOnVacation = $(this).parent().parent().find('.empVacation').val(), searchQuery = { "Key": _key, "AbsenceDate": date, "AbsenceID": absenceID, "DepartmentID": $id, "RegEmpOut": regEmpOut, "RegEmpLate": regEmpLate, "RegEmpLeftEarly": regEmpLeftEarly, "TempEmpOut": tempEmpOut, "TempEmpLate": tempEmpLate, "TempEmpLeftEarly": tempEmpLeftEarly, "InmateLeftEarly": inmateLeftEarly, "InmateOut": inmateOut, "EmployeesOnVacation": employeesOnVacation }, data = JSON.stringify(searchQuery);
+                console.log(searchQuery);
+                console.log(data);
+                $.ajax('../api/Absence/AbsenceAddOrEdit', {
                     type: 'PUT',
                     data: data,
                     success: function (msg) {
                         hideProgress();
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
-                        loadPondList(date);
+                        loadDepartmentList(date);
                     }
-                })
+                });
             });
 
             $('.cancel').unbind().click(function (e) {
@@ -308,52 +311,55 @@ function shiftEnd() {
         }
     }
 
-    function loadEditDeptDeptDownTimes($id, $status) {
-        var searchQuery = { "Key": _key, "PPWDateTime": chosenDate, "PondID": $id }, data = JSON.stringify(searchQuery);
-        $.ajax('../api/PlantPondWeight/PlantPondWeightList', {
+    function loadEditDeptDownTimes($id, $status) {
+        var searchQuery = { "Key": _key, "DTDate": chosenDate, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+        $.ajax('../api/Downtime/DownTimeList', {
             type: 'POST',
             data: data,
             success: function (msg) {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
-                PlantPondWeightData = msg['ReturnData'];
-                if (PlantPondWeightData.length == 0) {
-                    var $pondPounds = "", $pondPoundsID = "-1", formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section><section class="row buttons"><button class="btn btn-default add-new-pond-weight">Add New Pond Weight</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                var deptDowntimeData = msg['ReturnData'];
+                console.log(deptDowntimeData);
+                var deptDowntimeTypes = msg['ReturnData1'];
+                console.log(deptDowntimeTypes);
+                if (deptDowntimeData.length == 0) {
+                    var $downtimeID = "-1", formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header><section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '"><select id="downtimeType' + $id + '" class="downtime-type form-control"></select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '"></section><section class="col-xs-12 form-group"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section><section class="row buttons"><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 } else {
-                    var formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header>';
-                    for (i = 0; i < PlantPondWeightData.length; i++) {
-                        var $pondPounds = PlantPondWeightData[i].PondWeight, $pondPoundsID = PlantPondWeightData[i].PlantPondWeightID;
-                        formHtml += '<section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section>';
+                    var formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header>';
+                    for (i = 0; i < deptDowntimeData.length; i++) {
+                        var $absenceID = deptDowntimeData[i].AbsenceID;
+                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '" value="' + deptDowntimeData[i].Minutes + '"><select id="downtimeType' + $id + '" class="downtime-type form-control"></select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '" value="' + deptDowntimeData[i].DownTimeID + '"></section><section class="col-xs-12 form-group"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '" value="' + deptDowntimeData[i].DownTimeNote + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section>';
                     }
-                    formHtml += '<section class="row buttons"><button class="btn btn-default add-new-pond-weight">Add New Pond Weight</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    formHtml += '<section class="row buttons"><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 }
-                $.when($('.form-container').empty().append(formHtml)).then(function () { bindPondWeightButtons($id); hideProgress(); });
+                $.when($('.form-container').empty().append(formHtml)).then(function () { bindDeptDowntimeButtons($id); hideProgress(); });
             }
         });
 
-        function bindPondWeightButtons($id) {
-            $('.editPondWeight').unbind().click(function (e) {
+        function bindDeptDowntimeButtons($id) {
+            $('.editDeptDowntimes').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, pondPounds = $(this).siblings('.pondPounds').val(), pondPoundsID = $(this).siblings('.pondPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PondWeight": pondPounds, "PlantPondWeightID": pondPoundsID, "PondID": $id }, data = JSON.stringify(searchQuery);
-                $.ajax('../api/PlantPondWeight/PlantPondWeightAddOrEdit', {
+                var date = chosenDate, DownTimeNote = $(this).parent().parent().find('.notes').val(), DownTimeID = $(this).parent().parent().find('.downtimeID').val(), Minutes = $(this).parent().parent().find('.minutes').val(), DownTimeType = $(this).parent().parent().find('.downtime-type').val(), searchQuery = { "Key": _key, "DTDate": date, "Minutes": Minutes, "DownTimeType": DownTimeType, "DownTimeNote": DownTimeNote, "DownTimeID": pondPoundsID, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+                $.ajax('../api/Downtime/DownTimeAddOrEdit', {
                     type: 'PUT',
                     data: data,
                     success: function (msg) {
                         hideProgress();
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
-                        loadPondList(date);
+                        loadDeparmentList(date);
                     }
                 })
             });
 
-            $('.add-new-pond-weight').unbind().click(function (e) {
+            $('.add-new-downtime').unbind().click(function (e) {
                 e.preventDefault();
                 var $currentSection = $(this).parent();
-                var formHtml = '<section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value=""><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="-1"><button class="btn btn-default editPondWeight">Edit</button></section></section>';
+                var formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header><section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '"><select id="downtimeType' + $id + '" class="downtime-type form-control"></select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '"></section><section class="col-xs-12 form-group"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section>';
                 $(formHtml).insertBefore($currentSection);
-                bindPondWeightButtons($id);
+                bindDeptDowntimeButtons($id);
             });
 
             $('.cancel').unbind().click(function (e) {
@@ -363,51 +369,43 @@ function shiftEnd() {
     }
 
     function loadEditDeptFinishTime($id, $status) {
-        var searchQuery = { "Key": _key, "PPWDateTime": chosenDate, "PondID": $id }, data = JSON.stringify(searchQuery);
-        $.ajax('../api/PlantPondWeight/PlantPondWeightList', {
+        var searchQuery = { "Key": _key, "DTDate": chosenDate, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+        $.ajax('../api/FinishTime/FinishTimeList', {
             type: 'POST',
             data: data,
             success: function (msg) {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
-                PlantPondWeightData = msg['ReturnData'];
-                if (PlantPondWeightData.length == 0) {
-                    var $pondPounds = "", $pondPoundsID = "-1", formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header><section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section><section class="row buttons"><button class="btn btn-default add-new-pond-weight">Add New Pond Weight</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                var deptFinishTimeData = msg['ReturnData'];
+                console.log(deptFinishTimeData);
+                if (deptFinishTimeData.length == 0) {
+                    var $finishtimeID = "-1", formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header><section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="text" class="table-numbers form-control minutes" id="finishtime-' + $id + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + $finishtimeID + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 } else {
-                    var formHtml = '<section id="pond-weight-' + $id + '" class="row form-inline" data-row="pond-weight"><header class="col-md-12">Pond Weights</header>';
-                    for (i = 0; i < PlantPondWeightData.length; i++) {
-                        var $pondPounds = PlantPondWeightData[i].PondWeight, $pondPoundsID = PlantPondWeightData[i].PlantPondWeightID;
-                        formHtml += '<section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value="' + $pondPounds + '"><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="' + $pondPoundsID + '"><button class="btn btn-default editPondWeight">Edit</button></section></section>';
+                    var formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header>';
+                    for (i = 0; i < deptFinishTimeData.length; i++) {
+                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="text" class="table-numbers form-control finishtime" id="finishtime-' + $id + '" value="' + deptFinishTimeData[i].FinishTime + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + deptFinishTimeData[i].FinishTimeID + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section>'
                     }
-                    formHtml += '<section class="row buttons"><button class="btn btn-default add-new-pond-weight">Add New Pond Weight</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    formHtml += '<section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 }
-                $.when($('.form-container').empty().append(formHtml)).then(function () { bindPondWeightButtons($id); hideProgress(); });
+                $.when($('.form-container').empty().append(formHtml)).then(function () { bindDeptFinishTimeButtons($id); hideProgress(); });
             }
         });
 
-        function bindPondWeightButtons($id) {
-            $('.editPondWeight').unbind().click(function (e) {
+        function bindDeptFinishTimeButtons($id) {
+            $('.editDeptFinishTime').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, pondPounds = $(this).siblings('.pondPounds').val(), pondPoundsID = $(this).siblings('.pondPoundsID').val(), searchQuery = { "Key": _key, "PPWDateTime": date, "PondWeight": pondPounds, "PlantPondWeightID": pondPoundsID, "PondID": $id }, data = JSON.stringify(searchQuery);
-                $.ajax('../api/PlantPondWeight/PlantPondWeightAddOrEdit', {
+                var date = chosenDate, FinishTime = $(this).parent().parent().find('.finishtime').val(), FinshTimeID = $(this).parent().parent().find('.finishtimeID').val(), searchQuery = { "Key": _key, "DTDate": date, "FinishTime": FinishTime, "FinishTimeID": FinishTimeID, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+                $.ajax('../api/FinishTime/FinishTimeAddOrEdit', {
                     type: 'PUT',
                     data: data,
                     success: function (msg) {
                         hideProgress();
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
-                        loadPondList(date);
+                        loadDeparmentList(date);
                     }
-                })
-            });
-
-            $('.add-new-pond-weight').unbind().click(function (e) {
-                e.preventDefault();
-                var $currentSection = $(this).parent();
-                var formHtml = '<section class="row"><section class="col-md-2"><p>(time will be stamped)</p></section><section class="col-md-10"><label>Pond Weight:</label><input type="text" id="pondPounds-' + $id + '" class="form-control pondPounds" value=""><input type="hidden" id="pondPoundsID-' + $id + '" class="pondPoundsID" value="-1"><button class="btn btn-default editPondWeight">Edit</button></section></section>';
-                $(formHtml).insertBefore($currentSection);
-                bindPondWeightButtons($id);
+                });
             });
 
             $('.cancel').unbind().click(function (e) {

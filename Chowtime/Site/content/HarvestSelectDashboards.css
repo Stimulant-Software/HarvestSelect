@@ -108,6 +108,7 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .weekly-report li.header { font-weight: bold; margin: 0; padding: 0; border-bottom: none; }
 
 .op.production .date-select, .op.shift-end .date-select { margin: 10px 0; }
+.op.shift-end input { background-color: #fff; }
 .op.production .pond-container, .op.shift-end .dept-container { border: 1px solid #a2a2a2; margin-bottom: 10px; padding: 10px; }
 .op .pondlist, .op .deptlist { display: none; }
 .op.production .pond-buttons > section, .op.shift-end .dept-buttons > section { padding: 10px 0; text-align: center; }
@@ -126,6 +127,8 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .op.production h3, .op.shift-end h3 { padding: 15px 0; font-weight: bold; text-transform: uppercase; font-size: 1.3em; }
 .op.production p, .op.shift-end p { line-height: 34px; }
 .op.production button, .op.shift-end button { margin: 0 7px !important; }
+#headerReading { border: 1px solid #cdcdcd; background-color: #ededed; padding: 10px 0; }
+@media (min-width: 768px) { .op.shift-end .form-inline .form-group { margin-bottom: 10px; } }
 
 /*.weekly-report .reports section { border: 1px solid #747474; min-height: 410px; } */
 .weekly-report .reports .farm-yields-report { min-height: 50px; }
