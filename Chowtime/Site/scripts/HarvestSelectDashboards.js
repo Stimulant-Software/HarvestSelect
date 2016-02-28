@@ -230,7 +230,12 @@ function shiftEnd() {
                         startTimer(msg.Key);
                         readingData = msg['ReturnData'];
                         console.log(readingData);
-                        $('FSReading').val(readingData);
+                        if (readingData.length !== 0) {
+                            $('.fsreading').val(readingData.FilletScaleReading);
+                            $('.fsrID').val(readingData.FilletScaleReadingID);
+                        } else {
+                            $('.fsrID').val("-1");
+                        }
                         $.when($('#deptListContainer').append(deptList)).then(function () {
                             bindDeptButtons();
                             $('.deptlist').show();
@@ -259,6 +264,22 @@ function shiftEnd() {
                 }
                 $activeButton.parent().addClass('open-tab').parent().next('.form-container').addClass('active').slideDown(500);
             }
+        });
+
+        $('.edit-fsr').unbind().click(function (e) {
+            showProgress('body');
+            e.preventDefault();
+            var date = chosenDate, FilletScaleReading = $(this).parent().find('.fsreading').val(), FilletScaleReadingID = $(this).parent().find('.fsrID').val(), searchQuery = { "Key": _key, "FSRDateTime": date, "FilletScaleReading": FilletScaleReading, "FilletScaleReadingID": FilletScaleReadingID }, data = JSON.stringify(searchQuery);
+            $.ajax('../api/Downtime/DownTimeAddOrEdit', {
+                type: 'PUT',
+                data: data,
+                success: function (msg) {
+                    hideProgress();
+                    localStorage['CT_key'] = msg['Key'];
+                    startTimer(msg.Key);
+                    loadDeparmentList(date);
+                }
+            })
         });
     }
 
@@ -351,7 +372,7 @@ function shiftEnd() {
                         startTimer(msg.Key);
                         loadDeparmentList(date);
                     }
-                })
+                });
             });
 
             $('.add-new-downtime').unbind().click(function (e) {
