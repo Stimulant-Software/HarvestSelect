@@ -229,10 +229,9 @@ function shiftEnd() {
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
                         readingData = msg['ReturnData'];
-                        console.log(readingData);
                         if (readingData.length !== 0) {
-                            $('.fsreading').val(readingData.FilletScaleReading);
-                            $('.fsrID').val(readingData.FilletScaleReadingID);
+                            $('.fsreading').val(readingData[0].FilletScaleReading);
+                            $('.fsrID').val(readingData[0].FilletScaleReadingID);
                         } else {
                             $('.fsrID').val("-1");
                         }
@@ -270,14 +269,14 @@ function shiftEnd() {
             showProgress('body');
             e.preventDefault();
             var date = chosenDate, FilletScaleReading = $(this).parent().find('.fsreading').val(), FilletScaleReadingID = $(this).parent().find('.fsrID').val(), searchQuery = { "Key": _key, "FSRDateTime": date, "FilletScaleReading": FilletScaleReading, "FilletScaleReadingID": FilletScaleReadingID }, data = JSON.stringify(searchQuery);
-            $.ajax('../api/Downtime/DownTimeAddOrEdit', {
+            $.ajax('../api/FilletScaleReading/FilletScaleReadingAddOrEdit', {
                 type: 'PUT',
                 data: data,
                 success: function (msg) {
                     hideProgress();
                     localStorage['CT_key'] = msg['Key'];
                     startTimer(msg.Key);
-                    loadDeparmentList(date);
+                    loadDepartmentList(date);
                 }
             })
         });
@@ -370,7 +369,7 @@ function shiftEnd() {
                         hideProgress();
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
-                        loadDeparmentList(date);
+                        loadDepartmentList(date);
                     }
                 });
             });
@@ -424,7 +423,7 @@ function shiftEnd() {
                         hideProgress();
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
-                        loadDeparmentList(date);
+                        loadDepartmentList(date);
                     }
                 });
             });
