@@ -61,10 +61,11 @@ namespace SGApp.Repository.Application
             return DbContext.DepartmentTotals.Where(x => x.DepartmentTotalID == id).SingleOrDefault();
         }
 
-        public DepartmentTotal GetByDate(DateTime reportDate)
+        public List<DepartmentTotal> GetByDate(DateTime reportDate)
         {
-            DateTime endDate = reportDate.AddDays(2);
-            return DbContext.DepartmentTotals.Where(x => x.DTDate > reportDate && x.DTDate < endDate).FirstOrDefault();
+            DateTime endDate = reportDate.AddDays(1);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.DepartmentTotals.Where(x => x.DTDate > reportDate && x.DTDate < endDate).ToList();
         }
 
         public DepartmentTotal GetByDateAndDepartment(DateTime reportDate1, int depid)

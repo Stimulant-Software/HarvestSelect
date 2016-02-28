@@ -66,7 +66,8 @@ namespace SGApp.Repository.Application
 
         public List<ProductionTotal> GetByDate(DateTime reportDate)
         {
-            DateTime endDate = reportDate.AddDays(2);
+            DateTime endDate = reportDate.AddDays(1);
+            reportDate = reportDate.AddSeconds(-1);
             return DbContext.ProductionTotals.Where(x => x.ProductionDate > reportDate && x.ProductionDate < endDate).ToList();
         }
 

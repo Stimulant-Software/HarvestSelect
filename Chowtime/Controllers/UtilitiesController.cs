@@ -13,6 +13,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Net.Mail;
+
 
 
 namespace SGApp.Controllers
@@ -139,6 +141,78 @@ namespace SGApp.Controllers
         {
             contact.ProcessRecord(cqDto);
             return pr.Validate(contact);
+        }
+
+        [HttpPost]
+        public HttpResponseMessage EmailDailyReport()
+        {
+            var reportdate = DateTime.Now;
+            var ptr = new ProductionTotalRepository();
+            var dtr = new DepartmentTotalRepository();
+            var wbr = new WeighBackRepository();
+            var ar = new AbsenceRepository();
+            var dr = new DownTimeRepository();
+            var fsrr = new FilletScaleReadingRepository();
+
+            var pts = ptr.GetByDate(reportdate);
+            var dts = dtr.GetByDate(reportdate);
+            var wbs = dtr.GetByDate(reportdate);
+            var abs = ar.GetByDate(reportdate);
+            var ds = dr.GetByDate(reportdate);
+            var fsrs = fsrr.GetByDate(reportdate);
+
+            string subject = "";
+            string body = "";
+            subject = "Harvest Select Daily Production Report";
+            body = "Report Date:  " + reportdate.ToShortDateString() + "<br /><br />";
+            body += "Fillet Scale Reading: " + fsrs.FilletScaleReading1.ToString() + "<br /><br />";
+            body = body + "Name:<br />";
+            body = body + "Comnpany Name:<br />";
+            body = body + "Email:<br />";
+            body = body + "Phone:<br />";
+            body = body + "Message:<br />";
+
+            SendMail("harper@stimulantgroup.com", subject, body);
+
+                
+            return Request.CreateResponse(HttpStatusCode.OK);
+
+        }
+
+
+
+        private bool SendMail(string emailto, string subject, string body)
+        {
+            try
+            {
+                MailMessage mm = new MailMessage();
+                mm.From = new MailAddress("harper@stimulantgroup.com");
+                string[] emails = emailto.Split(',');
+                foreach (string addy in emails)
+                {
+                    mm.To.Add(new MailAddress(addy));
+                }
+                //(2) Assign the MailMessage's properties
+                //MailAddress copy = new MailAddress("support@rcginc.net");
+                //mm.CC.Add(copy);
+                mm.Subject = subject;
+                mm.Body = body;
+                mm.IsBodyHtml = true;
+
+                //(3) Create the SmtpClient object
+                SmtpClient smtp = new SmtpClient();
+
+
+                //(4) Send the MailMessage (will use the Web.config settings)
+                smtp.Send(mm);
+                return true;
+                //lblContactSent.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                //tbComments.Text = ex.Message;
+            }
         }
     }
 

@@ -61,10 +61,11 @@ namespace SGApp.Repository.Application
             return DbContext.Absences.Where(x => x.AbsenceID == id).SingleOrDefault();
         }
 
-        public Absence GetByDate(DateTime reportDate)
+        public List<Absence> GetByDate(DateTime reportDate)
         {
-            DateTime endDate = reportDate.AddDays(2);
-            return DbContext.Absences.Where(x => x.AbsenceDate > reportDate && x.AbsenceDate < endDate).FirstOrDefault();
+            DateTime endDate = reportDate.AddDays(1);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.Absences.Where(x => x.AbsenceDate > reportDate && x.AbsenceDate < endDate).ToList();
         }
 
         public List<Absence> GetByDateAndDepartment(DateTime reportDate1, int depid)
