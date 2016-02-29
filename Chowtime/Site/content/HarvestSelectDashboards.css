@@ -81,7 +81,7 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 }*/
 
 
-.weigh-backs #mainContent { padding: 0 15px 40px; }
+/*.weigh-backs #mainContent { padding: 0 15px 40px; }
 .weigh-backs form { text-align: left; margin: 0; padding: 0; }
 .weigh-backs form fieldset { width: 32%; }
 .weigh-backs input[type="text"] { width: 100px; }
@@ -89,7 +89,7 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .weigh-backs #rowContainer .row { border-top: 1px solid #000; padding: 10px 0; }
 .weigh-backs #rowContainer .row:first-child { border-top: none; padding: 0 0 10px; }
 .weigh-backs #rowContainer .row:nth-child(even) { background-color: #fff; border-left: 1px solid #000; border-right: 1px solid #000; }
-.weigh-backs .farmsDDL, .weigh-backs .pondsDDL, .weigh-backs #newValues, .weigh-backs #newButtons { opacity: 0; }
+.weigh-backs .farmsDDL, .weigh-backs .pondsDDL, .weigh-backs #newValues, .weigh-backs #newButtons { opacity: 0; }*/
 
 /*.shift-end .fields { margin: 10px 0; }
 .shiftForm { opacity: 0; }
@@ -126,6 +126,7 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .op.production .buttons, .op.shift-end .buttons { padding: 15px 0; background-color: #fff; margin-left: 0; margin-right: 0; }
 .op.production h3, .op.shift-end h3 { padding: 15px 0; font-weight: bold; text-transform: uppercase; font-size: 1.3em; }
 .op.production p, .op.shift-end p { line-height: 34px; }
+.op.shift-end label { mni-width: 175px; padding-left: 10px; }
 .op.production button, .op.shift-end button { margin: 0 7px !important; }
 #headerReading { background-color: transparent; padding: 10px 0; }
 #headerReading input { background-color: #fff; }

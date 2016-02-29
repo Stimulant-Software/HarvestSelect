@@ -184,10 +184,11 @@ function shiftEnd() {
                     });
                 });
             },
-            eventClick: function (event) {
+            eventClick: function (calEvent) {
                 chosenDate = calEvent.start._i;
                 $.when(loadDepartmentList(chosenDate)).then(function () {
                     hideProgress();
+                    $('#FSReading, #FSReadingID').val();
                     $('#calendarModal').modal('hide');
                 });
             },
@@ -195,6 +196,7 @@ function shiftEnd() {
                 showProgress('body');
                 chosenDate = $(this).data('date');
                 $.when(loadDepartmentList(chosenDate)).then(function () {
+                    $('#FSReading, #FSReadingID').val();
                     $('#calendarModal').modal('hide');
                 });
             }
@@ -293,12 +295,12 @@ function shiftEnd() {
                 var deptAbsenceData = msg['ReturnData'];
                 console.log(deptAbsenceData);
                 if (deptAbsenceData.length == 0) {
-                    var $absenceID = "-1", formHtml = '<section id="absences-' + $id + '" class="row form-inline" data-row="absences"><header class="col-md-12">Department Absences</header><section class="row"><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Late</label><input type="text"class="table-numbers form-control regEmpLate" id="regEmpLate-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Out</label><input type="text" class="table-numbers form-control regEmpOut" id="regEmpOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Left Early</label><input type="text" class="table-numbers form-control regEmpLeftEarly" id="regEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Late</label><input type="text" class="table-numbers form-control tempEmpLate" id="tempEmpLate-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Out</label><input type="text" class="table-numbers form-control tempEmpOut" id="tempEmpOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Left Early</label><input type="text" class="table-numbers form-control tempEmpLeftEarly" id="tempEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Left Early</label><input type="text" class="table-numbers form-control inmateLeftEarly" id="inmateLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Out</label><input type="text" class="table-numbers form-control inmateOut" id="inmateOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Employees on Vacation</label><input type="text" class="table-numbers form-control empVacation" id="empVacation-' + $id + '"><input type="hidden" id="absenceID-' + $id + '" class="absenceID" value="' + $absenceID + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptAbsences">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    var $absenceID = "-1", formHtml = '<section id="absences-' + $id + '" class="row form-inline" data-row="absences"><header class="col-md-12">Department Absences</header><section class="row"><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Late</label><input type="text"class="table-numbers form-control regEmpLate" id="regEmpLate-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Out</label><input type="text" class="table-numbers form-control regEmpOut" id="regEmpOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Left Early</label><input type="text" class="table-numbers form-control regEmpLeftEarly" id="regEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Late</label><input type="text" class="table-numbers form-control tempEmpLate" id="tempEmpLate-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Out</label><input type="text" class="table-numbers form-control tempEmpOut" id="tempEmpOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Left Early</label><input type="text" class="table-numbers form-control tempEmpLeftEarly" id="tempEmpLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Left Early</label><input type="text" class="table-numbers form-control inmateLeftEarly" id="inmateLeftEarly-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Out</label><input type="text" class="table-numbers form-control inmateOut" id="inmateOut-' + $id + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Employees on Vacation</label><input type="text" class="table-numbers form-control empVacation" id="empVacation-' + $id + '"><input type="hidden" id="absenceID-' + $id + '" class="absenceID" value="' + $absenceID + '"></section><section class="col-xs-12 buttons"><button class="btn btn-default editDeptAbsences">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 } else {
                     var formHtml = '<section id="absences-' + $id + '" class="row form-inline" data-row="absences"><header class="col-md-12">Department Absences</header>';
                     for (i = 0; i < deptAbsenceData.length; i++) {
                         var $absenceID = deptAbsenceData[i].AbsenceID;
-                        formHtml += '<section class="row"><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Late</label><input type="text"class="table-numbers form-control regEmpLate" id="regEmpLate-' + $id + '" value="' + deptAbsenceData[i].RegEmpLate + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Out</label><input type="text" class="table-numbers form-control regEmpOut" id="regEmpOut-' + $id + '" value="' + deptAbsenceData[i].RegEmpOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Left Early</label><input type="text" class="table-numbers form-control regEmpLeftEarly" id="regEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].RegEmpLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Late</label><input type="text" class="table-numbers form-control tempEmpLate" id="tempEmpLate-' + $id + '" value="' + deptAbsenceData[i].TempEmpLate + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Out</label><input type="text" class="table-numbers form-control tempEmpOut" id="tempEmpOut-' + $id + '" value="' + deptAbsenceData[i].TempEmpOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Left Early</label><input type="text" class="table-numbers form-control tempEmpLeftEarly" id="tempEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].TempEmpLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Left Early</label><input type="text" class="table-numbers form-control inmateLeftEarly" id="inmateEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].InmateLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Out</label><input type="text" class="table-numbers form-control inmateOut" id="inLateOut-' + $id + '" value="' + deptAbsenceData[i].InmateOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Employees on Vacation</label><input type="text" class="table-numbers form-control empVacation" id="empVacation-' + $id + '" value="' + deptAbsenceData[i].EmployeesOnVacation + '"><input type="hidden" id="absenceID-' + $id + '" class="absenceID" value="' + $absenceID + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptAbsences">Edit</button></section></section>';
+                        formHtml += '<section class="row"><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Late</label><input type="text"class="table-numbers form-control regEmpLate" id="regEmpLate-' + $id + '" value="' + deptAbsenceData[i].RegEmpLate + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Out</label><input type="text" class="table-numbers form-control regEmpOut" id="regEmpOut-' + $id + '" value="' + deptAbsenceData[i].RegEmpOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Reg Employees Left Early</label><input type="text" class="table-numbers form-control regEmpLeftEarly" id="regEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].RegEmpLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Late</label><input type="text" class="table-numbers form-control tempEmpLate" id="tempEmpLate-' + $id + '" value="' + deptAbsenceData[i].TempEmpLate + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Out</label><input type="text" class="table-numbers form-control tempEmpOut" id="tempEmpOut-' + $id + '" value="' + deptAbsenceData[i].TempEmpOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Temp Svc Left Early</label><input type="text" class="table-numbers form-control tempEmpLeftEarly" id="tempEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].TempEmpLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Left Early</label><input type="text" class="table-numbers form-control inmateLeftEarly" id="inmateEmpLeftEarly-' + $id + '" value="' + deptAbsenceData[i].InmateLeftEarly + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Inmate Out</label><input type="text" class="table-numbers form-control inmateOut" id="inLateOut-' + $id + '" value="' + deptAbsenceData[i].InmateOut + '"></section><section class="col-xs-12 col-sm-6 form-group"><label>Employees on Vacation</label><input type="text" class="table-numbers form-control empVacation" id="empVacation-' + $id + '" value="' + deptAbsenceData[i].EmployeesOnVacation + '"><input type="hidden" id="absenceID-' + $id + '" class="absenceID" value="' + $absenceID + '"></section><section class="col-xs-12 buttons"><button class="btn btn-default editDeptAbsences">Edit</button></section></section>';
                     }
                     formHtml += '<section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 }
@@ -339,17 +341,20 @@ function shiftEnd() {
             success: function (msg) {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
-                var deptDowntimeData = msg['ReturnData'];
+                var deptDowntimeData = msg['ReturnData'], deptDowntimeTypes = msg['ReturnData1'], optionsHtml = '';
                 console.log(deptDowntimeData);
-                var deptDowntimeTypes = msg['ReturnData1'];
-                console.log(deptDowntimeTypes);
+                if (deptDowntimeTypes.length !== 0) {
+                    for (var i = 0; i < deptDowntimeTypes.length; i++) {
+                        optionsHtml += '<option value="' + deptDowntimeTypes[i].DownTimeTypeID + '">' + deptDowntimeTypes[i].DownTypeName + '</option>';
+                    }
+                }
                 if (deptDowntimeData.length == 0) {
-                    var $downtimeID = "-1", formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header><section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '"><select id="downtimeType' + $id + '" class="downtime-type form-control"></select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '"></section><section class="col-xs-12 form-group"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section><section class="row buttons"><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    var $downtimeID = "-1", formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header><section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '"><select id="downtimeType' + $id + '" class="downtime-type form-control">' + optionsHtml + '</select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section><section class="row buttons"><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 } else {
                     var formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header>';
                     for (i = 0; i < deptDowntimeData.length; i++) {
                         var $absenceID = deptDowntimeData[i].AbsenceID;
-                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '" value="' + deptDowntimeData[i].Minutes + '"><select id="downtimeType' + $id + '" class="downtime-type form-control"></select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '" value="' + deptDowntimeData[i].DownTimeID + '"></section><section class="col-xs-12 form-group"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '" value="' + deptDowntimeData[i].DownTimeNote + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section>';
+                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '" value="' + deptDowntimeData[i].Minutes + '"><select id="downtimeType' + $id + '" class="downtime-type form-control">' + optionsHtml + '</select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '" value="' + deptDowntimeData[i].DownTimeID + '"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '" value="' + deptDowntimeData[i].DownTimeNote + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section>';
                     }
                     formHtml += '<section class="row buttons"><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 }
@@ -361,7 +366,7 @@ function shiftEnd() {
             $('.editDeptDowntimes').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
-                var date = chosenDate, DownTimeNote = $(this).parent().parent().find('.notes').val(), DownTimeID = $(this).parent().parent().find('.downtimeID').val(), Minutes = $(this).parent().parent().find('.minutes').val(), DownTimeType = $(this).parent().parent().find('.downtime-type').val(), searchQuery = { "Key": _key, "DownTimeDate": date, "Minutes": Minutes, "DownTimeType": DownTimeType, "DownTimeNote": DownTimeNote, "DownTimeID": pondPoundsID, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
+                var date = chosenDate, DownTimeNote = $(this).parent().parent().find('.notes').val(), DownTimeID = $(this).parent().parent().find('.downtimeID').val(), Minutes = $(this).parent().parent().find('.minutes').val(), DownTimeType = $(this).parent().parent().find('.downtime-type').val(), searchQuery = { "Key": _key, "DownTimeDate": date, "Minutes": Minutes, "DownTimeType": DownTimeType, "DownTimeNote": DownTimeNote, "DownTimeID": DownTimeID, "DepartmentID": $id }, data = JSON.stringify(searchQuery);
                 $.ajax('../api/Downtime/DownTimeAddOrEdit', {
                     type: 'PUT',
                     data: data,
@@ -399,11 +404,11 @@ function shiftEnd() {
                 var deptFinishTimeData = msg['ReturnData'];
                 console.log(deptFinishTimeData);
                 if (deptFinishTimeData.length == 0) {
-                    var $finishtimeID = "-1", formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header><section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="text" class="table-numbers form-control finishtime" id="finishtime-' + $id + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + $finishtimeID + '"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    var $finishtimeID = "-1", formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header><section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="time" class="table-numbers form-control finishtime" id="finishtime-' + $id + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + $finishtimeID + '"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section><section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 } else {
                     var formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header>';
                     for (i = 0; i < deptFinishTimeData.length; i++) {
-                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="text" class="table-numbers form-control finishtime" id="finishtime-' + $id + '" value="' + deptFinishTimeData[i].FinishTime + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + deptFinishTimeData[i].FinishTimeID + '"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section>'
+                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="time" class="table-numbers form-control finishtime" id="finishtime-' + $id + '" value="' + deptFinishTimeData[i].FinishDateTime + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + deptFinishTimeData[i].FinishTimeID + '"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section>'
                     }
                     formHtml += '<section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 }
@@ -433,17 +438,6 @@ function shiftEnd() {
             });
         }
     }
-
-  ///// FOR REMAINING TWO FUNCTIONS -- THE HTML, MOSTLY /////  
-
-//<div class="col-xs-12 input-group">
-//    <label>Finished Time</label><input type="time" class="table-numbers" id="finTime">
-//</div>
-//<div class="col-xs-12 input-group">
-//    <label>Downtime</label><input type="number" step="any" class="table-numbers" id="downtimeMin"><select id="DTType"></select><input type="text" id="DTNotes">
-//</div>
-
-
 }
 
 /* LIVE FISH SAMPLING */
