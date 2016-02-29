@@ -61,10 +61,11 @@ namespace SGApp.Repository.Application
             return DbContext.DownTimes.Where(x => x.DownTimeID == id).SingleOrDefault();
         }
 
-        public DownTime GetByDate(DateTime reportDate)
+        public List<DownTime> GetByDate(DateTime reportDate)
         {
-            DateTime endDate = reportDate.AddDays(2);
-            return DbContext.DownTimes.Where(x => x.DownTimeDate > reportDate && x.DownTimeDate < endDate).FirstOrDefault();
+            DateTime endDate = reportDate.AddDays(1);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.DownTimes.Where(x => x.DownTimeDate > reportDate && x.DownTimeDate < endDate).ToList();
         }
 
         public List<DownTime> GetByDateAndDepartment(DateTime reportDate1, int depid)
