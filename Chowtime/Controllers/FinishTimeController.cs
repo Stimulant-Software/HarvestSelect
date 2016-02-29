@@ -47,7 +47,7 @@ namespace SGApp.Controllers
                 }
                 var NEUserId = 0;
 
-
+                uDto.FinishDateTime = uDto.FinishDateTime + " " + uDto.FinishTime;
                 if (int.TryParse(uDto.FinishTimeID, out NEUserId))
                 {
                     if (NEUserId == -1)
@@ -202,7 +202,7 @@ namespace SGApp.Controllers
                     dic.Add("FinishTimeID", item.FinishTimeID.ToString());
                     dic.Add("DepartmentID", item.DepartmentID.ToString());
                     dic.Add("DepartmentName", item.Department.DepartmentName);
-                    dic.Add("FinishDateTime", item.FinishDateTime.ToShortDateString());
+                    dic.Add("FinishDateTime", item.FinishDateTime.ToShortTimeString());
 
                     col.Add(dic);
                     var ufdic = new Dictionary<string, string>();

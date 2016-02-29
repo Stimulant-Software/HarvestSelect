@@ -149,7 +149,7 @@ namespace SGApp.Controllers
                         dic.Add("DepartmentID", dt.DepartmentID.ToString());
                         dic.Add("DepartmentName", dt.Department.DepartmentName);
                         dic.Add("DTDate", dt.DTDate.ToShortDateString());
-                        dic.Add("FinishTime", dt.FinishTime != null ? dt.FinishTime.ToString() : "---");
+                        dic.Add("FinishTime", dt.FinishTime != null ? dt.FinishTime.Value.ToShortTimeString() : "---");
                         dic.Add("DownTime", dt.DownTime != null ? dt.DownTime.ToString() : "---");
                         dic.Add("ShiftWeight", dt.ShiftWeight != null ? dt.ShiftWeight.ToString() : "---");
                         dic.Add("Absences", dt.Absences != null ? dt.Absences.ToString() : "---");

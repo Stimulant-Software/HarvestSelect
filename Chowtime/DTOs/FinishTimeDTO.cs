@@ -8,6 +8,7 @@ namespace SGApp.DTOs
         public string Key { get; set; }
         public string FinishTimeID { get; set; }
         public string FinishDateTime { get; set; }
+        public string FinishTime { get; set; }
         public string Start_FinishDateTime { get; set; }
         public string End_FinishDateTime { get; set; }
         public string DepartmentID { get; set; }
