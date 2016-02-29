@@ -126,7 +126,7 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .op.production .buttons, .op.shift-end .buttons { padding: 15px 0; background-color: #fff; margin-left: 0; margin-right: 0; }
 .op.production h3, .op.shift-end h3 { padding: 15px 0; font-weight: bold; text-transform: uppercase; font-size: 1.3em; }
 .op.production p, .op.shift-end p { line-height: 34px; }
-.op.shift-end label { mni-width: 175px; padding-left: 10px; }
+.op.shift-end label { min-width: 175px; padding-left: 10px; }
 .op.production button, .op.shift-end button { margin: 0 7px !important; }
 #headerReading { background-color: transparent; padding: 10px 0; }
 #headerReading input { background-color: #fff; }
