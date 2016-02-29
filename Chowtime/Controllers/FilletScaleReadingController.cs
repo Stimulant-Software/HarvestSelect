@@ -81,6 +81,7 @@ namespace SGApp.Controllers
             {
                 return ProcessValidationErrors(request, validationErrors, key);
             }
+            user.FilletScaleReading1 = decimal.Parse(uDto.FilletScaleReading);
 
             user = ur.Save(user);
 
@@ -114,6 +115,7 @@ namespace SGApp.Controllers
             //}
             else
             {
+                user.FilletScaleReading1 = decimal.Parse(cqDto.FilletScaleReading);
                 ur.Save(user);
             }
 

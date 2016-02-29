@@ -162,7 +162,7 @@ function shiftEnd() {
                             shiftEndList = msg['ReturnData'];
                             if (shiftEndList.length > 0) {
                                 for (var i = 0; i < shiftEndList.length; i++) {
-                                    var shiftDate = shiftEndList[i].ShiftDate.split(" ")[0];
+                                    var shiftDate = shiftEndList[i].DTDate.split(" ")[0];
                                     results.push(shiftDate);
                                 }
                             }

@@ -20,6 +20,7 @@ namespace SGApp.Models.EF
             this.DownTimeTypes = new HashSet<DownTimeType>();
             this.FinishTimes = new HashSet<FinishTime>();
             this.DepartmentTotals = new HashSet<DepartmentTotal>();
+            this.DownTimes = new HashSet<DownTime>();
         }
     
         public int DepartmentID { get; set; }
@@ -29,5 +30,6 @@ namespace SGApp.Models.EF
         public virtual ICollection<DownTimeType> DownTimeTypes { get; set; }
         public virtual ICollection<FinishTime> FinishTimes { get; set; }
         public virtual ICollection<DepartmentTotal> DepartmentTotals { get; set; }
+        public virtual ICollection<DownTime> DownTimes { get; set; }
     }
 }

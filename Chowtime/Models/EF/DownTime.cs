@@ -19,7 +19,9 @@ namespace SGApp.Models.EF
         public int Minutes { get; set; }
         public string DownTimeNote { get; set; }
         public System.DateTime DownTimeDate { get; set; }
+        public int DepartmentID { get; set; }
     
+        public virtual Department Department { get; set; }
         public virtual DownTimeType DownTimeType { get; set; }
     }
 }

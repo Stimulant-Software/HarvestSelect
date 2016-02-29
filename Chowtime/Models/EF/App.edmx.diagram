@@ -49,13 +49,14 @@
         <AssociationConnector Association="AppModel.FK_Absences_Departments" />
         <EntityTypeShape EntityType="AppModel.DownTimeType" Width="1.5" PointX="6.780632065041285" PointY="16.91024827254482" />
         <AssociationConnector Association="AppModel.FK_DownTimeTypes_Departments" />
-        <EntityTypeShape EntityType="AppModel.DownTime" Width="1.5" PointX="10.412050019210227" PointY="30.664160891745315" />
-        <AssociationConnector Association="AppModel.FK_DownTimes_DownTimeTypes" />
         <EntityTypeShape EntityType="AppModel.FilletScaleReading" Width="1.5" PointX="10.705228098996555" PointY="20.595722819024569" />
         <EntityTypeShape EntityType="AppModel.FinishTime" Width="1.5" PointX="6.702728036186997" PointY="2.4855400186430385" />
         <AssociationConnector Association="AppModel.FK_FinishTimes_Departments" />
-        <EntityTypeShape EntityType="AppModel.DepartmentTotal" Width="1.5" PointX="6.0368789183147618" PointY="2.7325918538182004" />
+        <EntityTypeShape EntityType="AppModel.DepartmentTotal" Width="1.5" PointX="8.43053856512091" PointY="7.7683226055318126" />
         <AssociationConnector Association="AppModel.FK_DepartmentTotals_Departments" />
+        <EntityTypeShape EntityType="AppModel.DownTime" Width="1.5" PointX="9.5735407926019" PointY="20.572008753461766" />
+        <AssociationConnector Association="AppModel.FK_DownTimes_Departments" />
+        <AssociationConnector Association="AppModel.FK_DownTimes_DownTimeTypes" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -9,17 +9,7 @@
           <EntitySet Name="Absences" EntityType="AppModel.Store.Absences" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Companies" EntityType="AppModel.Store.Companies" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Departments" EntityType="AppModel.Store.Departments" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="DepartmentTotals" EntityType="AppModel.Store.DepartmentTotals" store:Type="Tables" store:Schema="dbo" store:Name="DepartmentTotals">
-            <DefiningQuery>SELECT 
-      [DepartmentTotals].[DepartmentTotalID] AS [DepartmentTotalID], 
-      [DepartmentTotals].[DepartmentID] AS [DepartmentID], 
-      [DepartmentTotals].[DTDate] AS [DTDate], 
-      [DepartmentTotals].[FinishTime] AS [FinishTime], 
-      [DepartmentTotals].[DownTime] AS [DownTime], 
-      [DepartmentTotals].[ShiftWeight] AS [ShiftWeight], 
-      [DepartmentTotals].[Absences] AS [Absences]
-      FROM [dbo].[DepartmentTotals] AS [DepartmentTotals]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="DepartmentTotals" EntityType="AppModel.Store.DepartmentTotals" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DownTimes" EntityType="AppModel.Store.DownTimes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DownTimeTypes" EntityType="AppModel.Store.DownTimeTypes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Farms" EntityType="AppModel.Store.Farms" store:Type="Tables" Schema="dbo" />
@@ -48,6 +38,10 @@
           <AssociationSet Name="FK_DepartmentTotals_Departments" Association="AppModel.Store.FK_DepartmentTotals_Departments">
             <End Role="Departments" EntitySet="Departments" />
             <End Role="DepartmentTotals" EntitySet="DepartmentTotals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DownTimes_Departments" Association="AppModel.Store.FK_DownTimes_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DownTimes" EntitySet="DownTimes" />
           </AssociationSet>
           <AssociationSet Name="FK_DownTimes_DownTimeTypes" Association="AppModel.Store.FK_DownTimes_DownTimeTypes">
             <End Role="DownTimeTypes" EntitySet="DownTimeTypes" />
@@ -183,14 +177,9 @@
           <Property Name="DepartmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DepartmentName" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'App.dbo.DepartmentTotals' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="DepartmentTotals">
           <Key>
             <PropertyRef Name="DepartmentTotalID" />
-            <PropertyRef Name="DepartmentID" />
-            <PropertyRef Name="DTDate" />
           </Key>
           <Property Name="DepartmentTotalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DepartmentID" Type="int" Nullable="false" />
@@ -209,6 +198,7 @@
           <Property Name="Minutes" Type="int" Nullable="false" />
           <Property Name="DownTimeNote" Type="varchar" MaxLength="100" />
           <Property Name="DownTimeDate" Type="datetime" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="DownTimeTypes">
           <Key>
@@ -454,6 +444,18 @@
               <PropertyRef Name="DepartmentID" />
             </Principal>
             <Dependent Role="DepartmentTotals">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DownTimes_Departments">
+          <End Role="Departments" Type="AppModel.Store.Departments" Multiplicity="1" />
+          <End Role="DownTimes" Type="AppModel.Store.DownTimes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Departments">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="DownTimes">
               <PropertyRef Name="DepartmentID" />
             </Dependent>
           </ReferentialConstraint>
@@ -864,11 +866,6 @@
             <End Role="Department" EntitySet="Departments" />
             <End Role="DownTimeType" EntitySet="DownTimeTypes" />
           </AssociationSet>
-          <EntitySet Name="DownTimes" EntityType="AppModel.DownTime" />
-          <AssociationSet Name="FK_DownTimes_DownTimeTypes" Association="AppModel.FK_DownTimes_DownTimeTypes">
-            <End Role="DownTimeType" EntitySet="DownTimeTypes" />
-            <End Role="DownTime" EntitySet="DownTimes" />
-          </AssociationSet>
           <EntitySet Name="FilletScaleReadings" EntityType="AppModel.FilletScaleReading" />
           <EntitySet Name="FinishTimes" EntityType="AppModel.FinishTime" />
           <AssociationSet Name="FK_FinishTimes_Departments" Association="AppModel.FK_FinishTimes_Departments">
@@ -879,6 +876,15 @@
           <AssociationSet Name="FK_DepartmentTotals_Departments" Association="AppModel.FK_DepartmentTotals_Departments">
             <End Role="Department" EntitySet="Departments" />
             <End Role="DepartmentTotal" EntitySet="DepartmentTotals" />
+          </AssociationSet>
+          <EntitySet Name="DownTimes" EntityType="AppModel.DownTime" />
+          <AssociationSet Name="FK_DownTimes_Departments" Association="AppModel.FK_DownTimes_Departments">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="DownTime" EntitySet="DownTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DownTimes_DownTimeTypes" Association="AppModel.FK_DownTimes_DownTimeTypes">
+            <End Role="DownTimeType" EntitySet="DownTimeTypes" />
+            <End Role="DownTime" EntitySet="DownTimes" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Company">
@@ -1416,6 +1422,7 @@
           <NavigationProperty Name="DownTimeTypes" Relationship="AppModel.FK_DownTimeTypes_Departments" FromRole="Department" ToRole="DownTimeType" />
           <NavigationProperty Name="FinishTimes" Relationship="AppModel.FK_FinishTimes_Departments" FromRole="Department" ToRole="FinishTime" />
           <NavigationProperty Name="DepartmentTotals" Relationship="AppModel.FK_DepartmentTotals_Departments" FromRole="Department" ToRole="DepartmentTotal" />
+          <NavigationProperty Name="DownTimes" Relationship="AppModel.FK_DownTimes_Departments" FromRole="Department" ToRole="DownTime" />
         </EntityType>
         <Association Name="FK_Absences_Departments">
           <End Type="AppModel.Department" Role="Department" Multiplicity="1" />
@@ -1451,29 +1458,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DownTime">
-          <Key>
-            <PropertyRef Name="DownTimeID" />
-          </Key>
-          <Property Type="Int32" Name="DownTimeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DownTimeTypeID" Nullable="false" />
-          <Property Type="Int32" Name="Minutes" Nullable="false" />
-          <Property Type="String" Name="DownTimeNote" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="DownTimeDate" Nullable="false" Precision="3" />
-          <NavigationProperty Name="DownTimeType" Relationship="AppModel.FK_DownTimes_DownTimeTypes" FromRole="DownTime" ToRole="DownTimeType" />
-        </EntityType>
-        <Association Name="FK_DownTimes_DownTimeTypes">
-          <End Type="AppModel.DownTimeType" Role="DownTimeType" Multiplicity="1" />
-          <End Type="AppModel.DownTime" Role="DownTime" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DownTimeType">
-              <PropertyRef Name="DownTimeTypeID" />
-            </Principal>
-            <Dependent Role="DownTime">
-              <PropertyRef Name="DownTimeTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="FilletScaleReading">
           <Key>
             <PropertyRef Name="FilletScaleReadingID" />
@@ -1506,8 +1490,6 @@
         <EntityType Name="DepartmentTotal">
           <Key>
             <PropertyRef Name="DepartmentTotalID" />
-            <PropertyRef Name="DepartmentID" />
-            <PropertyRef Name="DTDate" />
           </Key>
           <Property Type="Int32" Name="DepartmentTotalID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="DepartmentID" Nullable="false" />
@@ -1527,6 +1509,43 @@
             </Principal>
             <Dependent Role="DepartmentTotal">
               <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DownTime">
+          <Key>
+            <PropertyRef Name="DownTimeID" />
+          </Key>
+          <Property Type="Int32" Name="DownTimeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DownTimeTypeID" Nullable="false" />
+          <Property Type="Int32" Name="Minutes" Nullable="false" />
+          <Property Type="String" Name="DownTimeNote" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DownTimeDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <NavigationProperty Name="Department" Relationship="AppModel.FK_DownTimes_Departments" FromRole="DownTime" ToRole="Department" />
+          <NavigationProperty Name="DownTimeType" Relationship="AppModel.FK_DownTimes_DownTimeTypes" FromRole="DownTime" ToRole="DownTimeType" />
+        </EntityType>
+        <Association Name="FK_DownTimes_Departments">
+          <End Type="AppModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="AppModel.DownTime" Role="DownTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="DownTime">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DownTimes_DownTimeTypes">
+          <End Type="AppModel.DownTimeType" Role="DownTimeType" Multiplicity="1" />
+          <End Type="AppModel.DownTime" Role="DownTime" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DownTimeType">
+              <PropertyRef Name="DownTimeTypeID" />
+            </Principal>
+            <Dependent Role="DownTime">
+              <PropertyRef Name="DownTimeTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1802,17 +1821,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DownTimes">
-            <EntityTypeMapping TypeName="AppModel.DownTime">
-              <MappingFragment StoreEntitySet="DownTimes">
-                <ScalarProperty Name="DownTimeDate" ColumnName="DownTimeDate" />
-                <ScalarProperty Name="DownTimeNote" ColumnName="DownTimeNote" />
-                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
-                <ScalarProperty Name="DownTimeTypeID" ColumnName="DownTimeTypeID" />
-                <ScalarProperty Name="DownTimeID" ColumnName="DownTimeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="FilletScaleReadings">
             <EntityTypeMapping TypeName="AppModel.FilletScaleReading">
               <MappingFragment StoreEntitySet="FilletScaleReadings">
@@ -1841,6 +1849,18 @@
                 <ScalarProperty Name="DTDate" ColumnName="DTDate" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
                 <ScalarProperty Name="DepartmentTotalID" ColumnName="DepartmentTotalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DownTimes">
+            <EntityTypeMapping TypeName="AppModel.DownTime">
+              <MappingFragment StoreEntitySet="DownTimes">
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="DownTimeDate" ColumnName="DownTimeDate" />
+                <ScalarProperty Name="DownTimeNote" ColumnName="DownTimeNote" />
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
+                <ScalarProperty Name="DownTimeTypeID" ColumnName="DownTimeTypeID" />
+                <ScalarProperty Name="DownTimeID" ColumnName="DownTimeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

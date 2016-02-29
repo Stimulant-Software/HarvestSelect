@@ -194,6 +194,7 @@ namespace SGApp.Controllers
                     cqDTO.StartDateMonth = null;
                     cqDTO.StartDateYear = null;
                 }
+                
 
                 var predicate = ur.GetPredicate(cqDTO, u, companyId);
                 var data = ur.GetByPredicate(predicate);
