@@ -354,6 +354,7 @@ function shiftEnd() {
                     for (i = 0; i < deptDowntimeData.length; i++) {
                         var $downtimeID = deptDowntimeData[i].DownTimeID, $downtimeTypeID = deptDowntimeData[i].DownTimeTypeID;
                         if (deptDowntimeTypes.length !== 0) {
+                            var optionsHtml = '';
                             for (var j = 0; j < deptDowntimeTypes.length; j++) {
                                 if (j + 1 != deptDowntimeData[i].DownTimeTypeID) {
                                     optionsHtml += '<option value="' + deptDowntimeTypes[j].DownTimeTypeID + '">' + deptDowntimeTypes[j].DownTypeName + '</option>';
