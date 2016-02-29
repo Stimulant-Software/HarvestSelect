@@ -183,7 +183,7 @@ namespace SGApp.Controllers
             string filletscale = fsrs == null ? "0" : fsrs.FilletScaleReading1.ToString();
             string subject = "";
             string body = "";
-            body += "<html><head><style>table, td, th {border: 1px solid #ddd; text-align: left;}table {border-collapse: collapse; width: 100%;} th, td {padding: 5px;} tr:nth-child(2) {background-color: #f8f8f8;} th {background-color: #ddd;}</style></head><body>";
+            body += "<style>table, td, th {border: 1px solid #ddd; text-align: left;}table {border-collapse: collapse; width: 100%;} th, td {padding: 5px;} tr:nth-child(2) {background-color: #f8f8f8;} th {background-color: #ddd;}</style>";
             subject = "Harvest Select Daily Production Report";
             body += "Report Date:  " + reportdate.ToShortDateString() + "<br /><br />";
             body += "Fillet Scale Reading: " + filletscale + "<br /><br />";
@@ -292,7 +292,7 @@ namespace SGApp.Controllers
             }
             body += "</table><br /><br />";
 
-            body += "</table></body></html>";
+            body += "</table>";
 
             SendMail("harper@stimulantgroup.com", subject, body);
 
