@@ -342,27 +342,35 @@ function shiftEnd() {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
                 var deptDowntimeData = msg['ReturnData'], deptDowntimeTypes = msg['ReturnData1'], optionsHtml = '';
-                console.log(deptDowntimeData);
-                if (deptDowntimeTypes.length !== 0) {
-                    for (var i = 0; i < deptDowntimeTypes.length; i++) {
-                        optionsHtml += '<option value="' + deptDowntimeTypes[i].DownTimeTypeID + '">' + deptDowntimeTypes[i].DownTypeName + '</option>';
-                    }
-                }
                 if (deptDowntimeData.length == 0) {
-                    var $downtimeID = "-1", formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header><section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '"><select id="downtimeType' + $id + '" class="downtime-type form-control">' + optionsHtml + '</select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section><section class="row buttons"><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    if (deptDowntimeTypes.length !== 0) {
+                        for (var i = 0; i < deptDowntimeTypes.length; i++) {
+                            optionsHtml += '<option value="' + deptDowntimeTypes[i].DownTimeTypeID + '">' + deptDowntimeTypes[i].DownTypeName + '</option>';
+                        }
+                    }
+                    var $downtimeID = "-1", formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header><section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '"><select id="downtimeType' + $id + '" class="downtime-type form-control">' + optionsHtml + '</select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 } else {
                     var formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header>';
                     for (i = 0; i < deptDowntimeData.length; i++) {
-                        var $absenceID = deptDowntimeData[i].AbsenceID;
-                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '" value="' + deptDowntimeData[i].Minutes + '"><select id="downtimeType' + $id + '" class="downtime-type form-control">' + optionsHtml + '</select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '" value="' + deptDowntimeData[i].DownTimeID + '"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '" value="' + deptDowntimeData[i].DownTimeNote + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section>';
+                        var $downtimeID = deptDowntimeData[i].DownTimeID, $downtimeTypeID = deptDowntimeData[i].DownTimeTypeID;
+                        if (deptDowntimeTypes.length !== 0) {
+                            for (var j = 0; j < deptDowntimeTypes.length; j++) {
+                                if (j + 1 != deptDowntimeData[i].DownTimeTypeID) {
+                                    optionsHtml += '<option value="' + deptDowntimeTypes[j].DownTimeTypeID + '">' + deptDowntimeTypes[j].DownTypeName + '</option>';
+                                } else {
+                                    optionsHtml += '<option value="' + deptDowntimeTypes[j].DownTimeTypeID + '" selected>' + deptDowntimeTypes[j].DownTypeName + '</option>';
+                                }
+                            }
+                        }
+                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '" value="' + deptDowntimeData[i].Minutes + '"><select id="downtimeType' + $id + '" class="downtime-type form-control">' + optionsHtml + '</select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '" value="' + deptDowntimeData[i].DownTimeID + '"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '" value="' + deptDowntimeData[i].Note + '"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section>';
                     }
-                    formHtml += '<section class="row buttons"><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';
+                    formHtml += '<section class="row buttons"><button class="btn btn-default add-new-downtime">Add New Down Time</button><button class="btn btn-danger cancel">Cancel</button></section></section>';                   
                 }
-                $.when($('.form-container').empty().append(formHtml)).then(function () { bindDeptDowntimeButtons($id); hideProgress(); });
+                $.when($('.form-container').empty().append(formHtml)).then(function () { bindDeptDowntimeButtons($id, optionsHtml); hideProgress(); });
             }
         });
 
-        function bindDeptDowntimeButtons($id) {
+        function bindDeptDowntimeButtons($id, optionsHtml) {
             $('.editDeptDowntimes').unbind().click(function (e) {
                 showProgress('body');
                 e.preventDefault();
@@ -382,7 +390,7 @@ function shiftEnd() {
             $('.add-new-downtime').unbind().click(function (e) {
                 e.preventDefault();
                 var $currentSection = $(this).parent();
-                var formHtml = '<section id="downtimes-' + $id + '" class="row form-inline" data-row="downtimes"><header class="col-md-12">Department Down Times</header><section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '"><select id="downtimeType' + $id + '" class="downtime-type form-control"></select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="' + $downtimeID + '"></section><section class="col-xs-12 form-group"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '"></section><section class="col-xs-12"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section>';
+                var formHtml = '<section class="row"><section class="col-xs-12 form-group"><label>Minutes</label><input type="text" class="table-numbers form-control minutes" id="minutes-' + $id + '"><select id="downtimeType' + $id + '" class="downtime-type form-control">' + optionsHtml + '</select><input type="hidden" id="downtime-' + $id + '" class="downtimeID" value="-1"><label>Notes</label><input type="text" class="form-control notes" id="notes-' + $id + '"><button class="btn btn-default editDeptDowntimes">Edit</button></section></section>';
                 $(formHtml).insertBefore($currentSection);
                 bindDeptDowntimeButtons($id);
             });
