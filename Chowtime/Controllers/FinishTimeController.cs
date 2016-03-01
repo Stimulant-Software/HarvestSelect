@@ -98,12 +98,12 @@ namespace SGApp.Controllers
         {
             var pr = new DepartmentTotalRepository();
             var prod = new DepartmentTotal();
-            var prodexists = pr.GetByDateAndDepartment(DateTime.Parse(uDto.FinishDateTime), int.Parse(uDto.DepartmentID));
+            var prodexists = pr.GetByDateAndDepartment(DateTime.Parse(DateTime.Parse(uDto.FinishDateTime).ToShortDateString()), int.Parse(uDto.DepartmentID));
             DateTime fdt = DateTime.Parse(uDto.FinishDateTime);
             if (prodexists == null)
             {
                 prod.DepartmentID = int.Parse(uDto.DepartmentID);
-                prod.DTDate = DateTime.Parse(uDto.FinishDateTime);
+                prod.DTDate = DateTime.Parse(DateTime.Parse(uDto.FinishDateTime).ToShortDateString());
                 prod.FinishTime = fdt;
                 pr.Save(prod);
             }
@@ -111,7 +111,7 @@ namespace SGApp.Controllers
             {
                 prod = prodexists;
                 var wbr = new FinishTimeRepository();
-                List<FinishTime> wbl = wbr.GetByDateAndDepartment(DateTime.Parse(uDto.FinishDateTime), int.Parse(uDto.DepartmentID));
+                List<FinishTime> wbl = wbr.GetByDateAndDepartment(DateTime.Parse(DateTime.Parse(uDto.FinishDateTime).ToShortDateString()), int.Parse(uDto.DepartmentID));
                 fdt = wbl.Select(x => x.FinishDateTime).FirstOrDefault();
                 prod.FinishTime = fdt;
                 pr.Save(prod);

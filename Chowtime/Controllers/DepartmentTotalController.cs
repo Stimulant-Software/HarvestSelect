@@ -67,6 +67,7 @@ namespace SGApp.Controllers
                 }
                 var predicate = ur.GetPredicate(cqDTO, u, companyId);
                 var data = ur.GetByPredicate(predicate);
+                data = data.GroupBy(x => x.DTDate).Select(x => x.First()).OrderBy(x => x.DTDate).ToList();
                 var col = new Collection<Dictionary<string, string>>();
                 foreach (var item in data)
                 {

@@ -35,7 +35,15 @@ namespace SGApp.Controllers
             var userId = ur.ValidateUser(uDto.Key, out key, ref AbsenceId);
 
             AppUserRoleRepository aur = new AppUserRoleRepository();
-
+            uDto.RegEmpLate = uDto.RegEmpLate == "" ? null : uDto.RegEmpLate;
+            uDto.RegEmpLeftEarly = uDto.RegEmpLeftEarly == "" ? null : uDto.RegEmpLeftEarly;
+            uDto.RegEmpOut = uDto.RegEmpOut == "" ? null : uDto.RegEmpOut;
+            uDto.TempEmpLate = uDto.TempEmpLate == "" ? null : uDto.TempEmpLate;
+            uDto.TempEmpLeftEarly = uDto.TempEmpLeftEarly == "" ? null : uDto.TempEmpLeftEarly;
+            uDto.TempEmpOut = uDto.TempEmpOut == "" ? null : uDto.TempEmpOut;
+            uDto.InmateLeftEarly = uDto.InmateLeftEarly == "" ? null : uDto.InmateLeftEarly;
+            uDto.InmateOut = uDto.InmateOut == "" ? null : uDto.InmateOut;
+            uDto.EmployeesOnVacation = uDto.EmployeesOnVacation == "" ? null : uDto.EmployeesOnVacation;
 
             if (userId > 0 && aur.IsInRole(userId, "Data Entry"))
             {
@@ -46,15 +54,7 @@ namespace SGApp.Controllers
                     return ProcessValidationErrors(Request, errors, key);
                 }
                 var NEUserId = 0;
-                uDto.RegEmpLate = uDto.RegEmpLate == "" ? null : uDto.RegEmpLate;
-                uDto.RegEmpLeftEarly = uDto.RegEmpLeftEarly == "" ? null : uDto.RegEmpLeftEarly;
-                uDto.RegEmpOut = uDto.RegEmpOut == "" ? null : uDto.RegEmpOut;
-                uDto.TempEmpLate = uDto.TempEmpLate == "" ? null : uDto.TempEmpLate;
-                uDto.TempEmpLeftEarly = uDto.TempEmpLeftEarly == "" ? null : uDto.TempEmpLeftEarly;
-                uDto.TempEmpOut = uDto.TempEmpOut == "" ? null : uDto.TempEmpOut;
-                uDto.InmateLeftEarly = uDto.InmateLeftEarly == "" ? null : uDto.InmateLeftEarly;
-                uDto.InmateOut = uDto.InmateOut == "" ? null : uDto.InmateOut;
-                uDto.EmployeesOnVacation = uDto.EmployeesOnVacation == "" ? null : uDto.EmployeesOnVacation;
+                
 
                 if (int.TryParse(uDto.AbsenceID, out NEUserId))
                 {
