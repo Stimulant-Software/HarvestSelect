@@ -417,7 +417,14 @@ function shiftEnd() {
                 } else {
                     var formHtml = '<section id="finishtime-' + $id + '" class="row form-inline" data-row="finishtime"><header class="col-md-12">Department Finish Time</header>';
                     for (i = 0; i < deptFinishTimeData.length; i++) {
-                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="time" class="table-numbers form-control finishtime" id="finishtime-' + $id + '" value="' + deptFinishTimeData[i].FinishDateTime + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + deptFinishTimeData[i].FinishTimeID + '"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section>'
+                        var $formattedTime = deptFinishTimeData[i].FinishDateTime.split(' ')[0];
+                        if (deptFinishTimeData[i].FinishDateTime.split(' ')[1] === "PM") {
+                            console.log(true);
+                            $adjustedHours = parseInt($formattedTime.split(':')[0]) + 12;
+                            $minutes = $formattedTime.split(':')[1];
+                            $formattedTime = $adjustedHours + ':' + $minutes;
+                        }
+                        formHtml += '<section class="row"><section class="col-xs-12 form-group"><label>Finish Time</label><input type="time" class="table-numbers form-control finishtime" id="finishtime-' + $id + '" value="' + $formattedTime + '"><input type="hidden" id="finishtimeID-' + $id + '" class="finishtimeID" value="' + deptFinishTimeData[i].FinishTimeID + '"><button class="btn btn-default editDeptFinishTime">Edit</button></section></section>'
                     }
                     formHtml += '<section class="row buttons"><button class="btn btn-danger cancel">Cancel</button></section></section>';
                 }
