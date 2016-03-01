@@ -419,7 +419,6 @@ function shiftEnd() {
                     for (i = 0; i < deptFinishTimeData.length; i++) {
                         var $formattedTime = deptFinishTimeData[i].FinishDateTime.split(' ')[0];
                         if (deptFinishTimeData[i].FinishDateTime.split(' ')[1] === "PM") {
-                            console.log(true);
                             $adjustedHours = parseInt($formattedTime.split(':')[0]) + 12;
                             $minutes = $formattedTime.split(':')[1];
                             $formattedTime = $adjustedHours + ':' + $minutes;
