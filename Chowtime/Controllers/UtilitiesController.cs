@@ -271,16 +271,24 @@ namespace SGApp.Controllers
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.EmployeesOnVacation).Value.ToString() + "</td></tr>";
             foreach (Absence ab in abs)
             {
-
-                body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.Department.DepartmentName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.RegEmpOut.Value.ToString() + "</td>";
-                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.RegEmpLate.Value.ToString() + "</td>";
-                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.RegEmpLeftEarly.Value.ToString() + "</td>";
-                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.TempEmpOut.Value.ToString() + "</td>";
-                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.TempEmpLate.Value.ToString() + "</td>";
-                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.TempEmpLeftEarly.Value.ToString() + "</td>";
-                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.InmateOut.Value.ToString() + "</td>";
-                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.InmateLeftEarly.Value.ToString() + "</td>";
-                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.EmployeesOnVacation.Value.ToString() + "</td></tr>";
+                string RegEmpOut = ab.RegEmpOut.HasValue ? ab.RegEmpOut.Value.ToString() : "---";
+                string RegEmpLate = ab.RegEmpLate.HasValue ? ab.RegEmpLate.Value.ToString() : "---";
+                string RegEmpLeftEarly = ab.RegEmpLeftEarly.HasValue ? ab.RegEmpLeftEarly.Value.ToString() : "---";
+                string TempEmpOut = ab.TempEmpOut.HasValue ? ab.TempEmpOut.Value.ToString() : "---";
+                string TempEmpLate = ab.TempEmpLate.HasValue ? ab.TempEmpLate.Value.ToString() : "---";
+                string TempEmpLeftEarly = ab.TempEmpLeftEarly.HasValue ? ab.TempEmpLeftEarly.Value.ToString() : "---";
+                string InmateOut = ab.InmateOut.HasValue ? ab.InmateOut.Value.ToString() : "---";
+                string InmateLeftEarly = ab.InmateLeftEarly.HasValue ? ab.InmateLeftEarly.Value.ToString() : "---";
+                string EmployeesOnVacation = ab.EmployeesOnVacation.HasValue ? ab.EmployeesOnVacation.Value.ToString() : "---";
+                body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.Department.DepartmentName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + RegEmpOut + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + RegEmpLate + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + RegEmpLeftEarly + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + TempEmpOut + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + TempEmpLate + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + TempEmpLeftEarly + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + InmateOut + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + InmateLeftEarly + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + EmployeesOnVacation + "</td></tr>";
 
             }
             body += "</table><br /><br />";
@@ -293,6 +301,7 @@ namespace SGApp.Controllers
             foreach (DownTime dt in dsl)
             {
 
+                string DownTimeNote = dt.DownTimeNote != null ? dt.DownTimeNote : "---";
                 body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.DownTimeType.Department.DepartmentName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.DownTimeType.DownTimeName + "</td>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.Minutes.ToString() + "</td>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.DownTimeNote + "</td></tr>";
