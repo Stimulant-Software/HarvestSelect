@@ -399,6 +399,7 @@ header.admin {
     text-align: center; 
     border-left: none;
     border-right: none;   
+    height: 30px;
 }
 
 .admin #main_content li:nth-child(even) {
@@ -408,6 +409,10 @@ header.admin {
 .admin #main_content li span {
     float: left;
     line-height: 46px;
+    max-height: 37px;
+    overflow: hidden;
+    text-align: left;
+    width: 120px;
 }
 
 .admin-modal fieldset {

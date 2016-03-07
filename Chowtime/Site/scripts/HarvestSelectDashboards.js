@@ -268,19 +268,28 @@ function shiftEnd() {
         });
 
         $('.edit-fsr').unbind().click(function (e) {
-            showProgress('body');
-            e.preventDefault();
-            var date = chosenDate, FilletScaleReading = $(this).parent().find('.fsreading').val(), FilletScaleReadingID = $(this).parent().find('.fsrID').val(), searchQuery = { "Key": _key, "FSRDateTime": date, "FilletScaleReading": FilletScaleReading, "FilletScaleReadingID": FilletScaleReadingID }, data = JSON.stringify(searchQuery);
-            $.ajax('../api/FilletScaleReading/FilletScaleReadingAddOrEdit', {
-                type: 'PUT',
-                data: data,
-                success: function (msg) {
-                    hideProgress();
-                    localStorage['CT_key'] = msg['Key'];
-                    startTimer(msg.Key);
-                    loadDepartmentList(date);
-                }
-            })
+            if($('#FSReading').attr('disabled', true)) {
+                $('#FSReading').attr('disabled', false);
+                $(this).text('Save Reading');
+                $('.edit-fsr').unbind().click(function (e) {
+                    showProgress('body');
+                    e.preventDefault();
+                    var date = chosenDate, FilletScaleReading = $(this).parent().find('.fsreading').val(), FilletScaleReadingID = $(this).parent().find('.fsrID').val(), searchQuery = { "Key": _key, "FSRDateTime": date, "FilletScaleReading": FilletScaleReading, "FilletScaleReadingID": FilletScaleReadingID }, data = JSON.stringify(searchQuery);
+                    $.ajax('../api/FilletScaleReading/FilletScaleReadingAddOrEdit', {
+                        type: 'PUT',
+                        data: data,
+                        success: function (msg) {
+                            hideProgress();
+                            localStorage['CT_key'] = msg['Key'];
+                            startTimer(msg.Key);
+                            $('#FSReading').attr('disabled', true);
+                            $(this).text('Edit Reading');
+                            bindDeptButtons();
+                            loadDepartmentList(date);
+                        }
+                    });
+                });
+            }
         });
     }
 

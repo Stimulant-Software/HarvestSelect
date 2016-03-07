@@ -130,6 +130,7 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .op.production button, .op.shift-end button { margin: 0 7px !important; }
 #headerReading { background-color: transparent; padding: 10px 0; }
 #headerReading input { background-color: #fff; }
+#headerReading input:disabled { background-color: #ccc; color: #333; }
 #headerReading label { color: #333; }
 @media (min-width: 768px) { .op.shift-end .form-inline .form-group { margin-bottom: 10px; } }
 
