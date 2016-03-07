@@ -139,14 +139,15 @@ namespace SGApp.Controllers
                 };
                 try
                 {
-                    //var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
-                    //response.EnsureSuccessStatusCode();
+                    var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
+                    response.EnsureSuccessStatusCode();
                     JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                     //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result); // new List<Sampling>();
                     //Sampling[] samplingResultsArray = response.Content.ReadAsAsync<Sampling[]>().Result;
                     //samplingResults = samplingResultsArray.ToList();
                     //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-                    Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
+                    //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
+                    Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result);
                     samplingResults = samplingResultsArray.ToList();
                     samplingResults = samplingResults.GroupBy(x => x.farmPond).Select(group => group.First()).ToList();
                     //var result = response.Content.ReadAsStringAsync().Result;

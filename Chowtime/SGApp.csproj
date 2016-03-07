@@ -186,6 +186,7 @@
     <Compile Include="DTOs\ReturnDTO.cs" />
     <Compile Include="DTOs\Samplings.cs" />
     <Compile Include="DTOs\ShiftEndDTO.cs" />
+    <Compile Include="DTOs\ShiftWeights.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="DTOs\UserFarmDTO.cs" />
     <Compile Include="DTOs\UserQueryDTO.cs" />
