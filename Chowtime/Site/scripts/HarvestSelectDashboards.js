@@ -1027,6 +1027,7 @@ function production() {
                         $('#dresseddiseasepct' + $WeightBackID).val((newValue / .6).toFixed(2));
                     });
                 });
+
             }
         });
 

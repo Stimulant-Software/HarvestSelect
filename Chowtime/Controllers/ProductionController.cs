@@ -139,15 +139,15 @@ namespace SGApp.Controllers
                 };
                 try
                 {
-                    var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
-                    response.EnsureSuccessStatusCode();
+                    //var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
+                    //response.EnsureSuccessStatusCode();
                     JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                     //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result); // new List<Sampling>();
                     //Sampling[] samplingResultsArray = response.Content.ReadAsAsync<Sampling[]>().Result;
                     //samplingResults = samplingResultsArray.ToList();
                     //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-                    //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-                    Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                    Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
+                    //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result);
                     samplingResults = samplingResultsArray.ToList();
                     samplingResults = samplingResults.GroupBy(x => x.farmPond).Select(group => group.First()).ToList();
                     //var result = response.Content.ReadAsStringAsync().Result;
@@ -171,6 +171,7 @@ namespace SGApp.Controllers
                     var dic = new Dictionary<string, string>();
                     if (fy != null)
                     {
+                        var wb = fy.WeighBacks != null ? fy.WeighBacks : 0;
                         dic.Add("ProductionTotalId", fy.ProductionTotalID.ToString());
                         dic.Add("PondID", fy.PondId.ToString());
                         dic.Add("PondName", sam.farmPond);
@@ -180,7 +181,7 @@ namespace SGApp.Controllers
                         dic.Add("PondWeight", fy.PondWeight != null ? fy.PondWeight.ToString() : "---");
                         dic.Add("WeighBacks", fy.WeighBacks != null ? fy.WeighBacks.ToString() : "---");
                         dic.Add("AverageYield", fy.AverageYield != null ? fy.AverageYield.ToString() : "---");
-                        dic.Add("HeadedWeight", fy.AverageYield != null && fy.PondWeight != null ? String.Format("{0:0.00}",((fy.AverageYield / 100) * fy.PondWeight)) : "---");
+                        dic.Add("HeadedWeight", fy.AverageYield != null && fy.PlantWeight != null ? String.Format("{0:0.00}", ((fy.AverageYield / 100) * (fy.PlantWeight - wb))) : "---");
                     }
                     else
                     {

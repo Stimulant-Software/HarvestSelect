@@ -164,16 +164,17 @@ namespace SGApp.Controllers
             };
             try
             {
-                var response = client.PostAsJsonAsync("api/Remote/GetDailyProductionTotal", dto).Result;
-                response.EnsureSuccessStatusCode();
+                //var response = client.PostAsJsonAsync("api/Remote/GetDailyProductionTotal", dto).Result;
+                //response.EnsureSuccessStatusCode();
                 JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                 //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result); // new List<Sampling>();
                 //Sampling[] samplingResultsArray = response.Content.ReadAsAsync<Sampling[]>().Result;
                 //samplingResults = samplingResultsArray.ToList();
                 //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                 //Object[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-
-                ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(response.Content.ReadAsStringAsync().Result);
+                string teststuff = "[{\"station\":10,\"nominal\":34038.25,\"weight\":35469.6},{\"station\":12,\"nominal\":7950.0,\"weight\":8062.02},{\"station\":13,\"nominal\":3165.0,\"weight\":3213.56},{\"station\":14,\"nominal\":3920.0,\"weight\":3990.14},{\"station\":15,\"nominal\":8342.0,\"weight\":8987.8},{\"station\":16,\"nominal\":10580.0,\"weight\":10862.35}]";
+                ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(teststuff);
+                //ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(response.Content.ReadAsStringAsync().Result);
                 shiftResults = samplingResultsArray.ToList();
                 //shiftResults = shiftResults.GroupBy(x => x.farmPond).Select(group => group.First()).ToList();
                 //var result = response.Content.ReadAsStringAsync().Result;
@@ -195,7 +196,7 @@ namespace SGApp.Controllers
             var FreshWeight = shiftResults.Where(x => stations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
 
             var reportdate = DateTime.Now;
-            reportdate = DateTime.Parse("2016-04-14");
+            reportdate = DateTime.Parse(DateTime.Now.ToShortDateString());
             var ptr = new ProductionTotalRepository();
             var dtr = new DepartmentTotalRepository();
             var wbr = new WeighBackRepository();
@@ -273,7 +274,17 @@ namespace SGApp.Controllers
                 wbweight = 0;
                 avgyield = 100;
             }
-            decimal avgTotal = headedweighttotal * 100 / (pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value);
+            decimal notzero = pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value;
+            decimal avgTotal = 1;
+            if (notzero == 0)
+            {
+                avgTotal = 0;
+            }
+            else
+            {
+                avgTotal = headedweighttotal * 100 / (pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value);
+            }
+            //decimal avgTotal = headedweighttotal * 100 / (pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value);
             string filletscale = fsrs == null ? "0" : fsrs.FilletScaleReading1.ToString();
             string subject = "";
             string body = "";

@@ -116,9 +116,9 @@ namespace SGApp.Controllers
             wb += uDto.Bream == null ? 0 : decimal.Parse(uDto.Bream);
             wb += uDto.Carp == null ? 0 : decimal.Parse(uDto.Carp);
             wb += uDto.DOAs == null ? 0 : decimal.Parse(uDto.DOAs);
-            wb += uDto.DressedDisease == null ? 0 : decimal.Parse(uDto.DressedDisease);
+            wb += uDto.DressedDisease == null ? 0 : decimal.Parse(uDto.DressedDisease) / decimal.Parse("0.6");
             wb += uDto.LiveDisease == null ? 0 : decimal.Parse(uDto.LiveDisease);
-            wb += uDto.RedFillet == null ? 0 : decimal.Parse(uDto.RedFillet);
+            wb += uDto.RedFillet == null ? 0 : decimal.Parse(uDto.RedFillet) / decimal.Parse("0.36");
             wb += uDto.Shad == null ? 0 : decimal.Parse(uDto.Shad);
             wb += uDto.Trash == null ? 0 : decimal.Parse(uDto.Trash);
             wb += uDto.Turtle == null ? 0 : decimal.Parse(uDto.Turtle);
@@ -139,9 +139,9 @@ namespace SGApp.Controllers
                 wb += wbl.Where(x => x.Bream != null).Sum(x => x.Bream).Value;
                 wb += wbl.Where(x => x.Carp != null).Sum(x => x.Carp).Value;
                 wb += wbl.Where(x => x.DOAs != null).Sum(x => x.DOAs).Value;
-                wb += wbl.Where(x => x.DressedDisease != null).Sum(x => x.DressedDisease).Value;
+                wb += wbl.Where(x => x.DressedDisease != null).Sum(x => x.DressedDisease).Value / decimal.Parse("0.6");
                 wb += wbl.Where(x => x.LiveDisease != null).Sum(x => x.LiveDisease).Value;
-                wb += wbl.Where(x => x.RedFillet != null).Sum(x => x.RedFillet).Value;
+                wb += wbl.Where(x => x.RedFillet != null).Sum(x => x.RedFillet).Value / decimal.Parse("0.36");
                 wb += wbl.Where(x => x.Shad != null).Sum(x => x.Shad).Value;
                 wb += wbl.Where(x => x.Trash != null).Sum(x => x.Trash).Value;
                 wb += wbl.Where(x => x.Turtle != null).Sum(x => x.Turtle).Value;
@@ -200,7 +200,111 @@ namespace SGApp.Controllers
             contact.ProcessRecord(cqDto);
             return pr.Validate(contact);
         }
+        [HttpPost]
+        public HttpResponseMessage WeighBackPrint([FromBody] WeighBackDTO cqDTO)
+        {
+            return WeighBackPrint(Request, cqDTO);
+        }
 
+        internal HttpResponseMessage WeighBackPrint(HttpRequestMessage request, WeighBackDTO cqDTO)
+        {
+            string key;
+            var aur = new AppUserRepository();
+            var companyId = 0;
+            var userId = aur.ValidateUser(cqDTO.Key, out key, ref companyId);
+            if (userId > 0)
+            {
+                var ur = new WeighBackRepository();
+                var u = new WeighBack();
+                if (cqDTO.WBDateTime != null)
+                {
+                    cqDTO.Start_WBDateTime = DateTime.Parse(cqDTO.WBDateTime).ToString();
+                    cqDTO.End_WBDateTime = DateTime.Parse(cqDTO.WBDateTime).AddDays(1).ToString();
+                }
+                else
+                {
+                    int sm = int.Parse(cqDTO.StartDateMonth);
+                    if (sm == 1)
+                    {
+                        cqDTO.Start_WBDateTime = DateTime.Parse("12/23/" + (int.Parse(cqDTO.StartDateYear) - 1).ToString()).ToString();
+                        cqDTO.End_WBDateTime = DateTime.Parse("2/14/" + cqDTO.StartDateYear).ToString();
+                    }
+                    else if (sm == 12)
+                    {
+                        cqDTO.Start_WBDateTime = DateTime.Parse("11/23/" + cqDTO.StartDateYear).ToString();
+                        cqDTO.End_WBDateTime = DateTime.Parse("1/14/" + (int.Parse(cqDTO.StartDateYear) + 1).ToString()).ToString();
+                    }
+                    else
+                    {
+                        cqDTO.Start_WBDateTime = DateTime.Parse((int.Parse(cqDTO.StartDateMonth) - 1).ToString() + "/23/" + cqDTO.StartDateYear).ToString();
+                        cqDTO.End_WBDateTime = DateTime.Parse((int.Parse(cqDTO.StartDateMonth) + 1).ToString() + "/14/" + cqDTO.StartDateYear).ToString();
+                    }
+
+                    cqDTO.StartDateMonth = null;
+                    cqDTO.StartDateYear = null;
+                }
+
+                var predicate = ur.GetPredicate(cqDTO, u, companyId);
+                var data = ur.GetByPredicate(predicate);
+                var col = new Collection<Dictionary<string, string>>();
+                data = data.OrderBy(x => x.WBDateTime).ToList();
+                string body = "";
+                body += "<style>table, td, th {border: 1px solid #ddd; text-align: left;}table {border-collapse: collapse; width: 100%;} th, td {padding: 5px;} tr:nth-child(2) {background-color: #f8f8f8;} th {background-color: #ddd;}</style>";
+
+                body += "Report Date:  " + cqDTO.Start_WBDateTime + "<br /><br />";
+
+                body += "<b>WeighBack Details</b><br />";
+                body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Turtle/Trash</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Shad/Carp/Bream</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Live Disease</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Dressed Disease</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>~~Backs</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Red Fillet</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Big Fish</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>DOAs</th></tr>";
+                body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td></tr>";
+
+                foreach (var uDto in data)
+                {
+
+                    uDto.Turtle = uDto.Turtle == null ? 0 : uDto.Turtle;
+                    uDto.Trash = uDto.Trash == null ? 0 : uDto.Trash;
+                    uDto.Shad = uDto.Shad == null ? 0 : uDto.Shad;
+                    uDto.Carp = uDto.Carp == null ? 0 : uDto.Carp;
+                    uDto.Bream = uDto.Bream == null ? 0 : uDto.Bream;
+                    uDto.LiveDisease = uDto.LiveDisease == null ? 0 : uDto.LiveDisease;
+                    uDto.DressedDisease = uDto.DressedDisease == null ? 0 : uDto.DressedDisease;
+                    uDto.Backs = uDto.Backs == null ? 0 : uDto.Backs;
+                    uDto.RedFillet = uDto.RedFillet == null ? 0 : uDto.RedFillet;
+                    uDto.BigFish = uDto.BigFish == null ? 0 : uDto.BigFish;
+                    uDto.DOAs = uDto.DOAs == null ? 0 : uDto.DOAs;
+                    body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.Pond.Farm.FarmName + " - " + uDto.Pond.PondName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.Turtle.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.Shad.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.LiveDisease.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.DressedDisease.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.Backs.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.RedFillet.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.BigFish.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.DOAs.ToString() + "</td></tr>";
+
+
+
+                }
+                body += "</table><br /><br />";
+                var dic = new Dictionary<string, string>();
+                dic.Add("WBHTML", body);
+                col.Add(dic);
+                var retVal = new GenericDTO
+                {
+                    Key = key,
+                    ReturnData = col
+                };
+                return Request.CreateResponse(HttpStatusCode.OK, retVal);
+            }
+            var message = "validation failed";
+            return request.CreateResponse(HttpStatusCode.NotFound, message);
+
+        }
         internal HttpResponseMessage WeighBacks(HttpRequestMessage request, WeighBackDTO cqDTO)
         {
             string key;
