@@ -254,8 +254,11 @@ namespace SGApp.Controllers
                 body += "Report Date:  " + cqDTO.Start_WBDateTime + "<br /><br />";
 
                 body += "<b>WeighBack Details</b><br />";
-                body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Turtle/Trash</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Shad/Carp/Bream</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Live Disease</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Dressed Disease</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>~~Backs</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Red Fillet</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Big Fish</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>DOAs</th></tr>";
+                body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Turtle/Trash</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Shad/Carp/Bream</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Live Disease</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Dressed Disease</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Dressed Disease @60% Yld</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>~~Backs</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Red Fillet</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Red Fillet @36% Yld</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Big Fish</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>DOAs</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Total</th></tr>";
                 body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
@@ -278,14 +281,18 @@ namespace SGApp.Controllers
                     uDto.RedFillet = uDto.RedFillet == null ? 0 : uDto.RedFillet;
                     uDto.BigFish = uDto.BigFish == null ? 0 : uDto.BigFish;
                     uDto.DOAs = uDto.DOAs == null ? 0 : uDto.DOAs;
+                    var total = uDto.Turtle + uDto.Shad + uDto.LiveDisease + (uDto.DressedDisease / decimal.Parse("0.6")) + uDto.Backs + (uDto.RedFillet / decimal.Parse("0.36")) + uDto.BigFish + uDto.DOAs;
                     body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.Pond.Farm.FarmName + " - " + uDto.Pond.PondName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.Turtle.ToString() + "</td>";
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.Shad.ToString() + "</td>";
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.LiveDisease.ToString() + "</td>";
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.DressedDisease.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (uDto.DressedDisease / decimal.Parse("0.6")).Value.ToString("#.##") + "</td>";
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.Backs.ToString() + "</td>";
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.RedFillet.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (uDto.RedFillet / decimal.Parse("0.36")).Value.ToString("#.##") + "</td>";
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.BigFish.ToString() + "</td>";
-                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.DOAs.ToString() + "</td></tr>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + uDto.DOAs.ToString() + "</td>";
+                    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + total.Value.ToString("#.##") + "</td></tr>";
 
 
 
