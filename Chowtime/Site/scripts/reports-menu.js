@@ -251,7 +251,6 @@ SGApp.reportsMenu = (function(){
     }
 
     function loadHighCharts() {
-        //debugger;
         loadDataSources();
     }
 
