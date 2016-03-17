@@ -164,17 +164,17 @@ namespace SGApp.Controllers
             };
             try
             {
-                //var response = client.PostAsJsonAsync("api/Remote/GetDailyProductionTotal", dto).Result;
-                //response.EnsureSuccessStatusCode();
+                var response = client.PostAsJsonAsync("api/Remote/GetDailyProductionTotal", dto).Result;
+                response.EnsureSuccessStatusCode();
                 JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                 //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result); // new List<Sampling>();
                 //Sampling[] samplingResultsArray = response.Content.ReadAsAsync<Sampling[]>().Result;
                 //samplingResults = samplingResultsArray.ToList();
                 //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                 //Object[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-                string teststuff = "[{\"station\":10,\"nominal\":34038.25,\"weight\":35469.6},{\"station\":12,\"nominal\":7950.0,\"weight\":8062.02},{\"station\":13,\"nominal\":3165.0,\"weight\":3213.56},{\"station\":14,\"nominal\":3920.0,\"weight\":3990.14},{\"station\":15,\"nominal\":8342.0,\"weight\":8987.8},{\"station\":16,\"nominal\":10580.0,\"weight\":10862.35}]";
-                ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(teststuff);
-                //ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(response.Content.ReadAsStringAsync().Result);
+                //string teststuff = "[{\"station\":10,\"nominal\":34038.25,\"weight\":35469.6},{\"station\":12,\"nominal\":7950.0,\"weight\":8062.02},{\"station\":13,\"nominal\":3165.0,\"weight\":3213.56},{\"station\":14,\"nominal\":3920.0,\"weight\":3990.14},{\"station\":15,\"nominal\":8342.0,\"weight\":8987.8},{\"station\":16,\"nominal\":10580.0,\"weight\":10862.35}]";
+                //ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(teststuff);
+                ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(response.Content.ReadAsStringAsync().Result);
                 shiftResults = samplingResultsArray.ToList();
                 //shiftResults = shiftResults.GroupBy(x => x.farmPond).Select(group => group.First()).ToList();
                 //var result = response.Content.ReadAsStringAsync().Result;
@@ -246,7 +246,7 @@ namespace SGApp.Controllers
                 bagw.DepartmentID = 6;
                 bagw.DTDate = reportdate;
                 bagw.ShiftWeight = decimal.Parse(BaggerWeight);
-                dtr.Save(freshw);
+                dtr.Save(bagw);
             }
 
 
@@ -423,7 +423,7 @@ namespace SGApp.Controllers
 
             body += "</table>";
 
-            SendMail("harper@stimulantgroup.com", subject, body);
+            SendMail("harper@stimulantgroup.com, danielw@harvestselect.com", subject, body);
 
                 
             return Request.CreateResponse(HttpStatusCode.OK);
