@@ -153,8 +153,8 @@ namespace SGApp.Controllers
             //Update Shift Weights
             List<ShiftWeight> shiftResults = new List<ShiftWeight>();
             SGApp.DTOs.GenericDTO dto = new GenericDTO();
-            dto.StartDate = DateTime.Now.Date;
-            dto.EndDate = DateTime.Now.AddDays(1).Date;
+            dto.StartDate = DateTime.Now.AddDays(-1).Date;
+            dto.EndDate = DateTime.Now.Date;
             var client = new HttpClient
             {
                 //BaseAddress = new Uri("http://323-booth-svr2:3030/")
@@ -196,7 +196,7 @@ namespace SGApp.Controllers
             var FreshWeight = shiftResults.Where(x => stations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
 
             var reportdate = DateTime.Now;
-            reportdate = DateTime.Parse(DateTime.Now.ToShortDateString());
+            reportdate = DateTime.Parse(DateTime.Now.AddDays(-1).ToShortDateString());
             var ptr = new ProductionTotalRepository();
             var dtr = new DepartmentTotalRepository();
             var wbr = new WeighBackRepository();
@@ -255,7 +255,7 @@ namespace SGApp.Controllers
             var wbs = wbr.GetByDate(reportdate);
             var abs = ar.GetByDate(reportdate);
             var dsl = dr.GetByDate(reportdate);
-            var fsrs = fsrr.GetByDate(reportdate);
+            var fsrs = fsrr.GetByDate(reportdate.AddSeconds(-1));
 
             decimal headedweighttotal = 0;
             decimal plweight = 0;

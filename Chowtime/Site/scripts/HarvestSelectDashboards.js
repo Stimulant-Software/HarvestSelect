@@ -80,20 +80,20 @@ function login() {
 }
 
 //logout
-function logoutControls() {
-    $('#logout').unbind().click(function (e) {
-        e.preventDefault();_key = "";
-        if (supports_html5_storage()) {
-            if (localStorage['CTremember'] == "false" || typeof localStorage['CTremember'] == 'undefined') {
-                localStorage.removeItem('CTuser'); localStorage.removeItem('CTpass');
-            }
-            localStorage.removeItem('CTuserRole'); localStorage.removeItem('CTcompanyID'); localStorage.removeItem('CTuserID'); localStorage.removeItem('CT_key');
-        } else {
-            createRemember('CTuserRole', ""); createRemember('CTuserID', ""); createRemember('CT_key', _key);
-        }
-        window.location.href = "login.html";
-    });
-}
+//function logoutControls() {
+//    $('#logout').unbind().click(function (e) {
+//        e.preventDefault();_key = "";
+//        if (supports_html5_storage()) {
+//            if (localStorage['CTremember'] == "false" || typeof localStorage['CTremember'] == 'undefined') {
+//                localStorage.removeItem('CTuser'); localStorage.removeItem('CTpass');
+//            }
+//            localStorage.removeItem('CTuserRole'); localStorage.removeItem('CTcompanyID'); localStorage.removeItem('CTuserID'); localStorage.removeItem('CT_key');
+//        } else {
+//            createRemember('CTuserRole', ""); createRemember('CTuserID', ""); createRemember('CT_key', _key);
+//        }
+//        window.location.href = "login.html";
+//    });
+//}
 
 // COOKIES - SET AND READ; for temp or (if "remember me" is checked) permanent memory of login info)
 // Only use cookies if browser doesn't support localStorage
@@ -1073,10 +1073,11 @@ function production() {
                         localStorage['CT_key'] = msg['Key'];
                         startTimer(msg.Key);
                         printHtml = (msg.ReturnData[0].WBHTML);
-                        var printWin = window.open("", "printWindow", "width=500, height=500");
-                        printWin.document.write(printHtml);
-                        printWin.focus();
                         hideProgress();
+                        var printWin = window.open("", "printWindow", "width=1000, height=1000");
+                        printWin.document.write(printHtml);
+                        printWin.print();
+                        
                     }
                 });
             });
