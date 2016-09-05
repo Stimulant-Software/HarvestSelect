@@ -57,6 +57,7 @@
         <EntityTypeShape EntityType="AppModel.DownTime" Width="1.5" PointX="9.5735407926019" PointY="20.572008753461766" />
         <AssociationConnector Association="AppModel.FK_DownTimes_Departments" />
         <AssociationConnector Association="AppModel.FK_DownTimes_DownTimeTypes" />
+        <EntityTypeShape EntityType="AppModel.Email" Width="1.5" PointX="6.9608184858042828" PointY="31.491595878960375" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

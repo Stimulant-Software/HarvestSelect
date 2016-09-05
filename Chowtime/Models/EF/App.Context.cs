@@ -51,5 +51,6 @@ namespace SGApp.Models.EF
         public DbSet<FinishTime> FinishTimes { get; set; }
         public DbSet<DepartmentTotal> DepartmentTotals { get; set; }
         public DbSet<DownTime> DownTimes { get; set; }
+        public DbSet<Email> Emails { get; set; }
     }
 }

@@ -26,6 +26,10 @@ $.when( checkKey(), pageLabel() ).then(function(){
                 pageType = "user";
                 populateUsers();
                 break;
+            case "email":
+                pageType = "email";
+                populateEmails();
+                break;
             case "setup":
                 if (!superAuthorized) window.location.href = "admin-user.html";
                 pagetype = "setup";
@@ -38,6 +42,7 @@ $.when( checkKey(), pageLabel() ).then(function(){
 });
 
 function populateFarms() { var searchQuery = { "key": _key, "userID": userID }; data = JSON.stringify(searchQuery); showProgress('body', 'populate-farms'); $.when($.ajax('../api/Farm/FarmList', { type: 'POST', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); farmList = msg['ReturnData']; } })).then(function () { var activeFarms = [], inactiveFarms = [], a = 0, b = 0, activeFarmList = '', inactiveFarmList = ''; for (var i = 0; i < farmList.length; i++) { if (farmList[i].StatusId == "1") { activeFarms[a] = farmList[i]; a++; } else { inactiveFarms[b] = farmList[i]; b++; } } $('ol.active li:not(".header"), ol.inactive li:not(".header")').remove(); for (var i = 0; i < activeFarms.length; i++) { activeFarmList += '<li><span>' + activeFarms[i].FarmName + '</span><button class="change-status" id="activeFarm_' + activeFarms[i].FarmId + '">Deactivate</button><button class="edit" id="editFarm_' + activeFarms[i].FarmId + '">Edit Farm</button></li>'; } for (var i = 0; i < inactiveFarms.length; i++) { inactiveFarmList += '<li><span>' + inactiveFarms[i].FarmName + '</span><button class="change-status" id="inactiveFarm_' + inactiveFarms[i].FarmId + '">Activate</button><button class="edit" id="editFarm_' + inactiveFarms[i].FarmId + '">Edit Farm</button></li>'; } if (activeFarms.length == 0) { activeFarmList += '<li><span>There are no active farms.</span></li>' }; if (inactiveFarms.length == 0) { inactiveFarmList += '<li><span>There are no inactive farms.</span></li>' }; $('ol.active').append(activeFarmList); $('ol.inactive').append(inactiveFarmList); $.when(bindButtons()).then(function () { hideProgress('populate-farms'); }); }); }
+function populateEmails() { var searchQuery = { "key": _key, "userID": userID }; data = JSON.stringify(searchQuery); showProgress('body', 'populate-emails'); $.when($.ajax('../api/Email/EmailList', { type: 'POST', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); emailList = msg['ReturnData']; } })).then(function () { var activeEmailList = ''; $('ol.active li:not(".header"), ol.inactive li:not(".header")').remove(); for (var i = 0; i < emailList.length; i++) { activeEmailList += '<li><span style="overflow: visible;">' + emailList[i].EmailAddress + '</span><button class="delete-email" id="activeEmail_' + emailList[i].EmailID + '">Delete</button></li>'; } $('ol.active').append(activeEmailList); $.when(bindButtons()).then(function () { hideProgress('populate-emails'); }); }); }
 
 function populatePonds(farmID) { var searchQuery = { "key": _key, "userID": userID, "FarmId": farmID }; data = JSON.stringify(searchQuery); showProgress('body', 'populate-ponds'); $.when($.ajax('../api/Pond/PondList', { type: 'POST', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); pondList = msg['ReturnData']; } })).then(function () { var activePonds = [], inactivePonds = [], a = 0, b = 0, activePondList = '', inactivePondList = ''; for (var i = 0; i < pondList.length; i++) { if (pondList[i].StatusId == "1") { activePonds[a] = pondList[i]; a++; } else { inactivePonds[b] = pondList[i]; b++; } } $('ol.active li:not(".header"), ol.inactive li:not(".header")').remove(); for (var i = 0; i < activePonds.length; i++) { activePondList += '<li><span>' + activePonds[i].PondName + '</span><button class="change-status" id="activePond_' + activePonds[i].PondId + '">Deactivate</button>'; activePondList += activePonds[i].NoFeed == "False" ? '<button class="change-feedme" data-nofeed="' + activePonds[i].NoFeed + '" id="feed_' + activePonds[i].PondId + '">Suspend Feed</button>' : '<button class="change-feedme suspended" data-nofeed="' + activePonds[i].NoFeed + '" id="feed_' + activePonds[i].PondId + '">Resume Feed</button>'; activePondList += '<button class="edit" id="editPond_' + activePonds[i].PondId + '">Edit Pond</button></li>'; } for (var i = 0; i < inactivePonds.length; i++) { inactivePondList += '<li><span>' + inactivePonds[i].PondName + '</span><button class="change-status" id="inactivePond_' + inactivePonds[i].PondId + '">Activate</button>'; inactivePondList += inactivePonds[i].NoFeed == "False" ? '<button class="change-feedme" data-nofeed="' + inactivePonds[i].NoFeed + '" id="feed_' + inactivePonds[i].PondId + '">Suspend Feed</button>' : '<button class="change-feedme suspended" data-nofeed="' + inactivePonds[i].NoFeed + '" id="feed_' + inactivePonds[i].PondId + '">Resume Feed</button>'; inactivePondList += '<button class="edit" id="editPond_' + inactivePonds[i].PondId + '">Edit Pond</button></li>'; } if (activePonds.length == 0) { activePondList += '<li><span>There are no active ponds.</span></li>' }; if (inactivePonds.length == 0) { inactivePondList += '<li><span>There are no inactive ponds.</span></li>' }; $('ol.active').append(activePondList); $('ol.inactive').append(inactivePondList); $.when(bindButtons()).then(function () { hideProgress('populate-ponds'); }); }); }
 
@@ -89,13 +94,28 @@ function populateUsers() {
     });
 }
 
-$('.add-new').unbind().click(function (e) { e.preventDefault(); var objectType = pageType.charAt(0).toUpperCase() + pageType.slice(1); $('body').append('<div id="lightboxBG" class="modal"></div>'); switch (pageType) { case "pond": loadFarmsForPonds(); break; case "user": /* loadFarmsForUsers(), loadRolesForUsers(); */break; default: break; } $('#lightboxBG').fadeIn('100', function () { centerModal('#addNew' + objectType + 'Modal'); $('#addNew' + objectType + 'Modal').fadeIn('100'); bindFormButtons(); }); });
+$('.add-new').unbind().click(function (e) { e.preventDefault(); var objectType = pageType.charAt(0).toUpperCase() + pageType.slice(1); $('body').append('<div id="lightboxBG" class="modal"></div>'); switch (pageType) { case "pond": loadFarmsForPonds(); break; case "user": /* loadFarmsForUsers(), loadRolesForUsers(); */break; case "email": break; default: break; } $('#lightboxBG').fadeIn('100', function () { centerModal('#addNew' + objectType + 'Modal'); $('#addNew' + objectType + 'Modal').fadeIn('100'); bindFormButtons(); }); });
 
 function bindButtons() {
     $('.change-feedme').unbind().click(function (e) { e.preventDefault(); var objectID = getObjectID($(this)), objectStatus = $(this).parent().parent('ol').attr('class'), objectName = $(this).siblings('span').text(); var newFeedStatusID = $(this).data('nofeed') == "True" ? "False" : "True"; dto = { "Key": localStorage['CT_key'],  "PondId": objectID, "PondName": objectName, "NoFeed": newFeedStatusID }, data = JSON.stringify(dto); showProgress('body', 'bind-buttons'); $.when($.ajax('../api/Pond/ChangePondFeedStatus', { type: 'PUT', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); console.log(msg); } })).then(function () { populatePonds(farmID); hideProgress('bind-buttons'); }); });
 
     $('.change-status').unbind().click(function (e) { e.preventDefault(); var objectID = getObjectID($(this)), objectStatus = $(this).parent().parent('ol').attr('class'), objectName = $(this).siblings('span').text(); var newStatusID = objectStatus == "active" ? "2" : "1"; switch (pageType) { case "farm": dto = { "Key": localStorage['CT_key'], "FarmId": objectID, "FarmName": objectName, "StatusId": newStatusID }, data = JSON.stringify(dto); showProgress('body', 'change-status-farm'); $.when($.ajax('../api/Farm/ChangeFarmStatus', { type: 'PUT', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); } })).then(function () { populateFarms(); hideProgress('change-status-farm'); }); break; case "pond": dto = { "Key": localStorage['CT_key'], "PondId": objectID, "PondName": objectName, "StatusId": newStatusID }, data = JSON.stringify(dto); showProgress('body', 'change-status-pond'); $.when($.ajax('../api/Pond/PondActiveFlag', { type: 'PUT', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); } })).then(function () { populatePonds(farmID); hideProgress('change-status-pond'); }); break; case "user": dto = { "Key": localStorage['CT_key'], "UserId": objectID, "UserName": objectName, "StatusId": newStatusID }, data = JSON.stringify(dto); showProgress('body', 'change-status-user'); $.when($.ajax('../api/User/ChangeUserStatus', { type: 'PUT', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); } })).then(function () { populateUsers(); hideProgress('change-status-user'); }); break; } });
-
+    $('.delete-email').unbind().click(function (e) {
+        e.preventDefault();
+        var objectID = getObjectID($(this));
+        switch (pageType) {
+            case "email": dto = { "Key": localStorage['CT_key'], "EmailID": objectID, },
+                data = JSON.stringify(dto);
+                showProgress('body', 'change-status-email');
+                $.when($.ajax('../api/Email/DeleteEmail',
+                    {
+                        type: 'PUT',
+                        data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); }
+                    })).then(function () { populateEmails(); hideProgress('change-status-email'); }); break;
+            
+            
+        }
+    });
     $('.edit-roles-farms').unbind().click(function (e) {
         e.preventDefault(); var objectID = getObjectID($(this)), objectStatus = $(this).parent().parent('ol').attr('class'), objectName = $(this).siblings('span').text(), userFarms = new Array(), userRoles = new Array();
         ; $('body').append('<div id="lightboxBG" class="modal"></div>'); $('#lightboxBG').fadeIn('100', function () { centerModal('#modifyUserRolesAndFarms'); $('#modifyUserRolesAndFarms').fadeIn('100'); });
@@ -220,6 +240,7 @@ function bindFormButtons() {
 
             switch (pageType) {
                 case "farm": $.ajax('../api/Farm/FarmAddOrEdit', { type: 'PUT', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); resetFarmModal(); closeAdminModal(); populateFarms(); hideProgress('submitForm'); } }); break;
+                case "email": $.ajax('../api/Email/EmailAddOrEdit', { type: 'PUT', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); resetEmailModal(); closeAdminModal(); populateEmails(); hideProgress('submitForm'); } }); break;
                 case "pond": $.ajax('../api/Pond/PondAddOrEdit', { type: 'PUT', data: data, success: function (msg) { localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); resetPondModal(); closeAdminModal(); populatePonds(farmID); hideProgress('submitForm'); } }); break;
                 case "user":
                     $.when($.ajax('../api/User/UserAddOrEdit', {
@@ -252,6 +273,8 @@ function bindFormButtons() {
     $('.cancel').unbind().click(function (e) { e.preventDefault(); switch (pageType) { case "farm": resetFarmModal(); break; case "pond": resetPondModal(); break; case "user": resetUserModal(); break; default: console.log("ERROR: Page has no type"); break; } closeAdminModal(); }); }
 
 function resetFarmModal() { $('#farmName').val(""); $('#statusID').val('1'); $('#farmID').val('-1'); }
+
+function resetEmailModal() { $('#EmailName').val(""); }
 
 function resetPondModal() { $('#PondName').val(""); $('#StatusId').val('1'); $('#PondId').val('-1'); $('#Size').val(""); $('#NoFeed').val('False'); $('#FarmId').empty(); }
 

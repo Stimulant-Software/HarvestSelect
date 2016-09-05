@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -26,38 +26,28 @@
 
     <section id="main_content">
         <header class="admin">
-            <h2>Pond Administration</h2>
-            <button id="addNewPond" class="add-new">+ Create New Pond</button>
+            <h2>Email Administration</h2>
+            <button id="addNewFarm" class="add-new">+ Add New Email</button>
         </header>
-        
         <form>
-            <fieldset><label>Administer ponds for: </label><select id="changeFarm"></select></fieldset>
             <ol class="active">
-                <li class="header">ACTIVE PONDS</li>
-                <li><span>There are no active ponds</span></li>
+                <li class="header">Email</li>
+                <li><span>There are no emails</span></li>
             </ol> 
-            <ol class="inactive">
-                <li class="header">INACTIVE PONDS</li>
-                <li><span>There are no inactive ponds</span></li>
-            </ol>  
         </form>
     </section>
 
     <footer></footer>
         
-    <section id="addNewPondModal" class="admin-modal modal">
+    <section id="addNewEmailModal" class="admin-modal modal">
         <form>
-            <header>New Pond</header>
-            <fieldset>
-                <label>Pond Name</label><input type="text" id="PondName" placeholder="Pond Name" required />                
-                <input type="hidden" id="StatusId" value="1" />
-                <input type="hidden" id="PondId" value="-1" />
-                <input type="hidden" id="NoFeed" value="False" />
-                <input type="hidden" id="HealthStatus" value="1" />
+            <header>New Email</header>
+            <fieldset><label>Email Address</label>
+                <input type="text" id="EmailAddress" placeholder="EmailAddress" required />
+                
+                <input type="hidden" id="EmailID" value="-1" />
             </fieldset>
-            <fieldset><label>Pond Size (acres)</label><input type="text" id="Size" placeholder="Pond Size" required /></fieldset>
-            <fieldset><label>Farm Location</label><select id="FarmId" required></select></fieldset>
-            <fieldset class="buttons"><button id="submitPond" class="submit">Submit</button><button class="cancel">Cancel</button></fieldset>
+            <fieldset class="buttons"><button id="submitFarm" class="submit">Submit</button><button class="cancel">Cancel</button></fieldset>
         </form>
     </section>
 

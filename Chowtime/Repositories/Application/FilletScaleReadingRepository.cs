@@ -63,7 +63,8 @@ namespace SGApp.Repository.Application
 
         public FilletScaleReading GetByDate(DateTime reportDate)
         {
-            DateTime endDate = reportDate.AddDays(2);
+            DateTime endDate = reportDate.AddDays(1);
+            reportDate = reportDate.AddSeconds(-1);
             return DbContext.FilletScaleReadings.Where(x => x.FSRDateTime > reportDate && x.FSRDateTime < endDate).FirstOrDefault();
         }
 

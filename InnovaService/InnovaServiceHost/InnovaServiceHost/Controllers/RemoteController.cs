@@ -109,18 +109,19 @@ namespace InnovaServiceHost.Controllers {
             var context = new innova01Entities();
             var startDate = dto.StartDate;
             var endDate = dto.EndDate;
-            List<int> stations = new List<int>();
-            stations.Add(8);
-            stations.Add(10);
-            stations.Add(12);
-            stations.Add(13);
-            stations.Add(14);
-            stations.Add(15);
-            stations.Add(16);
-            return (from p in context.proc_packs.Where(x => stations.Contains(x.station.Value)
-                                                        && x.regtime >= startDate
-                                                        && x.regtime <= endDate)
-                                                        group p by p.station into g
+            //List<int> stations = new List<int>();
+            //stations.Add(8);
+            //stations.Add(10);
+            //stations.Add(12);
+            //stations.Add(13);
+            //stations.Add(14);
+            //stations.Add(15);
+            //stations.Add(16);
+            return (from p in context.proc_packs.Where(x => //stations.Contains(x.station.Value) &&
+                                                         x.prday >= startDate
+                                                        && x.prday <= endDate
+                                                        && x.conum != null)
+                                                        group p by p.device into g
                     select new
                     {
                         Station = g.Key,

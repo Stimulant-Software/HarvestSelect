@@ -20,5 +20,6 @@ namespace SGApp.DTOs
         public string rangeName {get; set;}
         public string rangeValue {get; set;}
         public string weight {get; set;}
+        public string count { get; set; }
     }
 }

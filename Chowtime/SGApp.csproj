@@ -143,6 +143,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\DepartmentTotalController.cs" />
     <Compile Include="Controllers\DowntimeController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\FarmController.cs" />
     <Compile Include="Controllers\FarmYieldController.cs" />
     <Compile Include="Controllers\FarmYieldHeaderController.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="DTOs\DepartmentDTO.cs" />
     <Compile Include="DTOs\DepartmentTotalDTO.cs" />
     <Compile Include="DTOs\DownTimeDTO.cs" />
+    <Compile Include="DTOs\EmailDTO.cs" />
     <Compile Include="DTOs\FarmDTO.cs" />
     <Compile Include="DTOs\FarmFeedDTO.cs" />
     <Compile Include="DTOs\FarmO2DTO.cs" />
@@ -232,6 +234,9 @@
     <Compile Include="Models\EF\DownTimeType.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\Email.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\Farm.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
@@ -295,6 +300,7 @@
     <Compile Include="Models\Partials\DepartmentTotal.Partial.cs" />
     <Compile Include="Models\Partials\DownTime.Partial.cs" />
     <Compile Include="Models\Partials\DownTimeType.Partial.cs" />
+    <Compile Include="Models\Partials\Email.Partial.cs" />
     <Compile Include="Models\Partials\Farm.Partial.cs" />
     <Compile Include="Models\Partials\FarmYield.Partial.cs" />
     <Compile Include="Models\Partials\FarmYieldHeader.Partial.cs" />
@@ -319,6 +325,7 @@
     <Compile Include="Models\Validation\Department_Metadata.cs" />
     <Compile Include="Models\Validation\DownTimeType_Metadata.cs" />
     <Compile Include="Models\Validation\DownTime_Metadata.cs" />
+    <Compile Include="Models\Validation\Email_Metadata.cs" />
     <Compile Include="Models\Validation\FarmYieldHeader_Metadata.cs" />
     <Compile Include="Models\Validation\FarmYield_Metadata.cs" />
     <Compile Include="Models\Validation\Farm_Metadata.cs" />
@@ -348,6 +355,7 @@
     <Compile Include="Repositories\Application\DepartmentTotalRepository.cs" />
     <Compile Include="Repositories\Application\DownTimeRepository.cs" />
     <Compile Include="Repositories\Application\DownTimeTypeRepository.cs" />
+    <Compile Include="Repositories\Application\EmailRepository.cs" />
     <Compile Include="Repositories\Application\FarmRepository.cs" />
     <Compile Include="Repositories\Application\FarmYieldHeaderRepository.cs" />
     <Compile Include="Repositories\Application\FarmYieldRepository.cs" />
@@ -460,6 +468,7 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
+    <Content Include="Site\admin-email.html" />
     <Content Include="Site\admin-farm.html" />
     <Content Include="Site\admin-pond.html" />
     <Content Include="Site\admin-setup.html" />

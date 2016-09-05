@@ -12,6 +12,7 @@
           <EntitySet Name="DepartmentTotals" EntityType="AppModel.Store.DepartmentTotals" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DownTimes" EntityType="AppModel.Store.DownTimes" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DownTimeTypes" EntityType="AppModel.Store.DownTimeTypes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Emails" EntityType="AppModel.Store.Emails" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Farms" EntityType="AppModel.Store.Farms" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FarmYieldHeaders" EntityType="AppModel.Store.FarmYieldHeaders" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FarmYields" EntityType="AppModel.Store.FarmYields" store:Type="Tables" Schema="dbo" />
@@ -207,6 +208,14 @@
           <Property Name="DownTimeTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DownTimeName" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="DepartmentID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Emails">
+          <Key>
+            <PropertyRef Name="EmailID" />
+          </Key>
+          <Property Name="EmailID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmailAddress" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="ReceiveDailyReport" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Farms">
           <Key>
@@ -886,6 +895,7 @@
             <End Role="DownTimeType" EntitySet="DownTimeTypes" />
             <End Role="DownTime" EntitySet="DownTimes" />
           </AssociationSet>
+          <EntitySet Name="Emails" EntityType="AppModel.Email" />
           </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -1549,6 +1559,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Email">
+          <Key>
+            <PropertyRef Name="EmailID" />
+          </Key>
+          <Property Type="Int32" Name="EmailID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="ReceiveDailyReport" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1861,6 +1879,15 @@
                 <ScalarProperty Name="Minutes" ColumnName="Minutes" />
                 <ScalarProperty Name="DownTimeTypeID" ColumnName="DownTimeTypeID" />
                 <ScalarProperty Name="DownTimeID" ColumnName="DownTimeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Emails">
+            <EntityTypeMapping TypeName="AppModel.Email">
+              <MappingFragment StoreEntitySet="Emails">
+                <ScalarProperty Name="ReceiveDailyReport" ColumnName="ReceiveDailyReport" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="EmailID" ColumnName="EmailID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
