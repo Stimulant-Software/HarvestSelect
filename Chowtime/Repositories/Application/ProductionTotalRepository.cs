@@ -71,6 +71,13 @@ namespace SGApp.Repository.Application
             return DbContext.ProductionTotals.Where(x => x.ProductionDate > reportDate && x.ProductionDate < endDate).ToList();
         }
 
+        public List<ProductionTotal> GetByWeek(DateTime reportDate)
+        {
+            DateTime endDate = reportDate.AddDays(6);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.ProductionTotals.Where(x => x.ProductionDate > reportDate && x.ProductionDate < endDate).ToList();
+        }
+
         public List<ProductionTotal> GetByDateRange(DateTime reportDate1, DateTime reportDate2)
         {
             DateTime endDate = reportDate2.AddDays(1);

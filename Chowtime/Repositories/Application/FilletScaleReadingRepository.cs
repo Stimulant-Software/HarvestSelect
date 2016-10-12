@@ -67,6 +67,12 @@ namespace SGApp.Repository.Application
             reportDate = reportDate.AddSeconds(-1);
             return DbContext.FilletScaleReadings.Where(x => x.FSRDateTime > reportDate && x.FSRDateTime < endDate).FirstOrDefault();
         }
+        public decimal GetByWeek(DateTime reportDate)
+        {
+            DateTime endDate = reportDate.AddDays(6);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.FilletScaleReadings.Where(x => x.FSRDateTime > reportDate && x.FSRDateTime < endDate).Sum(x => x.FilletScaleReading1);
+        }
 
     }
 

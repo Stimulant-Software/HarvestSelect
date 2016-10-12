@@ -67,6 +67,12 @@ namespace SGApp.Repository.Application
             reportDate = reportDate.AddSeconds(-1);
             return DbContext.DownTimes.Where(x => x.DownTimeDate > reportDate && x.DownTimeDate < endDate).ToList();
         }
+        public List<DownTime> GetByWeek(DateTime reportDate)
+        {
+            DateTime endDate = reportDate.AddDays(6);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.DownTimes.Where(x => x.DownTimeDate > reportDate && x.DownTimeDate < endDate).ToList();
+        }
 
         public List<DownTime> GetByDateAndDepartment(DateTime reportDate1, int depid)
         {

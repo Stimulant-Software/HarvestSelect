@@ -70,6 +70,12 @@ namespace SGApp.Repository.Application
             reportDate = reportDate.AddSeconds(-1);
             return DbContext.WeighBacks.Where(x => x.WBDateTime > reportDate && x.WBDateTime < endDate).ToList();
         }
+        public List<WeighBack> GetByWeek(DateTime reportDate)
+        {
+            DateTime endDate = reportDate.AddDays(6);
+            reportDate = reportDate.AddSeconds(-1);
+            return DbContext.WeighBacks.Where(x => x.WBDateTime > reportDate && x.WBDateTime < endDate).ToList();
+        }
 
         public List<WeighBack> GetByDateAndPond(DateTime reportDate, int pondid)
         {
