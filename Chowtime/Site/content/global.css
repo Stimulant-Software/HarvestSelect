@@ -1224,3 +1224,8 @@ form .windows8 {
 .w150 {
     width: 150px;
 }
+
+
+
+#calendarModal { width: 90%; margin: 0 auto; top: 5%; left: 5%; z-index: -1; position: fixed; }
+#calendarModal.in { z-index: 3000; }
