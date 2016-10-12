@@ -29,6 +29,7 @@ $.when( checkKey(), pageLabel() ).then(function(){
             case "email":
                 pageType = "email";
                 populateEmails();
+                resendReport();
                 break;
             case "setup":
                 if (!superAuthorized) window.location.href = "admin-user.html";
@@ -490,4 +491,58 @@ function initialSetup() {
             }
         }
     });
+}
+
+function resendReport() {
+    var calFlag, date, addOrEdit, date, i, tdate = getTodaysMonth(), startDateMonth = tdate.month, startDateYear = tdate.year, chosenDate;
+    $('#reportDate').unbind().click(function () {
+        if (calFlag != "created") loadCalendar(startDateMonth, startDateYear);
+    });
+
+    function loadCalendar() {
+        calFlag = "created";
+
+        $('#calendarModal .modal-body').fullCalendar({
+            events: function (start, end, timezone, refetchEvents) {
+                $.when(hideProgress()).then(function () {
+                    showProgress('body');
+                    var view = $('#calendarModal .modal-body').fullCalendar('getView');
+                    var startDateYear1 = view.calendar.getDate()._d.getFullYear();
+                    startDateYear = startDateYear1;
+                    var startDateMonth1 = view.calendar.getDate()._d.getMonth() + 1; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
+                    startDateMonth = startDateMonth1;
+                    hideProgress();
+                    $('#calendarModal').modal();
+                });
+            },
+            dayClick: function () {
+                showProgress('body');
+                chosenDate = $(this).data('date').replace(/-/g, '');
+                $.get('http://dashboards.harvestselect.com/api/utilities/EmailDailyReport?sDate='+chosenDate+'&eDate='+chosenDate, function() {
+                    alert( "success" );
+                }).done(function() {
+                    alert( "second success" );
+                })
+                .fail(function() {
+                    alert( "error" );
+                })
+                .always(function() {
+                    alert("finished");
+                    $('#calendarModal').modal('hide');
+                    hideProgress();
+                });
+            }
+        });
+    }
+
+
+    function getTodaysMonth() {
+        $('.row.buttons').css('opacity', 0);
+        var today = new Date(), todaysMonth = today.getMonth() + 1, todaysYear = today.getFullYear();
+        if (todaysMonth < 10) todaysMonth = "0" + todaysMonth;
+        var tdate = new Object();
+        tdate.month = todaysMonth;
+        tdate.year = todaysYear;
+        return tdate;
+    }
 }
