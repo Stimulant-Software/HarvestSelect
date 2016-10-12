@@ -1220,3 +1220,7 @@ form .windows8 {
 .tableview .tablenumbers {
     text-align: right;
 }
+
+.w150 {
+    width: 150px;
+}
