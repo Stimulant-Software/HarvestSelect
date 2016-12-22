@@ -47,7 +47,10 @@ namespace SGApp.Repository.Application
             var iq = DbContext.DepartmentTotals.AsQueryable();
             return predicate.Length > 0 ? iq.Where(predicate, null).ToList() : iq.ToList();
         }
-
+        public void SaveRepoChanges()
+        {
+            DbContext.SaveChanges();
+        }
         public List<DepartmentTotal> GetDepartmentTotals()
         {
 

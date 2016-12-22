@@ -518,16 +518,14 @@ function resendReport() {
             dayClick: function () {
                 showProgress('body');
                 chosenDate = $(this).data('date').replace(/-/g, '');
-                $.get('http://dashboards.harvestselect.com/api/utilities/EmailDailyReport?sDate='+chosenDate+'&eDate='+chosenDate, function() {
-                    alert( "success" );
-                }).done(function() {
-                    alert( "second success" );
+                var sDate = moment($(this).data('date')).subtract(1, "days").format("YYYYMMDD");
+                $.get('http://dashboards.harvestselect.com/api/utilities/EmailDailyReport?sDate='+sDate+'&eDate='+chosenDate).done(function() {
+                    alert( "Report successfully sent." );
                 })
                 .fail(function() {
-                    alert( "error" );
+                    alert( "Error occurred while sending report." );
                 })
                 .always(function() {
-                    alert("finished");
                     $('#calendarModal').modal('hide');
                     hideProgress();
                 });

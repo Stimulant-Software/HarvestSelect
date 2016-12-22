@@ -204,6 +204,7 @@ namespace SGApp.Controllers
             stations.Add("2");
             stations.Add("4");
             stations.Add("3");
+            stations.Add("866");
             var FreshWeight = shiftResults.Where(x => stations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
             
 
@@ -274,6 +275,9 @@ namespace SGApp.Controllers
 
                 dtr.Save(bagw);
             }
+
+            dtr.SaveRepoChanges();
+            
             List<Sampling> samplingResults = new List<Sampling>();
 
             try
@@ -631,7 +635,7 @@ namespace SGApp.Controllers
                 elist += em.EmailAddress + ", ";
             }
             elist = elist.Substring(0, elist.Length - 2);
-            //SendMail("harper@stimulantgroup.com, danielw@harvestselect.com, RobertL@HarvestSelect.com, Alice@HarvestSelect.com, Betsya@HarvestSelect.com, Bobby@HarvestSelect.com, Brenda@harvestselect.com, ChrisH@HarvestSelect.com, cory@harvestselect.com, daniel@harvestselect.com, Debi@HarvestSelect.com, jimbo@harvestselect.com, johnny@harvestselect.com, leec@harvestselect.com, lee@harvestselect.com, Mark@HarvestSelect.com, Michael@harvestselect.com, Mike@HarvestSelect.com, Randy@HarvestSelect.com, reed@harvestselect.com, rhonda@harvestselect.com, Ryan@HarvestSelect.com, Shirley@HarvestSelect.com, tammy@harvestselect.com, tom@harvestselect.com, trey@harvestselect.com, sam@harvestselect.com", subject, body);
+            //SendMail("harper@stimulantgroup.com", subject, body);// danielw@harvestselect.com, RobertL@HarvestSelect.com, Alice@HarvestSelect.com, Betsya@HarvestSelect.com, Bobby@HarvestSelect.com, Brenda@harvestselect.com, ChrisH@HarvestSelect.com, cory@harvestselect.com, daniel@harvestselect.com, Debi@HarvestSelect.com, jimbo@harvestselect.com, johnny@harvestselect.com, leec@harvestselect.com, lee@harvestselect.com, Mark@HarvestSelect.com, Michael@harvestselect.com, Mike@HarvestSelect.com, Randy@HarvestSelect.com, reed@harvestselect.com, rhonda@harvestselect.com, Ryan@HarvestSelect.com, Shirley@HarvestSelect.com, tammy@harvestselect.com, tom@harvestselect.com, trey@harvestselect.com, sam@harvestselect.com", subject, body);
             SendMail(elist, subject, body);
                 
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -662,41 +666,42 @@ namespace SGApp.Controllers
                 BaseAddress = new Uri("http://64.139.95.243:7846/")
                 //BaseAddress = new Uri(baseAddress)                
             };
-            try
-            {
-                var response = client.PostAsJsonAsync("api/Remote/GetDailyProductionTotal", dto).Result;
-                response.EnsureSuccessStatusCode();
-                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-                //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result); // new List<Sampling>();
-                //Sampling[] samplingResultsArray = response.Content.ReadAsAsync<Sampling[]>().Result;
-                //samplingResults = samplingResultsArray.ToList();
-                //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-                //Object[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-                //string teststuff = "[{\"station\":10,\"nominal\":34038.25,\"weight\":35469.6},{\"station\":12,\"nominal\":7950.0,\"weight\":8062.02},{\"station\":13,\"nominal\":3165.0,\"weight\":3213.56},{\"station\":14,\"nominal\":3920.0,\"weight\":3990.14},{\"station\":15,\"nominal\":8342.0,\"weight\":8987.8},{\"station\":16,\"nominal\":10580.0,\"weight\":10862.35}]";
-                //ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(Constants.testprod);
-                ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(response.Content.ReadAsStringAsync().Result);
-                shiftResults = samplingResultsArray.ToList();
-                //shiftResults = shiftResults.GroupBy(x => x.farmPond).Select(group => group.First()).ToList();
-                //var result = response.Content.ReadAsStringAsync().Result;
+            //try
+            //{
+            //    var response = client.PostAsJsonAsync("api/Remote/GetDailyProductionTotal", dto).Result;
+            //    response.EnsureSuccessStatusCode();
+            //    JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+            //    //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result); // new List<Sampling>();
+            //    //Sampling[] samplingResultsArray = response.Content.ReadAsAsync<Sampling[]>().Result;
+            //    //samplingResults = samplingResultsArray.ToList();
+            //    //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+            //    //Object[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
+            //    //string teststuff = "[{\"station\":10,\"nominal\":34038.25,\"weight\":35469.6},{\"station\":12,\"nominal\":7950.0,\"weight\":8062.02},{\"station\":13,\"nominal\":3165.0,\"weight\":3213.56},{\"station\":14,\"nominal\":3920.0,\"weight\":3990.14},{\"station\":15,\"nominal\":8342.0,\"weight\":8987.8},{\"station\":16,\"nominal\":10580.0,\"weight\":10862.35}]";
+            //    //ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(Constants.testprod);
+            //    ShiftWeight[] samplingResultsArray = json_serializer.Deserialize<ShiftWeight[]>(response.Content.ReadAsStringAsync().Result);
+            //    shiftResults = samplingResultsArray.ToList();
+            //    //shiftResults = shiftResults.GroupBy(x => x.farmPond).Select(group => group.First()).ToList();
+            //    //var result = response.Content.ReadAsStringAsync().Result;
 
-                //return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception e)
-            {
-                throw new HttpException("Error occurred: " + e.Message);
-            }
-            List<string> iqfstations = new List<string>();
-            iqfstations.Add("9");
-            iqfstations.Add("10");
-            var IQFweight = shiftResults.Where(x => iqfstations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
-            var BaggerWeightRecord = shiftResults.Where(x => x.Station == "7").FirstOrDefault();
-            var BaggerWeight = BaggerWeightRecord != null ? BaggerWeightRecord.Nominal : "0";
-            List<string> stations = new List<string>();
-            stations.Add("8");
-            stations.Add("2");
-            stations.Add("4");
-            stations.Add("3");
-            var FreshWeight = shiftResults.Where(x => stations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
+            //    //return Request.CreateResponse(HttpStatusCode.OK, result);
+            //}
+            //catch (Exception e)
+            //{
+            //    throw new HttpException("Error occurred: " + e.Message);
+            //}
+            //List<string> iqfstations = new List<string>();
+            //iqfstations.Add("9");
+            //iqfstations.Add("10");
+            //var IQFweight = shiftResults.Where(x => iqfstations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
+            //var BaggerWeightRecord = shiftResults.Where(x => x.Station == "7").FirstOrDefault();
+            //var BaggerWeight = BaggerWeightRecord != null ? BaggerWeightRecord.Nominal : "0";
+            //List<string> stations = new List<string>();
+            //stations.Add("8");
+            //stations.Add("2");
+            //stations.Add("4");
+            //stations.Add("3");
+            //stations.Add("866");
+            //var FreshWeight = shiftResults.Where(x => stations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
 
 
             var reportdate = DateTime.Now;
@@ -712,64 +717,66 @@ namespace SGApp.Controllers
             var fsrr = new FilletScaleReadingRepository();
 
 
-            var iqfw = dtr.GetByDateAndDepartment(reportdate, 5);
-            if (iqfw != null && IQFweight != null)
-            {
-                iqfw.ShiftWeight = decimal.Parse(IQFweight);
-                dtr.Save(iqfw);
-            }
-            else
-            {
-                iqfw = new DepartmentTotal();
-                if (IQFweight != null)
-                {
-                    iqfw.ShiftWeight = decimal.Parse(IQFweight);
-                }
-                iqfw.DepartmentID = 5;
-                iqfw.DTDate = reportdate;
-                dtr.Save(iqfw);
+            //var iqfw = dtr.GetByDateAndDepartment(reportdate, 5);
+            //if (iqfw != null && IQFweight != null)
+            //{
+            //    iqfw.ShiftWeight = decimal.Parse(IQFweight);
+            //    dtr.Save(iqfw);
+            //}
+            //else
+            //{
+            //    iqfw = new DepartmentTotal();
+            //    if (IQFweight != null)
+            //    {
+            //        iqfw.ShiftWeight = decimal.Parse(IQFweight);
+            //    }
+            //    iqfw.DepartmentID = 5;
+            //    iqfw.DTDate = reportdate;
+            //    dtr.Save(iqfw);
 
-            }
-            var freshw = dtr.GetByDateAndDepartment(reportdate, 4);
-            if (freshw != null && FreshWeight != null)
-            {
-                freshw.ShiftWeight = decimal.Parse(FreshWeight);
-                dtr.Save(freshw);
-            }
-            else
-            {
-                freshw = new DepartmentTotal();
-                freshw.DepartmentID = 4;
-                freshw.DTDate = reportdate;
-                if (FreshWeight != null)
-                {
-                    freshw.ShiftWeight = decimal.Parse(FreshWeight);
-                }
+            //}
+            //var freshw = dtr.GetByDateAndDepartment(reportdate, 4);
+            //if (freshw != null && FreshWeight != null)
+            //{
+            //    freshw.ShiftWeight = decimal.Parse(FreshWeight);
+            //    dtr.Save(freshw);
+            //}
+            //else
+            //{
+            //    freshw = new DepartmentTotal();
+            //    freshw.DepartmentID = 4;
+            //    freshw.DTDate = reportdate;
+            //    if (FreshWeight != null)
+            //    {
+            //        freshw.ShiftWeight = decimal.Parse(FreshWeight);
+            //    }
 
-                dtr.Save(freshw);
-            }
-            var bagw = dtr.GetByDateAndDepartment(reportdate, 6);
-            if (bagw != null && BaggerWeight != null)
-            {
-                bagw.ShiftWeight = decimal.Parse(BaggerWeight);
-                dtr.Save(bagw);
-            }
-            else
-            {
-                bagw = new DepartmentTotal();
-                bagw.DepartmentID = 6;
-                bagw.DTDate = reportdate;
-                if (BaggerWeight != null)
-                {
-                    bagw.ShiftWeight = decimal.Parse(BaggerWeight);
-                }
+            //    dtr.Save(freshw);
+            //}
+            //var bagw = dtr.GetByDateAndDepartment(reportdate, 6);
+            //if (bagw != null && BaggerWeight != null)
+            //{
+            //    bagw.ShiftWeight = decimal.Parse(BaggerWeight);
+            //    dtr.Save(bagw);
+            //}
+            //else
+            //{
+            //    bagw = new DepartmentTotal();
+            //    bagw.DepartmentID = 6;
+            //    bagw.DTDate = reportdate;
+            //    if (BaggerWeight != null)
+            //    {
+            //        bagw.ShiftWeight = decimal.Parse(BaggerWeight);
+            //    }
 
-                dtr.Save(bagw);
-            }
+            //    dtr.Save(bagw);
+            //}
+            //dtr.SaveRepoChanges();
             List<Sampling> samplingResults = new List<Sampling>();
 
             try
             {
+                dto.EndDate = dto.EndDate.AddDays(1);
                 var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
                 response.EnsureSuccessStatusCode();
                 JavaScriptSerializer json_serializer = new JavaScriptSerializer();
@@ -945,8 +952,8 @@ namespace SGApp.Controllers
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalfarmaverage) + "</td>";
                 body += "</tr>";
 
-                foreach (Sampling sam1 in sresultsPonds.Where(x => x.farm == sam.farm))
-                {
+                //foreach (Sampling sam1 in sresultsPonds.Where(x => x.farm == sam.farm))
+                //{
                     //bool pNameLabel = true;
                     var totalpondcount = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.count));
                     var totalpondweight = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.weight));
@@ -984,7 +991,7 @@ namespace SGApp.Controllers
                         body += "</tr>";
                     }
 
-                }
+                //}
 
             }
 
@@ -1192,16 +1199,16 @@ namespace SGApp.Controllers
             body += "</table><br /><br />";
 
             body += "</table>";
-            ////, danielw@harvestselect.com
-            //string elist = "";
-            //EmailRepository er = new EmailRepository();
-            //List<Email> emails = er.GetEmails();
-            //foreach (Email em in emails)
-            //{
-            //    elist += em.EmailAddress + ", ";
-            //}
-            //elist = elist.Substring(0, elist.Length - 2);
-            ////SendMail("harper@stimulantgroup.com, danielw@harvestselect.com, RobertL@HarvestSelect.com, Alice@HarvestSelect.com, Betsya@HarvestSelect.com, Bobby@HarvestSelect.com, Brenda@harvestselect.com, ChrisH@HarvestSelect.com, cory@harvestselect.com, daniel@harvestselect.com, Debi@HarvestSelect.com, jimbo@harvestselect.com, johnny@harvestselect.com, leec@harvestselect.com, lee@harvestselect.com, Mark@HarvestSelect.com, Michael@harvestselect.com, Mike@HarvestSelect.com, Randy@HarvestSelect.com, reed@harvestselect.com, rhonda@harvestselect.com, Ryan@HarvestSelect.com, Shirley@HarvestSelect.com, tammy@harvestselect.com, tom@harvestselect.com, trey@harvestselect.com, sam@harvestselect.com", subject, body);
+            //, danielw@harvestselect.com
+            string elist = "";
+            EmailRepository er = new EmailRepository();
+            List<Email> emails = er.GetEmails();
+            foreach (Email em in emails)
+            {
+                elist += em.EmailAddress + ", ";
+            }
+            elist = elist.Substring(0, elist.Length - 2);
+            //SendMail("harper@stimulantgroup.com, danielw@harvestselect.com, RobertL@HarvestSelect.com, Alice@HarvestSelect.com, Betsya@HarvestSelect.com, Bobby@HarvestSelect.com, Brenda@harvestselect.com, ChrisH@HarvestSelect.com, cory@harvestselect.com, daniel@harvestselect.com, Debi@HarvestSelect.com, jimbo@harvestselect.com, johnny@harvestselect.com, leec@harvestselect.com, lee@harvestselect.com, Mark@HarvestSelect.com, Michael@harvestselect.com, Mike@HarvestSelect.com, Randy@HarvestSelect.com, reed@harvestselect.com, rhonda@harvestselect.com, Ryan@HarvestSelect.com, Shirley@HarvestSelect.com, tammy@harvestselect.com, tom@harvestselect.com, trey@harvestselect.com, sam@harvestselect.com", subject, body);
             //SendMail(elist, subject, body);
 
             return Request.CreateResponse(HttpStatusCode.OK, body);
