@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -52,6 +53,21 @@
       <DependentUpon>Innova.tt</DependentUpon>
     </Compile>
     <Compile Include="Class1.cs" />
+    <Compile Include="DB323.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB323.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB323.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB323.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DB323.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DB323.edmx</DependentUpon>
+    </Compile>
     <Compile Include="IKey.cs" />
     <Compile Include="Innova.Context.cs">
       <AutoGen>True</AutoGen>
@@ -82,6 +98,9 @@
       <DependentUpon>Innova.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="vwBOL2.cs">
+      <DependentUpon>DB323.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Innova.edmx">
@@ -91,6 +110,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
+    <EntityDeploy Include="DB323.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>DB323.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="DB323.edmx.diagram">
+      <DependentUpon>DB323.edmx</DependentUpon>
+    </None>
     <None Include="Innova.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Innova.edmx</DependentUpon>
@@ -108,6 +134,18 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DB323.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DB323.edmx</DependentUpon>
+      <LastGenOutput>DB323.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DB323.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>DB323.edmx</DependentUpon>
+      <LastGenOutput>DB323.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

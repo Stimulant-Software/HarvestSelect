@@ -145,7 +145,96 @@ namespace SGApp.Controllers
             contact.ProcessRecord(cqDto);
             return pr.Validate(contact);
         }
+        [HttpGet]
+        public HttpResponseMessage GetBOLReport()
+        {
 
+            //Update Shift Weights
+            List<BOL> BOLResults = new List<BOL>();
+            //SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            var sDate = DateTime.ParseExact(dic.First().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            var eDate = DateTime.ParseExact(dic.Last().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            dto.StartDate = sDate;
+            dto.EndDate = eDate;
+            //dto.StartDate = DateTime.Now.AddDays(-1).Date;
+            //dto.EndDate = DateTime.Now.Date;
+            //dto.StartDate = DateTime.Now.AddDays(1).Date;
+            //dto.EndDate = DateTime.Now.AddDays(2).Date;
+            var client = new HttpClient
+            {
+                //BaseAddress = new Uri("http://323-booth-svr2:3030/")
+                //BaseAddress = new Uri("http://64.139.95.243:7846/")
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+                //BaseAddress = new Uri(baseAddress)                
+            };
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetBOLData", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                BOL[] BOLResultsArray = json_serializer.Deserialize<BOL[]>(response.Content.ReadAsStringAsync().Result);
+                BOLResults = BOLResultsArray.ToList();
+                
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            
+            //var IQFweight = shiftResults.Where(x => iqfstations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
+
+            string subject = "";
+            string body = "";
+            body += "<style>table, td, th {border: 1px solid #ddd; text-align: left;}table {border-collapse: collapse; width: 100%;} th, td {padding: 5px;} tr:nth-child(2) {background-color: #f8f8f8;} th {background-color: #ddd;}</style>";
+            subject = "Harvest Select Daily Production Report";
+            body += "Report Date:  " + sDate.ToShortDateString() + "<br /><br />";
+            body += "Fillet Scale Reading: " + "Stuff Here" + "<br /><br />";
+            body += "<b>Live Fish Receiving</b><br />";
+            body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Pond Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Plant Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Difference</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>WeighBacks</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Net Live Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Yield %</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Headed Yield</th></tr>";
+            body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td>";
+            //<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.PondWeight).Value.ToString("#") + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.PlantWeight).Value.ToString("#") + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pts.Sum(x => x.PondWeight).Value - pts.Sum(x => x.PlantWeight).Value).ToString("#") + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.WeighBacks).Value.ToString("#") + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value).ToString("#") + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + avgTotal.ToString("#.####") + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + headedweighttotal.ToString("#") + "</td></tr>";
+            //foreach (ProductionTotal pt in pts)
+            //{
+            //    decimal plantweight = pt.PlantWeight.HasValue ? pt.PlantWeight.Value : 0;
+            //    decimal pondweight = pt.PondWeight.HasValue ? pt.PondWeight.Value : 0;
+            //    decimal weighbacks = pt.WeighBacks.HasValue ? pt.WeighBacks.Value : 0;
+            //    decimal averageyield = pt.AverageYield.HasValue ? pt.AverageYield.Value : 0;
+            //    body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pt.Pond.Farm.InnovaName + " - " + pt.Pond.PondName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pondweight.ToString("#") + "</td>";
+            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + plantweight.ToString("#") + "</td>";
+            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pondweight - plantweight).ToString("#") + "</td>";
+            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + weighbacks.ToString("#") + "</td>";
+            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (plantweight - weighbacks).ToString("#") + "</td>";
+            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + averageyield.ToString("#.####") + "</td>";
+            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ((plantweight - weighbacks) * averageyield / 100).ToString("#") + "</td></tr>";
+            //}
+            //body += "</table><br /><br />";
+
+            
+
+            body += "</table>";
+            ////, danielw@harvestselect.com
+            //string elist = "";
+            //EmailRepository er = new EmailRepository();
+            //List<Email> emails = er.GetEmails();
+            //foreach (Email em in emails)
+            //{
+            //    elist += em.EmailAddress + ", ";
+            //}
+            //elist = elist.Substring(0, elist.Length - 2);
+            ////SendMail("harper@stimulantgroup.com", subject, body);// danielw@harvestselect.com, RobertL@HarvestSelect.com, Alice@HarvestSelect.com, Betsya@HarvestSelect.com, Bobby@HarvestSelect.com, Brenda@harvestselect.com, ChrisH@HarvestSelect.com, cory@harvestselect.com, daniel@harvestselect.com, Debi@HarvestSelect.com, jimbo@harvestselect.com, johnny@harvestselect.com, leec@harvestselect.com, lee@harvestselect.com, Mark@HarvestSelect.com, Michael@harvestselect.com, Mike@HarvestSelect.com, Randy@HarvestSelect.com, reed@harvestselect.com, rhonda@harvestselect.com, Ryan@HarvestSelect.com, Shirley@HarvestSelect.com, tammy@harvestselect.com, tom@harvestselect.com, trey@harvestselect.com, sam@harvestselect.com", subject, body);
+            //SendMail(elist, subject, body);
+
+            return Request.CreateResponse(HttpStatusCode.OK, BOLResults);
+
+        }
         [HttpGet]
         public HttpResponseMessage EmailDailyReport()
         {

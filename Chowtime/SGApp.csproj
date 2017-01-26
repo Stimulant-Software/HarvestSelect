@@ -162,6 +162,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WeighBackController.cs" />
     <Compile Include="DTOs\AbsenceDTO.cs" />
+    <Compile Include="DTOs\BOLDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\DailyReportDTO.cs" />
     <Compile Include="DTOs\DepartmentDTO.cs" />

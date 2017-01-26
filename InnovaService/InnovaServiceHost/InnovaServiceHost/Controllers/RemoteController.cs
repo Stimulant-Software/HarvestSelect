@@ -102,7 +102,38 @@ namespace InnovaServiceHost.Controllers {
             return null;
         }
 
+        [HttpPost]
+        public object GetBOLData([FromBody] InnovaDto dto)
+        {
+            
+            var context = new DB323Entities();
+           
+            var startDate = dto.StartDate;
+            var endDate = dto.EndDate;
+            return (from p in context.vwBOL2.Where(x => //stations.Contains(x.station.Value) &&
+                                                         x.OrderDate >= startDate
+                                                        && x.OrderDate <= endDate
+                                                        )
+                    
+                    select new
+                    {
+                        OrderCode = p.OrderCode,
+                        CustNumber = p.CustNumber,
+                        CustShort = p.CustShort,
+                        CustLong = p.CustLong,
+                        OrderDate = p.OrderDate,
+                        MaterialID = p.MaterialID,
+                        PM_Name43 = p.PM_Name43,
+                        OrderedAmt = p.OrderedAmt,
+                        UnitCount = p.UnitCount,
+                        NewShippedAmt = p.NewShippedAmt,
+                        ExtendedTotalWt = p.ExtendedTotalWt,
+                        HowPacked = p.HowPacked,
+                        WeightLabel = p.WeightLabel
+                    });
 
+            
+        }
         [HttpPost]
         public object GetDailyProductionTotal([FromBody] InnovaDto dto)
         {

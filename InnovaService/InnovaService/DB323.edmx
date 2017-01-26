@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB323Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="DB323ModelStoreContainer">
+          <EntitySet Name="vwBOL2" EntityType="DB323Model.Store.vwBOL2" store:Type="Views" store:Schema="dbo" store:Name="vwBOL2">
+            <DefiningQuery>SELECT 
+      [vwBOL2].[OrderCode] AS [OrderCode], 
+      [vwBOL2].[CustNumber] AS [CustNumber], 
+      [vwBOL2].[CustShort] AS [CustShort], 
+      [vwBOL2].[CustLong] AS [CustLong], 
+      [vwBOL2].[OrderDate] AS [OrderDate], 
+      [vwBOL2].[MaterialID] AS [MaterialID], 
+      [vwBOL2].[PM_Name43] AS [PM_Name43], 
+      [vwBOL2].[OrderedAmt] AS [OrderedAmt], 
+      [vwBOL2].[UnitCount] AS [UnitCount], 
+      [vwBOL2].[NewShippedAmt] AS [NewShippedAmt], 
+      [vwBOL2].[ExtendedTotalWt] AS [ExtendedTotalWt], 
+      [vwBOL2].[HowPacked] AS [HowPacked], 
+      [vwBOL2].[WeightLabel] AS [WeightLabel]
+      FROM [dbo].[vwBOL2] AS [vwBOL2]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DB323.dbo.vwBOL2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="vwBOL2">
+          <Key>
+            <PropertyRef Name="OrderCode" />
+            <PropertyRef Name="MaterialID" />
+            <PropertyRef Name="HowPacked" />
+            <PropertyRef Name="WeightLabel" />
+          </Key>
+          <Property Name="OrderCode" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="CustNumber" Type="int" />
+          <Property Name="CustShort" Type="nvarchar" MaxLength="80" />
+          <Property Name="CustLong" Type="nvarchar" MaxLength="80" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="MaterialID" Type="int" Nullable="false" />
+          <Property Name="PM_Name43" Type="nvarchar" MaxLength="30" />
+          <Property Name="OrderedAmt" Type="real" />
+          <Property Name="UnitCount" Type="int" />
+          <Property Name="NewShippedAmt" Type="real" />
+          <Property Name="ExtendedTotalWt" Type="real" />
+          <Property Name="HowPacked" Type="varchar" Nullable="false" MaxLength="7" />
+          <Property Name="WeightLabel" Type="varchar" Nullable="false" MaxLength="7" />
+        </EntityType>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB323Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DB323Entities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="vwBOL2" EntityType="DB323Model.vwBOL2" />
+        </EntityContainer>
+        <EntityType Name="vwBOL2">
+          <Key>
+            <PropertyRef Name="OrderCode" />
+            <PropertyRef Name="MaterialID" />
+            <PropertyRef Name="HowPacked" />
+            <PropertyRef Name="WeightLabel" />
+          </Key>
+          <Property Name="OrderCode" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="CustNumber" Type="Int32" />
+          <Property Name="CustShort" Type="String" MaxLength="80" Unicode="true" FixedLength="false" />
+          <Property Name="CustLong" Type="String" MaxLength="80" Unicode="true" FixedLength="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="MaterialID" Type="Int32" Nullable="false" />
+          <Property Name="PM_Name43" Type="String" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="OrderedAmt" Type="Single" />
+          <Property Name="UnitCount" Type="Int32" />
+          <Property Name="NewShippedAmt" Type="Single" />
+          <Property Name="ExtendedTotalWt" Type="Single" />
+          <Property Name="HowPacked" Type="String" Nullable="false" MaxLength="7" Unicode="false" FixedLength="false" />
+          <Property Name="WeightLabel" Type="String" Nullable="false" MaxLength="7" Unicode="false" FixedLength="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB323ModelStoreContainer" CdmEntityContainer="DB323Entities">
+          <EntitySetMapping Name="vwBOL2">
+            <EntityTypeMapping TypeName="DB323Model.vwBOL2">
+              <MappingFragment StoreEntitySet="vwBOL2">
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="CustNumber" ColumnName="CustNumber" />
+                <ScalarProperty Name="CustShort" ColumnName="CustShort" />
+                <ScalarProperty Name="CustLong" ColumnName="CustLong" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="PM_Name43" ColumnName="PM_Name43" />
+                <ScalarProperty Name="OrderedAmt" ColumnName="OrderedAmt" />
+                <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
+                <ScalarProperty Name="NewShippedAmt" ColumnName="NewShippedAmt" />
+                <ScalarProperty Name="ExtendedTotalWt" ColumnName="ExtendedTotalWt" />
+                <ScalarProperty Name="HowPacked" ColumnName="HowPacked" />
+                <ScalarProperty Name="WeightLabel" ColumnName="WeightLabel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
