@@ -186,51 +186,13 @@ namespace SGApp.Controllers
             //var IQFweight = shiftResults.Where(x => iqfstations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
 
             string subject = "";
-            string body = "";
-            body += "<style>table, td, th {border: 1px solid #ddd; text-align: left;}table {border-collapse: collapse; width: 100%;} th, td {padding: 5px;} tr:nth-child(2) {background-color: #f8f8f8;} th {background-color: #ddd;}</style>";
-            subject = "Harvest Select Daily Production Report";
-            body += "Report Date:  " + sDate.ToShortDateString() + "<br /><br />";
-            body += "Fillet Scale Reading: " + "Stuff Here" + "<br /><br />";
-            body += "<b>Live Fish Receiving</b><br />";
-            body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Pond Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Plant Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Difference</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>WeighBacks</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Net Live Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Yield %</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Headed Yield</th></tr>";
-            body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td>";
-            //<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.PondWeight).Value.ToString("#") + "</td>";
-            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.PlantWeight).Value.ToString("#") + "</td>";
-            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pts.Sum(x => x.PondWeight).Value - pts.Sum(x => x.PlantWeight).Value).ToString("#") + "</td>";
-            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.WeighBacks).Value.ToString("#") + "</td>";
-            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value).ToString("#") + "</td>";
-            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + avgTotal.ToString("#.####") + "</td>";
-            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + headedweighttotal.ToString("#") + "</td></tr>";
-            //foreach (ProductionTotal pt in pts)
-            //{
-            //    decimal plantweight = pt.PlantWeight.HasValue ? pt.PlantWeight.Value : 0;
-            //    decimal pondweight = pt.PondWeight.HasValue ? pt.PondWeight.Value : 0;
-            //    decimal weighbacks = pt.WeighBacks.HasValue ? pt.WeighBacks.Value : 0;
-            //    decimal averageyield = pt.AverageYield.HasValue ? pt.AverageYield.Value : 0;
-            //    body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pt.Pond.Farm.InnovaName + " - " + pt.Pond.PondName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pondweight.ToString("#") + "</td>";
-            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + plantweight.ToString("#") + "</td>";
-            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pondweight - plantweight).ToString("#") + "</td>";
-            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + weighbacks.ToString("#") + "</td>";
-            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (plantweight - weighbacks).ToString("#") + "</td>";
-            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + averageyield.ToString("#.####") + "</td>";
-            //    body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ((plantweight - weighbacks) * averageyield / 100).ToString("#") + "</td></tr>";
-            //}
-            //body += "</table><br /><br />";
-
+            string body = "<!DOCTYPE HTML PUBLIC ' -//W3C//DTD HTML 4.01 Transitional//EN'><html><head><META http-equiv='Content-Type' content='text/html; charset=utf-8'></head>";
+            //each order goes here
+            body += "<body><div><div><table><tbody><tr><td><table><tr><td colspan='2'><h1>Bill of Lading</h1></td></tr><tr><td><img src='http://logo.png' height='150px'></td><td>Harvest Select Catfish<br>Highway 80 East<br>P.O. Box 769<br>Uniontown, AL 36786<br>TEL: (334) 628-3474 Tax: (334) 628-6122</td></tr></table></td><td valign='top'><table><tr><td>Order No.</td><td>XXXXXX</td></tr><tr><td>Order Date</td><td>XX/XX/XXXX</td></tr><tr><td>Ship Date</td><td>XX/XX/XXXX</td></tr></table></td></tr><tr><td colspan='2'><table><thead><tr><th>Sold To:</th><th>Ship To:</th></tr></thead><tbody><tr><td>Otc - Charge<br><br><br><br>Uniontown, AL, 36786<br>2056283474</td><td>Otc - Charge<br>Customer Pickup</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'><table><thead><tr><th>Cust No.</th><th>Corp PO</th><th>House PO</th><th>Freight PO</th><th>Terms</th></tr></thead><tbody><tr><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'><table><thead><tr><th>Item</th><th>Product Description</th><th>UM</th><th>Ordered</th><th>Shipped</th><th>Weight<br>(Subject to Correction)</th></tr></thead><tbody><tr><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td></tr><tr><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td></tr><tr><td colspan='3'><strong>TOTALS</strong></td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td></tr></tbody></table></td></tr></tbody></table></div></div>";
             
+            
+            body += "<div style='page-break-after:always'></div></body></html>";
 
-            body += "</table>";
-            ////, danielw@harvestselect.com
-            //string elist = "";
-            //EmailRepository er = new EmailRepository();
-            //List<Email> emails = er.GetEmails();
-            //foreach (Email em in emails)
-            //{
-            //    elist += em.EmailAddress + ", ";
-            //}
-            //elist = elist.Substring(0, elist.Length - 2);
-            ////SendMail("harper@stimulantgroup.com", subject, body);// danielw@harvestselect.com, RobertL@HarvestSelect.com, Alice@HarvestSelect.com, Betsya@HarvestSelect.com, Bobby@HarvestSelect.com, Brenda@harvestselect.com, ChrisH@HarvestSelect.com, cory@harvestselect.com, daniel@harvestselect.com, Debi@HarvestSelect.com, jimbo@harvestselect.com, johnny@harvestselect.com, leec@harvestselect.com, lee@harvestselect.com, Mark@HarvestSelect.com, Michael@harvestselect.com, Mike@HarvestSelect.com, Randy@HarvestSelect.com, reed@harvestselect.com, rhonda@harvestselect.com, Ryan@HarvestSelect.com, Shirley@HarvestSelect.com, tammy@harvestselect.com, tom@harvestselect.com, trey@harvestselect.com, sam@harvestselect.com", subject, body);
-            //SendMail(elist, subject, body);
 
             return Request.CreateResponse(HttpStatusCode.OK, BOLResults);
 

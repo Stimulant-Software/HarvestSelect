@@ -110,7 +110,7 @@ namespace InnovaServiceHost.Controllers {
            
             var startDate = dto.StartDate;
             var endDate = dto.EndDate;
-            return (from p in context.vwBOL2.Where(x => //stations.Contains(x.station.Value) &&
+            return (from p in context.vwBOLProds.Where(x => //stations.Contains(x.station.Value) &&
                                                          x.OrderDate >= startDate
                                                         && x.OrderDate <= endDate
                                                         )
@@ -122,14 +122,31 @@ namespace InnovaServiceHost.Controllers {
                         CustShort = p.CustShort,
                         CustLong = p.CustLong,
                         OrderDate = p.OrderDate,
+                        DispDate = p.DispDate,
+                        PO1 = p.PO1,
+                        PO2 = p.PO2,
+                        PO3 = p.PO3,
+                        Comments = p.Comments,
+                        OrderTerms = p.OrderTerms,
+                        ShipToName = p.ShipToName,
+                        ShipToAddress = p.ShipToAddress,
+                        ShipToPhone = p.ShipToPhone,
                         MaterialID = p.MaterialID,
-                        PM_Name43 = p.PM_Name43,
+                        ProdCode = p.ProdCode,
+                        ProdName = p.ProdName,
                         OrderedAmt = p.OrderedAmt,
-                        UnitCount = p.UnitCount,
-                        NewShippedAmt = p.NewShippedAmt,
-                        ExtendedTotalWt = p.ExtendedTotalWt,
+                        ShippedQty = p.ShippedQty,
+                        ShippedWeight = p.ShippedWeight,
+                        ApproxUnitWeight = p.ApproxUnitWeight,
                         HowPacked = p.HowPacked,
-                        WeightLabel = p.WeightLabel
+                        WeightLabel = p.WeightLabel,
+                        CustomerAddress = p.CustomerAddress,
+                        CustomerAddress2 = p.CustomerAddress2,
+                        CustomerCity = p.CustomerCity,
+                        CustomerState = p.CustomerState,
+                        CustomerZip = p.CustomerZip,
+                        CustomerPhone = p.CustomerPhone,
+                        Terms = p.Terms
                     });
 
             

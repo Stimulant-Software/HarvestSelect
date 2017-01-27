@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DB323Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DB323Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityContainer Name="DB323ModelStoreContainer">
           <EntitySet Name="vwBOL2" EntityType="DB323Model.Store.vwBOL2" store:Type="Views" store:Schema="dbo" store:Name="vwBOL2">
             <DefiningQuery>SELECT 
@@ -22,6 +22,40 @@
       [vwBOL2].[HowPacked] AS [HowPacked], 
       [vwBOL2].[WeightLabel] AS [WeightLabel]
       FROM [dbo].[vwBOL2] AS [vwBOL2]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vwBOLProd" EntityType="DB323Model.Store.vwBOLProd" store:Type="Views" store:Schema="dbo" store:Name="vwBOLProd">
+            <DefiningQuery>SELECT 
+      [vwBOLProd].[OrderCode] AS [OrderCode], 
+      [vwBOLProd].[CustNumber] AS [CustNumber], 
+      [vwBOLProd].[CustShort] AS [CustShort], 
+      [vwBOLProd].[CustLong] AS [CustLong], 
+      [vwBOLProd].[OrderDate] AS [OrderDate], 
+      [vwBOLProd].[DispDate] AS [DispDate], 
+      [vwBOLProd].[PO1] AS [PO1], 
+      [vwBOLProd].[PO2] AS [PO2], 
+      [vwBOLProd].[PO3] AS [PO3], 
+      [vwBOLProd].[Comments] AS [Comments], 
+      [vwBOLProd].[OrderTerms] AS [OrderTerms], 
+      [vwBOLProd].[ShipToName] AS [ShipToName], 
+      [vwBOLProd].[ShipToAddress] AS [ShipToAddress], 
+      [vwBOLProd].[ShipToPhone] AS [ShipToPhone], 
+      [vwBOLProd].[MaterialID] AS [MaterialID], 
+      [vwBOLProd].[ProdCode] AS [ProdCode], 
+      [vwBOLProd].[ProdName] AS [ProdName], 
+      [vwBOLProd].[OrderedAmt] AS [OrderedAmt], 
+      [vwBOLProd].[ShippedQty] AS [ShippedQty], 
+      [vwBOLProd].[ShippedWeight] AS [ShippedWeight], 
+      [vwBOLProd].[ApproxUnitWeight] AS [ApproxUnitWeight], 
+      [vwBOLProd].[HowPacked] AS [HowPacked], 
+      [vwBOLProd].[WeightLabel] AS [WeightLabel], 
+      [vwBOLProd].[CustomerAddress] AS [CustomerAddress], 
+      [vwBOLProd].[CustomerAddress2] AS [CustomerAddress2], 
+      [vwBOLProd].[CustomerCity] AS [CustomerCity], 
+      [vwBOLProd].[CustomerState] AS [CustomerState], 
+      [vwBOLProd].[CustomerZip] AS [CustomerZip], 
+      [vwBOLProd].[CustomerPhone] AS [CustomerPhone], 
+      [vwBOLProd].[Terms] AS [Terms]
+      FROM [dbo].[vwBOLProd] AS [vwBOLProd]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
@@ -48,13 +82,56 @@
           <Property Name="HowPacked" Type="varchar" Nullable="false" MaxLength="7" />
           <Property Name="WeightLabel" Type="varchar" Nullable="false" MaxLength="7" />
         </EntityType>
-      </Schema>
-    </edmx:StorageModels>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'DB323.dbo.vwBOLProd' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="vwBOLProd">
+          <Key>
+            <PropertyRef Name="OrderCode" />
+            <PropertyRef Name="MaterialID" />
+            <PropertyRef Name="ShippedWeight" />
+            <PropertyRef Name="ApproxUnitWeight" />
+            <PropertyRef Name="HowPacked" />
+            <PropertyRef Name="WeightLabel" />
+          </Key>
+          <Property Name="OrderCode" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="CustNumber" Type="int" />
+          <Property Name="CustShort" Type="nvarchar" MaxLength="80" />
+          <Property Name="CustLong" Type="nvarchar" MaxLength="80" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="DispDate" Type="datetime" />
+          <Property Name="PO1" Type="nvarchar" MaxLength="80" />
+          <Property Name="PO2" Type="nvarchar" MaxLength="80" />
+          <Property Name="PO3" Type="nvarchar" MaxLength="80" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="80" />
+          <Property Name="OrderTerms" Type="nvarchar" MaxLength="80" />
+          <Property Name="ShipToName" Type="nvarchar" MaxLength="80" />
+          <Property Name="ShipToAddress" Type="nvarchar" MaxLength="80" />
+          <Property Name="ShipToPhone" Type="nvarchar" MaxLength="80" />
+          <Property Name="MaterialID" Type="int" Nullable="false" />
+          <Property Name="ProdCode" Type="nvarchar" MaxLength="30" />
+          <Property Name="ProdName" Type="nvarchar" MaxLength="30" />
+          <Property Name="OrderedAmt" Type="real" />
+          <Property Name="ShippedQty" Type="int" />
+          <Property Name="ShippedWeight" Type="real" Nullable="false" />
+          <Property Name="ApproxUnitWeight" Type="float" Nullable="false" />
+          <Property Name="HowPacked" Type="varchar" Nullable="false" MaxLength="7" />
+          <Property Name="WeightLabel" Type="varchar" Nullable="false" MaxLength="7" />
+          <Property Name="CustomerAddress" Type="nvarchar" MaxLength="80" />
+          <Property Name="CustomerAddress2" Type="nvarchar" MaxLength="80" />
+          <Property Name="CustomerCity" Type="nvarchar" MaxLength="80" />
+          <Property Name="CustomerState" Type="nvarchar" MaxLength="80" />
+          <Property Name="CustomerZip" Type="nvarchar" MaxLength="80" />
+          <Property Name="CustomerPhone" Type="nvarchar" MaxLength="80" />
+          <Property Name="Terms" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DB323Model" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DB323Entities" p1:LazyLoadingEnabled="true">
           <EntitySet Name="vwBOL2" EntityType="DB323Model.vwBOL2" />
+          <EntitySet Name="vwBOLProds" EntityType="DB323Model.vwBOLProd" />
         </EntityContainer>
         <EntityType Name="vwBOL2">
           <Key>
@@ -76,6 +153,46 @@
           <Property Name="ExtendedTotalWt" Type="Single" />
           <Property Name="HowPacked" Type="String" Nullable="false" MaxLength="7" Unicode="false" FixedLength="false" />
           <Property Name="WeightLabel" Type="String" Nullable="false" MaxLength="7" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="vwBOLProd">
+          <Key>
+            <PropertyRef Name="OrderCode" />
+            <PropertyRef Name="MaterialID" />
+            <PropertyRef Name="ShippedWeight" />
+            <PropertyRef Name="ApproxUnitWeight" />
+            <PropertyRef Name="HowPacked" />
+            <PropertyRef Name="WeightLabel" />
+          </Key>
+          <Property Type="String" Name="OrderCode" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CustNumber" />
+          <Property Type="String" Name="CustShort" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CustLong" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="OrderDate" Precision="3" />
+          <Property Type="DateTime" Name="DispDate" Precision="3" />
+          <Property Type="String" Name="PO1" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PO2" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PO3" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comments" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OrderTerms" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ShipToName" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ShipToAddress" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ShipToPhone" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="MaterialID" Nullable="false" />
+          <Property Type="String" Name="ProdCode" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProdName" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="Single" Name="OrderedAmt" />
+          <Property Type="Int32" Name="ShippedQty" />
+          <Property Type="Single" Name="ShippedWeight" Nullable="false" />
+          <Property Type="Double" Name="ApproxUnitWeight" Nullable="false" />
+          <Property Type="String" Name="HowPacked" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="WeightLabel" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CustomerAddress" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CustomerAddress2" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CustomerCity" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CustomerState" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CustomerZip" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CustomerPhone" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Terms" MaxLength="80" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -99,6 +216,42 @@
                 <ScalarProperty Name="ExtendedTotalWt" ColumnName="ExtendedTotalWt" />
                 <ScalarProperty Name="HowPacked" ColumnName="HowPacked" />
                 <ScalarProperty Name="WeightLabel" ColumnName="WeightLabel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vwBOLProds">
+            <EntityTypeMapping TypeName="DB323Model.vwBOLProd">
+              <MappingFragment StoreEntitySet="vwBOLProd">
+                <ScalarProperty Name="Terms" ColumnName="Terms" />
+                <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
+                <ScalarProperty Name="CustomerZip" ColumnName="CustomerZip" />
+                <ScalarProperty Name="CustomerState" ColumnName="CustomerState" />
+                <ScalarProperty Name="CustomerCity" ColumnName="CustomerCity" />
+                <ScalarProperty Name="CustomerAddress2" ColumnName="CustomerAddress2" />
+                <ScalarProperty Name="CustomerAddress" ColumnName="CustomerAddress" />
+                <ScalarProperty Name="WeightLabel" ColumnName="WeightLabel" />
+                <ScalarProperty Name="HowPacked" ColumnName="HowPacked" />
+                <ScalarProperty Name="ApproxUnitWeight" ColumnName="ApproxUnitWeight" />
+                <ScalarProperty Name="ShippedWeight" ColumnName="ShippedWeight" />
+                <ScalarProperty Name="ShippedQty" ColumnName="ShippedQty" />
+                <ScalarProperty Name="OrderedAmt" ColumnName="OrderedAmt" />
+                <ScalarProperty Name="ProdName" ColumnName="ProdName" />
+                <ScalarProperty Name="ProdCode" ColumnName="ProdCode" />
+                <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
+                <ScalarProperty Name="ShipToPhone" ColumnName="ShipToPhone" />
+                <ScalarProperty Name="ShipToAddress" ColumnName="ShipToAddress" />
+                <ScalarProperty Name="ShipToName" ColumnName="ShipToName" />
+                <ScalarProperty Name="OrderTerms" ColumnName="OrderTerms" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="PO3" ColumnName="PO3" />
+                <ScalarProperty Name="PO2" ColumnName="PO2" />
+                <ScalarProperty Name="PO1" ColumnName="PO1" />
+                <ScalarProperty Name="DispDate" ColumnName="DispDate" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="CustLong" ColumnName="CustLong" />
+                <ScalarProperty Name="CustShort" ColumnName="CustShort" />
+                <ScalarProperty Name="CustNumber" ColumnName="CustNumber" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

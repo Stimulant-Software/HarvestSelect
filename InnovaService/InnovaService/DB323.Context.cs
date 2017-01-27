@@ -26,5 +26,6 @@ namespace InnovaService
         }
     
         public DbSet<vwBOL2> vwBOL2 { get; set; }
+        public DbSet<vwBOLProd> vwBOLProds { get; set; }
     }
 }
