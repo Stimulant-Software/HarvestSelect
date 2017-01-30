@@ -21,15 +21,16 @@
                 <li class="sample"><a href="op-sampling.html">Live Fish Sampling</a></li>
                 <!--<li class="reports"><a href="op-plant-weights.html">Plant Weights</a></li>-->
                 <li class="reports"><a href="op-reports.html">Weekly Reports</a></li>
+                <li class="reports"><a href="op-bol-reports.html">BOL Reports</a></li>
                 <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
             </ol>
         </nav>
     </header>
-    <section class="row date-select">
-        <!-- pull in string of dates - need range, method -->
-        <button id="shiftDate" data-toggle="modal" data-target="#calendarModal">Select a date to view report</button>
-    </section>
     <section id="main_content" class="container">
+        <section class="row date-select text-center">
+            <!-- pull in string of dates - need range, method -->
+            <button id="shiftDate" data-toggle="modal" data-target="#calendarModal">Select a date to view report</button>
+        </section>
         <section class="row reports data">
             <section class="farm-yields-report col-xs-12">
                 <div class="report-container">

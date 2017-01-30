@@ -18,6 +18,7 @@ $(function () {
     if ($('.weekly-report').length > 0) { showProgress(); weeklyReport(); }
     if ($('.op-report').length > 0) { showProgress(); weeklyReport(); }
     if ($('.production').length > 0) { showProgress(); production(); }
+    if ($('.bol').length > 0) { showProgress(); bol(); }
 });
 
 /* Login page */
@@ -1393,4 +1394,106 @@ function plantWeights() {
         })).then(function () { $('input').val(""); $('.row.fields, .row.buttons').css('opacity', 0); });
     });
 }
-/**** END OPTIONAL DELETE ****/
+
+/* BOL */
+function bol() {
+    var calFlag, date, i, tdate = getTodaysMonth(), startDateMonth = tdate.month, startDateYear = tdate.year;
+    $('#shiftDate').unbind().click(function () {
+        if (calFlag != "created") { 
+            loadCalendar(startDateMonth, startDateYear); 
+        } else { 
+            $('#calendarModal').modal(); 
+            return; 
+        }
+    });
+
+    function loadCalendar() {
+        calFlag = "created";
+        $('#calendarModal .modal-body').fullCalendar({
+            events:
+                function (start, end, timezone, refetchEvents) {
+                    $.when(hideProgress()).then(function () {
+                        showProgress('body');
+                        var view = $('#calendarModal .modal-body').fullCalendar('getView');
+
+                        var startDateYear1 = view.calendar.getDate()._d.getFullYear();
+                        startDateYear = startDateYear1;
+                        var startDateMonth1 = view.calendar.getDate()._d.getMonth() + 1; // adding one for javascript month representation, 1 for view starting 10 days prior to viewed month
+                        startDateMonth = startDateMonth1;
+
+                        var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
+                        $.when($.ajax('../api/Production/ProductionDates', { 
+                            type: 'POST',
+                            data: data,
+                            success: function (msg) {
+                                localStorage['CT_key'] = msg['Key'];
+                                startTimer(msg.Key);
+                                yieldList = msg['ReturnData'];
+                                if (yieldList.length > 0) {
+                                    var lastdate = yieldList[0].ProductionDate.split(" ")[0];
+                                    for (var i = 0; i < yieldList.length; i++) {
+                                        var shiftDate = yieldList[i].ProductionDate.split(" ")[0];
+                                        if (i == 0) { results.push(shiftDate); }
+                                        else if (shiftDate != lastdate) {
+                                            results.push(shiftDate);
+                                            lastdate = shiftDate;
+                                        }
+                                    };
+                                }
+                            }
+                        })).then(function () {
+                            hideProgress();
+                            $('#calendarModal').modal();
+                            var events = [];
+                            for (var event in results) {
+                                var obj = {
+                                    title: "EDIT",
+                                    start: results[event],
+                                    end: results[event],
+                                    allDay: true
+                                };
+                                events.push(obj);
+                            }
+                            refetchEvents(events);
+                        });
+                    });
+                },
+            dayClick: function () {
+                showProgress('body');
+                chosenDate = $(this).data('date');
+                $.when(openBolReport(chosenDate)).then(function () {
+                    $('#calendarModal').modal('hide');
+                });
+            },
+            eventClick: function (calEvent) {
+                chosenDate = calEvent.start._i;
+                $.when(openBolReport(chosenDate)).then(function () {
+                    hideProgress();
+                    $('#calendarModal').modal('hide');
+                });
+            }
+        });
+        function openBolReport(date) {
+            showProgress('body');
+            date = $(this).data('date');
+            orderNumber = $('#ordernumber').val();
+            custNumber = $('#custnumber').val();
+            searchQuery = { "Key": _key, "ReportDate": date, "OrderNumber": orderNumber, "CustomerNumber": custNumber }, data = JSON.stringify(searchQuery);
+
+            $.ajax(urlPre + 'api/Projects/GetQuoteGuid?guid=' + guid, {
+                type: 'GET',
+                success: function (msg) {
+                    var uri = 'data:application/pdf;charset=utf-8;base64,' + msg;
+                    var downloadLink = document.createElement("a");
+                    downloadLink.href = uri;
+                    downloadLink.target = "_blank";
+                    downloadLink.download = filename + ".pdf";// "data.csv"; SHOULD BE  Project Name + Quote Number.pdf
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    hideProgress();
+                }
+            });
+        }
+    }
+}

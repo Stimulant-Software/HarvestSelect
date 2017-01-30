@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
     <head>
         <title>Harvest Select Dashboards</title>
@@ -9,7 +9,7 @@
         <link rel="stylesheet" type="text/css" href="content/HarvestSelectDashboards.css">
         <link href="content/global.css" rel="stylesheet" type="text/css">
     </head>
-    <body class="shift-end op">
+    <body class="bol op">
         <header>
         <h1>Operations</h1>
         <nav>
@@ -29,21 +29,10 @@
         <section id="mainContent" class="container">
 			<section class="row date-select text-center">
 				<!-- pull in string of dates - need range, method -->
-                <button id="shiftDate" data-toggle="modal" data-target="#calendarModal">Select a date to add or edit information</button>
+                <fieldset class="col-sm-12"><button id="shiftDate" class="btn" data-toggle=modal" data-target="#calendarModal">Select a date to add or edit information</button></fieldset>
+                <fieldset class="col-sm-6"><label>(Optional) Order No.: <input type="text" id="ordernumber"></label></fieldset>
+                <fieldset class="col-sm-6"><label>(Optional) Customer No.: <input type="text" id="custnumber"></label></fieldset>
 			</section>
-
-            <section class="row deptlist">
-                <header class="text-center">
-                    <section id="headerReading" class="col-xs-12 form-inline"><label>Fillet Scale Reading</label><input type="text" id="FSReading" class="form-control fsreading" disabled><input type="hidden" id="FSReadingID" class="form-control fsrID"><button class="btn btn-default edit-fsr">Edit Reading</button></section>
-                    <section class="col-md-4"><h3>Dept</h3></section>
-                    <section class="col-md-2"><h3>Absences</h3></section>
-                    <section class="col-md-2"><h3>Down Time</h3></section>
-                    <section class="col-md-2"><h3>Finish TIme</h3></section>
-                    <section class="col-md-2"><h3>Shift Weight</h3></section>
-                </header>
-            </section>
-
-            <section id="deptListContainer" class="deptlist"></section>
         </section>
 
         <section id="calendarModal" class="modal-body fade">
@@ -63,6 +52,9 @@
         </section>
         <footer></footer>
         
+        <!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">-->
+        <script src="scripts/underscore.min.js"></script>
+        <script src="scripts/moment.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment-with-locales.min.js"></script>
