@@ -194,36 +194,39 @@ namespace SGApp.Controllers
             body += "<body>";
             foreach (BOL order in resultsByOrder)
             {
-                body += "<div><div><table><tbody><tr><td><table><tr><td colspan='2'><h1>Bill of Lading</h1></td></tr>";
-                body += "<tr><td><img src='http://dashboards.harvestselect.com/Images/logo.png' height='150px'></td><td>Harvest Select Catfish<br>Highway 80 East<br>P.O. Box 769<br>Uniontown, AL 36786<br>TEL: (334) 628-3474 Tax: (334) 628-6122</td></tr></table></td><td valign='top'><table>";
-                body += "<tr><td>Order No.</td><td>" + order.OrderCode + "</td></tr><tr><td>Order Date</td><td>" + order.OrderDate + "</td></tr>";
-                body += "<tr><td>Ship Date</td><td>" + order.DispDate + "</td></tr></table></td></tr><tr><td colspan='2'><table>";
-                body += "<thead><tr><th>Sold To:</th>";
-                body += "<th>Ship To:</th></tr></thead>";
-                body += "<tbody><tr><td>" + order.CustLong +"<br>" + order.CustomerAddress +"<br>" + order.CustomerAddress2 +"<br><br>" + order.CustomerCity + ", " + order.CustomerState + "  " + order.CustomerZip + "<br>" + order.CustomerPhone + "</td>";
-                body += "<td>" + order.ShipToName +"<br>" + order.ShipToAddress +"</td></tr><tr></tr></tbody></table>";
-                body += "</td></tr><tr><td colspan='2'><table><thead><tr><th>Cust No.</th><th>Corp PO</th><th>House PO</th><th>Freight PO</th><th>Terms</th></tr></thead>";
-                body += "<tbody><tr><td>" + order.CustNumber + "</td><td>" + order.PO1 + "</td><td>" + order.PO2 + "</td><td>" + order.PO3 + "</td><td>" + order.OrderTerms + "</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'>";
-                body += " <table><thead><tr><th>Item</th><th>Product Description</th><th>UM</th><th>Ordered</th><th>Shipped</th><th>Approx Unit Weight</th><th>Weight<br>(Subject to Correction)</th></tr></thead><tbody>";
+                body += "<div><div><table style='width: 100%'><tbody><tr><td><table style='width: 100%'><tr><td><h1>Bill of Lading</h1></td></tr>";
+                body += "<tr><td><img src='http://dashboards.harvestselect.com/Images/logo.png' height='150px'><br />Harvest Select Catfish<br>Highway 80 East<br>P.O. Box 769<br>Uniontown, AL 36786<br>TEL: (334) 628-3474 Fax: (334) 628-6122</td></tr></table></td><td valign='top'><table style='width: 100%'>";
+                body += "<tr><td style='border: 1px solid #ddd'>Order No.</td><td style='border: 1px solid #ddd'>" + order.OrderCode + "</td></tr><tr><td style='border: 1px solid #ddd'>Order Date</td><td style='border: 1px solid #ddd'>" + DateTime.Parse(order.OrderDate).ToShortDateString() + "</td></tr>";
+                body += "<tr><td style='border: 1px solid #ddd'>Ship Date</td><td style='border: 1px solid #ddd'>" + DateTime.Parse(order.DispDate).ToShortDateString() + "</td></tr></table></td></tr><tr><td colspan='2'><br /><table style='width: 100%'>";
+                body += "<thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Sold To:</th>";
+                body += "<th style='border: 1px solid #ddd; background-color: #ddd;'>Ship To:</th></tr></thead>";
+                body += "<tbody><tr><td style='border: 1px solid #ddd'>" + order.CustLong + "<br>" + order.CustomerAddress + "<br>" + order.CustomerAddress2 + "<br>" + order.CustomerCity + "  " + order.CustomerZip + "<br>" + order.CustomerPhone + "</td>";
+                body += "<td style='border: 1px solid #ddd'>" + order.ShipToName + "<br>" + order.ShipToAddress + "</td></tr><tr></tr></tbody></table>";
+                body += "</td></tr><tr><td colspan='2'><br /><table style='width: 100%'><thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Cust No.</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Corp PO</th><th style='border: 1px solid #ddd; background-color: #ddd;'>House PO</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Freight PO</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Terms</th></tr></thead>";
+                body += "<tbody><tr><td style='border: 1px solid #ddd'>" + order.CustNumber + "</td><td style='border: 1px solid #ddd'>" + order.PO1 + "</td><td style='border: 1px solid #ddd'>" + order.PO2 + "</td><td style='border: 1px solid #ddd'>" + order.PO3 + "</td><td style='border: 1px solid #ddd'>" + order.OrderTerms + "</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'>";
+                body += " <br /><table style='width: 100%'><thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Item</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Product Description</th><th style='border: 1px solid #ddd; background-color: #ddd;'>UM</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Ordered</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Shipped</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Approx Unit Weight</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Weight<br>(Subject to Correction)</th></tr></thead><tbody>";
                 foreach (BOL orderdetail in BOLResults.Where(x => x.OrderCode == order.OrderCode))
                 {
-                    body += "<tr><td>" + orderdetail.ProdCode + "</td><td>" + orderdetail.ProdName + "</td><td>" + orderdetail.WeightLabel + "</td><td>" + orderdetail.OrderedAmt + "</td><td>" + orderdetail.ShippedQty + "</td><td>" + orderdetail.ApproxUnitWeight + "</td><td>" + orderdetail.ShippedWeight + "</td></tr>";
+                    body += "<tr><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdCode + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdName + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.WeightLabel + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.OrderedAmt + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedQty + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ApproxUnitWeight + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedWeight + "</td></tr>";
                 }
 
-                body += "<tr><td colspan='3'><strong>TOTALS</strong></td><td>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.OrderedAmt)).ToString() + "</td><td>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.ShippedQty)).ToString() + "</td><td></td><td>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.ShippedWeight)).ToString() + "</td></tr></tbody></table></td></tr></tbody></table></div></div>";
+                body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.OrderedAmt)).ToString() + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.ShippedQty)).ToString() + "</td><td style='border: 1px solid #ddd'></td><td style='border: 1px solid #ddd; text-align: right;'>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.ShippedWeight)).ToString() + "</td></tr></tbody></table></td></tr></tbody></table></div></div>";
+                body += "<div style='page-break-after:always'></div>";
             }
           
             
             
-            body += "<div style='page-break-after:always'></div></body></html>";
+            body += "</body></html>";
             var pdfBytes = (new NReco.PdfGenerator.HtmlToPdfConverter()).GeneratePdf(body);
-            return Request.CreateResponse(HttpStatusCode.OK, body);
+            //return Request.CreateResponse(HttpStatusCode.OK, body);
 
-            //HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            //result.Content = new ByteArrayContent(pdfBytes);
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new ByteArrayContent(pdfBytes);
+            
             //result.Content = new StringContent(System.Convert.ToBase64String(pdfBytes));
-            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-            //return result;
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            result.Content.Headers.Add("Content-Disposition", "inline; filename=BOL.pdf");
+            return result;
 
 
         }
