@@ -188,7 +188,7 @@ namespace SGApp.Controllers
             //var IQFweight = shiftResults.Where(x => iqfstations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
 
             string subject = "";
-            string body = "<!DOCTYPE HTML PUBLIC ' -//W3C//DTD HTML 4.01 Transitional//EN'><html><head><META http-equiv='Content-Type' content='text/html; charset=utf-8'></head>";
+            string body = "<html>";
             //each order goes here
             BOL[] resultsByOrder = BOLResults.GroupBy(x => x.OrderCode).Select(group => group.First()).ToArray();
             body += "<body>";
@@ -201,7 +201,7 @@ namespace SGApp.Controllers
                 body += "<thead><tr><th>Sold To:</th>";
                 body += "<th>Ship To:</th></tr></thead>";
                 body += "<tbody><tr><td>" + order.CustLong +"<br>" + order.CustomerAddress +"<br>" + order.CustomerAddress2 +"<br><br>" + order.CustomerCity + ", " + order.CustomerState + "  " + order.CustomerZip + "<br>" + order.CustomerPhone + "</td>";
-                body += "<tbody><tr><td>" + order.ShipToName +"<br>" + order.ShipToAddress +"</td></tr><tr></tr></tbody></table>";
+                body += "<td>" + order.ShipToName +"<br>" + order.ShipToAddress +"</td></tr><tr></tr></tbody></table>";
                 body += "</td></tr><tr><td colspan='2'><table><thead><tr><th>Cust No.</th><th>Corp PO</th><th>House PO</th><th>Freight PO</th><th>Terms</th></tr></thead>";
                 body += "<tbody><tr><td>" + order.CustNumber + "</td><td>" + order.PO1 + "</td><td>" + order.PO2 + "</td><td>" + order.PO3 + "</td><td>" + order.OrderTerms + "</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'>";
                 body += " <table><thead><tr><th>Item</th><th>Product Description</th><th>UM</th><th>Ordered</th><th>Shipped</th><th>Approx Unit Weight</th><th>Weight<br>(Subject to Correction)</th></tr></thead><tbody>";
@@ -217,11 +217,13 @@ namespace SGApp.Controllers
             
             body += "<div style='page-break-after:always'></div></body></html>";
             var pdfBytes = (new NReco.PdfGenerator.HtmlToPdfConverter()).GeneratePdf(body);
-            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.OK, body);
+
+            //HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
             //result.Content = new ByteArrayContent(pdfBytes);
-            result.Content = new StringContent(System.Convert.ToBase64String(pdfBytes));
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-            return result;
+            //result.Content = new StringContent(System.Convert.ToBase64String(pdfBytes));
+            //result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            //return result;
 
 
         }
