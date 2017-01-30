@@ -146,19 +146,23 @@ namespace SGApp.Controllers
             contact.ProcessRecord(cqDto);
             return pr.Validate(contact);
         }
-        [HttpGet]
-        public HttpResponseMessage GetBOLReport()
+        [HttpPost]
+        public HttpResponseMessage GetBOLReport([FromBody] UtilityDTO utilityDto)
         {
 
             //Update Shift Weights
             List<BOL> BOLResults = new List<BOL>();
             //SGApp.DTOs.GenericDTO dto = new GenericDTO();
             SGApp.DTOs.GenericDTO dto = new GenericDTO();
-            var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
-            var sDate = DateTime.ParseExact(dic.First().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
-            var eDate = DateTime.ParseExact(dic.Last().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
-            dto.StartDate = sDate;
-            dto.EndDate = eDate;
+            //var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            //var sDate = DateTime.ParseExact(dic.First().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            //var eDate = DateTime.ParseExact(dic.Last().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            var sDate = utilityDto.OrderDate;
+            var eDate = utilityDto.OrderDate;
+            dto.StartDate = DateTime.Parse(sDate);
+            dto.EndDate = DateTime.Parse(sDate);
+            dto.CustomerNumber = utilityDto.CustomerNumber;
+            dto.OrderNumber = utilityDto.OrderNumber;
             //dto.StartDate = DateTime.Now.AddDays(-1).Date;
             //dto.EndDate = DateTime.Now.Date;
             //dto.StartDate = DateTime.Now.AddDays(1).Date;

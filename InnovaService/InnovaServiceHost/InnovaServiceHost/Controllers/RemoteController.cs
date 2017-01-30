@@ -11,6 +11,8 @@ using System.Configuration;
 using InnovaServiceHost.DTOs;
 using System.Globalization;
 using InnovaService;
+using System.Linq.Dynamic;
+
 
 namespace InnovaServiceHost.Controllers {
     public class RemoteController : BaseController {
@@ -110,10 +112,18 @@ namespace InnovaServiceHost.Controllers {
            
             var startDate = dto.StartDate;
             var endDate = dto.EndDate;
-            return (from p in context.vwBOLProds.Where(x => //stations.Contains(x.station.Value) &&
-                                                         x.OrderDate >= startDate
-                                                        && x.OrderDate <= endDate
-                                                        )
+            var mypredicate = "OrderDate >= " + startDate.ToShortDateString() + " && OrderDate <= " + startDate.ToShortDateString();
+            if (dto.CustomerNumber != null || dto.CustomerNumber != "")
+            {
+                mypredicate += " && CustNumber == " + dto.CustomerNumber;
+            }
+            if (dto.OrderNumber != null || dto.OrderNumber != "")
+            {
+                mypredicate += " && OrderCode == " + dto.OrderNumber;
+            }
+
+
+            return (from p in context.vwBOLProds.Where(mypredicate, null)
                     
                     select new
                     {

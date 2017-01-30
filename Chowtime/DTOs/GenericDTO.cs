@@ -19,5 +19,7 @@ namespace SGApp.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public virtual ICollection<Dictionary<string, string>> ReturnData1 { get; set; }
+        public string CustomerNumber { get; set; }
+        public string OrderNumber { get; set; }
     }
 }
