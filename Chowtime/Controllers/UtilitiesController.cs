@@ -12,6 +12,7 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Net.Mail;
 using System.Web;
@@ -167,6 +168,7 @@ namespace SGApp.Controllers
                 //BaseAddress = new Uri("http://323-booth-svr2:3030/")
                 //BaseAddress = new Uri("http://64.139.95.243:7846/")
                 BaseAddress = new Uri("http://64.139.95.243:7846/")
+                //BaseAddress = new Uri("http://localhost:51888/")
                 //BaseAddress = new Uri(baseAddress)                
             };
             try
@@ -188,13 +190,39 @@ namespace SGApp.Controllers
             string subject = "";
             string body = "<!DOCTYPE HTML PUBLIC ' -//W3C//DTD HTML 4.01 Transitional//EN'><html><head><META http-equiv='Content-Type' content='text/html; charset=utf-8'></head>";
             //each order goes here
-            body += "<body><div><div><table><tbody><tr><td><table><tr><td colspan='2'><h1>Bill of Lading</h1></td></tr><tr><td><img src='http://logo.png' height='150px'></td><td>Harvest Select Catfish<br>Highway 80 East<br>P.O. Box 769<br>Uniontown, AL 36786<br>TEL: (334) 628-3474 Tax: (334) 628-6122</td></tr></table></td><td valign='top'><table><tr><td>Order No.</td><td>XXXXXX</td></tr><tr><td>Order Date</td><td>XX/XX/XXXX</td></tr><tr><td>Ship Date</td><td>XX/XX/XXXX</td></tr></table></td></tr><tr><td colspan='2'><table><thead><tr><th>Sold To:</th><th>Ship To:</th></tr></thead><tbody><tr><td>Otc - Charge<br><br><br><br>Uniontown, AL, 36786<br>2056283474</td><td>Otc - Charge<br>Customer Pickup</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'><table><thead><tr><th>Cust No.</th><th>Corp PO</th><th>House PO</th><th>Freight PO</th><th>Terms</th></tr></thead><tbody><tr><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'><table><thead><tr><th>Item</th><th>Product Description</th><th>UM</th><th>Ordered</th><th>Shipped</th><th>Weight<br>(Subject to Correction)</th></tr></thead><tbody><tr><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td></tr><tr><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td></tr><tr><td colspan='3'><strong>TOTALS</strong></td><td>XXXXX</td><td>XXXXX</td><td>XXXXX</td></tr></tbody></table></td></tr></tbody></table></div></div>";
+            BOL[] resultsByOrder = BOLResults.GroupBy(x => x.OrderCode).Select(group => group.First()).ToArray();
+            body += "<body>";
+            foreach (BOL order in resultsByOrder)
+            {
+                body += "<div><div><table><tbody><tr><td><table><tr><td colspan='2'><h1>Bill of Lading</h1></td></tr>";
+                body += "<tr><td><img src='http://dashboards.harvestselect.com/Images/logo.png' height='150px'></td><td>Harvest Select Catfish<br>Highway 80 East<br>P.O. Box 769<br>Uniontown, AL 36786<br>TEL: (334) 628-3474 Tax: (334) 628-6122</td></tr></table></td><td valign='top'><table>";
+                body += "<tr><td>Order No.</td><td>" + order.OrderCode + "</td></tr><tr><td>Order Date</td><td>" + order.OrderDate + "</td></tr>";
+                body += "<tr><td>Ship Date</td><td>" + order.DispDate + "</td></tr></table></td></tr><tr><td colspan='2'><table>";
+                body += "<thead><tr><th>Sold To:</th>";
+                body += "<th>Ship To:</th></tr></thead>";
+                body += "<tbody><tr><td>" + order.CustLong +"<br>" + order.CustomerAddress +"<br>" + order.CustomerAddress2 +"<br><br>" + order.CustomerCity + ", " + order.CustomerState + "  " + order.CustomerZip + "<br>" + order.CustomerPhone + "</td>";
+                body += "<tbody><tr><td>" + order.ShipToName +"<br>" + order.ShipToAddress +"</td></tr><tr></tr></tbody></table>";
+                body += "</td></tr><tr><td colspan='2'><table><thead><tr><th>Cust No.</th><th>Corp PO</th><th>House PO</th><th>Freight PO</th><th>Terms</th></tr></thead>";
+                body += "<tbody><tr><td>" + order.CustNumber + "</td><td>" + order.PO1 + "</td><td>" + order.PO2 + "</td><td>" + order.PO3 + "</td><td>" + order.OrderTerms + "</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'>";
+                body += " <table><thead><tr><th>Item</th><th>Product Description</th><th>UM</th><th>Ordered</th><th>Shipped</th><th>Approx Unit Weight</th><th>Weight<br>(Subject to Correction)</th></tr></thead><tbody>";
+                foreach (BOL orderdetail in BOLResults.Where(x => x.OrderCode == order.OrderCode))
+                {
+                    body += "<tr><td>" + orderdetail.ProdCode + "</td><td>" + orderdetail.ProdName + "</td><td>" + orderdetail.WeightLabel + "</td><td>" + orderdetail.OrderedAmt + "</td><td>" + orderdetail.ShippedQty + "</td><td>" + orderdetail.ApproxUnitWeight + "</td><td>" + orderdetail.ShippedWeight + "</td></tr>";
+                }
+
+                body += "<tr><td colspan='3'><strong>TOTALS</strong></td><td>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.OrderedAmt)).ToString() + "</td><td>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.ShippedQty)).ToString() + "</td><td></td><td>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.ShippedWeight)).ToString() + "</td></tr></tbody></table></td></tr></tbody></table></div></div>";
+            }
+          
             
             
             body += "<div style='page-break-after:always'></div></body></html>";
+            var pdfBytes = (new NReco.PdfGenerator.HtmlToPdfConverter()).GeneratePdf(body);
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            //result.Content = new ByteArrayContent(pdfBytes);
+            result.Content = new StringContent(System.Convert.ToBase64String(pdfBytes));
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            return result;
 
-
-            return Request.CreateResponse(HttpStatusCode.OK, BOLResults);
 
         }
         [HttpGet]

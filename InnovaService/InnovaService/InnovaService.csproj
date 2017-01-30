@@ -101,6 +101,9 @@
     <Compile Include="vwBOL2.cs">
       <DependentUpon>DB323.tt</DependentUpon>
     </Compile>
+    <Compile Include="vwBOLProd.cs">
+      <DependentUpon>DB323.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Innova.edmx">
