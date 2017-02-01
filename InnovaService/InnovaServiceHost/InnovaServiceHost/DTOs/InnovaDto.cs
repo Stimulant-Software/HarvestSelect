@@ -9,5 +9,6 @@ namespace InnovaServiceHost.DTOs {
         public string Key { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public string OrderCode { get; set; }
     }
 }

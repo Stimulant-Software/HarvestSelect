@@ -17,5 +17,7 @@ namespace SGApp.DTOs
         }
 
         #endregion
+
+        public string OrderCode { get; set; }
     }
 }
