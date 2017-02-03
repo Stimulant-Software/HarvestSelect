@@ -112,18 +112,18 @@ namespace InnovaServiceHost.Controllers {
            
             var startDate = dto.StartDate;
             var endDate = dto.EndDate;
-            var mypredicate = "OrderDate >= " + startDate.ToShortDateString() + " && OrderDate <= " + startDate.ToShortDateString();
-            if (dto.CustomerNumber != null || dto.CustomerNumber != "")
-            {
-                mypredicate += " && CustNumber == " + dto.CustomerNumber;
-            }
-            if (dto.OrderNumber != null || dto.OrderNumber != "")
-            {
-                mypredicate += " && OrderCode == " + dto.OrderNumber;
-            }
+            //var mypredicate = "OrderDate == DateTime.Parse(\"" + startDate.ToShortDateString() + "\")";// +" && OrderDate <= " + startDate.ToShortDateString();
+            //if (dto.CustomerNumber != "")
+            //{
+            //    mypredicate += " && CustNumber == " + dto.CustomerNumber + "";
+            //}
+            //if (dto.OrderNumber != null || dto.OrderNumber != "")
+            //{
+            //    mypredicate += " && OrderCode == \"" + dto.OrderNumber + "\"";
+            //}
 
 
-            return (from p in context.vwBOLProds.Where(mypredicate, null)
+            return (from p in context.vwBOLProds.Where(x => x.OrderDate >= startDate && x.OrderDate <= startDate)
                     
                     select new
                     {

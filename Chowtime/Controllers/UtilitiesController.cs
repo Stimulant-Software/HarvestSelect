@@ -225,9 +225,9 @@ namespace SGApp.Controllers
             //return Request.CreateResponse(HttpStatusCode.OK, body);
 
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
-            result.Content = new ByteArrayContent(pdfBytes);
+            //result.Content = new ByteArrayContent(pdfBytes);
             
-            //result.Content = new StringContent(System.Convert.ToBase64String(pdfBytes));
+            result.Content = new StringContent(System.Convert.ToBase64String(pdfBytes));
             result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
             result.Content.Headers.Add("Content-Disposition", "inline; filename=BOL.pdf");
             return result;

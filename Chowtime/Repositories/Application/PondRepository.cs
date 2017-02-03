@@ -45,7 +45,7 @@ namespace SGApp.Repository.Application
         public override List<Pond> GetByPredicate(string predicate)
         {
             var iq = DbContext.Ponds.AsQueryable();
-            return predicate.Length > 0 ? iq.Where(predicate, null).ToList() : iq.ToList();
+            return predicate.Length > 0 ? iq.Where(predicate, null).OrderBy(x => x.OldPondID).ToList() : iq.OrderBy(x => x.OldPondID).ToList();
         }
 
         public List<Pond> GetPonds(int farmId)
