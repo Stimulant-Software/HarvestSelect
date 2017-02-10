@@ -178,6 +178,12 @@ body.op > header {
     border-top: 1px solid #6F5015;
     border-bottom: 1px solid #6F5015;
 }
+body.bol > header {
+    background-color: #a94442;
+    background-image: -webkit-linear-gradient(top, #1a1e24, #a94442);
+    border-top: 1px solid #a94442;
+    border-bottom: 1px solid #a94442;
+}
 
 body > header h1 {
     background: url(images/alt-logo.png) no-repeat left center;
@@ -193,6 +199,7 @@ nav {
 .ct nav { background-color: #3f8b97; background-image: -webkit-linear-gradient(top, #49a1af, #3f8b97); }
 .at nav { background-color: #156f23; }
 .op nav { background-color: #6F5015; }
+.bol nav { background-color: #a94442; }
 
 .login nav {display: none; }
 

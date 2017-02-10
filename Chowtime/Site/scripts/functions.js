@@ -166,7 +166,7 @@ function centerProgress(container) { if (container == 'body') { container = wind
 // OPENS AND CENTERS MODALS ON WINDOW
 function openModal(modalId) { $("#lightboxBG").fadeIn(250); centerModalX(modalId); $(modalId).fadeIn(250); $(".modal-cancel").click(function(e) { e.preventDefault(); closeModal(); }); $(document).keyup(function(e) { if (e.keyCode == 27) { closeModal() } }); }
 
-function centerModal(modalId) { var windowHeight = window.innerHeight, windowWidth = window.innerWidth, modalHeight = $(modalId).innerHeight(), modalWidth = $(modalId).innerWidth(); var modalTop = (windowHeight - modalHeight) / 2, modalLeft = (windowWidth - modalWidth) / 2; $(modalId).css({ 'top': modalTop, 'left': modalLeft }); }
+function centerModal(modalId) { var windowHeight = window.innerHeight, windowWidth = window.innerWidth, modalHeight = $(modalId).innerHeight(), modalWidth = $(modalId).innerWidth(); var modalTop = (windowHeight - modalHeight) / 2, modalLeft = (windowWidth - modalWidth) / 2; $(modalId).css({ 'top': /* modalTop */ '100px', 'left': modalLeft }); }
 
 function centerModalX(modalId) { var windowWidth = window.innerWidth, modalWidth = $(modalId).innerWidth(); var modalLeft = (windowWidth - modalWidth) / 2; $(modalId).css({ 'top': '50px', 'left': modalLeft }); }
 
