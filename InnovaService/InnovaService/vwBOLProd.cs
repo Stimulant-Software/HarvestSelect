@@ -44,5 +44,6 @@ namespace InnovaService
         public string CustomerZip { get; set; }
         public string CustomerPhone { get; set; }
         public string Terms { get; set; }
+        public string CWItem { get; set; }
     }
 }

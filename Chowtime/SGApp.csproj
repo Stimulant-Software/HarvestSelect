@@ -512,6 +512,7 @@
     <Content Include="Site\content\images\yellow_body_bg.jpg" />
     <Content Include="Site\ct-entry.html" />
     <Content Include="Site\ct-reports.html" />
+    <Content Include="Site\op-bol-reports.html" />
     <Content Include="Site\op-farm-yields.html" />
     <Content Include="Site\footer.html" />
     <Content Include="Site\index.html" />

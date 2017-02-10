@@ -123,7 +123,7 @@ namespace InnovaServiceHost.Controllers {
             //}
 
 
-            return (from p in context.vwBOLProds.Where(x => x.OrderDate >= startDate && x.OrderDate <= startDate)
+            return (from p in context.vwBOLProds.Where(x => x.OrderCode == dto.OrderCode)
                     
                     select new
                     {

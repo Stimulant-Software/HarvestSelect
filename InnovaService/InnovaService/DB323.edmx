@@ -47,6 +47,7 @@
       [vwBOLProd].[ShippedWeight] AS [ShippedWeight], 
       [vwBOLProd].[ApproxUnitWeight] AS [ApproxUnitWeight], 
       [vwBOLProd].[HowPacked] AS [HowPacked], 
+      [vwBOLProd].[CWItem] AS [CWItem], 
       [vwBOLProd].[WeightLabel] AS [WeightLabel], 
       [vwBOLProd].[CustomerAddress] AS [CustomerAddress], 
       [vwBOLProd].[CustomerAddress2] AS [CustomerAddress2], 
@@ -92,6 +93,7 @@
             <PropertyRef Name="ShippedWeight" />
             <PropertyRef Name="ApproxUnitWeight" />
             <PropertyRef Name="HowPacked" />
+            <PropertyRef Name="CWItem" />
             <PropertyRef Name="WeightLabel" />
           </Key>
           <Property Name="OrderCode" Type="nvarchar" Nullable="false" MaxLength="30" />
@@ -116,6 +118,7 @@
           <Property Name="ShippedWeight" Type="real" Nullable="false" />
           <Property Name="ApproxUnitWeight" Type="float" Nullable="false" />
           <Property Name="HowPacked" Type="varchar" Nullable="false" MaxLength="7" />
+          <Property Name="CWItem" Type="varchar" Nullable="false" MaxLength="21" />
           <Property Name="WeightLabel" Type="varchar" Nullable="false" MaxLength="7" />
           <Property Name="CustomerAddress" Type="nvarchar" MaxLength="80" />
           <Property Name="CustomerAddress2" Type="nvarchar" MaxLength="80" />
@@ -162,6 +165,7 @@
             <PropertyRef Name="ApproxUnitWeight" />
             <PropertyRef Name="HowPacked" />
             <PropertyRef Name="WeightLabel" />
+            <PropertyRef Name="CWItem" />
           </Key>
           <Property Type="String" Name="OrderCode" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="CustNumber" />
@@ -193,6 +197,7 @@
           <Property Type="String" Name="CustomerZip" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="CustomerPhone" MaxLength="80" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Terms" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CWItem" Nullable="false" MaxLength="21" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -222,6 +227,7 @@
           <EntitySetMapping Name="vwBOLProds">
             <EntityTypeMapping TypeName="DB323Model.vwBOLProd">
               <MappingFragment StoreEntitySet="vwBOLProd">
+                <ScalarProperty Name="CWItem" ColumnName="CWItem" />
                 <ScalarProperty Name="Terms" ColumnName="Terms" />
                 <ScalarProperty Name="CustomerPhone" ColumnName="CustomerPhone" />
                 <ScalarProperty Name="CustomerZip" ColumnName="CustomerZip" />

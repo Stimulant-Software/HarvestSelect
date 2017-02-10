@@ -17,8 +17,9 @@ namespace SGApp.DTOs
         }
 
         #endregion
-        public string OrderDate { get; set; }
-        public string CustomerNumber { get; set; }
-        public string OrderNumber { get; set; }
+
+
+        public string OrderCode { get; set; }
+
     }
 }

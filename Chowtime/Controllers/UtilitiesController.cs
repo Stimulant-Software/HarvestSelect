@@ -157,12 +157,13 @@ namespace SGApp.Controllers
             //var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
             //var sDate = DateTime.ParseExact(dic.First().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
             //var eDate = DateTime.ParseExact(dic.Last().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
-            var sDate = utilityDto.OrderDate;
-            var eDate = utilityDto.OrderDate;
-            dto.StartDate = DateTime.Parse(sDate);
-            dto.EndDate = DateTime.Parse(sDate);
-            dto.CustomerNumber = utilityDto.CustomerNumber;
-            dto.OrderNumber = utilityDto.OrderNumber;
+            //var sDate = utilityDto.OrderDate;
+            //var eDate = utilityDto.OrderDate;
+            //dto.StartDate = DateTime.Parse(sDate);
+            //dto.EndDate = DateTime.Parse(sDate);
+            //dto.CustomerNumber = utilityDto.CustomerNumber;
+            //dto.OrderNumber = utilityDto.OrderNumber;
+            dto.OrderCode = utilityDto.OrderCode;
             //dto.StartDate = DateTime.Now.AddDays(-1).Date;
             //dto.EndDate = DateTime.Now.Date;
             //dto.StartDate = DateTime.Now.AddDays(1).Date;
@@ -192,7 +193,7 @@ namespace SGApp.Controllers
             //var IQFweight = shiftResults.Where(x => iqfstations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
 
             string subject = "";
-            string body = "<html>";
+            string body = "<html><head><style>thead, tfoot { display: table-row-group } .contentTable tr, td {page-break-inside: avoid !important;}</style></head>";
             //each order goes here
             BOL[] resultsByOrder = BOLResults.GroupBy(x => x.OrderCode).Select(group => group.First()).ToArray();
             body += "<body>";
@@ -206,16 +207,48 @@ namespace SGApp.Controllers
                 body += "<th style='border: 1px solid #ddd; background-color: #ddd;'>Ship To:</th></tr></thead>";
                 body += "<tbody><tr><td style='border: 1px solid #ddd'>" + order.CustLong + "<br>" + order.CustomerAddress + "<br>" + order.CustomerAddress2 + "<br>" + order.CustomerCity + "  " + order.CustomerZip + "<br>" + order.CustomerPhone + "</td>";
                 body += "<td style='border: 1px solid #ddd'>" + order.ShipToName + "<br>" + order.ShipToAddress + "</td></tr><tr></tr></tbody></table>";
-                body += "</td></tr><tr><td colspan='2'><br /><table style='width: 100%'><thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Cust No.</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Corp PO</th><th style='border: 1px solid #ddd; background-color: #ddd;'>House PO</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Freight PO</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Terms</th></tr></thead>";
-                body += "<tbody><tr><td style='border: 1px solid #ddd'>" + order.CustNumber + "</td><td style='border: 1px solid #ddd'>" + order.PO1 + "</td><td style='border: 1px solid #ddd'>" + order.PO2 + "</td><td style='border: 1px solid #ddd'>" + order.PO3 + "</td><td style='border: 1px solid #ddd'>" + order.OrderTerms + "</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'>";
-                body += " <br /><table style='width: 100%'><thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Item</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Product Description</th><th style='border: 1px solid #ddd; background-color: #ddd;'>UM</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Ordered</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Shipped</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Approx Unit Weight</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Weight<br>(Subject to Correction)</th></tr></thead><tbody>";
-                foreach (BOL orderdetail in BOLResults.Where(x => x.OrderCode == order.OrderCode))
+                body += "</td></tr><tr><td colspan='2'><br /><table style='width: 100%'><thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Cust No.</th><th style='border: 1px solid #ddd; background-color: #ddd; text-align: center;'>Company PO</th><th style='border: 1px solid #ddd; background-color: #ddd; text-align: center;'>Corporate PO</th><th style='border: 1px solid #ddd; background-color: #ddd; text-align: center;'>Freight PO</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Terms</th></tr></thead>";
+                body += "<tbody><tr><td style='border: 1px solid #ddd'>" + order.CustNumber + "</td><td style='border: 1px solid #ddd; text-align: center;'>" + order.PO1 + "</td><td style='border: 1px solid #ddd; text-align: center;'>" + order.PO2 + "</td><td style='border: 1px solid #ddd;  text-align: center;'>" + order.PO3 + "</td><td style='border: 1px solid #ddd'>" + order.OrderTerms + "</td></tr><tr></tr></tbody></table></td></tr><tr><td colspan='2'>";
+                var ncw = BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM");
+                var tmp = BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").GroupBy(x => x.MaterialID).Select(group => group.First()).ToArray();
+                if (ncw.Count() > 0)
                 {
-                    body += "<tr><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdCode + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdName + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.WeightLabel + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.OrderedAmt + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedQty + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ApproxUnitWeight + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedWeight + "</td></tr>";
+                    body += " <br />Non Catch Weight Items<br /><table style='width: 100%' class='contentTable'><thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Item</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Product Description</th><th style='border: 1px solid #ddd; background-color: #ddd;'>UM</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Ordered</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Shipped</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Unit Net Wt.</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Total Net Wt.</th></tr></thead><tbody>";
                 }
+                foreach (BOL orderdetail in ncw)
+                {
+                    body += "<tr><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdCode + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdName + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.WeightLabel + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:0}", Decimal.Parse(orderdetail.OrderedAmt)) + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedQty + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:0.00}", Decimal.Parse(orderdetail.ApproxUnitWeight)) + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:0.00}", Decimal.Parse(orderdetail.ShippedWeight)) + "</td></tr>";
+                }
+                if (ncw.Count() > 0)
+                {
+                    body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.OrderedAmt))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedQty)).ToString() + "</strong></td><td style='border: 1px solid #ddd'></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr></tbody></table>";
+                }
+                if (tmp.Count() > 0)
+                {
 
-                body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.OrderedAmt)).ToString() + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.ShippedQty)).ToString() + "</td><td style='border: 1px solid #ddd'></td><td style='border: 1px solid #ddd; text-align: right;'>" + BOLResults.Where(x => x.OrderCode == order.OrderCode).Sum(x => decimal.Parse(x.ShippedWeight)).ToString() + "</td></tr></tbody></table></td></tr></tbody></table></div></div>";
-                body += "<div style='page-break-after:always'></div>";
+                    body += " <br />Catch Weight Items<br /><table style='width: 100%'  class='contentTable'><thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Item</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Product Description</th><th style='border: 1px solid #ddd; background-color: #ddd;'>UM</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Ordered</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Shipped</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Approx Unit Weight</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Weight<br>(Subject to Correction)</th></tr></thead><tbody>";
+                }  
+                foreach (BOL odet in tmp)
+                {
+                    var cw = BOLResults.Where(x => x.MaterialID == odet.MaterialID && x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM");
+                    foreach (BOL orderdetail in cw)
+                    {
+                        //removed " + orderdetail.OrderedAmt + "
+                        //removed " + orderdetail.ShippedQty + "
+                        //removed " + orderdetail.ApproxUnitWeight + "
+
+                        body += "<tr><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdCode + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdName + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.WeightLabel + "</td><td style='border: 1px solid #ddd; text-align: right;'></td><td style='border: 1px solid #ddd; text-align: right;'></td><td style='border: 1px solid #ddd; text-align: right;'></td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedWeight + "</td></tr>";
+                    }
+                    if (cw.Count() > 0)
+                    {
+                        body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>ITEM TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Sum(x => decimal.Parse(x.OrderedAmt))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Sum(x => decimal.Parse(x.ShippedQty))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;''><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Average(x => decimal.Parse(x.ShippedWeight))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr>";
+                    }
+                     }
+                if (tmp.Count() > 0)
+                {
+                    body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.OrderedAmt))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedQty))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Average(x => decimal.Parse(x.ShippedWeight))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr></tbody></table>";
+                }
+                body += "</td></tr></tbody></table></div></div>";
             }
           
             
