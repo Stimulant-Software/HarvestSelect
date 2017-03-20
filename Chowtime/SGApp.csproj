@@ -523,6 +523,7 @@
     <Content Include="Site\reports-menu.html" />
     <Content Include="Site\scripts\admin-functions.js" />
     <Content Include="Site\scripts\at-functions.js" />
+    <Content Include="Site\scripts\bol-functions.js" />
     <Content Include="Site\scripts\ct-functions.js" />
     <Content Include="Site\scripts\drilldown.js" />
     <Content Include="Site\scripts\exporting.js" />

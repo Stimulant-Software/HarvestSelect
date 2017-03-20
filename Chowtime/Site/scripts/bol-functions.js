@@ -2,9 +2,14 @@
 if (userRoles.indexOf('BOL') > -1) authorized = true;
 if (userRoles.indexOf('BOL') > -1) { authorized = true; superAuthorized = true; }
 
-console.log(userRoles); debugger;
+
 
 if (!authorized) window.location.href = "login.html";
+
+$.when(checkKey(), pageLabel()).then(function () {
+
+    bol();
+});
 
 /* BOL */
 function bol() {

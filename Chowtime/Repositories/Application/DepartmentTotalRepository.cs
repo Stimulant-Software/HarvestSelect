@@ -68,7 +68,7 @@ namespace SGApp.Repository.Application
         {
             DateTime endDate = reportDate.AddDays(1);
             reportDate = reportDate.AddSeconds(-1);
-            return DbContext.DepartmentTotals.Where(x => x.DTDate > reportDate && x.DTDate < endDate).ToList();
+            return DbContext.DepartmentTotals.Include("Department").Where(x => x.DTDate > reportDate && x.DTDate < endDate).ToList();
         }
         public List<DepartmentTotal> GetByWeek(DateTime reportDate)
         {

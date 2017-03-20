@@ -193,10 +193,11 @@ namespace SGApp.Controllers
             //var IQFweight = shiftResults.Where(x => iqfstations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
 
             string subject = "";
-            string body = "<html><head><style>thead, tfoot { display: table-row-group } .contentTable tr, td {page-break-inside: avoid !important;}</style></head>";
+            string body = "<html><head><style>thead, tfoot { display: table-row-group } .contentTable tr, td {page-break-inside: avoid !important;}</style>";
+            body += "<script>function subst(){var vars={};var x=document.location.search.substring(1).split('&'); for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}" + "var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];for(var i in x) {var y = document.getElementsByClassName(x[i]);" + "for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];}}</script></head>";
             //each order goes here
             BOL[] resultsByOrder = BOLResults.GroupBy(x => x.OrderCode).Select(group => group.First()).ToArray();
-            body += "<body>";
+            body += "<body onload=\"subst()\">";
             foreach (BOL order in resultsByOrder)
             {
                 body += "<div><div><table style='width: 100%'><tbody><tr><td><table style='width: 100%'><tr><td><h1>Bill of Lading</h1></td></tr>";
@@ -217,36 +218,43 @@ namespace SGApp.Controllers
                 }
                 foreach (BOL orderdetail in ncw)
                 {
-                    body += "<tr><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdCode + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdName + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.WeightLabel + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:0}", Decimal.Parse(orderdetail.OrderedAmt)) + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedQty + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:0.00}", Decimal.Parse(orderdetail.ApproxUnitWeight)) + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:0.00}", Decimal.Parse(orderdetail.ShippedWeight)) + "</td></tr>";
+                    body += "<tr><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdCode + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdName + "</td><td style='border: 1px solid #ddd; text-align: right;'>ca</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:0}", Decimal.Parse(orderdetail.OrderedAmt)) + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedQty + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:.##}", Decimal.Parse(orderdetail.ApproxUnitWeight)) + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:.##}", Decimal.Parse(orderdetail.ShippedWeight)) + "</td></tr>";
                 }
                 if (ncw.Count() > 0)
                 {
-                    body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.OrderedAmt))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedQty)).ToString() + "</strong></td><td style='border: 1px solid #ddd'></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr></tbody></table>";
+                    body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.OrderedAmt))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedQty)).ToString() + "</strong></td><td style='border: 1px solid #ddd'></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:.##}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "NON CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr></tbody></table>";
                 }
                 if (tmp.Count() > 0)
                 {
 
-                    body += " <br />Catch Weight Items<br /><table style='width: 100%'  class='contentTable'><thead><tr><th style='border: 1px solid #ddd; background-color: #ddd;'>Item</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Product Description</th><th style='border: 1px solid #ddd; background-color: #ddd;'>UM</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Ordered</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Shipped</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Approx Unit Weight</th><th style='border: 1px solid #ddd; background-color: #ddd;'>Weight<br>(Subject to Correction)</th></tr></thead><tbody>";
+                    body += " <br />Catch Weight Items<br /><table style='width: 100%'  class='contentTable'><tbody>";
                 }  
                 foreach (BOL odet in tmp)
                 {
                     var cw = BOLResults.Where(x => x.MaterialID == odet.MaterialID && x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM");
+                    body += "<tr><td style='border: 1px solid #ddd; background-color: #ddd; text-align:center;'><strong>Item</strong></td><td style='border: 1px solid #ddd; background-color: #ddd; text-align:center;'><strong>Product Description</strong></td><td style='border: 1px solid #ddd; background-color: #ddd; text-align:center;'><strong>UM</strong></td><td style='border: 1px solid #ddd; background-color: #ddd;'></td><td style='border: 1px solid #ddd; background-color: #ddd;'></td><!--<td style='border: 1px solid #ddd; background-color: #ddd;'><strong>Approx Unit Weight</strong></td>--><td style='border: 1px solid #ddd; background-color: #ddd; text-align: right;'><strong>Case Weight</strong></td></tr>";
                     foreach (BOL orderdetail in cw)
                     {
                         //removed " + orderdetail.OrderedAmt + "
                         //removed " + orderdetail.ShippedQty + "
                         //removed " + orderdetail.ApproxUnitWeight + "
 
-                        body += "<tr><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdCode + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdName + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.WeightLabel + "</td><td style='border: 1px solid #ddd; text-align: right;'></td><td style='border: 1px solid #ddd; text-align: right;'></td><td style='border: 1px solid #ddd; text-align: right;'></td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ShippedWeight + "</td></tr>";
+                        body += "<tr><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdCode + "</td><td style='border: 1px solid #ddd; text-align: right;'>" + orderdetail.ProdName + "</td><td style='border: 1px solid #ddd; text-align: right;'>ca</td><td style='border: 1px solid #ddd; text-align: right;'></td><td style='border: 1px solid #ddd; text-align: right;'></td><td style='border: 1px solid #ddd; text-align: right;'>" + String.Format("{0:0.00}", decimal.Parse(orderdetail.ShippedWeight)) + "</td></tr>";
                     }
                     if (cw.Count() > 0)
                     {
-                        body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>ITEM TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Sum(x => decimal.Parse(x.OrderedAmt))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Sum(x => decimal.Parse(x.ShippedQty))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;''><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Average(x => decimal.Parse(x.ShippedWeight))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr>";
+                        //<td style='border: 1px solid #ddd; text-align: right;''><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Average(x => decimal.Parse(x.ShippedWeight))) + "</strong></td> -------REMOVED PER DANIEL
+                        body += "<tr><td colspan='3' style='border: 1px solid #ddd; background-color: #ddd;'></td><td style='border: 1px solid #ddd; background-color: #ddd;; text-align: right;'><strong>Ordered</strong></td><td style='border: 1px solid #ddd; background-color: #ddd;; text-align: right;'><strong>Shipped</strong></td><td style='border: 1px solid #ddd; background-color: #ddd;; text-align: right;'><strong>Total Case Weight</strong></td></tr>";
+                        body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>ITEM TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Count().ToString() + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Sum(x => decimal.Parse(x.ShippedQty))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:.##}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM" && x.MaterialID == odet.MaterialID).Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr>";
+                        body += "<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>";
                     }
                      }
                 if (tmp.Count() > 0)
                 {
-                    body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.OrderedAmt))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedQty))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Average(x => decimal.Parse(x.ShippedWeight))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr></tbody></table>";
+                    //REMOVED PER DANIEL
+                    //<td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0.00}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Average(x => decimal.Parse(x.ShippedWeight))) + "</strong></td>
+                    body += "<tr><td colspan='3' style='border: 1px solid #ddd; background-color: #ddd;'></td><td style='border: 1px solid #ddd; background-color: #ddd;; text-align: right;'><strong>Ordered</strong></td><td style='border: 1px solid #ddd; background-color: #ddd;; text-align: right;'><strong>Shipped</strong></td><td style='border: 1px solid #ddd; background-color: #ddd;; text-align: right;'><strong>Total Case Weight</strong></td></tr>";
+                    body += "<tr><td colspan='3' style='border: 1px solid #ddd'><strong>CATCHWEIGHT TOTALS</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Count().ToString() + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:0}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedQty))) + "</strong></td><td style='border: 1px solid #ddd; text-align: right;'><strong>" + String.Format("{0:.##}", BOLResults.Where(x => x.OrderCode == order.OrderCode && x.CWItem == "CATCH WEIGHT ITEM").Sum(x => decimal.Parse(x.ShippedWeight))) + "</strong></td></tr></tbody></table>";
                 }
                 body += "</td></tr></tbody></table></div></div>";
             }
@@ -254,7 +262,14 @@ namespace SGApp.Controllers
             
             
             body += "</body></html>";
-            var pdfBytes = (new NReco.PdfGenerator.HtmlToPdfConverter()).GeneratePdf(body);
+            var pdfGen = new NReco.PdfGenerator.HtmlToPdfConverter();
+            var pdfheader = "<div>Page <span class=\"page\"></span> of <span class=\"topage\"></span><span>&nbsp;&nbsp;&nbsp;Order:&nbsp;" + BOLResults[0].OrderCode + "&nbsp;&nbsp;&nbsp;Ship Date:&nbsp;" + DateTime.Parse(BOLResults[0].DispDate).ToShortDateString() + "</span></div>";
+            pdfGen.PageFooterHtml = pdfheader;
+            var pdfMargins = new NReco.PdfGenerator.PageMargins();
+            pdfMargins.Top = 10;
+            pdfMargins.Bottom = 10;
+            pdfGen.Margins = pdfMargins;
+            var pdfBytes = pdfGen.GeneratePdf(body);
             //return Request.CreateResponse(HttpStatusCode.OK, body);
 
             HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
@@ -317,6 +332,8 @@ namespace SGApp.Controllers
             List<string> iqfstations = new List<string>();
             iqfstations.Add("9");
             iqfstations.Add("10");
+            iqfstations.Add("1024");
+            iqfstations.Add("1025");
             var IQFweight = shiftResults.Where(x => iqfstations.Contains(x.Station)).Sum(x => decimal.Parse(x.Nominal)).ToString();
             var BaggerWeightRecord = shiftResults.Where(x => x.Station == "7").FirstOrDefault();
             var BaggerWeight = BaggerWeightRecord != null ? BaggerWeightRecord.Nominal : "0";
@@ -1371,6 +1388,297 @@ namespace SGApp.Controllers
                 return false;
                 //tbComments.Text = ex.Message;
             }
+        }
+        [HttpGet]
+        public HttpResponseMessage TestDailyReport()
+        {
+
+            //Update Shift Weights
+            List<ShiftWeight> shiftResults = new List<ShiftWeight>();
+            //SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+
+            dto.StartDate = DateTime.Now.AddYears(102);
+            dto.EndDate = DateTime.Now.AddYears(102);
+            //dto.StartDate = DateTime.Now.AddDays(-1).Date;
+            //dto.EndDate = DateTime.Now.Date;
+            //dto.StartDate = DateTime.Now.AddDays(1).Date;
+            //dto.EndDate = DateTime.Now.AddDays(2).Date;
+
+            List<string> iqfstations = new List<string>();
+            iqfstations.Add("9");
+            iqfstations.Add("10");
+            iqfstations.Add("1024");
+            iqfstations.Add("1025");
+            var IQFweight = 99999.ToString();
+            var BaggerWeightRecord = shiftResults.Where(x => x.Station == "7").FirstOrDefault();
+            var BaggerWeight = "88888";
+            List<string> stations = new List<string>();
+            stations.Add("8");
+            stations.Add("2");
+            stations.Add("4");
+            stations.Add("3");
+            stations.Add("866");
+            var FreshWeight = 77777.ToString();
+
+
+            var reportdate = DateTime.Now;
+            //reportdate = DateTime.Parse(DateTime.Now.AddDays(-1).ToShortDateString());
+            reportdate = dto.StartDate;
+            //dto.StartDate = DateTime.Now.AddDays(-1).Date;
+            //reportdate = DateTime.Parse(DateTime.Now.AddDays(11).ToShortDateString());
+            var ptr = new ProductionTotalRepository();
+            var dtr = new DepartmentTotalRepository();
+            var wbr = new WeighBackRepository();
+            var ar = new AbsenceRepository();
+            var dr = new DownTimeRepository();
+            var fsrr = new FilletScaleReadingRepository();
+
+
+            var iqfw = dtr.GetByDateAndDepartment(reportdate, 5);
+            if (iqfw != null && IQFweight != null)
+            {
+                iqfw.ShiftWeight = decimal.Parse(IQFweight);
+                dtr.Save(iqfw);
+            }
+            else
+            {
+                iqfw = new DepartmentTotal();
+                if (IQFweight != null)
+                {
+                    iqfw.ShiftWeight = decimal.Parse(IQFweight);
+                }
+                iqfw.DepartmentID = 5;
+                iqfw.DTDate = reportdate;
+                dtr.Save(iqfw);
+
+            }
+            var freshw = dtr.GetByDateAndDepartment(reportdate, 4);
+            if (freshw != null && FreshWeight != null)
+            {
+                freshw.ShiftWeight = decimal.Parse(FreshWeight);
+                dtr.Save(freshw);
+            }
+            else
+            {
+                freshw = new DepartmentTotal();
+                freshw.DepartmentID = 4;
+                freshw.DTDate = reportdate;
+                if (FreshWeight != null)
+                {
+                    freshw.ShiftWeight = decimal.Parse(FreshWeight);
+                }
+
+                dtr.Save(freshw);
+            }
+            var bagw = dtr.GetByDateAndDepartment(reportdate, 6);
+            if (bagw != null && BaggerWeight != null)
+            {
+                bagw.ShiftWeight = decimal.Parse(BaggerWeight);
+                dtr.Save(bagw);
+            }
+            else
+            {
+                bagw = new DepartmentTotal();
+                bagw.DepartmentID = 6;
+                bagw.DTDate = reportdate;
+                if (BaggerWeight != null)
+                {
+                    bagw.ShiftWeight = decimal.Parse(BaggerWeight);
+                }
+
+                dtr.Save(bagw);
+            }
+
+            dtr.SaveRepoChanges();
+
+            List<Sampling> samplingResults = new List<Sampling>();
+
+
+
+            var pts = ptr.GetByDate(reportdate);
+            var dts = dtr.GetByDate(reportdate);
+            var wbs = wbr.GetByDate(reportdate);
+            var abs = ar.GetByDate(reportdate);
+            var dsl = dr.GetByDate(reportdate);
+            var fsrs = fsrr.GetByDate(reportdate);
+
+            decimal headedweighttotal = 0;
+            decimal plweight = 0;
+            decimal wbweight = 0;
+            decimal avgyield = 100;
+            foreach (ProductionTotal pt in pts)
+            {
+                if (pt.PlantWeight != null)
+                { plweight = pt.PlantWeight.Value; }
+                if (pt.WeighBacks != null)
+                { wbweight = pt.WeighBacks.Value; }
+                if (pt.AverageYield != null)
+                { avgyield = pt.AverageYield.Value; }
+                headedweighttotal += (plweight - wbweight) * avgyield / 100;
+                plweight = 0;
+                wbweight = 0;
+                avgyield = 100;
+            }
+            decimal notzero = pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value;
+            decimal avgTotal = 1;
+            if (notzero == 0)
+            {
+                avgTotal = 0;
+            }
+            else
+            {
+                avgTotal = headedweighttotal * 100 / (pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value);
+            }
+            //decimal avgTotal = headedweighttotal * 100 / (pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value);
+            string filletscale = fsrs == null ? "0" : fsrs.FilletScaleReading1.ToString();
+            string subject = "";
+            string body = "";
+            body += "<style>table, td, th {border: 1px solid #ddd; text-align: left;}table {border-collapse: collapse; width: 100%;} th, td {padding: 5px;} tr:nth-child(2) {background-color: #f8f8f8;} th {background-color: #ddd;}</style>";
+            subject = "Harvest Select Daily Production Report";
+            body += "Report Date:  " + reportdate.ToShortDateString() + "<br /><br />";
+            body += "Fillet Scale Reading: " + filletscale + "<br /><br />";
+            body += "<b>Live Fish Receiving</b><br />";
+            body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Pond Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Plant Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Difference</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>WeighBacks</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Net Live Weight</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Yield %</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Headed Yield</th></tr>";
+            body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.PondWeight).Value.ToString("#") + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.PlantWeight).Value.ToString("#") + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pts.Sum(x => x.PondWeight).Value - pts.Sum(x => x.PlantWeight).Value).ToString("#") + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pts.Sum(x => x.WeighBacks).Value.ToString("#") + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pts.Sum(x => x.PlantWeight).Value - pts.Sum(x => x.WeighBacks).Value).ToString("#") + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + avgTotal.ToString("#.####") + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + headedweighttotal.ToString("#") + "</td></tr>";
+            foreach (ProductionTotal pt in pts)
+            {
+                decimal plantweight = pt.PlantWeight.HasValue ? pt.PlantWeight.Value : 0;
+                decimal pondweight = pt.PondWeight.HasValue ? pt.PondWeight.Value : 0;
+                decimal weighbacks = pt.WeighBacks.HasValue ? pt.WeighBacks.Value : 0;
+                decimal averageyield = pt.AverageYield.HasValue ? pt.AverageYield.Value : 0;
+                body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pt.Pond.Farm.InnovaName + " - " + pt.Pond.PondName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + pondweight.ToString("#") + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + plantweight.ToString("#") + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (pondweight - plantweight).ToString("#") + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + weighbacks.ToString("#") + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + (plantweight - weighbacks).ToString("#") + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + averageyield.ToString("#.####") + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ((plantweight - weighbacks) * averageyield / 100).ToString("#") + "</td></tr>";
+            }
+  
+
+
+
+
+            body += "</table><br /><br />";
+
+            body += "<b>Production By Department</b><br />";
+            body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Absences</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Finish Time</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Production Total</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Downtime</th></tr>";
+            body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dts.Sum(x => x.Absences).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>---</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dts.Sum(x => x.ShiftWeight).Value.ToString() + " lbs</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dts.Sum(x => x.DownTime).Value.ToString() + "</td></tr>";
+
+            foreach (DepartmentTotal dt in dts)
+            {
+                string finishtime = dt.FinishTime.HasValue ? dt.FinishTime.Value.ToShortTimeString() : "---";
+                string shiftweight = dt.ShiftWeight.HasValue ? dt.ShiftWeight.Value.ToString() : "---";
+                if (dt.DepartmentID == 3)
+                {
+                    shiftweight = filletscale;
+                }
+                string downtime = dt.DownTime.HasValue ? dt.DownTime.Value.ToString() : "---";
+                string absences = dt.Absences.HasValue ? dt.Absences.Value.ToString() : "---";
+                body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.Department.DepartmentName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + absences + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + finishtime + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + shiftweight + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + downtime + "</td></tr>";
+            }
+            body += "</table><br /><br />";
+
+            //body += "<b>WeighBack Details</b><br />";
+            //body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Turtle/Trash</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Shad/Carp/Bream</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Live Disease</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Dressed Disease</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>~~Backs</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Red Fillet</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Big Fish</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>DOAs</th></tr>";
+            //body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Sum(x => x.Turtle).Value.ToString() + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Sum(x => x.Shad).Value.ToString() +  "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Sum(x => x.LiveDisease).Value.ToString() + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Sum(x => x.DressedDisease).Value.ToString() + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Sum(x => x.Backs).Value.ToString() + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Sum(x => x.RedFillet).Value.ToString() + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Sum(x => x.BigFish).Value.ToString() + "</td>";
+            //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Sum(x => x.DOAs).Value.ToString() + "</td></tr>";
+            //List<int> ponds = new List<int>();
+            //foreach (WeighBack wb in wbs)
+            //{
+            //    if (!ponds.Contains(wb.PondID)){
+
+            //        body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wb.Pond.Farm.FarmName + " - " + wb.Pond.PondName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Where(x => x.PondID == wb.PondID).Sum(x => x.Turtle).Value.ToString() + "</td>";
+            //        body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Where(x => x.PondID == wb.PondID).Sum(x => x.Shad).Value.ToString() + "</td>";
+            //        body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Where(x => x.PondID == wb.PondID).Sum(x => x.LiveDisease).Value.ToString() + "</td>";
+            //        body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Where(x => x.PondID == wb.PondID).Sum(x => x.DressedDisease).Value.ToString() + "</td>";
+            //        body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Where(x => x.PondID == wb.PondID).Sum(x => x.Backs).Value.ToString() + "</td>";
+            //        body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Where(x => x.PondID == wb.PondID).Sum(x => x.RedFillet).Value.ToString() + "</td>";
+            //        body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Where(x => x.PondID == wb.PondID).Sum(x => x.BigFish).Value.ToString() + "</td>";
+            //        body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + wbs.Where(x => x.PondID == wb.PondID).Sum(x => x.DOAs).Value.ToString() + "</td></tr>";
+
+            //    }
+            //    ponds.Add(wb.PondID);
+            //}
+            //body += "</table><br /><br />";
+
+
+            body += "<b>Employee Absence Details</b><br />";
+            body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Reg Out</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Reg Late</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Reg Left Early</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Temp Out</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Temp Late</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Temp Left Early</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Inmate Out</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Inmate Left Early</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Vacation</th></tr>";
+            body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.RegEmpOut).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.RegEmpLate).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.RegEmpLeftEarly).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.TempEmpOut).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.TempEmpLate).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.TempEmpLeftEarly).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.InmateOut).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.InmateLeftEarly).Value.ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + abs.Sum(x => x.EmployeesOnVacation).Value.ToString() + "</td></tr>";
+            foreach (Absence ab in abs)
+            {
+                string RegEmpOut = ab.RegEmpOut.HasValue ? ab.RegEmpOut.Value.ToString() : "---";
+                string RegEmpLate = ab.RegEmpLate.HasValue ? ab.RegEmpLate.Value.ToString() : "---";
+                string RegEmpLeftEarly = ab.RegEmpLeftEarly.HasValue ? ab.RegEmpLeftEarly.Value.ToString() : "---";
+                string TempEmpOut = ab.TempEmpOut.HasValue ? ab.TempEmpOut.Value.ToString() : "---";
+                string TempEmpLate = ab.TempEmpLate.HasValue ? ab.TempEmpLate.Value.ToString() : "---";
+                string TempEmpLeftEarly = ab.TempEmpLeftEarly.HasValue ? ab.TempEmpLeftEarly.Value.ToString() : "---";
+                string InmateOut = ab.InmateOut.HasValue ? ab.InmateOut.Value.ToString() : "---";
+                string InmateLeftEarly = ab.InmateLeftEarly.HasValue ? ab.InmateLeftEarly.Value.ToString() : "---";
+                string EmployeesOnVacation = ab.EmployeesOnVacation.HasValue ? ab.EmployeesOnVacation.Value.ToString() : "---";
+                body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + ab.Department.DepartmentName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + RegEmpOut + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + RegEmpLate + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + RegEmpLeftEarly + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + TempEmpOut + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + TempEmpLate + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + TempEmpLeftEarly + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + InmateOut + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + InmateLeftEarly + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + EmployeesOnVacation + "</td></tr>";
+
+            }
+            body += "</table><br /><br />";
+
+            body += "<b>Downtime Details</b><br />";
+            body += "<table style='border: 1px solid #ddd; text-align:left; border-collapse: collapse; width: 100%;'><tr><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'></th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Type</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Minutes</th><th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Note</th></tr>";
+            body += "<tr style='background-color: #A1D490; font-weight: bold;'><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>TOTAL</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>---</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dsl.Sum(x => x.Minutes).ToString() + "</td>";
+            body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>---</td></tr>";
+            foreach (DownTime dt in dsl)
+            {
+
+                string DownTimeNote = dt.DownTimeNote != null ? dt.DownTimeNote : "---";
+                body += "<tr><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.DownTimeType.Department.DepartmentName + "</td><td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.DownTimeType.DownTimeName + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.Minutes.ToString() + "</td>";
+                body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + dt.DownTimeNote + "</td></tr>";
+
+
+            }
+            body += "</table><br /><br />";
+
+            body += "</table>";
+           
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+
         }
     }
 

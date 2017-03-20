@@ -65,7 +65,7 @@ namespace SGApp.Repository.Application
         {
             DateTime endDate = reportDate.AddDays(1);
             reportDate = reportDate.AddSeconds(-1);
-            return DbContext.Absences.Where(x => x.AbsenceDate > reportDate && x.AbsenceDate < endDate).ToList();
+            return DbContext.Absences.Include("Department").Where(x => x.AbsenceDate > reportDate && x.AbsenceDate < endDate).ToList();
         }
         public List<Absence> GetByWeek(DateTime reportDate)
         {
