@@ -1174,7 +1174,7 @@ function budgetVsActual() {
 
                         var results = [], searchQuery = { "Key": _key, "StartDateMonth": startDateMonth, "StartDateYear": startDateYear }, data = JSON.stringify(searchQuery);
                         /* TODO:  FIX API */
-                        $.when($.ajax('../api/Production/ProductionDates', {
+                        $.when($.ajax('../api/AdagioData/weekDataDates', {
                             type: 'POST',
                             data: data,
                             success: function (msg) {
