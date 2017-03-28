@@ -1226,7 +1226,7 @@ function budgetVsActual() {
 
         /* TO DO: EDIT API AND SUCCESS FUNCTION FOR PRODUCT ROWS */
         var searchQuery = { "Key": _key, "ProductionDate": date }, data = JSON.stringify(searchQuery);
-        $.ajax('../api/Production/ProductionTotals', {
+        $.ajax('../api/AdagioData/WeekDataAddOrEdit', {
             type: 'POST',
             data: data,
             success: function (msg) {
@@ -1249,9 +1249,10 @@ function budgetVsActual() {
                     $('productlist input[type="text"]').off().blur(function () {
                         showProgress();
                         /* TO DO: Check values and change query */
-                        var selectedField = $(this), value = selectedField.val(), productID = 123, weekID = 123;
-                        var searchQuery = { "Key": _key, "ProductionDate": date }, data = JSON.stringify(searchQuery);
-                        $.ajax('../api/Production/ProductionTotals', {
+                        /* TO DO: Selected Field should be one of: AD_BudgetLbs , AD_BudgetDollars , AD_ActualLbs , AD_ActualDollars   */
+                        var selectedField = $(this), value = selectedField.val(), weekDataID = 123;
+                        var searchQuery = { "Key": _key, "AD_WeekDataID": date }, data = JSON.stringify(searchQuery);
+                        $.ajax('../api/AdagioData/ChangeWeekDataProperty', {
                             type: 'POST',
                             data: data,
                             success: function (msg) {
