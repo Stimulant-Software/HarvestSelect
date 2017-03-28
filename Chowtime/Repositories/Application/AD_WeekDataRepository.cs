@@ -72,7 +72,8 @@ namespace SGApp.Repository.Application
         {
             
             startDate = startDate.AddSeconds(-1);
-            return DbContext.AD_WeekData.Where(x => x.AD_WeekEnd > startDate && x.AD_WeekEnd < endDate.AddDays(1)).GroupBy(x => x.AD_WeekEnd).Select(x => x.First()).ToList();
+            endDate = endDate.AddDays(1);
+            return DbContext.AD_WeekData.Where(x => x.AD_WeekEnd > startDate && x.AD_WeekEnd < endDate).GroupBy(x => x.AD_WeekEnd).Select(x => x.First()).ToList();
         }
         public List<AD_WeekData> GetByWeek(DateTime reportDate)
         {
