@@ -1282,6 +1282,10 @@ function budgetVsActual() {
 
 /* DASHBOARD */
 function dashboard() {
+    $('#pageRefresh').off().click(function (e) {
+        e.preventDefault();
+        window.location.reload();
+    });
     Highcharts.chart('widgetBVA', {
         chart: {
             type: 'column',
