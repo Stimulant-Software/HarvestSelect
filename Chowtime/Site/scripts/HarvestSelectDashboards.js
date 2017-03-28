@@ -15,10 +15,10 @@ $(function () {
     if ($('.weigh-backs').length > 0) { showProgress(); weighBacks(); }
     if ($('.shift-end').length > 0) { showProgress(); shiftEnd(); }
     if ($('.live-sample').length > 0) { showProgress(); liveSample(); }
-    if ($('.budget-vs-actual').length > 0) { showProgress(); budgetVsActual(); }
+    if ($('.bva').length > 0) { showProgress(); budgetVsActual(); }
     if ($('.weekly-report').length > 0) { showProgress(); weeklyReport(); }
     if ($('.op-report').length > 0) { showProgress(); weeklyReport(); }
-    if ($('.dashboard').length > 0) { showProgress(); dashboard(); }
+    if ($('.dashboard-container').length > 0) { showProgress(); dashboard(); }
     if ($('.production').length > 0) { showProgress(); production(); }
     if ($('.bol').length > 0) { showProgress(); bol(); }
 });
@@ -1210,13 +1210,6 @@ function budgetVsActual() {
                         });
                     });
                 },
-            dayClick: function () {
-                showProgress('body');
-                chosenDate = $(this).data('date');
-                $.when(loadProductList(chosenDate)).then(function () {
-                    $('#calendarModal').modal('hide');
-                });
-            },
             eventClick: function (calEvent) {
                 chosenDate = calEvent.start._i;
                 $.when(loadProductList(chosenDate)).then(function () {
@@ -1250,31 +1243,25 @@ function budgetVsActual() {
                     pondList += '<section id="pond' + pondData[i].PondID + '" class="row pond-container"><section class="pond-buttons"><section class="col-md-2"><button class="btn btn-label">' + pondData[i].PondName + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_pondWeight" data-column="pond-weight" class="btn ' + $pondBtn + '">' + pondData[i].PondWeight + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_plantWeight" class="btn ' + $plantBtn + '" data-column="plant-weight">' + pondData[i].PlantWeight + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_weighbacks" class="btn ' + $backsBtn + '" data-column="weighbacks">' + pondData[i].WeighBacks + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_yield" class="btn ' + $yieldsBtn + '" data-column="yield">' + pondData[i].AverageYield + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_headedWeight" class="btn btn-label">' + pondData[i].HeadedWeight + '</button></section></section><section class="form-container col-md-12"></section></section>';
                 }
                 $.when($('#pondListContainer').append(pondList)).then(function () {
-                    bindPondButtons();
                     $('.productlist').show();
                     hideProgress();
-                });
-            }
-        });
-    }
 
-    function bindProductFields() {
-        $('.pond-buttons button').unbind().click(function () {
-            // RUN ERROR CHECK TO MAKE SURE THEY'RE NOT FORGETTING TO SUBMIT INFORMATION
-            var $status = $(this).attr('class').split("-")[1], $id = $(this).attr('id').split("d")[1].split('_')[0], $activeButton = $(this), $activeRow = $activeButton.data('column'), $formContainer = $activeButton.parent().parent().next('.form-container');
-            if ($activeRow != undefined) {
-                showProgress('body');
-                $('.open-tab').removeClass('open-tab');
-                if ($('.form-container.active').length > 0) {
-                    $('.form-container.active').slideUp(500);
-                }
-                switch ($activeRow) {
-                    case 'pond-weight': loadEditPondWeights($id, $status); break;
-                    case 'plant-weight': loadEditPlantWeights($id, $status); break;
-                    case 'weighbacks': loadEditWeighBacks($id, $status); break;
-                    case 'yield': loadEditFarmYields($id, $status); break;
-                }
-                $activeButton.parent().addClass('open-tab').parent().next('.form-container').addClass('active').slideDown(500);
+                    $('productlist input[type="text"]').off().blur(function () {
+                        showProgress();
+                        /* TO DO: Check values and change query */
+                        var selectedField = $(this), value = selectedField.val(), productID = 123, weekID = 123;
+                        var searchQuery = { "Key": _key, "ProductionDate": date }, data = JSON.stringify(searchQuery);
+                        $.ajax('../api/Production/ProductionTotals', {
+                            type: 'POST',
+                            data: data,
+                            success: function (msg) {
+                                localStorage['CT_key'] = msg['Key'];
+                                selectedField.css('border-color', 'green');
+                                hideProgress();
+                            }
+                        });
+                    });
+                });
             }
         });
     }
@@ -1282,180 +1269,185 @@ function budgetVsActual() {
 
 /* DASHBOARD */
 function dashboard() {
+    console.log("!");
     $('#pageRefresh').off().click(function (e) {
         e.preventDefault();
         window.location.reload();
     });
-    Highcharts.chart('widgetBVA', {
-        chart: {
-            type: 'column',
-            options3d: {
-                enabled: true,
-                alpha: 15,
-                beta: 15,
-                viewDistance: 25,
-                depth: 40
-            }
-        },
-
-        title: {
-            text: 'Total fruit consumption, grouped by gender'
-        },
-
-        xAxis: {
-            categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-        },
-
-        yAxis: {
-            allowDecimals: false,
-            min: 0,
-            title: {
-                text: 'Number of fruits'
-            }
-        },
-
-        tooltip: {
-            headerFormat: '<b>{point.key}</b><br>',
-            pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
-        },
-
-        plotOptions: {
-            column: {
-                stacking: 'normal',
-                depth: 40
-            }
-        },
-
-        series: [{
-            name: 'John',
-            data: [5, 3, 4, 7, 2],
-            stack: 'male'
-        }, {
-            name: 'Joe',
-            data: [3, 4, 4, 2, 5],
-            stack: 'male'
-        }, {
-            name: 'Jane',
-            data: [2, 5, 6, 2, 1],
-            stack: 'female'
-        }, {
-            name: 'Janet',
-            data: [3, 0, 4, 4, 3],
-            stack: 'female'
-        }]
-    });
-
-
-
-    Highcharts.chart('widgetOther', {
-        chart: {
-            type: 'spline'
-        },
-        title: {
-            text: 'Snow depth at Vikjafjellet, Norway'
-        },
-        subtitle: {
-            text: 'Irregular time data in Highcharts JS'
-        },
-        xAxis: {
-            type: 'datetime',
-            dateTimeLabelFormats: { // don't display the dummy year
-                month: '%e. %b',
-                year: '%b'
-            },
-            title: {
-                text: 'Date'
-            }
-        },
-        yAxis: {
-            title: {
-                text: 'Snow depth (m)'
-            },
-            min: 0
-        },
-        tooltip: {
-            headerFormat: '<b>{series.name}</b><br>',
-            pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
-        },
-
-        plotOptions: {
-            spline: {
-                marker: {
-                    enabled: true
+    
+    if ($('.dashboard').length > 0) {
+        /* Sample stuff */
+        Highcharts.chart('widgetBVA', {
+            chart: {
+                type: 'column',
+                options3d: {
+                    enabled: true,
+                    alpha: 15,
+                    beta: 15,
+                    viewDistance: 25,
+                    depth: 40
                 }
-            }
-        },
+            },
 
-        series: [{
-            name: 'Winter 2012-2013',
-            // Define the data points. All series have a dummy year
-            // of 1970/71 in order to be compared on the same x axis. Note
-            // that in JavaScript, months start at 0 for January, 1 for February etc.
-            data: [
-                [Date.UTC(1970, 9, 21), 0],
-                [Date.UTC(1970, 10, 4), 0.28],
-                [Date.UTC(1970, 10, 9), 0.25],
-                [Date.UTC(1970, 10, 27), 0.2],
-                [Date.UTC(1970, 11, 2), 0.28],
-                [Date.UTC(1970, 11, 26), 0.28],
-                [Date.UTC(1970, 11, 29), 0.47],
-                [Date.UTC(1971, 0, 11), 0.79],
-                [Date.UTC(1971, 0, 26), 0.72],
-                [Date.UTC(1971, 1, 3), 1.02],
-                [Date.UTC(1971, 1, 11), 1.12],
-                [Date.UTC(1971, 1, 25), 1.2],
-                [Date.UTC(1971, 2, 11), 1.18],
-                [Date.UTC(1971, 3, 11), 1.19],
-                [Date.UTC(1971, 4, 1), 1.85],
-                [Date.UTC(1971, 4, 5), 2.22],
-                [Date.UTC(1971, 4, 19), 1.15],
-                [Date.UTC(1971, 5, 3), 0]
-            ]
-        }, {
-            name: 'Winter 2013-2014',
-            data: [
-                [Date.UTC(1970, 9, 29), 0],
-                [Date.UTC(1970, 10, 9), 0.4],
-                [Date.UTC(1970, 11, 1), 0.25],
-                [Date.UTC(1971, 0, 1), 1.66],
-                [Date.UTC(1971, 0, 10), 1.8],
-                [Date.UTC(1971, 1, 19), 1.76],
-                [Date.UTC(1971, 2, 25), 2.62],
-                [Date.UTC(1971, 3, 19), 2.41],
-                [Date.UTC(1971, 3, 30), 2.05],
-                [Date.UTC(1971, 4, 14), 1.7],
-                [Date.UTC(1971, 4, 24), 1.1],
-                [Date.UTC(1971, 5, 10), 0]
-            ]
-        }, {
-            name: 'Winter 2014-2015',
-            data: [
-                [Date.UTC(1970, 10, 25), 0],
-                [Date.UTC(1970, 11, 6), 0.25],
-                [Date.UTC(1970, 11, 20), 1.41],
-                [Date.UTC(1970, 11, 25), 1.64],
-                [Date.UTC(1971, 0, 4), 1.6],
-                [Date.UTC(1971, 0, 17), 2.55],
-                [Date.UTC(1971, 0, 24), 2.62],
-                [Date.UTC(1971, 1, 4), 2.5],
-                [Date.UTC(1971, 1, 14), 2.42],
-                [Date.UTC(1971, 2, 6), 2.74],
-                [Date.UTC(1971, 2, 14), 2.62],
-                [Date.UTC(1971, 2, 24), 2.6],
-                [Date.UTC(1971, 3, 2), 2.81],
-                [Date.UTC(1971, 3, 12), 2.63],
-                [Date.UTC(1971, 3, 28), 2.77],
-                [Date.UTC(1971, 4, 5), 2.68],
-                [Date.UTC(1971, 4, 10), 2.56],
-                [Date.UTC(1971, 4, 15), 2.39],
-                [Date.UTC(1971, 4, 20), 2.3],
-                [Date.UTC(1971, 5, 5), 2],
-                [Date.UTC(1971, 5, 10), 1.85],
-                [Date.UTC(1971, 5, 15), 1.49],
-                [Date.UTC(1971, 5, 23), 1.08]
-            ]
-        }]
-    });
+            title: {
+                text: 'Total fruit consumption, grouped by gender'
+            },
+
+            xAxis: {
+                categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+            },
+
+            yAxis: {
+                allowDecimals: false,
+                min: 0,
+                title: {
+                    text: 'Number of fruits'
+                }
+            },
+
+            tooltip: {
+                headerFormat: '<b>{point.key}</b><br>',
+                pointFormat: '<span style="color:{series.color}">\u25CF</span> {series.name}: {point.y} / {point.stackTotal}'
+            },
+
+            plotOptions: {
+                column: {
+                    stacking: 'normal',
+                    depth: 40
+                }
+            },
+
+            series: [{
+                name: 'John',
+                data: [5, 3, 4, 7, 2],
+                stack: 'male'
+            }, {
+                name: 'Joe',
+                data: [3, 4, 4, 2, 5],
+                stack: 'male'
+            }, {
+                name: 'Jane',
+                data: [2, 5, 6, 2, 1],
+                stack: 'female'
+            }, {
+                name: 'Janet',
+                data: [3, 0, 4, 4, 3],
+                stack: 'female'
+            }]
+        });
+
+
+
+        Highcharts.chart('widgetOther', {
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: 'Snow depth at Vikjafjellet, Norway'
+            },
+            subtitle: {
+                text: 'Irregular time data in Highcharts JS'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: { // don't display the dummy year
+                    month: '%e. %b',
+                    year: '%b'
+                },
+                title: {
+                    text: 'Date'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Snow depth (m)'
+                },
+                min: 0
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.x:%e. %b}: {point.y:.2f} m'
+            },
+
+            plotOptions: {
+                spline: {
+                    marker: {
+                        enabled: true
+                    }
+                }
+            },
+
+            series: [{
+                name: 'Winter 2012-2013',
+                // Define the data points. All series have a dummy year
+                // of 1970/71 in order to be compared on the same x axis. Note
+                // that in JavaScript, months start at 0 for January, 1 for February etc.
+                data: [
+                    [Date.UTC(1970, 9, 21), 0],
+                    [Date.UTC(1970, 10, 4), 0.28],
+                    [Date.UTC(1970, 10, 9), 0.25],
+                    [Date.UTC(1970, 10, 27), 0.2],
+                    [Date.UTC(1970, 11, 2), 0.28],
+                    [Date.UTC(1970, 11, 26), 0.28],
+                    [Date.UTC(1970, 11, 29), 0.47],
+                    [Date.UTC(1971, 0, 11), 0.79],
+                    [Date.UTC(1971, 0, 26), 0.72],
+                    [Date.UTC(1971, 1, 3), 1.02],
+                    [Date.UTC(1971, 1, 11), 1.12],
+                    [Date.UTC(1971, 1, 25), 1.2],
+                    [Date.UTC(1971, 2, 11), 1.18],
+                    [Date.UTC(1971, 3, 11), 1.19],
+                    [Date.UTC(1971, 4, 1), 1.85],
+                    [Date.UTC(1971, 4, 5), 2.22],
+                    [Date.UTC(1971, 4, 19), 1.15],
+                    [Date.UTC(1971, 5, 3), 0]
+                ]
+            }, {
+                name: 'Winter 2013-2014',
+                data: [
+                    [Date.UTC(1970, 9, 29), 0],
+                    [Date.UTC(1970, 10, 9), 0.4],
+                    [Date.UTC(1970, 11, 1), 0.25],
+                    [Date.UTC(1971, 0, 1), 1.66],
+                    [Date.UTC(1971, 0, 10), 1.8],
+                    [Date.UTC(1971, 1, 19), 1.76],
+                    [Date.UTC(1971, 2, 25), 2.62],
+                    [Date.UTC(1971, 3, 19), 2.41],
+                    [Date.UTC(1971, 3, 30), 2.05],
+                    [Date.UTC(1971, 4, 14), 1.7],
+                    [Date.UTC(1971, 4, 24), 1.1],
+                    [Date.UTC(1971, 5, 10), 0]
+                ]
+            }, {
+                name: 'Winter 2014-2015',
+                data: [
+                    [Date.UTC(1970, 10, 25), 0],
+                    [Date.UTC(1970, 11, 6), 0.25],
+                    [Date.UTC(1970, 11, 20), 1.41],
+                    [Date.UTC(1970, 11, 25), 1.64],
+                    [Date.UTC(1971, 0, 4), 1.6],
+                    [Date.UTC(1971, 0, 17), 2.55],
+                    [Date.UTC(1971, 0, 24), 2.62],
+                    [Date.UTC(1971, 1, 4), 2.5],
+                    [Date.UTC(1971, 1, 14), 2.42],
+                    [Date.UTC(1971, 2, 6), 2.74],
+                    [Date.UTC(1971, 2, 14), 2.62],
+                    [Date.UTC(1971, 2, 24), 2.6],
+                    [Date.UTC(1971, 3, 2), 2.81],
+                    [Date.UTC(1971, 3, 12), 2.63],
+                    [Date.UTC(1971, 3, 28), 2.77],
+                    [Date.UTC(1971, 4, 5), 2.68],
+                    [Date.UTC(1971, 4, 10), 2.56],
+                    [Date.UTC(1971, 4, 15), 2.39],
+                    [Date.UTC(1971, 4, 20), 2.3],
+                    [Date.UTC(1971, 5, 5), 2],
+                    [Date.UTC(1971, 5, 10), 1.85],
+                    [Date.UTC(1971, 5, 15), 1.49],
+                    [Date.UTC(1971, 5, 23), 1.08]
+                ]
+            }]
+        });
+    }
 }
 
 /**** DELETE FROM HERE DOWN WHEN PRODUCTION IS READY ****/
