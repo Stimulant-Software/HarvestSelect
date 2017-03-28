@@ -9,7 +9,7 @@
     <link href="content/HarvestSelectDashboards.css" rel="stylesheet" type="text/css">
     <link href="content/global.css" rel="stylesheet" type="text/css">
 </head>
-<body class="op op-report">
+<body class="op dashboard">
     <header>
         <h1>Operations</h1>
         <nav>
@@ -28,32 +28,19 @@
         </nav>
     </header>
     <section id="main_content" class="container">
-        <section class="row date-select text-center">
-            <!-- pull in string of dates - need range, method -->
-            <button id="shiftDate" data-toggle="modal" data-target="#calendarModal">Select a date to view report</button>
-        </section>
-        <section class="row reports data">
-            <section class="farm-yields-report col-xs-12">
+        <section class="row text-center"><button id="pageRefresh" class="btn btn-primary">Refresh Dashboard</button></section>
+        <section class="row widgets">
+            <section class="widget-bva col-xs-6">
                 <div class="report-container">
-                    <header><img class="open" src="content/images/minus.png" /><img class="closed" src="content/images/plus.png" />Farm Yields</header>
-                    <div id="farmYieldsSection" class="farm-yields"></div>
+                    <header>Budget Vs Actual</header>
                 </div>
+                <div id="widgetBVA" class="widget"></div>
             </section>
-           <section class="finished col-xs-12 col-sm-6">
+            <section class="widget-other col-xs-6">
                 <div class="report-container">
-                    <header>Department End Times</header>
-                    <div id="finishcontainer"></div>
+                    <header>Another Widget</header>
                 </div>
-            </section>
-            <section class="freezings col-xs-12 col-sm-6">
-                <div class="report-container">
-                    <header>Production Totals</header>
-                </div>
-            </section>
-            <section class="employees col-xs-12 col-sm-6">
-                <div class="report-container">
-                    <header>Employee Attendance</header>
-                </div>
+                <div id="widgetOther" class="widget"></div>
             </section>
         </section>
     </section>
@@ -74,23 +61,12 @@
     </section>
     <footer></footer>
 
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script type="text/javascript">
-        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
-    </script>
-    <script src="scripts/underscore.min.js"></script>
-    <script src="scripts/moment.js"></script>
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/modules/drilldown.js"></script>
-    <script type="text/javascript" src="scripts/HarvestSelectDashboards.js"></script>
-    <script src="scripts/reports-menu.js"></script>-->
-
-    <script type="text/javascript" src="scripts/functions.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment-with-locales.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
     <script src="http://code.highcharts.com/modules/data.js"></script>
     <script type="text/javascript" src="scripts/functions.js"></script>
     <script src="scripts/HarvestSelectDashboards.js"></script>
