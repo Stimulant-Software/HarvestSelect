@@ -58,6 +58,11 @@
         <AssociationConnector Association="AppModel.FK_DownTimes_Departments" />
         <AssociationConnector Association="AppModel.FK_DownTimes_DownTimeTypes" />
         <EntityTypeShape EntityType="AppModel.Email" Width="1.5" PointX="6.9608184858042828" PointY="31.491595878960375" />
+        <EntityTypeShape EntityType="AppModel.AD_Groups" Width="1.5" PointX="10.375" PointY="6.375" />
+        <EntityTypeShape EntityType="AppModel.AD_Products" Width="1.5" PointX="12.625" PointY="6.25" />
+        <EntityTypeShape EntityType="AppModel.AD_WeekData" Width="1.5" PointX="14.875" PointY="6" />
+        <AssociationConnector Association="AppModel.FK_AD_Products_AD_Groups" />
+        <AssociationConnector Association="AppModel.FK_AD_WeekData_AD_Products" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

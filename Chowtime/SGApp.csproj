@@ -144,6 +144,7 @@
     <Compile Include="BusinessLogic\Application\AppUserDomain.cs" />
     <Compile Include="BusinessLogic\BusinessDomainBase.cs" />
     <Compile Include="Controllers\AbsenceController.cs" />
+    <Compile Include="Controllers\AdagioDataController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\DepartmentTotalController.cs" />
     <Compile Include="Controllers\DowntimeController.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="DTOs\UserQueryDTO.cs" />
     <Compile Include="DTOs\UserRoleDTO.cs" />
     <Compile Include="DTOs\UtilityDTO.cs" />
+    <Compile Include="DTOs\WeekDataDTO.cs" />
     <Compile Include="DTOs\WeighBackDTO.cs" />
     <Compile Include="Filters\ModelStateValidatorAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -207,6 +209,15 @@
     <Compile Include="Models\Common\EntityBase.cs" />
     <Compile Include="Models\Common\IKey.cs" />
     <Compile Include="Models\EF\Absence.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\AD_Groups.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\AD_Products.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\AD_WeekData.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\App.Context.cs">
@@ -300,6 +311,9 @@
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Partials\Absence.Partial.cs" />
+    <Compile Include="Models\Partials\AD_Group.partial.cs" />
+    <Compile Include="Models\Partials\AD_Product.Partial.cs" />
+    <Compile Include="Models\Partials\AD_WeekData.Partial.cs" />
     <Compile Include="Models\Partials\Company.Partial.cs" />
     <Compile Include="Models\Partials\Department.Partial.cs" />
     <Compile Include="Models\Partials\DepartmentTotal.Partial.cs" />
@@ -353,6 +367,7 @@
     <Compile Include="Models\Validation\WeighBack_Metadata.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\Application\AbsenceRepository.cs" />
+    <Compile Include="Repositories\Application\AD_WeekDataRepository.cs" />
     <Compile Include="Repositories\Application\AppUserRepository.cs" />
     <Compile Include="Repositories\Application\AppUserRoleRepository.cs" />
     <Compile Include="Repositories\Application\CompanyRepository.cs" />

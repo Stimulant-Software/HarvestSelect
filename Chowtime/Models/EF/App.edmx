@@ -4,148 +4,12 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="AppModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityContainer Name="AppModelStoreContainer">
-          <EntitySet Name="Absences" EntityType="AppModel.Store.Absences" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Companies" EntityType="AppModel.Store.Companies" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Departments" EntityType="AppModel.Store.Departments" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="DepartmentTotals" EntityType="AppModel.Store.DepartmentTotals" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="DownTimes" EntityType="AppModel.Store.DownTimes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="DownTimeTypes" EntityType="AppModel.Store.DownTimeTypes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Emails" EntityType="AppModel.Store.Emails" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Farms" EntityType="AppModel.Store.Farms" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FarmYieldHeaders" EntityType="AppModel.Store.FarmYieldHeaders" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FarmYields" EntityType="AppModel.Store.FarmYields" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Feedings" EntityType="AppModel.Store.Feedings" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FilletScaleReadings" EntityType="AppModel.Store.FilletScaleReadings" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="FinishTimes" EntityType="AppModel.Store.FinishTimes" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Harvests" EntityType="AppModel.Store.Harvests" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="HealthStatuses" EntityType="AppModel.Store.HealthStatuses" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="O2Readings" EntityType="AppModel.Store.O2Readings" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="PlantPondWeights" EntityType="AppModel.Store.PlantPondWeights" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Ponds" EntityType="AppModel.Store.Ponds" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ProductionTotals" EntityType="AppModel.Store.ProductionTotals" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Roles" EntityType="AppModel.Store.Roles" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="ShiftEnd" EntityType="AppModel.Store.ShiftEnd" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Statuses" EntityType="AppModel.Store.Statuses" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UserFarms" EntityType="AppModel.Store.UserFarms" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UserRoles" EntityType="AppModel.Store.UserRoles" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="Users" EntityType="AppModel.Store.Users" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="WeighBacks" EntityType="AppModel.Store.WeighBacks" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_Absences_Departments" Association="AppModel.Store.FK_Absences_Departments">
-            <End Role="Departments" EntitySet="Departments" />
-            <End Role="Absences" EntitySet="Absences" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DepartmentTotals_Departments" Association="AppModel.Store.FK_DepartmentTotals_Departments">
-            <End Role="Departments" EntitySet="Departments" />
-            <End Role="DepartmentTotals" EntitySet="DepartmentTotals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DownTimes_Departments" Association="AppModel.Store.FK_DownTimes_Departments">
-            <End Role="Departments" EntitySet="Departments" />
-            <End Role="DownTimes" EntitySet="DownTimes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DownTimes_DownTimeTypes" Association="AppModel.Store.FK_DownTimes_DownTimeTypes">
-            <End Role="DownTimeTypes" EntitySet="DownTimeTypes" />
-            <End Role="DownTimes" EntitySet="DownTimes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DownTimeTypes_Departments" Association="AppModel.Store.FK_DownTimeTypes_Departments">
-            <End Role="Departments" EntitySet="Departments" />
-            <End Role="DownTimeTypes" EntitySet="DownTimeTypes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Farms_Companies" Association="AppModel.Store.FK_Farms_Companies">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="Farms" EntitySet="Farms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Farms_Statuses" Association="AppModel.Store.FK_Farms_Statuses">
-            <End Role="Statuses" EntitySet="Statuses" />
-            <End Role="Farms" EntitySet="Farms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FarmYields_Ponds" Association="AppModel.Store.FK_FarmYields_Ponds">
-            <End Role="Ponds" EntitySet="Ponds" />
-            <End Role="FarmYields" EntitySet="FarmYields" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Feedings_Ponds" Association="AppModel.Store.FK_Feedings_Ponds">
-            <End Role="Ponds" EntitySet="Ponds" />
-            <End Role="Feedings" EntitySet="Feedings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Feedings_UserFarms" Association="AppModel.Store.FK_Feedings_UserFarms">
-            <End Role="UserFarms" EntitySet="UserFarms" />
-            <End Role="Feedings" EntitySet="Feedings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FinishTimes_Departments" Association="AppModel.Store.FK_FinishTimes_Departments">
-            <End Role="Departments" EntitySet="Departments" />
-            <End Role="FinishTimes" EntitySet="FinishTimes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Harvests_Ponds" Association="AppModel.Store.FK_Harvests_Ponds">
-            <End Role="Ponds" EntitySet="Ponds" />
-            <End Role="Harvests" EntitySet="Harvests" />
-          </AssociationSet>
-          <AssociationSet Name="FK_O2Readings_Ponds" Association="AppModel.Store.FK_O2Readings_Ponds">
-            <End Role="Ponds" EntitySet="Ponds" />
-            <End Role="O2Readings" EntitySet="O2Readings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_O2Readings_UsersFarms" Association="AppModel.Store.FK_O2Readings_UsersFarms">
-            <End Role="UserFarms" EntitySet="UserFarms" />
-            <End Role="O2Readings" EntitySet="O2Readings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PlantPondWeights_Ponds" Association="AppModel.Store.FK_PlantPondWeights_Ponds">
-            <End Role="Ponds" EntitySet="Ponds" />
-            <End Role="PlantPondWeights" EntitySet="PlantPondWeights" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ponds_Farms" Association="AppModel.Store.FK_Ponds_Farms">
-            <End Role="Farms" EntitySet="Farms" />
-            <End Role="Ponds" EntitySet="Ponds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ponds_HealthStatuses" Association="AppModel.Store.FK_Ponds_HealthStatuses">
-            <End Role="HealthStatuses" EntitySet="HealthStatuses" />
-            <End Role="Ponds" EntitySet="Ponds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Ponds_Statuses" Association="AppModel.Store.FK_Ponds_Statuses">
-            <End Role="Statuses" EntitySet="Statuses" />
-            <End Role="Ponds" EntitySet="Ponds" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductionTotals_Ponds" Association="AppModel.Store.FK_ProductionTotals_Ponds">
-            <End Role="Ponds" EntitySet="Ponds" />
-            <End Role="ProductionTotals" EntitySet="ProductionTotals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserFarms_Farms" Association="AppModel.Store.FK_UserFarms_Farms">
-            <End Role="Farms" EntitySet="Farms" />
-            <End Role="UserFarms" EntitySet="UserFarms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserFarms_Statuses" Association="AppModel.Store.FK_UserFarms_Statuses">
-            <End Role="Statuses" EntitySet="Statuses" />
-            <End Role="UserFarms" EntitySet="UserFarms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserFarms_Users" Association="AppModel.Store.FK_UserFarms_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UserFarms" EntitySet="UserFarms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRoles_Roles" Association="AppModel.Store.FK_UserRoles_Roles">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="UserRoles" EntitySet="UserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserRoles_User" Association="AppModel.Store.FK_UserRoles_User">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="UserRoles" EntitySet="UserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Companies" Association="AppModel.Store.FK_Users_Companies">
-            <End Role="Companies" EntitySet="Companies" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Status" Association="AppModel.Store.FK_Users_Status">
-            <End Role="Statuses" EntitySet="Statuses" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WeighBacks_Ponds" Association="AppModel.Store.FK_WeighBacks_Ponds">
-            <End Role="Ponds" EntitySet="Ponds" />
-            <End Role="WeighBacks" EntitySet="WeighBacks" />
-          </AssociationSet>
-        </EntityContainer>
+    <Schema Namespace="AppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Absences">
           <Key>
             <PropertyRef Name="AbsenceID" />
           </Key>
-          <Property Name="AbsenceID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AbsenceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AbsenceDate" Type="datetime" Nullable="false" />
           <Property Name="DepartmentID" Type="int" Nullable="false" />
           <Property Name="RegEmpLate" Type="int" />
@@ -158,12 +22,39 @@
           <Property Name="InmateOut" Type="int" />
           <Property Name="EmployeesOnVacation" Type="int" />
         </EntityType>
+        <EntityType Name="AD_Groups">
+          <Key>
+            <PropertyRef Name="AD_GroupId" />
+          </Key>
+          <Property Name="AD_GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AD_GroupName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AD_Products">
+          <Key>
+            <PropertyRef Name="AD_ProductID" />
+          </Key>
+          <Property Name="AD_ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AD_GroupID" Type="int" Nullable="false" />
+          <Property Name="AD_ProductName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AD_WeekData">
+          <Key>
+            <PropertyRef Name="AD_WeekDataID" />
+          </Key>
+          <Property Name="AD_WeekDataID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AD_ProductID" Type="int" Nullable="false" />
+          <Property Name="AD_BudgetLbs" Type="int" />
+          <Property Name="AD_ActualLbs" Type="int" />
+          <Property Name="AD_BudgetDollars" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AD_ActualDollars" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="AD_WeekEnd" Type="datetime" />
+        </EntityType>
         <EntityType Name="Companies">
           <Key>
             <PropertyRef Name="CompanyId" />
           </Key>
-          <Property Name="CompanyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Address1" Type="varchar" MaxLength="50" />
           <Property Name="Address2" Type="varchar" MaxLength="50" />
           <Property Name="City" Type="varchar" MaxLength="50" />
@@ -175,14 +66,14 @@
           <Key>
             <PropertyRef Name="DepartmentID" />
           </Key>
-          <Property Name="DepartmentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="DepartmentName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DepartmentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DepartmentName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="DepartmentTotals">
           <Key>
             <PropertyRef Name="DepartmentTotalID" />
           </Key>
-          <Property Name="DepartmentTotalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentTotalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DepartmentID" Type="int" Nullable="false" />
           <Property Name="DTDate" Type="datetime" Nullable="false" />
           <Property Name="FinishTime" Type="datetime" />
@@ -194,7 +85,7 @@
           <Key>
             <PropertyRef Name="DownTimeID" />
           </Key>
-          <Property Name="DownTimeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DownTimeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DownTimeTypeID" Type="int" Nullable="false" />
           <Property Name="Minutes" Type="int" Nullable="false" />
           <Property Name="DownTimeNote" Type="varchar" MaxLength="100" />
@@ -205,25 +96,25 @@
           <Key>
             <PropertyRef Name="DownTimeTypeID" />
           </Key>
-          <Property Name="DownTimeTypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="DownTimeName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DownTimeTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DownTimeName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="DepartmentID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Emails">
           <Key>
             <PropertyRef Name="EmailID" />
           </Key>
-          <Property Name="EmailID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="EmailAddress" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="EmailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="ReceiveDailyReport" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Farms">
           <Key>
             <PropertyRef Name="FarmId" />
           </Key>
-          <Property Name="FarmId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FarmId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="FarmName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="FarmName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="CompanyId" Type="int" Nullable="false" />
           <Property Name="OldFarmId" Type="int" Nullable="false" />
           <Property Name="InnovaName" Type="varchar" MaxLength="50" />
@@ -233,29 +124,29 @@
           <Key>
             <PropertyRef Name="FarmYieldHeaderID" />
           </Key>
-          <Property Name="FarmYieldHeaderID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FarmYieldHeaderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="YieldDate" Type="datetime" Nullable="false" />
-          <Property Name="PlantWeight" Type="decimal" Scale="2" />
-          <Property Name="WeighBacks" Type="decimal" Scale="2" />
+          <Property Name="PlantWeight" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="WeighBacks" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="FarmYields">
           <Key>
             <PropertyRef Name="YieldID" />
           </Key>
-          <Property Name="YieldID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="YieldID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="YieldDate" Type="datetime" Nullable="false" />
           <Property Name="PondID" Type="int" Nullable="false" />
-          <Property Name="PoundsYielded" Type="decimal" Nullable="false" Scale="2" />
-          <Property Name="PoundsPlant" Type="decimal" Scale="2" />
-          <Property Name="PoundsHeaded" Type="decimal" Scale="2" />
-          <Property Name="PercentYield" Type="decimal" Scale="2" />
-          <Property Name="PercentYield2" Type="decimal" Scale="2" />
+          <Property Name="PoundsYielded" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PoundsPlant" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PoundsHeaded" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PercentYield" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PercentYield2" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Feedings">
           <Key>
             <PropertyRef Name="FeedingId" />
           </Key>
-          <Property Name="FeedingId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FeedingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PondId" Type="int" Nullable="false" />
           <Property Name="FeedDate" Type="datetime" Nullable="false" />
           <Property Name="PoundsFed" Type="int" Nullable="false" />
@@ -265,15 +156,15 @@
           <Key>
             <PropertyRef Name="FilletScaleReadingID" />
           </Key>
-          <Property Name="FilletScaleReadingID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FilletScaleReadingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FSRDateTime" Type="datetime" Nullable="false" />
-          <Property Name="FilletScaleReading" Type="decimal" Nullable="false" Precision="16" Scale="2" />
+          <Property Name="FilletScaleReading" Type="decimal" Precision="16" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="FinishTimes">
           <Key>
             <PropertyRef Name="FinishTimeID" />
           </Key>
-          <Property Name="FinishTimeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="FinishTimeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FinishDateTime" Type="datetime" Nullable="false" />
           <Property Name="DepartmentID" Type="int" Nullable="false" />
         </EntityType>
@@ -281,7 +172,7 @@
           <Key>
             <PropertyRef Name="HarvestId" />
           </Key>
-          <Property Name="HarvestId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="HarvestId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PondId" Type="int" Nullable="false" />
           <Property Name="HarvestDate" Type="datetime" Nullable="false" />
         </EntityType>
@@ -289,17 +180,17 @@
           <Key>
             <PropertyRef Name="HealthStatusId" />
           </Key>
-          <Property Name="HealthStatusId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="HealthStatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="O2Readings">
           <Key>
             <PropertyRef Name="ReadingId" />
           </Key>
-          <Property Name="ReadingId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReadingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PondId" Type="int" Nullable="false" />
           <Property Name="ReadingDate" Type="datetime" Nullable="false" />
-          <Property Name="O2Level" Type="decimal" Nullable="false" Scale="4" />
+          <Property Name="O2Level" Type="decimal" Precision="18" Scale="4" Nullable="false" />
           <Property Name="PortableCount" Type="int" Nullable="false" />
           <Property Name="StaticCount" Type="int" Nullable="false" />
           <Property Name="UsersFarmId" Type="int" Nullable="false" />
@@ -310,7 +201,7 @@
           <Key>
             <PropertyRef Name="PlantPondWeightID" />
           </Key>
-          <Property Name="PlantPondWeightID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PlantPondWeightID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PondID" Type="int" Nullable="false" />
           <Property Name="PPWDateTime" Type="datetime" Nullable="false" />
           <Property Name="PlantWeight" Type="decimal" Precision="10" Scale="2" />
@@ -321,11 +212,11 @@
           <Key>
             <PropertyRef Name="PondId" />
           </Key>
-          <Property Name="PondId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="PondId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FarmId" Type="int" Nullable="false" />
-          <Property Name="PondName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PondName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
-          <Property Name="Size" Type="decimal" Nullable="false" />
+          <Property Name="Size" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="NoFeed" Type="bit" Nullable="false" />
           <Property Name="HealthStatus" Type="int" Nullable="false" />
           <Property Name="SortOrder" Type="int" Nullable="false" />
@@ -337,26 +228,26 @@
           <Key>
             <PropertyRef Name="ProductionTotalID" />
           </Key>
-          <Property Name="ProductionTotalID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProductionTotalID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductionDate" Type="date" Nullable="false" />
           <Property Name="PondId" Type="int" Nullable="false" />
-          <Property Name="PlantWeight" Type="decimal" Scale="2" />
-          <Property Name="PondWeight" Type="decimal" Scale="2" />
-          <Property Name="WeighBacks" Type="decimal" Scale="2" />
+          <Property Name="PlantWeight" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PondWeight" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="WeighBacks" Type="decimal" Precision="18" Scale="2" />
           <Property Name="AverageYield" Type="decimal" Precision="16" Scale="4" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="RoleId" />
           </Key>
-          <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="RoleName" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="ShiftEnd">
           <Key>
             <PropertyRef Name="ShiftEndID" />
           </Key>
-          <Property Name="ShiftEndID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ShiftEndID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ShiftDate" Type="datetime" Nullable="false" />
           <Property Name="RegEmpLate" Type="int" />
           <Property Name="RegEmpOut" Type="int" />
@@ -368,9 +259,9 @@
           <Property Name="FinishedSkinning" Type="datetime" />
           <Property Name="DayFinishedFreezing" Type="datetime" />
           <Property Name="NightFinishedFreezing" Type="datetime" />
-          <Property Name="DayShiftFroze" Type="decimal" Scale="2" />
-          <Property Name="NightShiftFroze" Type="decimal" Scale="2" />
-          <Property Name="FilletScaleReading" Type="decimal" Scale="2" />
+          <Property Name="DayShiftFroze" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="NightShiftFroze" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="FilletScaleReading" Type="decimal" Precision="18" Scale="2" />
           <Property Name="DowntimeMinutes" Type="int" />
           <Property Name="InLateOut" Type="int" />
           <Property Name="EmployeesOnVacation" Type="int" />
@@ -379,14 +270,14 @@
           <Key>
             <PropertyRef Name="StatusId" />
           </Key>
-          <Property Name="StatusId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="StatusName" Type="varchar" Nullable="false" MaxLength="25" />
+          <Property Name="StatusId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
         <EntityType Name="UserFarms">
           <Key>
             <PropertyRef Name="UserFarmId" />
           </Key>
-          <Property Name="UserFarmId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserFarmId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="FarmId" Type="int" Nullable="false" />
           <Property Name="StatusId" Type="int" Nullable="false" />
@@ -395,7 +286,7 @@
           <Key>
             <PropertyRef Name="UserRoleId" />
           </Key>
-          <Property Name="UserRoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserRoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="RoleId" Type="int" Nullable="false" />
         </EntityType>
@@ -403,8 +294,8 @@
           <Key>
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="UserId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="EmailAddress" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmailAddress" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" />
           <Property Name="LastName" Type="varchar" MaxLength="50" />
           <Property Name="Phone" Type="varchar" MaxLength="50" />
@@ -416,7 +307,7 @@
           <Key>
             <PropertyRef Name="WeightBackID" />
           </Key>
-          <Property Name="WeightBackID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WeightBackID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PondID" Type="int" Nullable="false" />
           <Property Name="WBDateTime" Type="datetime" Nullable="false" />
           <Property Name="Turtle" Type="decimal" Precision="10" Scale="2" />
@@ -434,8 +325,8 @@
           <Property Name="DOAs" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <Association Name="FK_Absences_Departments">
-          <End Role="Departments" Type="AppModel.Store.Departments" Multiplicity="1" />
-          <End Role="Absences" Type="AppModel.Store.Absences" Multiplicity="*" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="Absences" Type="Self.Absences" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Departments">
               <PropertyRef Name="DepartmentID" />
@@ -445,9 +336,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AD_Products_AD_Groups">
+          <End Role="AD_Groups" Type="Self.AD_Groups" Multiplicity="1" />
+          <End Role="AD_Products" Type="Self.AD_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AD_Groups">
+              <PropertyRef Name="AD_GroupId" />
+            </Principal>
+            <Dependent Role="AD_Products">
+              <PropertyRef Name="AD_GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AD_WeekData_AD_Products">
+          <End Role="AD_Products" Type="Self.AD_Products" Multiplicity="1" />
+          <End Role="AD_WeekData" Type="Self.AD_WeekData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AD_Products">
+              <PropertyRef Name="AD_ProductID" />
+            </Principal>
+            <Dependent Role="AD_WeekData">
+              <PropertyRef Name="AD_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DepartmentTotals_Departments">
-          <End Role="Departments" Type="AppModel.Store.Departments" Multiplicity="1" />
-          <End Role="DepartmentTotals" Type="AppModel.Store.DepartmentTotals" Multiplicity="*" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="DepartmentTotals" Type="Self.DepartmentTotals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Departments">
               <PropertyRef Name="DepartmentID" />
@@ -458,8 +373,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DownTimes_Departments">
-          <End Role="Departments" Type="AppModel.Store.Departments" Multiplicity="1" />
-          <End Role="DownTimes" Type="AppModel.Store.DownTimes" Multiplicity="*" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="DownTimes" Type="Self.DownTimes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Departments">
               <PropertyRef Name="DepartmentID" />
@@ -470,8 +385,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DownTimes_DownTimeTypes">
-          <End Role="DownTimeTypes" Type="AppModel.Store.DownTimeTypes" Multiplicity="1" />
-          <End Role="DownTimes" Type="AppModel.Store.DownTimes" Multiplicity="*" />
+          <End Role="DownTimeTypes" Type="Self.DownTimeTypes" Multiplicity="1" />
+          <End Role="DownTimes" Type="Self.DownTimes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="DownTimeTypes">
               <PropertyRef Name="DownTimeTypeID" />
@@ -482,8 +397,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DownTimeTypes_Departments">
-          <End Role="Departments" Type="AppModel.Store.Departments" Multiplicity="1" />
-          <End Role="DownTimeTypes" Type="AppModel.Store.DownTimeTypes" Multiplicity="*" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="DownTimeTypes" Type="Self.DownTimeTypes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Departments">
               <PropertyRef Name="DepartmentID" />
@@ -494,8 +409,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Farms_Companies">
-          <End Role="Companies" Type="AppModel.Store.Companies" Multiplicity="1" />
-          <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="*" />
+          <End Role="Companies" Type="Self.Companies" Multiplicity="1" />
+          <End Role="Farms" Type="Self.Farms" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Companies">
               <PropertyRef Name="CompanyId" />
@@ -506,8 +421,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Farms_Statuses">
-          <End Role="Statuses" Type="AppModel.Store.Statuses" Multiplicity="1" />
-          <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="*" />
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+          <End Role="Farms" Type="Self.Farms" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Statuses">
               <PropertyRef Name="StatusId" />
@@ -518,8 +433,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FarmYields_Ponds">
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
-          <End Role="FarmYields" Type="AppModel.Store.FarmYields" Multiplicity="*" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="1" />
+          <End Role="FarmYields" Type="Self.FarmYields" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ponds">
               <PropertyRef Name="PondId" />
@@ -530,8 +445,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Feedings_Ponds">
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
-          <End Role="Feedings" Type="AppModel.Store.Feedings" Multiplicity="*" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ponds">
               <PropertyRef Name="PondId" />
@@ -542,8 +457,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Feedings_UserFarms">
-          <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="1" />
-          <End Role="Feedings" Type="AppModel.Store.Feedings" Multiplicity="*" />
+          <End Role="UserFarms" Type="Self.UserFarms" Multiplicity="1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserFarms">
               <PropertyRef Name="UserFarmId" />
@@ -554,8 +469,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_FinishTimes_Departments">
-          <End Role="Departments" Type="AppModel.Store.Departments" Multiplicity="1" />
-          <End Role="FinishTimes" Type="AppModel.Store.FinishTimes" Multiplicity="*" />
+          <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
+          <End Role="FinishTimes" Type="Self.FinishTimes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Departments">
               <PropertyRef Name="DepartmentID" />
@@ -566,8 +481,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Harvests_Ponds">
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
-          <End Role="Harvests" Type="AppModel.Store.Harvests" Multiplicity="*" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="1" />
+          <End Role="Harvests" Type="Self.Harvests" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ponds">
               <PropertyRef Name="PondId" />
@@ -578,8 +493,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_O2Readings_Ponds">
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
-          <End Role="O2Readings" Type="AppModel.Store.O2Readings" Multiplicity="*" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="1" />
+          <End Role="O2Readings" Type="Self.O2Readings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ponds">
               <PropertyRef Name="PondId" />
@@ -590,8 +505,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_O2Readings_UsersFarms">
-          <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="1" />
-          <End Role="O2Readings" Type="AppModel.Store.O2Readings" Multiplicity="*" />
+          <End Role="UserFarms" Type="Self.UserFarms" Multiplicity="1" />
+          <End Role="O2Readings" Type="Self.O2Readings" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserFarms">
               <PropertyRef Name="UserFarmId" />
@@ -602,8 +517,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PlantPondWeights_Ponds">
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
-          <End Role="PlantPondWeights" Type="AppModel.Store.PlantPondWeights" Multiplicity="*" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="1" />
+          <End Role="PlantPondWeights" Type="Self.PlantPondWeights" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ponds">
               <PropertyRef Name="PondId" />
@@ -614,8 +529,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ponds_Farms">
-          <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="1" />
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="*" />
+          <End Role="Farms" Type="Self.Farms" Multiplicity="1" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Farms">
               <PropertyRef Name="FarmId" />
@@ -626,8 +541,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ponds_HealthStatuses">
-          <End Role="HealthStatuses" Type="AppModel.Store.HealthStatuses" Multiplicity="1" />
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="*" />
+          <End Role="HealthStatuses" Type="Self.HealthStatuses" Multiplicity="1" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="HealthStatuses">
               <PropertyRef Name="HealthStatusId" />
@@ -638,8 +553,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Ponds_Statuses">
-          <End Role="Statuses" Type="AppModel.Store.Statuses" Multiplicity="1" />
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="*" />
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Statuses">
               <PropertyRef Name="StatusId" />
@@ -650,8 +565,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductionTotals_Ponds">
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
-          <End Role="ProductionTotals" Type="AppModel.Store.ProductionTotals" Multiplicity="*" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="1" />
+          <End Role="ProductionTotals" Type="Self.ProductionTotals" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ponds">
               <PropertyRef Name="PondId" />
@@ -662,8 +577,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserFarms_Farms">
-          <End Role="Farms" Type="AppModel.Store.Farms" Multiplicity="1" />
-          <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="*" />
+          <End Role="Farms" Type="Self.Farms" Multiplicity="1" />
+          <End Role="UserFarms" Type="Self.UserFarms" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Farms">
               <PropertyRef Name="FarmId" />
@@ -674,8 +589,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserFarms_Statuses">
-          <End Role="Statuses" Type="AppModel.Store.Statuses" Multiplicity="1" />
-          <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="*" />
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="1" />
+          <End Role="UserFarms" Type="Self.UserFarms" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Statuses">
               <PropertyRef Name="StatusId" />
@@ -686,8 +601,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserFarms_Users">
-          <End Role="Users" Type="AppModel.Store.Users" Multiplicity="1" />
-          <End Role="UserFarms" Type="AppModel.Store.UserFarms" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserFarms" Type="Self.UserFarms" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserId" />
@@ -698,8 +613,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRoles_Roles">
-          <End Role="Roles" Type="AppModel.Store.Roles" Multiplicity="1" />
-          <End Role="UserRoles" Type="AppModel.Store.UserRoles" Multiplicity="*" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="RoleId" />
@@ -710,8 +625,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserRoles_User">
-          <End Role="Users" Type="AppModel.Store.Users" Multiplicity="1" />
-          <End Role="UserRoles" Type="AppModel.Store.UserRoles" Multiplicity="*" />
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="UserRoles" Type="Self.UserRoles" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserId" />
@@ -722,8 +637,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Companies">
-          <End Role="Companies" Type="AppModel.Store.Companies" Multiplicity="0..1" />
-          <End Role="Users" Type="AppModel.Store.Users" Multiplicity="*" />
+          <End Role="Companies" Type="Self.Companies" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Companies">
               <PropertyRef Name="CompanyId" />
@@ -734,8 +649,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Users_Status">
-          <End Role="Statuses" Type="AppModel.Store.Statuses" Multiplicity="0..1" />
-          <End Role="Users" Type="AppModel.Store.Users" Multiplicity="*" />
+          <End Role="Statuses" Type="Self.Statuses" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Statuses">
               <PropertyRef Name="StatusId" />
@@ -746,8 +661,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_WeighBacks_Ponds">
-          <End Role="Ponds" Type="AppModel.Store.Ponds" Multiplicity="1" />
-          <End Role="WeighBacks" Type="AppModel.Store.WeighBacks" Multiplicity="*" />
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="1" />
+          <End Role="WeighBacks" Type="Self.WeighBacks" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ponds">
               <PropertyRef Name="PondId" />
@@ -757,6 +672,153 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="AppModelStoreContainer">
+          <EntitySet Name="Absences" EntityType="Self.Absences" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AD_Groups" EntityType="Self.AD_Groups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AD_Products" EntityType="Self.AD_Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AD_WeekData" EntityType="Self.AD_WeekData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartmentTotals" EntityType="Self.DepartmentTotals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DownTimes" EntityType="Self.DownTimes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DownTimeTypes" EntityType="Self.DownTimeTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Emails" EntityType="Self.Emails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Farms" EntityType="Self.Farms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FarmYieldHeaders" EntityType="Self.FarmYieldHeaders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FarmYields" EntityType="Self.FarmYields" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedings" EntityType="Self.Feedings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FilletScaleReadings" EntityType="Self.FilletScaleReadings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FinishTimes" EntityType="Self.FinishTimes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Harvests" EntityType="Self.Harvests" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HealthStatuses" EntityType="Self.HealthStatuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="O2Readings" EntityType="Self.O2Readings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlantPondWeights" EntityType="Self.PlantPondWeights" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ponds" EntityType="Self.Ponds" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionTotals" EntityType="Self.ProductionTotals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShiftEnd" EntityType="Self.ShiftEnd" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserFarms" EntityType="Self.UserFarms" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WeighBacks" EntityType="Self.WeighBacks" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Absences_Departments" Association="Self.FK_Absences_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="Absences" EntitySet="Absences" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AD_Products_AD_Groups" Association="Self.FK_AD_Products_AD_Groups">
+            <End Role="AD_Groups" EntitySet="AD_Groups" />
+            <End Role="AD_Products" EntitySet="AD_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AD_WeekData_AD_Products" Association="Self.FK_AD_WeekData_AD_Products">
+            <End Role="AD_Products" EntitySet="AD_Products" />
+            <End Role="AD_WeekData" EntitySet="AD_WeekData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentTotals_Departments" Association="Self.FK_DepartmentTotals_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DepartmentTotals" EntitySet="DepartmentTotals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DownTimes_Departments" Association="Self.FK_DownTimes_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DownTimes" EntitySet="DownTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DownTimes_DownTimeTypes" Association="Self.FK_DownTimes_DownTimeTypes">
+            <End Role="DownTimeTypes" EntitySet="DownTimeTypes" />
+            <End Role="DownTimes" EntitySet="DownTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DownTimeTypes_Departments" Association="Self.FK_DownTimeTypes_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="DownTimeTypes" EntitySet="DownTimeTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Farms_Companies" Association="Self.FK_Farms_Companies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Farms" EntitySet="Farms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Farms_Statuses" Association="Self.FK_Farms_Statuses">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Farms" EntitySet="Farms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FarmYields_Ponds" Association="Self.FK_FarmYields_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="FarmYields" EntitySet="FarmYields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedings_Ponds" Association="Self.FK_Feedings_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedings_UserFarms" Association="Self.FK_Feedings_UserFarms">
+            <End Role="UserFarms" EntitySet="UserFarms" />
+            <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinishTimes_Departments" Association="Self.FK_FinishTimes_Departments">
+            <End Role="Departments" EntitySet="Departments" />
+            <End Role="FinishTimes" EntitySet="FinishTimes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Harvests_Ponds" Association="Self.FK_Harvests_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="Harvests" EntitySet="Harvests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_O2Readings_Ponds" Association="Self.FK_O2Readings_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="O2Readings" EntitySet="O2Readings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_O2Readings_UsersFarms" Association="Self.FK_O2Readings_UsersFarms">
+            <End Role="UserFarms" EntitySet="UserFarms" />
+            <End Role="O2Readings" EntitySet="O2Readings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlantPondWeights_Ponds" Association="Self.FK_PlantPondWeights_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="PlantPondWeights" EntitySet="PlantPondWeights" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ponds_Farms" Association="Self.FK_Ponds_Farms">
+            <End Role="Farms" EntitySet="Farms" />
+            <End Role="Ponds" EntitySet="Ponds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ponds_HealthStatuses" Association="Self.FK_Ponds_HealthStatuses">
+            <End Role="HealthStatuses" EntitySet="HealthStatuses" />
+            <End Role="Ponds" EntitySet="Ponds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ponds_Statuses" Association="Self.FK_Ponds_Statuses">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Ponds" EntitySet="Ponds" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionTotals_Ponds" Association="Self.FK_ProductionTotals_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="ProductionTotals" EntitySet="ProductionTotals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFarms_Farms" Association="Self.FK_UserFarms_Farms">
+            <End Role="Farms" EntitySet="Farms" />
+            <End Role="UserFarms" EntitySet="UserFarms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFarms_Statuses" Association="Self.FK_UserFarms_Statuses">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="UserFarms" EntitySet="UserFarms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserFarms_Users" Association="Self.FK_UserFarms_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserFarms" EntitySet="UserFarms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_Roles" Association="Self.FK_UserRoles_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRoles_User" Association="Self.FK_UserRoles_User">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserRoles" EntitySet="UserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Companies" Association="Self.FK_Users_Companies">
+            <End Role="Companies" EntitySet="Companies" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Status" Association="Self.FK_Users_Status">
+            <End Role="Statuses" EntitySet="Statuses" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WeighBacks_Ponds" Association="Self.FK_WeighBacks_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="WeighBacks" EntitySet="WeighBacks" />
+          </AssociationSet>
+        </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -896,6 +958,17 @@
             <End Role="DownTime" EntitySet="DownTimes" />
           </AssociationSet>
           <EntitySet Name="Emails" EntityType="AppModel.Email" />
+          <EntitySet Name="AD_Groups" EntityType="AppModel.AD_Groups" />
+          <EntitySet Name="AD_Products" EntityType="AppModel.AD_Products" />
+          <EntitySet Name="AD_WeekData" EntityType="AppModel.AD_WeekData" />
+          <AssociationSet Name="FK_AD_Products_AD_Groups" Association="AppModel.FK_AD_Products_AD_Groups">
+            <End Role="AD_Groups" EntitySet="AD_Groups" />
+            <End Role="AD_Products" EntitySet="AD_Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AD_WeekData_AD_Products" Association="AppModel.FK_AD_WeekData_AD_Products">
+            <End Role="AD_Products" EntitySet="AD_Products" />
+            <End Role="AD_WeekData" EntitySet="AD_WeekData" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -1567,6 +1640,61 @@
           <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Type="Boolean" Name="ReceiveDailyReport" Nullable="false" />
         </EntityType>
+        <EntityType Name="AD_Groups">
+          <Key>
+            <PropertyRef Name="AD_GroupId" />
+          </Key>
+          <Property Name="AD_GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AD_GroupName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AD_Products" Relationship="AppModel.FK_AD_Products_AD_Groups" FromRole="AD_Groups" ToRole="AD_Products" />
+        </EntityType>
+        <EntityType Name="AD_Products">
+          <Key>
+            <PropertyRef Name="AD_ProductID" />
+          </Key>
+          <Property Name="AD_ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AD_GroupID" Type="Int32" Nullable="false" />
+          <Property Name="AD_ProductName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AD_Groups" Relationship="AppModel.FK_AD_Products_AD_Groups" FromRole="AD_Products" ToRole="AD_Groups" />
+          <NavigationProperty Name="AD_WeekData" Relationship="AppModel.FK_AD_WeekData_AD_Products" FromRole="AD_Products" ToRole="AD_WeekData" />
+        </EntityType>
+        <EntityType Name="AD_WeekData">
+          <Key>
+            <PropertyRef Name="AD_WeekDataID" />
+          </Key>
+          <Property Name="AD_WeekDataID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AD_ProductID" Type="Int32" Nullable="false" />
+          <Property Name="AD_BudgetLbs" Type="Int32" />
+          <Property Name="AD_ActualLbs" Type="Int32" />
+          <Property Name="AD_BudgetDollars" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AD_ActualDollars" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="AD_WeekEnd" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AD_Products" Relationship="AppModel.FK_AD_WeekData_AD_Products" FromRole="AD_WeekData" ToRole="AD_Products" />
+        </EntityType>
+        <Association Name="FK_AD_Products_AD_Groups">
+          <End Type="AppModel.AD_Groups" Role="AD_Groups" Multiplicity="1" />
+          <End Type="AppModel.AD_Products" Role="AD_Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AD_Groups">
+              <PropertyRef Name="AD_GroupId" />
+            </Principal>
+            <Dependent Role="AD_Products">
+              <PropertyRef Name="AD_GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AD_WeekData_AD_Products">
+          <End Type="AppModel.AD_Products" Role="AD_Products" Multiplicity="1" />
+          <End Type="AppModel.AD_WeekData" Role="AD_WeekData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AD_Products">
+              <PropertyRef Name="AD_ProductID" />
+            </Principal>
+            <Dependent Role="AD_WeekData">
+              <PropertyRef Name="AD_ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1891,6 +2019,36 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AD_Groups">
+            <EntityTypeMapping TypeName="AppModel.AD_Groups">
+              <MappingFragment StoreEntitySet="AD_Groups">
+                <ScalarProperty Name="AD_GroupName" ColumnName="AD_GroupName" />
+                <ScalarProperty Name="AD_GroupId" ColumnName="AD_GroupId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AD_Products">
+            <EntityTypeMapping TypeName="AppModel.AD_Products">
+              <MappingFragment StoreEntitySet="AD_Products">
+                <ScalarProperty Name="AD_ProductName" ColumnName="AD_ProductName" />
+                <ScalarProperty Name="AD_GroupID" ColumnName="AD_GroupID" />
+                <ScalarProperty Name="AD_ProductID" ColumnName="AD_ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AD_WeekData">
+            <EntityTypeMapping TypeName="AppModel.AD_WeekData">
+              <MappingFragment StoreEntitySet="AD_WeekData">
+                <ScalarProperty Name="AD_WeekEnd" ColumnName="AD_WeekEnd" />
+                <ScalarProperty Name="AD_ActualDollars" ColumnName="AD_ActualDollars" />
+                <ScalarProperty Name="AD_BudgetDollars" ColumnName="AD_BudgetDollars" />
+                <ScalarProperty Name="AD_ActualLbs" ColumnName="AD_ActualLbs" />
+                <ScalarProperty Name="AD_BudgetLbs" ColumnName="AD_BudgetLbs" />
+                <ScalarProperty Name="AD_ProductID" ColumnName="AD_ProductID" />
+                <ScalarProperty Name="AD_WeekDataID" ColumnName="AD_WeekDataID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1908,6 +2066,7 @@
         <DesignerProperty Name="EnablePluralization" Value="True" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="True" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
