@@ -528,6 +528,8 @@
     <Content Include="Site\ct-entry.html" />
     <Content Include="Site\ct-reports.html" />
     <Content Include="Site\op-bol-reports.html" />
+    <Content Include="Site\op-budget-vs-actual.html" />
+    <Content Include="Site\op-dashboard.html" />
     <Content Include="Site\op-farm-yields.html" />
     <Content Include="Site\footer.html" />
     <Content Include="Site\index.html" />
