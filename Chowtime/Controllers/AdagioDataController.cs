@@ -43,7 +43,7 @@ namespace SGApp.Controllers
                 var WeekEndDate = DateTime.Parse(uDto.AD_WeekEnd);
 
                 var data = wer.GetByDate(WeekEndDate);
-                if (data == null)
+                if (data.Count == 0)
                 {
                     var prodData = wer.GetAllProducts();
                     foreach (var prod in prodData)
