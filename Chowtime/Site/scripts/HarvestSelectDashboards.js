@@ -1180,11 +1180,11 @@ function budgetVsActual() {
                             success: function (msg) {
                                 localStorage['CT_key'] = msg['Key'];
                                 startTimer(msg.Key);
-                                yieldList = msg['ReturnData'];
-                                if (yieldList.length > 0) {
-                                    var lastdate = yieldList[0].ProductionDate.split(" ")[0];
-                                    for (var i = 0; i < yieldList.length; i++) {
-                                        var shiftDate = yieldList[i].ProductionDate.split(" ")[0];
+                                productList = msg['ReturnData'];
+                                if (productList.length > 0) {
+                                    var lastdate = productList[0].WeekDataDate[0];
+                                    for (var i = 0; i < productList.length; i++) {
+                                        var shiftDate = productList[i].WeekDataDate;
                                         if (i == 0) { results.push(shiftDate); }
                                         else if (shiftDate != lastdate) {
                                             results.push(shiftDate);
@@ -1217,6 +1217,13 @@ function budgetVsActual() {
                     $('#calendarModal').modal('hide');
                 });
             },
+            eventClick: function (calEvent) {
+                chosenDate = calEvent.start._i;
+                $.when(loadProductList(chosenDate)).then(function () {
+                    hideProgress();
+                    $('#calendarModal').modal('hide');
+                });
+            }
         });
     }
 
@@ -1232,37 +1239,50 @@ function budgetVsActual() {
             success: function (msg) {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
-                pondData = msg['ReturnData'];
-                var pondList = '';
-                $('#pondListContainer').empty();
-                $('.date-select h3').remove();
-                $('.date-select').append("<h3><strong>" + date + "</strong></h3>");
-                for (var i = 0; i < pondData.length; i++) {
-                    // add test to determine which buttons are green and red
-                    var $pondBtn = pondData[i].PondWeight != "---" ? "btn-success" : "btn-danger", $plantBtn = pondData[i].PlantWeight != "---" ? "btn-success" : "btn-danger", $backsBtn = pondData[i].WeighBacks != "---" ? "btn-success" : "btn-danger", $yieldsBtn = pondData[i].AverageYield != "---" ? "btn-success" : "btn-danger";
-                    pondList += '<section id="pond' + pondData[i].PondID + '" class="row pond-container"><section class="pond-buttons"><section class="col-md-2"><button class="btn btn-label">' + pondData[i].PondName + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_pondWeight" data-column="pond-weight" class="btn ' + $pondBtn + '">' + pondData[i].PondWeight + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_plantWeight" class="btn ' + $plantBtn + '" data-column="plant-weight">' + pondData[i].PlantWeight + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_weighbacks" class="btn ' + $backsBtn + '" data-column="weighbacks">' + pondData[i].WeighBacks + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_yield" class="btn ' + $yieldsBtn + '" data-column="yield">' + pondData[i].AverageYield + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_headedWeight" class="btn btn-label">' + pondData[i].HeadedWeight + '</button></section></section><section class="form-container col-md-12"></section></section>';
-                }
-                $.when($('#pondListContainer').append(pondList)).then(function () {
-                    $('.productlist').show();
-                    hideProgress();
+                productData = msg['ReturnData'];
+                console.log(productData);
+                var productList = '';
 
-                    $('productlist input[type="text"]').off().blur(function () {
-                        showProgress();
-                        /* TO DO: Check values and change query */
-                        /* TO DO: Selected Field should be one of: AD_BudgetLbs , AD_BudgetDollars , AD_ActualLbs , AD_ActualDollars   */
-                        var selectedField = $(this), value = selectedField.val(), weekDataID = 123;
-                        var searchQuery = { "Key": _key, "AD_WeekDataID": date }, data = JSON.stringify(searchQuery);
-                        $.ajax('../api/AdagioData/ChangeWeekDataProperty', {
-                            type: 'POST',
-                            data: data,
-                            success: function (msg) {
-                                localStorage['CT_key'] = msg['Key'];
-                                selectedField.css('border-color', 'green');
-                                hideProgress();
-                            }
-                        });
-                    });
-                });
+                //$(productData).each(function () {
+                //    console.log(this);
+
+                //    productListHtml += '<header class="text-center">
+                //    <section class="col-md-2 col-offset-md-1"><h3>Product</h3></section>
+                //    <section class="col-md-2"><h3>Budget Lbs.</h3></section>
+                //    <section class="col-md-2"><h3>Budget Dollars</h3></section>
+                //    <section class="col-md-2"><h3>Actual Lbs.</h3></section>
+                //    <section class="col-md-2"><h3>Actual Dollars</h3></section>
+                //</header>'
+                //});
+                //$('#pondListContainer').empty();
+                //$('.date-select h3').remove();
+                //$('.date-select').append("<h3><strong>" + date + "</strong></h3>");
+                //for (var i = 0; i < productData.length; i++) {
+                //    // add test to determine which buttons are green and red
+                //    var $pondBtn = productData[i].PondWeight != "---" ? "btn-success" : "btn-danger", $plantBtn = productData[i].PlantWeight != "---" ? "btn-success" : "btn-danger", $backsBtn = pondData[i].WeighBacks != "---" ? "btn-success" : "btn-danger", $yieldsBtn = pondData[i].AverageYield != "---" ? "btn-success" : "btn-danger";
+                //    pondList += '<section id="pond' + pondData[i].PondID + '" class="row pond-container"><section class="pond-buttons"><section class="col-md-2"><button class="btn btn-label">' + pondData[i].PondName + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_pondWeight" data-column="pond-weight" class="btn ' + $pondBtn + '">' + pondData[i].PondWeight + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_plantWeight" class="btn ' + $plantBtn + '" data-column="plant-weight">' + pondData[i].PlantWeight + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_weighbacks" class="btn ' + $backsBtn + '" data-column="weighbacks">' + pondData[i].WeighBacks + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_yield" class="btn ' + $yieldsBtn + '" data-column="yield">' + pondData[i].AverageYield + '</button></section><section class="col-md-2"><button id="pond' + pondData[i].PondID + '_headedWeight" class="btn btn-label">' + pondData[i].HeadedWeight + '</button></section></section><section class="form-container col-md-12"></section></section>';
+                //}
+                //$.when($('#pondListContainer').append(pondList)).then(function () {
+                //    $('.productlist').show();
+                //    hideProgress();
+
+                //    $('productlist input[type="text"]').off().blur(function () {
+                //        showProgress();
+                //        /* TO DO: Check values and change query */
+                //        /* TO DO: Selected Field should be one of: AD_BudgetLbs , AD_BudgetDollars , AD_ActualLbs , AD_ActualDollars   */
+                //        var selectedField = $(this), value = selectedField.val(), weekDataID = 123;
+                //        var searchQuery = { "Key": _key, "AD_WeekDataID": date }, data = JSON.stringify(searchQuery);
+                //        $.ajax('../api/AdagioData/ChangeWeekDataProperty', {
+                //            type: 'POST',
+                //            data: data,
+                //            success: function (msg) {
+                //                localStorage['CT_key'] = msg['Key'];
+                //                selectedField.css('border-color', 'green');
+                //                hideProgress();
+                //            }
+                //        });
+                //    });
+                //});
             }
         });
     }
