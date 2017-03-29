@@ -1257,11 +1257,9 @@ function budgetVsActual() {
                     $('.productlist').show();
                     hideProgress();
 
-                    $('.productlist input[type="text"]').off().focus(function() {
-                        $(this).val('');
-                    }).off().blur(function () {
+                    $( '.productlist input[type="text"]' ).off().blur( function () {
                         showProgress();
-                        var selectedField = $(this), value = selectedField.val(), label = '"AD_' + selectedField.data('label') + '"', weekDataID = selectedField.data('weekid');
+                        var selectedField = $(this), value = selectedField.val(), label = 'AD_' + selectedField.data('label'), weekDataID = selectedField.data('weekid');
                         var searchQuery = { "Key": _key, "AD_WeekDataID": weekDataID };
                         searchQuery[label] = value;
                         data = JSON.stringify(searchQuery);
