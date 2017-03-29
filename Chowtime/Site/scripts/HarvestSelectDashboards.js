@@ -1290,7 +1290,6 @@ function budgetVsActual() {
 
 /* DASHBOARD */
 function dashboard() {
-    console.log("!");
     $('#pageRefresh').off().click(function (e) {
         e.preventDefault();
         window.location.reload();
