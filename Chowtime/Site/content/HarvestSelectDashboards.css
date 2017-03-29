@@ -34,6 +34,7 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .op nav { background-color: #6F5015; }
 .op nav a:hover { background-color: #fff; color:  #6F5015; text-decoration: none; }
 .op .btn, .op button { background: #6F5015; color: #fff; text-shadow: none; }
+.op #mainContent { padding-bottom: 100px; }
 .op #main_content header { background-color: #917031; width: 850px; text-align: center; margin: 10px auto; padding: 10px 20px; border-radius: 4px; }
 .op #main_content .report-container header { color: #fff; font-weight: bold; width: auto; line-height: 26px; text-transform: uppercase; }
 .op .report-container header img { height: 24px; margin-right: 10px; position: relative; top: 6px; }
@@ -58,6 +59,9 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .op .farm-yields-report .row { margin: 0; }
 .op .farm-yields-report .totals:after { content: ''; display: block; clear: both; }
 .op .farm-yields-report ul { background-color: #fff; border: 1px solid #000; }
+
+.op .productlist .row { margin-bottom: 10px; }
+.op .productlist input[type="text"] { width: auto; border-radius: 4px; padding: 6px 12 px; }
 
 .fc-event { cursor: pointer; }
 

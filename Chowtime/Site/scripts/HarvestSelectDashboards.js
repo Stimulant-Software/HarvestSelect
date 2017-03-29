@@ -1240,17 +1240,14 @@ function budgetVsActual() {
                 localStorage['CT_key'] = msg['Key'];
                 startTimer(msg.Key);
                 productData = msg['ReturnData'];
-                console.log(productData);
                 var productListHtml = '';
 
                 $(productData).each(function () {
-                    console.log(this);
-
-                    productListHtml += '<div class="row"><p class="col-md-2 col-md-offset-1">' + this.Product + '</p>' +
-                        '<p class="col-md-2">' + this.BudgetLbs + '</p>' +
-                        '<p class="col-md-2">' + this.BudgetDollars + '</p>' +
-                        '<p class="col-md-2">' + this.ActualLbs + '</p>' +
-                        '<p class="col-md-2">' + this.ActualDollars + '</p></div>';
+                    productListHtml += '<div class="row"><p class="col-md-2 col-md-offset-1" data-productID="' + this.AD_ProductID + '">' + this.ProductName + '</p>' +
+                        '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="BudgetLbs" value="' + this.BudgetLbs + '"></p>' +
+                        '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="BudgetDollars" value="' + this.BudgetDollars + '"></p>' +
+                        '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="ActualLbs" value="' + this.ActualLbs + '"></p>' +
+                        '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="ActualDollars" value="' + this.ActualDollars + '"></p></div>';
                 });
                 productListHtml += '<div class="row text-center"><button id="finishEntry" class="btn btn-label">Finished</button></div>';
                 $('#productListContainer').empty();
@@ -1260,12 +1257,16 @@ function budgetVsActual() {
                     $('.productlist').show();
                     hideProgress();
 
-                    $('.productlist input[type="text"]').off().blur(function () {
+                    $('.productlist input[type="text"]').off().focus(function() {
+                        $(this).val('');
+                    }).blur(function () {
                         showProgress();
                         /* TO DO: Check values and change query */
                         /* TO DO: Selected Field should be one of: AD_BudgetLbs , AD_BudgetDollars , AD_ActualLbs , AD_ActualDollars   */
-                        var selectedField = $(this), value = selectedField.val(), weekDataID = 123;
-                        var searchQuery = { "Key": _key, "AD_WeekDataID": date }, data = JSON.stringify(searchQuery);
+                        var selectedField = $(this), value = selectedField.val(), label = '"' + selectedField.data('label') + '"', weekDataID = selectedField.data('weekid');
+                        var searchQuery = { "Key": _key, "AD_WeekDataID": weekDataID };
+                        searchQuery[label] = value;
+                        data = JSON.stringify(searchQuery);
                         $.ajax('../api/AdagioData/ChangeWeekDataProperty', {
                             type: 'POST',
                             data: data,
