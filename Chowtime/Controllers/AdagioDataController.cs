@@ -68,6 +68,7 @@ namespace SGApp.Controllers
                     dic.Add("ActualLbs", wd.AD_ActualLbs != null ? wd.AD_ActualLbs.ToString() : "0");
                     dic.Add("ActualDollars", wd.AD_ActualDollars != null ? wd.AD_ActualDollars.ToString() : "0");
                     dic.Add("AD_WeekDataID", wd.AD_WeekDataID.ToString());
+                    col.Add(dic);
 
                 }
                 var retVal = new GenericDTO
