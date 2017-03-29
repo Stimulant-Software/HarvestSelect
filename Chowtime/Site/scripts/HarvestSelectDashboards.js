@@ -1210,13 +1210,13 @@ function budgetVsActual() {
                         });
                     });
                 },
-            eventClick: function (calEvent) {
-                chosenDate = calEvent.start._i;
+            dayClick: function () {
+                showProgress('body');
+                chosenDate = $(this).data('date');
                 $.when(loadProductList(chosenDate)).then(function () {
-                    hideProgress();
                     $('#calendarModal').modal('hide');
                 });
-            }
+            },
         });
     }
 
