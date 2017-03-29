@@ -1225,7 +1225,7 @@ function budgetVsActual() {
         $('.date-select h3, .date-select div').remove();
 
         /* TO DO: EDIT API AND SUCCESS FUNCTION FOR PRODUCT ROWS */
-        var searchQuery = { "Key": _key, "ProductionDate": date }, data = JSON.stringify(searchQuery);
+        var searchQuery = { "Key": _key, "AD_WeekEnd ": date }, data = JSON.stringify(searchQuery);
         $.ajax('../api/AdagioData/WeekDataAddOrEdit', {
             type: 'POST',
             data: data,
