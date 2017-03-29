@@ -1259,11 +1259,9 @@ function budgetVsActual() {
 
                     $('.productlist input[type="text"]').off().focus(function() {
                         $(this).val('');
-                    }).blur(function () {
+                    }).off().blur(function () {
                         showProgress();
-                        /* TO DO: Check values and change query */
-                        /* TO DO: Selected Field should be one of: AD_BudgetLbs , AD_BudgetDollars , AD_ActualLbs , AD_ActualDollars   */
-                        var selectedField = $(this), value = selectedField.val(), label = '"' + selectedField.data('label') + '"', weekDataID = selectedField.data('weekid');
+                        var selectedField = $(this), value = selectedField.val(), label = '"AD_' + selectedField.data('label') + '"', weekDataID = selectedField.data('weekid');
                         var searchQuery = { "Key": _key, "AD_WeekDataID": weekDataID };
                         searchQuery[label] = value;
                         data = JSON.stringify(searchQuery);
