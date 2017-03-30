@@ -1245,8 +1245,8 @@ function budgetVsActual() {
                 $(productData).each(function () {
                     productListHtml += '<div class="row"><p class="col-md-2 col-md-offset-1" data-productID="' + this.AD_ProductID + '">' + this.ProductName + '</p>' +
                         '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="BudgetLbs" value="' + this.BudgetLbs + '"></p>' +
-                        '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="BudgetDollars" value="' + this.BudgetDollars + '"></p>' +
                         '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="ActualLbs" value="' + this.ActualLbs + '"></p>' +
+                        '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="BudgetDollars" value="' + this.BudgetDollars + '"></p>' +
                         '<p class="col-md-2 text-center"><input type="text" class="form-control text-right" data-weekid="' + this.AD_WeekDataID + '" data-label="ActualDollars" value="' + this.ActualDollars + '"></p></div>';
                 });
                 productListHtml += '<div class="row text-center"><button id="finishEntry" class="btn btn-label">Finished</button></div>';
