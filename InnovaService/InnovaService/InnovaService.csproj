@@ -36,6 +36,10 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\InnovaServiceHost\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=5.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\Chowtime\packages\FluentValidation.5.0.0.1\lib\Net40\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
