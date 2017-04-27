@@ -176,6 +176,7 @@
     <Compile Include="Controllers\WeighBackController.cs" />
     <Compile Include="DTOs\AbsenceDTO.cs" />
     <Compile Include="DTOs\BOLDTO.cs" />
+    <Compile Include="DTOs\ChartDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
     <Compile Include="DTOs\DailyReportDTO.cs" />
     <Compile Include="DTOs\DepartmentDTO.cs" />
@@ -536,6 +537,8 @@
     <Content Include="Site\ct-entry.html" />
     <Content Include="Site\ct-reports.html" />
     <Content Include="Site\op-bol-reports.html" />
+    <Content Include="Site\op-budget-vs-actual.html" />
+    <Content Include="Site\op-dashboard.html" />
     <Content Include="Site\op-farm-yields.html" />
     <Content Include="Site\footer.html" />
     <Content Include="Site\index.html" />

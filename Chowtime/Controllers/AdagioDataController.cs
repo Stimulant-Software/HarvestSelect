@@ -204,6 +204,71 @@ namespace SGApp.Controllers
             return request.CreateResponse(HttpStatusCode.NotFound, message);
 
         }
+
+
+
+
+
+        [HttpGet]
+        public HttpResponseMessage WeekDataChart()
+        {
+            //string key;
+            //var ur = new AppUserRepository();
+            //var AbsenceId = 0;
+            //var userId = ur.ValidateUser(uDto.Key, out key, ref AbsenceId);
+
+            //AppUserRoleRepository aur = new AppUserRoleRepository();
+
+
+            //if (userId > 0)
+            //{
+                var wer = new AD_WeekDataRepository();
+                //var WeekEndDate = DateTime.Parse(uDto.AD_WeekEnd);
+
+                var data = wer.GetYTDGroup();
+                //var data2 = wer.GetYTDProduct();
+                //if (data.Count == 0)
+                //{
+                //    var prodData = wer.GetAllProducts();
+                //    foreach (var prod in prodData)
+                //    {
+                //        var wkData = new AD_WeekData();
+                //        wkData.AD_ProductID = prod;
+                //        wkData.AD_WeekEnd = WeekEndDate;
+                //        wer.Save(wkData);
+                //    }
+                //    data = wer.GetByDate(WeekEndDate);
+                //}
+                //var col = new Collection<Dictionary<string, string>>();
+                //data = data.OrderBy(x => x.AD_Products.AD_GroupID).ToList();
+
+                //foreach (var wd in data)
+                //{
+                //    var dic = new Dictionary<string, string>();
+                //    dic.Add("AD_ProductID", wd.AD_ProductID.ToString());
+                //    dic.Add("ProductName", wd.AD_Products.AD_ProductName);
+                //    dic.Add("BudgetLbs", wd.AD_BudgetLbs != null ? wd.AD_BudgetLbs.ToString() : "0");
+                //    dic.Add("BudgetDollars", wd.AD_BudgetDollars != null ? wd.AD_BudgetDollars.ToString() : "0");
+                //    dic.Add("ActualLbs", wd.AD_ActualLbs != null ? wd.AD_ActualLbs.ToString() : "0");
+                //    dic.Add("ActualDollars", wd.AD_ActualDollars != null ? wd.AD_ActualDollars.ToString() : "0");
+                //    dic.Add("AD_WeekDataID", wd.AD_WeekDataID.ToString());
+                //    col.Add(dic);
+
+                //}
+                //var retVal = new GenericDTO
+                //{
+                //    //Key = key,
+                //    ReturnData = col
+                //};
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+
+            //}
+
+
+
+            //var message = "validation failed";
+            //return Request.CreateResponse(HttpStatusCode.NotFound, message);
+        }
     }
 
 }

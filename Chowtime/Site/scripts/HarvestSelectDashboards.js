@@ -1290,438 +1290,225 @@ function dashboard() {
         e.preventDefault();
         window.location.reload();
     });
-    
-    if ( $( '.dashboard' ).length > 0 ) {
-        /* Sample stuff */
-        // Create the chart
-        //Highcharts.chart( 'widgetBVA', {
-        //    chart: {
-        //        type: 'column'
-        //    },
-        //    title: {
-        //        text: 'Browser market shares. January, 2015 to May, 2015'
-        //    },
-        //    subtitle: {
-        //        text: 'Click the columns to view versions. Source: <a href="http://netmarketshare.com">netmarketshare.com</a>.'
-        //    },
-        //    xAxis: {
-        //        type: 'category'
-        //    },
-        //    yAxis: {
-        //        title: {
-        //            text: 'Total percent market share'
-        //        }
 
-        //    },
-        //    legend: {
-        //        enabled: false
-        //    },
-        //    plotOptions: {
-        //        series: {
-        //            borderWidth: 0,
-        //            dataLabels: {
-        //                enabled: true,
-        //                format: '{point.y:.1f}%'
-        //            }
-        //        }
-        //    },
+    $.ajax('../api/AdagioData/WeekDataChart', {
+        type: 'GET',
+        //data: data,
+        success: function (msg) {
+            localStorage['CT_key'] = msg['Key'];
+            startTimer(msg.Key);
+            console.log(msg);
+            var series = msg.ChartSeries;
+            var drilldown = msg.DrillDownData;
 
-        //    tooltip: {
-        //        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-        //        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
-        //    },
+            var seriesArray = [], drilldownArray = [];
 
-        //    series: [{
-        //        name: 'Brands',
-        //        colorByPoint: true,
-        //        data: [{
-        //            name: 'Microsoft Internet Explorer',
-        //            y: 56.33,
-        //            drilldown: 'Microsoft Internet Explorer'
-        //        }, {
-        //            name: 'Chrome',
-        //            y: 24.03,
-        //            drilldown: 'Chrome'
-        //        }, {
-        //            name: 'Firefox',
-        //            y: 10.38,
-        //            drilldown: 'Firefox'
-        //        }, {
-        //            name: 'Safari',
-        //            y: 4.77,
-        //            drilldown: 'Safari'
-        //        }, {
-        //            name: 'Opera',
-        //            y: 0.91,
-        //            drilldown: 'Opera'
-        //        }, {
-        //            name: 'Proprietary or Undetectable',
-        //            y: 0.2,
-        //            drilldown: null
-        //        }]
-        //    }],
-        //    drilldown: {
-        //        series: [{
-        //            name: 'Microsoft Internet Explorer',
-        //            id: 'Microsoft Internet Explorer',
-        //            data: [
-        //                [
-        //                    'v11.0',
-        //                    24.13
-        //                ],
-        //                [
-        //                    'v8.0',
-        //                    17.2
-        //                ],
-        //                [
-        //                    'v9.0',
-        //                    8.11
-        //                ],
-        //                [
-        //                    'v10.0',
-        //                    5.33
-        //                ],
-        //                [
-        //                    'v6.0',
-        //                    1.06
-        //                ],
-        //                [
-        //                    'v7.0',
-        //                    0.5
-        //                ]
-        //            ]
-        //        }, {
-        //            name: 'Chrome',
-        //            id: 'Chrome',
-        //            data: [
-        //                [
-        //                    'v40.0',
-        //                    5
-        //                ],
-        //                [
-        //                    'v41.0',
-        //                    4.32
-        //                ],
-        //                [
-        //                    'v42.0',
-        //                    3.68
-        //                ],
-        //                [
-        //                    'v39.0',
-        //                    2.96
-        //                ],
-        //                [
-        //                    'v36.0',
-        //                    2.53
-        //                ],
-        //                [
-        //                    'v43.0',
-        //                    1.45
-        //                ],
-        //                [
-        //                    'v31.0',
-        //                    1.24
-        //                ],
-        //                [
-        //                    'v35.0',
-        //                    0.85
-        //                ],
-        //                [
-        //                    'v38.0',
-        //                    0.6
-        //                ],
-        //                [
-        //                    'v32.0',
-        //                    0.55
-        //                ],
-        //                [
-        //                    'v37.0',
-        //                    0.38
-        //                ],
-        //                [
-        //                    'v33.0',
-        //                    0.19
-        //                ],
-        //                [
-        //                    'v34.0',
-        //                    0.14
-        //                ],
-        //                [
-        //                    'v30.0',
-        //                    0.14
-        //                ]
-        //            ]
-        //        }, {
-        //            name: 'Firefox',
-        //            id: 'Firefox',
-        //            data: [
-        //                [
-        //                    'v35',
-        //                    2.76
-        //                ],
-        //                [
-        //                    'v36',
-        //                    2.32
-        //                ],
-        //                [
-        //                    'v37',
-        //                    2.31
-        //                ],
-        //                [
-        //                    'v34',
-        //                    1.27
-        //                ],
-        //                [
-        //                    'v38',
-        //                    1.02
-        //                ],
-        //                [
-        //                    'v31',
-        //                    0.33
-        //                ],
-        //                [
-        //                    'v33',
-        //                    0.22
-        //                ],
-        //                [
-        //                    'v32',
-        //                    0.15
-        //                ]
-        //            ]
-        //        }, {
-        //            name: 'Safari',
-        //            id: 'Safari',
-        //            data: [
-        //                [
-        //                    'v8.0',
-        //                    2.56
-        //                ],
-        //                [
-        //                    'v7.1',
-        //                    0.77
-        //                ],
-        //                [
-        //                    'v5.1',
-        //                    0.42
-        //                ],
-        //                [
-        //                    'v5.0',
-        //                    0.3
-        //                ],
-        //                [
-        //                    'v6.1',
-        //                    0.29
-        //                ],
-        //                [
-        //                    'v7.0',
-        //                    0.26
-        //                ],
-        //                [
-        //                    'v6.2',
-        //                    0.17
-        //                ]
-        //            ]
-        //        }, {
-        //            name: 'Opera',
-        //            id: 'Opera',
-        //            data: [
-        //                [
-        //                    'v12.x',
-        //                    0.34
-        //                ],
-        //                [
-        //                    'v28',
-        //                    0.24
-        //                ],
-        //                [
-        //                    'v27',
-        //                    0.17
-        //                ],
-        //                [
-        //                    'v29',
-        //                    0.16
-        //                ]
-        //            ]
-        //        }]
-        //    }
-        //} );
+            $(series).each(function () {
+                console.log(this);
+                $(this).each(function () {
+                    var tempObj = new Object();
+                    tempObj.data = [];
+                    tempObj.name = this.name;
+                    tempObj.color = this.color;
+                    $(this.data).each(function () {
+                        tempObj.data.push(this);
+                    });
+                    tempObj.pointPadding = this.pointPadding;
+                    tempObj.pointPlacement = this.pointPlacement;
+                    seriesArray.push(tempObj);
+                });
+            });
 
+            //$(drilldown).each(function(){
+            //    $(this).series.each(function(value) {
+            //        var tempObj = new Object();
+            //        tempObj.id = value.id;
+            //        tempObj.data = value.data;
+            //        drilldownArray.push(tempObj)
+            //    }
+            //    }
+            
 
+            if ($('.dashboard').length > 0) {
 
-        Highcharts.chart('widgetOther', {
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'Budget vs Actual'
-            },
-            xAxis: {
-                type: 'category'
-            },
-            yAxis: [{
-                min: 0,
-                title: {
-                    text: 'Lbs'
-                }
-            }, {
-                title: {
-                    text: 'Dollars'
-                },
-                opposite: true
-            }],
-            legend: {
-                shadow: false
-            },
-            tooltip: {
-                shared: true
-            },
-            plotOptions: {
-                column: {
-                    grouping: false,
-                    shadow: false,
-                    borderWidth: 0
-                }
-            },
-            series: [{
-                name: 'Budget Lbs',
-                color: 'rgba(165,170,217,1)',
-                data: [{
-                    name: 'March',
-                    y: 150,
-                    drilldown: 'BudgetLbsMarch'
-                }, {
-                    name: 'April',
-                    y: 73,
-                    drilldown: 'BudgetLbsApril'
-                }, {
-                    name: 'May',
-                    y: 20,
-                    drilldown: 'BudgetLbsMay'
-                }, {
-                    name: 'June',
-                    y: 65,
-                    drilldown: 'BudgetLbsMay'
-                }],
-                    
-                pointPadding: 0.26,
-                pointPlacement: -0.2
-            }, {
-                name: 'Actual Lbs',
-                color: 'rgba(126,86,134,.9)',
-                data: [{
-                    name: 'March',
-                    y: 150,
-                    drilldown: 'ActualLbsMarch'
-                }, {
-                    name: 'April',
-                    y: 73,
-                    drilldown: 'ActualLbsApril'
-                }, {
-                    name: 'May',
-                    y: 20,
-                    drilldown: 'ActualLbsMay'
-                }, {
-                    name: 'June',
-                    y: 65,
-                    drilldown: 'ActualLbsMay'
-                }],
-                pointPadding: 0.4,
-                pointPlacement: -0.2
-            }, {
-                name: 'Budget Dollars',
-                color: 'rgba(248,161,63,1)',
-                data: [{
-                    name: 'March',
-                    y: 150,
-                    drilldown: 'BudgetDollarsMarch'
-                }, {
-                    name: 'April',
-                    y: 73,
-                    drilldown: 'BudgetDollarsApril'
-                }, {
-                    name: 'May',
-                    y: 20,
-                    drilldown: 'BudgetDollarsMay'
-                }, {
-                    name: 'June',
-                    y: 65,
-                    drilldown: 'BudgetDollarsMay'
-                }],
-                tooltip: {
-                    valuePrefix: '$',
-                    valueSuffix: ' M'
-                },
-                pointPadding: 0.26,
-                pointPlacement: 0.1,
-                yAxis: 1
-            }, {
-                name: 'Actual Dollars',
-                color: 'rgba(186,60,61,.9)',
-                data: [{
-                    name: 'March',
-                    y: 150,
-                    drilldown: 'ActualDollarsMarch'
-                }, {
-                    name: 'April',
-                    y: 73,
-                    drilldown: 'ActualDollarsApril'
-                }, {
-                    name: 'May',
-                    y: 20,
-                    drilldown: 'ActualDollarsMay'
-                }, {
-                    name: 'June',
-                    y: 65,
-                    drilldown: 'ActualDollarsMay'
-                }],
-                tooltip: {
-                    valuePrefix: '$',
-                    valueSuffix: ' M'
-                },
-                pointPadding: 0.4,
-                pointPlacement: 0.1,
-                yAxis: 1
-            }],
-            drilldown: {
-                series: [{
-                    id: 'BudgetLbsMarch',
-                    data: [
-                        ['East', 4],
-                        ['West', 2],
-                        ['North', 1],
-                        ['South', 4]
-                    ]
-                },
-                {
-                    id: 'BudgetLbsApril',
-                    data: [
-                        ['East', 8],
-                        ['West', 9],
-                        ['North', 10],
-                        ['South', 14]
-                    ]
-                },
-                {
-                    id: 'ActualLbsApril',
-                    data: [
-                        ['East', 8],
-                        ['West', 9],
-                        ['North', 10],
-                        ['South', 14]
-                    ]
-                },
-                {
-                    id: 'ActualLbsMarch',
-                    data: [
-                        ['East', 8],
-                        ['West', 9],
-                        ['North', 10],
-                        ['South', 14]
-                    ]
-                }]
+                Highcharts.chart('widgetOther', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Budget vs Actual'
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: [{
+                        min: 0,
+                        title: {
+                            text: 'Lbs'
+                        }
+                    }, {
+                        title: {
+                            text: 'Dollars'
+                        },
+                        opposite: true
+                    }],
+                    legend: {
+                        shadow: false
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
+                    series: seriesArray
+                    //    [{
+                    //    name: 'Budget Lbs',
+                    //    color: 'rgba(165,170,217,1)',
+                    //    data: [{
+                    //        name: 'March',
+                    //        y: 150,
+                    //        drilldown: 'BudgetLbsMarch'
+                    //    }, {
+                    //        name: 'April',
+                    //        y: 73,
+                    //        drilldown: 'BudgetLbsApril'
+                    //    }, {
+                    //        name: 'May',
+                    //        y: 20,
+                    //        drilldown: 'BudgetLbsMay'
+                    //    }, {
+                    //        name: 'June',
+                    //        y: 65,
+                    //        drilldown: 'BudgetLbsMay'
+                    //    }],
+
+                    //    pointPadding: 0.26,
+                    //    pointPlacement: -0.2
+                    //}, {
+                    //    name: 'Actual Lbs',
+                    //    color: 'rgba(126,86,134,.9)',
+                    //    data: [{
+                    //        name: 'March',
+                    //        y: 150,
+                    //        drilldown: 'ActualLbsMarch'
+                    //    }, {
+                    //        name: 'April',
+                    //        y: 73,
+                    //        drilldown: 'ActualLbsApril'
+                    //    }, {
+                    //        name: 'May',
+                    //        y: 20,
+                    //        drilldown: 'ActualLbsMay'
+                    //    }, {
+                    //        name: 'June',
+                    //        y: 65,
+                    //        drilldown: 'ActualLbsMay'
+                    //    }],
+                    //    pointPadding: 0.4,
+                    //    pointPlacement: -0.2
+                    //}, {
+                    //    name: 'Budget Dollars',
+                    //    color: 'rgba(248,161,63,1)',
+                    //    data: [{
+                    //        name: 'March',
+                    //        y: 150,
+                    //        drilldown: 'BudgetDollarsMarch'
+                    //    }, {
+                    //        name: 'April',
+                    //        y: 73,
+                    //        drilldown: 'BudgetDollarsApril'
+                    //    }, {
+                    //        name: 'May',
+                    //        y: 20,
+                    //        drilldown: 'BudgetDollarsMay'
+                    //    }, {
+                    //        name: 'June',
+                    //        y: 65,
+                    //        drilldown: 'BudgetDollarsMay'
+                    //    }],
+                    //    tooltip: {
+                    //        valuePrefix: '$',
+                    //        valueSuffix: ' M'
+                    //    },
+                    //    pointPadding: 0.26,
+                    //    pointPlacement: 0.1,
+                    //    yAxis: 1
+                    //}, {
+                    //    name: 'Actual Dollars',
+                    //    color: 'rgba(186,60,61,.9)',
+                    //    data: [{
+                    //        name: 'March',
+                    //        y: 150,
+                    //        drilldown: 'ActualDollarsMarch'
+                    //    }, {
+                    //        name: 'April',
+                    //        y: 73,
+                    //        drilldown: 'ActualDollarsApril'
+                    //    }, {
+                    //        name: 'May',
+                    //        y: 20,
+                    //        drilldown: 'ActualDollarsMay'
+                    //    }, {
+                    //        name: 'June',
+                    //        y: 65,
+                    //        drilldown: 'ActualDollarsMay'
+                    //    }],
+                    //    tooltip: {
+                    //        valuePrefix: '$',
+                    //        valueSuffix: ' M'
+                    //    },
+                    //    pointPadding: 0.4,
+                    //    pointPlacement: 0.1,
+                    //    yAxis: 1
+                    //}],
+                    ,
+                    drilldown: {
+                        series: [{
+                            id: 'BudgetLbsMarch',
+                            data: [
+                                ['East', 4],
+                                ['West', 2],
+                                ['North', 1],
+                                ['South', 4]
+                            ]
+                        },
+                        {
+                            id: 'BudgetLbsApril',
+                            data: [
+                                ['East', 8],
+                                ['West', 9],
+                                ['North', 10],
+                                ['South', 14]
+                            ]
+                        },
+                        {
+                            id: 'ActualLbsApril',
+                            data: [
+                                ['East', 8],
+                                ['West', 9],
+                                ['North', 10],
+                                ['South', 14]
+                            ]
+                        },
+                        {
+                            id: 'ActualLbsMarch',
+                            data: [
+                                ['East', 8],
+                                ['West', 9],
+                                ['North', 10],
+                                ['South', 14]
+                            ]
+                        }]
+                    }
+                });
             }
-        });
-    }
+        }
+    });
 }
 
 /**** DELETE FROM HERE DOWN WHEN PRODUCTION IS READY ****/
