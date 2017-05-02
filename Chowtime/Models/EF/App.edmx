@@ -36,6 +36,7 @@
           <Property Name="AD_ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AD_GroupID" Type="int" Nullable="false" />
           <Property Name="AD_ProductName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AD_SubgroupId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="AD_WeekData">
           <Key>
@@ -48,6 +49,35 @@
           <Property Name="AD_BudgetDollars" Type="decimal" Precision="18" Scale="2" />
           <Property Name="AD_ActualDollars" Type="decimal" Precision="18" Scale="2" />
           <Property Name="AD_WeekEnd" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ADAGIOSalesStatitics">
+          <Key>
+            <PropertyRef Name="StatsID" />
+          </Key>
+          <Property Name="Date_2" Type="datetime" />
+          <Property Name="Curr" Type="varchar" MaxLength="50" />
+          <Property Name="NetQtySold" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="GrossSalesAmt" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="GrossCreditAmt" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="NetInvoiceAmt" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="NetTaxes" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="NetSalesAmt" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="CostofSales" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="InvoiceCount" Type="int" />
+          <Property Name="LargestInvoice" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="SmallestInvoice" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="LargestCustomer" Type="varchar" MaxLength="50" />
+          <Property Name="LargestSalesperson" Type="varchar" MaxLength="50" />
+          <Property Name="CNCount" Type="int" />
+          <Property Name="LargestCN" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="SmallestCN" Type="decimal" Precision="28" Scale="2" />
+          <Property Name="RateDate" Type="datetime" />
+          <Property Name="Rate" Type="int" />
+          <Property Name="RateRep" Type="varchar" MaxLength="50" />
+          <Property Name="DateMatching" Type="varchar" MaxLength="50" />
+          <Property Name="Filler" Type="varchar" MaxLength="50" />
+          <Property Name="RNumAS90ASTA" Type="int" />
+          <Property Name="StatsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Companies">
           <Key>
@@ -677,6 +707,7 @@
           <EntitySet Name="AD_Groups" EntityType="Self.AD_Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AD_Products" EntityType="Self.AD_Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AD_WeekData" EntityType="Self.AD_WeekData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ADAGIOSalesStatitics" EntityType="Self.ADAGIOSalesStatitics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentTotals" EntityType="Self.DepartmentTotals" Schema="dbo" store:Type="Tables" />
@@ -969,6 +1000,7 @@
             <End Role="AD_Products" EntitySet="AD_Products" />
             <End Role="AD_WeekData" EntitySet="AD_WeekData" />
           </AssociationSet>
+          <EntitySet Name="ADAGIOSalesStatitics" EntityType="AppModel.ADAGIOSalesStatitic" />
           </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -1657,6 +1689,7 @@
           <Property Name="AD_ProductName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AD_Groups" Relationship="AppModel.FK_AD_Products_AD_Groups" FromRole="AD_Products" ToRole="AD_Groups" />
           <NavigationProperty Name="AD_WeekData" Relationship="AppModel.FK_AD_WeekData_AD_Products" FromRole="AD_Products" ToRole="AD_WeekData" />
+          <Property Name="AD_SubgroupId" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="AD_WeekData">
           <Key>
@@ -1695,6 +1728,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ADAGIOSalesStatitic">
+          <Key>
+            <PropertyRef Name="StatsID" />
+          </Key>
+          <Property Name="Date_2" Type="DateTime" Precision="3" />
+          <Property Name="Curr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NetQtySold" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="GrossSalesAmt" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="GrossCreditAmt" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="NetInvoiceAmt" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="NetTaxes" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="NetSalesAmt" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="CostofSales" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="InvoiceCount" Type="Int32" />
+          <Property Name="LargestInvoice" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="SmallestInvoice" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="LargestCustomer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LargestSalesperson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="CNCount" Type="Int32" />
+          <Property Name="LargestCN" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="SmallestCN" Type="Decimal" Precision="28" Scale="2" />
+          <Property Name="RateDate" Type="DateTime" Precision="3" />
+          <Property Name="Rate" Type="Int32" />
+          <Property Name="RateRep" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DateMatching" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Filler" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RNumAS90ASTA" Type="Int32" />
+          <Property Name="StatsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2030,6 +2092,7 @@
           <EntitySetMapping Name="AD_Products">
             <EntityTypeMapping TypeName="AppModel.AD_Products">
               <MappingFragment StoreEntitySet="AD_Products">
+                <ScalarProperty Name="AD_SubgroupId" ColumnName="AD_SubgroupId" />
                 <ScalarProperty Name="AD_ProductName" ColumnName="AD_ProductName" />
                 <ScalarProperty Name="AD_GroupID" ColumnName="AD_GroupID" />
                 <ScalarProperty Name="AD_ProductID" ColumnName="AD_ProductID" />
@@ -2046,6 +2109,36 @@
                 <ScalarProperty Name="AD_BudgetLbs" ColumnName="AD_BudgetLbs" />
                 <ScalarProperty Name="AD_ProductID" ColumnName="AD_ProductID" />
                 <ScalarProperty Name="AD_WeekDataID" ColumnName="AD_WeekDataID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ADAGIOSalesStatitics">
+            <EntityTypeMapping TypeName="AppModel.ADAGIOSalesStatitic">
+              <MappingFragment StoreEntitySet="ADAGIOSalesStatitics">
+                <ScalarProperty Name="StatsID" ColumnName="StatsID" />
+                <ScalarProperty Name="RNumAS90ASTA" ColumnName="RNumAS90ASTA" />
+                <ScalarProperty Name="Filler" ColumnName="Filler" />
+                <ScalarProperty Name="DateMatching" ColumnName="DateMatching" />
+                <ScalarProperty Name="RateRep" ColumnName="RateRep" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
+                <ScalarProperty Name="RateDate" ColumnName="RateDate" />
+                <ScalarProperty Name="SmallestCN" ColumnName="SmallestCN" />
+                <ScalarProperty Name="LargestCN" ColumnName="LargestCN" />
+                <ScalarProperty Name="CNCount" ColumnName="CNCount" />
+                <ScalarProperty Name="LargestSalesperson" ColumnName="LargestSalesperson" />
+                <ScalarProperty Name="LargestCustomer" ColumnName="LargestCustomer" />
+                <ScalarProperty Name="SmallestInvoice" ColumnName="SmallestInvoice" />
+                <ScalarProperty Name="LargestInvoice" ColumnName="LargestInvoice" />
+                <ScalarProperty Name="InvoiceCount" ColumnName="InvoiceCount" />
+                <ScalarProperty Name="CostofSales" ColumnName="CostofSales" />
+                <ScalarProperty Name="NetSalesAmt" ColumnName="NetSalesAmt" />
+                <ScalarProperty Name="NetTaxes" ColumnName="NetTaxes" />
+                <ScalarProperty Name="NetInvoiceAmt" ColumnName="NetInvoiceAmt" />
+                <ScalarProperty Name="GrossCreditAmt" ColumnName="GrossCreditAmt" />
+                <ScalarProperty Name="GrossSalesAmt" ColumnName="GrossSalesAmt" />
+                <ScalarProperty Name="NetQtySold" ColumnName="NetQtySold" />
+                <ScalarProperty Name="Curr" ColumnName="Curr" />
+                <ScalarProperty Name="Date_2" ColumnName="Date_2" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

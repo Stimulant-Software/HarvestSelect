@@ -22,6 +22,7 @@ namespace SGApp.Models.EF
         public int AD_ProductID { get; set; }
         public int AD_GroupID { get; set; }
         public string AD_ProductName { get; set; }
+        public int AD_SubgroupId { get; set; }
     
         public virtual AD_Groups AD_Groups { get; set; }
         public virtual ICollection<AD_WeekData> AD_WeekData { get; set; }

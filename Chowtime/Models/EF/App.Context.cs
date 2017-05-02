@@ -55,5 +55,6 @@ namespace SGApp.Models.EF
         public DbSet<AD_Groups> AD_Groups { get; set; }
         public DbSet<AD_Products> AD_Products { get; set; }
         public DbSet<AD_WeekData> AD_WeekData { get; set; }
+        public DbSet<ADAGIOSalesStatitic> ADAGIOSalesStatitics { get; set; }
     }
 }

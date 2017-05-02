@@ -63,6 +63,7 @@
         <EntityTypeShape EntityType="AppModel.AD_WeekData" Width="1.5" PointX="14.875" PointY="6" />
         <AssociationConnector Association="AppModel.FK_AD_Products_AD_Groups" />
         <AssociationConnector Association="AppModel.FK_AD_WeekData_AD_Products" />
+        <EntityTypeShape EntityType="AppModel.ADAGIOSalesStatitic" Width="1.5" PointX="5.375" PointY="6.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
