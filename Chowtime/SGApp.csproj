@@ -223,6 +223,9 @@
     <Compile Include="Models\EF\Absence.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\ADAGIOSalesStatitic.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\AD_Groups.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>

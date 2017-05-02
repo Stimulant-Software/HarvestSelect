@@ -1408,6 +1408,190 @@ function dashboard() {
             }
         }
     });
+
+    $.ajax('../api/AdagioData/SalesStats', {
+        type: 'GET',
+        //data: data,
+        success: function (msg) {
+            localStorage['CT_key'] = msg['Key'];
+            startTimer(msg.Key);
+            console.log(msg);
+            var series = msg.ChartSeries;
+            var drilldown = msg.DrillDownData.DrillDownSeries;
+
+            var seriesArray = [], drilldownArray = [];
+
+            $(series).each(function () {
+                console.log(this);
+                $(this).each(function () {
+                    var tempObj = new Object();
+                    tempObj.data = [];
+                    tempObj.name = this.name;
+                    tempObj.color = this.color;
+                    $(this.data).each(function () {
+                        tempObj.data.push(this);
+                    });
+                    tempObj.pointPadding = this.pointPadding;
+                    tempObj.pointPlacement = this.pointPlacement;
+                    seriesArray.push(tempObj);
+                });
+            });
+
+            //$(drilldown).each(function(){
+            //    $(this).series.each(function(value) {
+            //        var tempObj = new Object();
+            //        tempObj.id = value.id;
+            //        tempObj.data = value.data;
+            //        drilldownArray.push(tempObj)
+            //    }
+            //    }
+
+
+            if ($('.dashboard').length > 0) {
+
+                Highcharts.chart('widgetOther2', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Sales'
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: [{
+                        min: 0,
+                        title: {
+                            text: 'Dollars'
+                        }
+                    }, {
+                        title: {
+                            text: 'Qty'
+                        },
+                        opposite: true
+                    }],
+                    legend: {
+                        shadow: false
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
+                    series: seriesArray
+                    //    [{
+                    //    name: 'Budget Lbs',
+                    //    color: 'rgba(165,170,217,1)',
+                    //    data: [{
+                    //        name: 'March',
+                    //        y: 150,
+                    //        drilldown: 'BudgetLbsMarch'
+                    //    }, {
+                    //        name: 'April',
+                    //        y: 73,
+                    //        drilldown: 'BudgetLbsApril'
+                    //    }, {
+                    //        name: 'May',
+                    //        y: 20,
+                    //        drilldown: 'BudgetLbsMay'
+                    //    }, {
+                    //        name: 'June',
+                    //        y: 65,
+                    //        drilldown: 'BudgetLbsMay'
+                    //    }],
+
+                    //    pointPadding: 0.26,
+                    //    pointPlacement: -0.2
+                    //}, {
+                    //    name: 'Actual Lbs',
+                    //    color: 'rgba(126,86,134,.9)',
+                    //    data: [{
+                    //        name: 'March',
+                    //        y: 150,
+                    //        drilldown: 'ActualLbsMarch'
+                    //    }, {
+                    //        name: 'April',
+                    //        y: 73,
+                    //        drilldown: 'ActualLbsApril'
+                    //    }, {
+                    //        name: 'May',
+                    //        y: 20,
+                    //        drilldown: 'ActualLbsMay'
+                    //    }, {
+                    //        name: 'June',
+                    //        y: 65,
+                    //        drilldown: 'ActualLbsMay'
+                    //    }],
+                    //    pointPadding: 0.4,
+                    //    pointPlacement: -0.2
+                    //}, {
+                    //    name: 'Budget Dollars',
+                    //    color: 'rgba(248,161,63,1)',
+                    //    data: [{
+                    //        name: 'March',
+                    //        y: 150,
+                    //        drilldown: 'BudgetDollarsMarch'
+                    //    }, {
+                    //        name: 'April',
+                    //        y: 73,
+                    //        drilldown: 'BudgetDollarsApril'
+                    //    }, {
+                    //        name: 'May',
+                    //        y: 20,
+                    //        drilldown: 'BudgetDollarsMay'
+                    //    }, {
+                    //        name: 'June',
+                    //        y: 65,
+                    //        drilldown: 'BudgetDollarsMay'
+                    //    }],
+                    //    tooltip: {
+                    //        valuePrefix: '$',
+                    //        valueSuffix: ' M'
+                    //    },
+                    //    pointPadding: 0.26,
+                    //    pointPlacement: 0.1,
+                    //    yAxis: 1
+                    //}, {
+                    //    name: 'Actual Dollars',
+                    //    color: 'rgba(186,60,61,.9)',
+                    //    data: [{
+                    //        name: 'March',
+                    //        y: 150,
+                    //        drilldown: 'ActualDollarsMarch'
+                    //    }, {
+                    //        name: 'April',
+                    //        y: 73,
+                    //        drilldown: 'ActualDollarsApril'
+                    //    }, {
+                    //        name: 'May',
+                    //        y: 20,
+                    //        drilldown: 'ActualDollarsMay'
+                    //    }, {
+                    //        name: 'June',
+                    //        y: 65,
+                    //        drilldown: 'ActualDollarsMay'
+                    //    }],
+                    //    tooltip: {
+                    //        valuePrefix: '$',
+                    //        valueSuffix: ' M'
+                    //    },
+                    //    pointPadding: 0.4,
+                    //    pointPlacement: 0.1,
+                    //    yAxis: 1
+                    //}],
+                    ,
+                    drilldown: {
+                        series: msg.DrillDownData.DrillDownSeries
+                    }
+                });
+            }
+        }
+    });
 }
 
 /**** DELETE FROM HERE DOWN WHEN PRODUCTION IS READY ****/

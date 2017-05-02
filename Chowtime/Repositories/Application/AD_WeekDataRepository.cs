@@ -88,6 +88,144 @@ namespace SGApp.Repository.Application
             
             return DbContext.AD_Products.Select( x => x.AD_ProductID).ToList();
         }
+        public ChartDTO GetSalesStats()
+        {
+            var bLbs = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
+            .Select(lg => new ChartDTO.Series.dataitem
+            {
+                name = lg.Key.ToString(),
+                y = lg.Sum(w => w.GrossSalesAmt != null ? (int) w.GrossSalesAmt.Value : 0),
+                drilldown = "GYear" + lg.Key.ToString()
+            }).OrderBy(o => o.name).ToArray();
+            var bDollars = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
+                .Select(lg => new ChartDTO.Series.dataitem
+                {
+                    name = lg.Key.ToString(),
+                    y = (int)lg.Sum(w => w.NetSalesAmt != null ? (int) w.NetSalesAmt.Value : 0),
+                    drilldown = "NYear" + lg.Key.ToString()
+                }).OrderBy(o => o.name).ToArray();
+            //var aLbs = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
+            //    .Select(lg => new ChartDTO.Series.dataitem
+            //    {
+            //        name = lg.Key.ToString(),
+            //        y = lg.Sum(w => w.NetInvoiceAmt != null ? (int) w.NetInvoiceAmt.Value : 0),
+            //        drilldown = "Invoice" + lg.Key.ToString()
+            //    }).OrderBy(o => o.name).ToArray();
+            var aDollars = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
+                .Select(lg => new ChartDTO.Series.dataitem
+                {
+                    name = lg.Key.ToString(),
+                    y = (int)lg.Sum(w => w.NetQtySold != null ? (int) w.NetQtySold.Value : 0),
+                    drilldown = "QYear" + lg.Key.ToString()
+                }).OrderBy(o => o.name).ToArray();
+
+            var seriesData1 = new ChartDTO.Series
+            {
+                data = bLbs.ToArray(),
+                color = "rgba(165,170,217,1)",
+                name = "Gross Sales",
+                pointPadding = 0.26M,
+                pointPlacement = -0.2M,
+                yAxis = 1
+
+
+            };
+            var seriesData2 = new ChartDTO.Series
+            {
+                data = bDollars.ToArray(),
+                color = "rgba(126,86,134,.9)",
+                name = "Net Sales",
+                pointPadding = 0.4M,
+                pointPlacement = -0.2M,
+                yAxis = 1
+            };
+            var seriesData3 = new ChartDTO.Series
+            {
+                data = aDollars.ToArray(),
+                color = "rgba(248,161,63,1)",
+                name = "Net Quantity",
+                pointPadding = 0.26M,
+                pointPlacement = 0.1M,
+                yAxis = 1
+            };
+
+            ChartDTO.Series[] seriesarray = new ChartDTO.Series[3];
+            seriesarray[0] = seriesData1;
+            seriesarray[1] = seriesData2;
+            seriesarray[2] = seriesData3;
+            //seriesarray[3] = seriesData4;
+
+            var cht = new ChartDTO();
+            cht.ChartSeries = seriesarray;
+
+            List<ChartDTO.Series> drillDownSeries = new List<ChartDTO.Series>();
+            foreach (int year in bLbs.Select(x => int.Parse(x.name))){
+                var ddGross = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year == year).GroupBy(x => x.Date_2.Value.Month)
+            .Select(lg => new ChartDTO.Series.dataitem
+            {
+                name = lg.Key.ToString(),
+                y = lg.Sum(w => w.GrossSalesAmt != null ? (int)w.GrossSalesAmt.Value : 0),
+                drilldown = "Month" + lg.Key.ToString()
+            }).OrderBy(o => o.name).ToArray();
+                var ddNet = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year == year).GroupBy(x => x.Date_2.Value.Month)
+                    .Select(lg => new ChartDTO.Series.dataitem
+                    {
+                        name = lg.Key.ToString(),
+                        y = (int)lg.Sum(w => w.NetSalesAmt != null ? (int)w.NetSalesAmt.Value : 0),
+                        drilldown = "Month" + lg.Key.ToString()
+                    }).OrderBy(o => o.name).ToArray();
+                var ddQty = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year == year).GroupBy(x => x.Date_2.Value.Month)
+                    .Select(lg => new ChartDTO.Series.dataitem
+                    {
+                        name = lg.Key.ToString(),
+                        y = (int)lg.Sum(w => w.NetQtySold != null ? (int)w.NetQtySold.Value : 0),
+                        drilldown = "Month" + lg.Key.ToString()
+                    }).OrderBy(o => o.name).ToArray();
+
+                var ddseriesData1 = new ChartDTO.Series
+                {
+                    data = ddGross.ToArray(),
+                    color = "rgba(165,170,217,1)",
+                    name = "Gross Sales",
+                    pointPadding = 0.26M,
+                    pointPlacement = -0.2M,
+                    yAxis = 1,
+                    id = "GYear" + year.ToString()
+
+
+                };
+                var ddseriesData2 = new ChartDTO.Series
+                {
+                    data = ddNet.ToArray(),
+                    color = "rgba(126,86,134,.9)",
+                    name = "Net Sales",
+                    pointPadding = 0.4M,
+                    pointPlacement = -0.2M,
+                    yAxis = 1,
+                    id = "NYear" + year.ToString()
+                };
+                var ddseriesData3 = new ChartDTO.Series
+                {
+                    data = ddQty.ToArray(),
+                    color = "rgba(248,161,63,1)",
+                    name = "Net Quantity",
+                    pointPadding = 0.26M,
+                    pointPlacement = 0.1M,
+                    yAxis = 1,
+                    id = "QYear" + year.ToString()
+                };
+
+                drillDownSeries.Add(ddseriesData1);
+                drillDownSeries.Add(ddseriesData2);
+                drillDownSeries.Add(ddseriesData3);
+            }
+
+            ChartDTO.DrillDown ddData = new ChartDTO.DrillDown();
+            ddData.DrillDownSeries = drillDownSeries.ToArray();
+            cht.DrillDownData = ddData;
+            return cht;
+        }
+
 
         public ChartDTO GetYTDGroup()
         {

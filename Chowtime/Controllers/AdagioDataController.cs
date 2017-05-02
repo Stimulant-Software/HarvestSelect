@@ -269,6 +269,17 @@ namespace SGApp.Controllers
             //var message = "validation failed";
             //return Request.CreateResponse(HttpStatusCode.NotFound, message);
         }
+
+        [HttpGet]
+        public HttpResponseMessage SalesStats()
+        {
+
+            var wer = new AD_WeekDataRepository();
+
+            var data = wer.GetSalesStats();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
     }
 
 }

@@ -19,6 +19,7 @@ namespace SGApp.DTOs
             public decimal pointPadding { get; set; }
             public decimal pointPlacement { get; set; }
             public decimal? yAxis { get; set; }
+            public string id { get; set; }
 
         }
 
@@ -41,6 +42,8 @@ namespace SGApp.DTOs
             }
 
             public SeriesItem[] Series { get; set; }
+            public Series[] DrillDownSeries { get; set; }
+            
 
         }
 
