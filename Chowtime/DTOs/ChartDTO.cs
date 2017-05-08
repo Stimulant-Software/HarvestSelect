@@ -20,12 +20,15 @@ namespace SGApp.DTOs
             public decimal pointPlacement { get; set; }
             public decimal? yAxis { get; set; }
             public string id { get; set; }
+            public string type { get; set; }
 
         }
 
        
         
         public Series[] ChartSeries { get; set; }
+        
+
 
         public class DrillDown {
 
@@ -40,14 +43,60 @@ namespace SGApp.DTOs
 
                 }
             }
-
+            public List<Series[]> ddCollection { get; set; }
+            public ICollection<Dictionary<string, List<ChartDTO.Series>>> DrillDownCollection { get; set; }
+           
             public SeriesItem[] Series { get; set; }
+            
             public Series[] DrillDownSeries { get; set; }
             
 
         }
 
         public DrillDown DrillDownData { get; set; }
+
+        public class SeriesDec
+        {
+            public dataitem[] data { get; set; }
+            public string name { get; set; }
+            public string color { get; set; }
+            public class dataitem
+            {
+                public decimal y { get; set; }
+                public string name { get; set; }
+                public string drilldown { get; set; }
+            }
+            public decimal pointPadding { get; set; }
+            public decimal pointPlacement { get; set; }
+            public decimal? yAxis { get; set; }
+            public string id { get; set; }
+            public string type { get; set; }
+
+        }
+        public SeriesDec[] ChartSeriesDec { get; set; }
+
+        public class SeriesPie
+        {
+            public dataitem[] data { get; set; }
+            public string name { get; set; }
+            public string color { get; set; }
+            public string innerSize { get; set; }
+            public class dataitem
+            {
+                public decimal y { get; set; }
+                public string name { get; set; }
+            }
+            public decimal pointPadding { get; set; }
+            public decimal pointPlacement { get; set; }
+            public decimal? yAxis { get; set; }
+            public string id { get; set; }
+            public string type { get; set; }
+
+        }
+
+
+
+        public SeriesPie[] ChartSeriesPie { get; set; }
 
     }
 }

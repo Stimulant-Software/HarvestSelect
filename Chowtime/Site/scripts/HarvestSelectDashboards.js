@@ -1291,123 +1291,123 @@ function dashboard() {
         window.location.reload();
     });
 
-    $.ajax('../api/AdagioData/WeekDataChart', {
-        type: 'GET',
-        //data: data,
-        success: function (msg) {
-            localStorage['CT_key'] = msg['Key'];
-            startTimer(msg.Key);
-            console.log(msg);
-            var series = msg.ChartSeries;
-            var drilldown = msg.DrillDownData;
+    //$.ajax('../api/AdagioData/WeekDataChart', {
+    //    type: 'GET',
+    //    //data: data,
+    //    success: function (msg) {
+    //        localStorage['CT_key'] = msg['Key'];
+    //        startTimer(msg.Key);
+    //        console.log(msg);
+    //        var series = msg.ChartSeries;
+    //        var drilldown = msg.DrillDownData;
 
-            var seriesArray = [], drilldownArray = [];
+    //        var seriesArray = [], drilldownArray = [];
 
-            $(series).each(function () {
-                console.log(this);
-                $(this).each(function () {
-                    var tempObj = new Object();
-                    tempObj.data = [];
-                    tempObj.name = this.name;
-                    tempObj.color = this.color;
-                    $(this.data).each(function () {
-                        tempObj.data.push(this);
-                    });
-                    tempObj.pointPadding = this.pointPadding;
-                    tempObj.pointPlacement = this.pointPlacement;
-                    seriesArray.push(tempObj);
-                });
-            });
+    //        $(series).each(function () {
+    //            console.log(this);
+    //            $(this).each(function () {
+    //                var tempObj = new Object();
+    //                tempObj.data = [];
+    //                tempObj.name = this.name;
+    //                tempObj.color = this.color;
+    //                $(this.data).each(function () {
+    //                    tempObj.data.push(this);
+    //                });
+    //                tempObj.pointPadding = this.pointPadding;
+    //                tempObj.pointPlacement = this.pointPlacement;
+    //                seriesArray.push(tempObj);
+    //            });
+    //        });
 
-            //$(drilldown).each(function(){
-            //    $(this).series.each(function(value) {
-            //        var tempObj = new Object();
-            //        tempObj.id = value.id;
-            //        tempObj.data = value.data;
-            //        drilldownArray.push(tempObj)
-            //    }
-            //    }
+    //        //$(drilldown).each(function(){
+    //        //    $(this).series.each(function(value) {
+    //        //        var tempObj = new Object();
+    //        //        tempObj.id = value.id;
+    //        //        tempObj.data = value.data;
+    //        //        drilldownArray.push(tempObj)
+    //        //    }
+    //        //    }
             
 
-            if ($('.dashboard').length > 0) {
+    //        if ($('.dashboard').length > 0) {
 
-                Highcharts.chart('widgetOther', {
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Budget vs Actual'
-                    },
-                    xAxis: {
-                        type: 'category'
-                    },
-                    yAxis: [{
-                        min: 0,
-                        title: {
-                            text: 'Lbs'
-                        }
-                    }, {
-                        title: {
-                            text: 'Dollars'
-                        },
-                        opposite: true
-                    }],
-                    legend: {
-                        shadow: false
-                    },
-                    tooltip: {
-                        shared: true
-                    },
-                    plotOptions: {
-                        column: {
-                            grouping: false,
-                            shadow: false,
-                            borderWidth: 0
-                        }
-                    },
-                    series: seriesArray,
-                    drilldown: {
-                        series: [{
-                            id: 'BudgetLbsMarch',
-                            data: [
-                                ['East', 4],
-                                ['West', 2],
-                                ['North', 1],
-                                ['South', 4]
-                            ]
-                        },
-                        {
-                            id: 'BudgetLbsApril',
-                            data: [
-                                ['East', 8],
-                                ['West', 9],
-                                ['North', 10],
-                                ['South', 14]
-                            ]
-                        },
-                        {
-                            id: 'ActualLbsApril',
-                            data: [
-                                ['East', 8],
-                                ['West', 9],
-                                ['North', 10],
-                                ['South', 14]
-                            ]
-                        },
-                        {
-                            id: 'ActualLbsMarch',
-                            data: [
-                                ['East', 8],
-                                ['West', 9],
-                                ['North', 10],
-                                ['South', 14]
-                            ]
-                        }]
-                    }
-                });
-            }
-        }
-    });
+    //            Highcharts.chart('widgetOther', {
+    //                chart: {
+    //                    type: 'column'
+    //                },
+    //                title: {
+    //                    text: 'Budget vs Actual'
+    //                },
+    //                xAxis: {
+    //                    type: 'category'
+    //                },
+    //                yAxis: [{
+    //                    min: 0,
+    //                    title: {
+    //                        text: 'Lbs'
+    //                    }
+    //                }, {
+    //                    title: {
+    //                        text: 'Dollars'
+    //                    },
+    //                    opposite: true
+    //                }],
+    //                legend: {
+    //                    shadow: false
+    //                },
+    //                tooltip: {
+    //                    shared: true
+    //                },
+    //                plotOptions: {
+    //                    column: {
+    //                        grouping: false,
+    //                        shadow: false,
+    //                        borderWidth: 0
+    //                    }
+    //                },
+    //                series: seriesArray,
+    //                drilldown: {
+    //                    series: [{
+    //                        id: 'BudgetLbsMarch',
+    //                        data: [
+    //                            ['East', 4],
+    //                            ['West', 2],
+    //                            ['North', 1],
+    //                            ['South', 4]
+    //                        ]
+    //                    },
+    //                    {
+    //                        id: 'BudgetLbsApril',
+    //                        data: [
+    //                            ['East', 8],
+    //                            ['West', 9],
+    //                            ['North', 10],
+    //                            ['South', 14]
+    //                        ]
+    //                    },
+    //                    {
+    //                        id: 'ActualLbsApril',
+    //                        data: [
+    //                            ['East', 8],
+    //                            ['West', 9],
+    //                            ['North', 10],
+    //                            ['South', 14]
+    //                        ]
+    //                    },
+    //                    {
+    //                        id: 'ActualLbsMarch',
+    //                        data: [
+    //                            ['East', 8],
+    //                            ['West', 9],
+    //                            ['North', 10],
+    //                            ['South', 14]
+    //                        ]
+    //                    }]
+    //                }
+    //            });
+    //        }
+    //    }
+    //});
 
     $.ajax('../api/AdagioData/SalesStats', {
         type: 'GET',
@@ -1460,11 +1460,17 @@ function dashboard() {
                         type: 'category'
                     },
                     yAxis: [{
-                        min: 0,
+                        labels: {
+                            format: '${value}',
+                           
+                        },
                         title: {
                             text: 'Dollars'
                         }
                     }, {
+                        labels: {
+                            format: '${value}',
+                        },
                         title: {
                             text: 'Qty'
                         },
@@ -1588,6 +1594,146 @@ function dashboard() {
                     drilldown: {
                         series: msg.DrillDownData.DrillDownSeries
                     }
+                });
+            }
+        }
+    });
+
+    $.ajax('../api/AdagioData/AvgSellingPrice', {
+        type: 'GET',
+        //data: data,
+        success: function (msg) {
+            localStorage['CT_key'] = msg['Key'];
+            startTimer(msg.Key);
+            console.log(msg);
+            var series = msg.ChartSeriesDec;
+
+            var seriesArray = [];
+
+            $(series).each(function () {
+                console.log(this);
+                $(this).each(function () {
+                    var tempObj = new Object();
+                    tempObj.data = [];
+                    tempObj.name = this.name;
+                    tempObj.color = this.color;
+                    $(this.data).each(function () {
+                        tempObj.data.push(this);
+                    });
+                    tempObj.pointPadding = this.pointPadding;
+                    tempObj.pointPlacement = this.pointPlacement;
+                    seriesArray.push(tempObj);
+                });
+            });
+
+            if ($('.dashboard').length > 0) {
+
+                Highcharts.chart('widgetASP', {
+                    chart: {
+                        type: 'spline'
+                    },
+                    title: {
+                        text: 'Sales'
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: [{
+                        labels: {
+                            format: '${value}',
+
+                        },
+                        title: {
+                            text: 'Dollars'
+                        }
+                    }],
+                    legend: {
+                        shadow: false
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
+                    series: seriesArray
+                    
+                    
+                    
+                });
+            }
+        }
+    });
+
+    $.ajax('../api/AdagioData/YTDSales', {
+        type: 'GET',
+        //data: data,
+        success: function (msg) {
+            localStorage['CT_key'] = msg['Key'];
+            startTimer(msg.Key);
+            console.log(msg);
+            var series = msg.ChartSeriesPie;
+
+            var seriesArray = [];
+
+            $(series).each(function () {
+                console.log(this);
+                $(this).each(function () {
+                    var tempObj = new Object();
+                    tempObj.data = [];
+                    tempObj.name = this.name;
+                    tempObj.color = this.color;
+                    $(this.data).each(function () {
+                        tempObj.data.push(this);
+                    });
+                    tempObj.pointPadding = this.pointPadding;
+                    tempObj.pointPlacement = this.pointPlacement;
+                    seriesArray.push(tempObj);
+                });
+            });
+
+            if ($('.dashboard').length > 0) {
+
+                Highcharts.chart('widgetYTD', {
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Sales'
+                    },
+                    xAxis: {
+                        type: 'category'
+                    },
+                    yAxis: [{
+                        labels: {
+                            format: '${value}',
+
+                        },
+                        title: {
+                            text: 'Dollars'
+                        }
+                    }],
+                    legend: {
+                        shadow: false
+                    },
+                    tooltip: {
+                        shared: true
+                    },
+                    plotOptions: {
+                        column: {
+                            grouping: false,
+                            shadow: false,
+                            borderWidth: 0
+                        }
+                    },
+                    series: seriesArray
+
+
+
                 });
             }
         }

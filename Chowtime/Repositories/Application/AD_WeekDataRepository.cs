@@ -226,6 +226,73 @@ namespace SGApp.Repository.Application
             return cht;
         }
 
+        public ChartDTO GetAvgSellingPrice()
+        {
+            var bLbs = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
+            .Select(lg => new ChartDTO.SeriesDec.dataitem
+            {
+                name = lg.Key.ToString(),
+                y = lg.Sum(w => w.GrossSalesAmt != null ? w.GrossSalesAmt.Value : 0) / lg.Sum(w => w.NetQtySold != null && w.NetQtySold != 0 ? w.NetQtySold.Value : 1)
+            }).OrderBy(o => o.name).ToArray();
+
+            var seriesData1 = new ChartDTO.SeriesDec
+            {
+                data = bLbs.ToArray(),
+                color = "rgba(165,170,217,1)",
+                name = "Gross Sales",
+                pointPadding = 0.26M,
+                pointPlacement = -0.2M,
+                yAxis = 1
+
+
+            };
+
+
+
+            ChartDTO.SeriesDec[] seriesarray = new ChartDTO.SeriesDec[1];
+            seriesarray[0] = seriesData1;
+
+            //seriesarray[3] = seriesData4;
+
+            var cht = new ChartDTO();
+            cht.ChartSeriesDec = seriesarray;
+
+            
+            return cht;
+        }
+
+        public ChartDTO GetYTDSales()
+        {
+            var bLbs = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2016).GroupBy(x => x.Date_2.Value.Month)
+            .Select(lg => new ChartDTO.SeriesPie.dataitem
+            {
+                name = lg.Key.ToString(),
+                y = lg.Sum(w => w.GrossSalesAmt != null ? w.GrossSalesAmt.Value : 0)
+            }).OrderBy(o => o.name).ToArray();
+
+            var seriesData1 = new ChartDTO.SeriesPie
+            {
+                data = bLbs.ToArray(),
+                color = "rgba(165,170,217,1)",
+                name = "Month"
+
+
+            };
+
+
+
+            ChartDTO.SeriesPie[] seriesarray = new ChartDTO.SeriesPie[1];
+            seriesarray[0] = seriesData1;
+
+            //seriesarray[3] = seriesData4;
+
+            var cht = new ChartDTO();
+            cht.ChartSeriesPie = seriesarray;
+
+
+            return cht;
+        }
+
 
         public ChartDTO GetYTDGroup()
         {

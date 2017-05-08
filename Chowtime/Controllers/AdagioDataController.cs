@@ -280,6 +280,28 @@ namespace SGApp.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }
+
+        [HttpGet]
+        public HttpResponseMessage AvgSellingPrice()
+        {
+
+            var wer = new AD_WeekDataRepository();
+
+            var data = wer.GetAvgSellingPrice();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
+
+        [HttpGet]
+        public HttpResponseMessage YTDSales()
+        {
+
+            var wer = new AD_WeekDataRepository();
+
+            var data = wer.GetYTDSales();
+            return Request.CreateResponse(HttpStatusCode.OK, data);
+
+        }
     }
 
 }
