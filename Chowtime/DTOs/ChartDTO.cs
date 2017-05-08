@@ -12,9 +12,10 @@ namespace SGApp.DTOs
             public string color { get; set; }
             public class dataitem
             {
-                public int y { get; set; }
+                public decimal y { get; set; }
                 public string name { get; set; }
                 public string drilldown { get; set; }
+                public int ordering { get; set; }
             }
             public decimal pointPadding { get; set; }
             public decimal pointPlacement { get; set; }
@@ -65,6 +66,8 @@ namespace SGApp.DTOs
                 public decimal y { get; set; }
                 public string name { get; set; }
                 public string drilldown { get; set; }
+
+                public int ordering { get; set; }
             }
             public decimal pointPadding { get; set; }
             public decimal pointPlacement { get; set; }
@@ -85,6 +88,8 @@ namespace SGApp.DTOs
             {
                 public decimal y { get; set; }
                 public string name { get; set; }
+
+                public int ordering { get; set; }
             }
             public decimal pointPadding { get; set; }
             public decimal pointPlacement { get; set; }

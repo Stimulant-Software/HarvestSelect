@@ -1421,21 +1421,21 @@ function dashboard() {
 
             var seriesArray = [], drilldownArray = [];
 
-            $(series).each(function () {
-                console.log(this);
-                $(this).each(function () {
-                    var tempObj = new Object();
-                    tempObj.data = [];
-                    tempObj.name = this.name;
-                    tempObj.color = this.color;
-                    $(this.data).each(function () {
-                        tempObj.data.push(this);
-                    });
-                    tempObj.pointPadding = this.pointPadding;
-                    tempObj.pointPlacement = this.pointPlacement;
-                    seriesArray.push(tempObj);
-                });
-            });
+            //$(series).each(function () {
+            //    console.log(this);
+            //    $(this).each(function () {
+            //        var tempObj = new Object();
+            //        tempObj.data = [];
+            //        tempObj.name = this.name;
+            //        tempObj.color = this.color;
+            //        $(this.data).each(function () {
+            //            tempObj.data.push(this);
+            //        });
+            //        tempObj.pointPadding = this.pointPadding;
+            //        tempObj.pointPlacement = this.pointPlacement;
+            //        seriesArray.push(tempObj);
+            //    });
+            //});
 
             //$(drilldown).each(function(){
             //    $(this).series.each(function(value) {
@@ -1450,9 +1450,7 @@ function dashboard() {
             if ($('.dashboard').length > 0) {
 
                 Highcharts.chart('widgetOther2', {
-                    chart: {
-                        type: 'column'
-                    },
+                    
                     title: {
                         text: 'Sales'
                     },
@@ -1472,7 +1470,7 @@ function dashboard() {
                             format: '${value}',
                         },
                         title: {
-                            text: 'Qty'
+                            text: 'Dollars'
                         },
                         opposite: true
                     }],
@@ -1489,7 +1487,7 @@ function dashboard() {
                             borderWidth: 0
                         }
                     },
-                    series: seriesArray
+                    series: series
                     //    [{
                     //    name: 'Budget Lbs',
                     //    color: 'rgba(165,170,217,1)',

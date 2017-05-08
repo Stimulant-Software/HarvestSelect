@@ -94,28 +94,27 @@ namespace SGApp.Repository.Application
             .Select(lg => new ChartDTO.Series.dataitem
             {
                 name = lg.Key.ToString(),
-                y = lg.Sum(w => w.GrossSalesAmt != null ? (int) w.GrossSalesAmt.Value : 0),
+                y = lg.Sum(w => w.GrossSalesAmt != null ?  w.GrossSalesAmt.Value : 0),
                 drilldown = "GYear" + lg.Key.ToString()
             }).OrderBy(o => o.name).ToArray();
             var bDollars = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
                 .Select(lg => new ChartDTO.Series.dataitem
                 {
                     name = lg.Key.ToString(),
-                    y = (int)lg.Sum(w => w.NetSalesAmt != null ? (int) w.NetSalesAmt.Value : 0),
+                    y = lg.Sum(w => w.NetSalesAmt != null ? w.NetSalesAmt.Value : 0),
                     drilldown = "NYear" + lg.Key.ToString()
                 }).OrderBy(o => o.name).ToArray();
-            //var aLbs = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
-            //    .Select(lg => new ChartDTO.Series.dataitem
-            //    {
-            //        name = lg.Key.ToString(),
-            //        y = lg.Sum(w => w.NetInvoiceAmt != null ? (int) w.NetInvoiceAmt.Value : 0),
-            //        drilldown = "Invoice" + lg.Key.ToString()
-            //    }).OrderBy(o => o.name).ToArray();
+            var asps = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
+                .Select(lg => new ChartDTO.Series.dataitem
+                {
+                    name = lg.Key.ToString(),
+                    y = lg.Sum(w => w.NetSalesAmt != null ? w.NetSalesAmt.Value : 0) / lg.Sum(w => w.NetQtySold != null ? w.NetQtySold.Value : 0)
+                }).OrderBy(o => o.name).ToArray();
             var aDollars = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
                 .Select(lg => new ChartDTO.Series.dataitem
                 {
                     name = lg.Key.ToString(),
-                    y = (int)lg.Sum(w => w.NetQtySold != null ? (int) w.NetQtySold.Value : 0),
+                    y = lg.Sum(w => w.NetQtySold != null ? w.NetQtySold.Value : 0),
                     drilldown = "QYear" + lg.Key.ToString()
                 }).OrderBy(o => o.name).ToArray();
 
@@ -126,7 +125,8 @@ namespace SGApp.Repository.Application
                 name = "Gross Sales",
                 pointPadding = 0.26M,
                 pointPlacement = -0.2M,
-                yAxis = 1
+                yAxis = 0,
+                type = "column"
 
 
             };
@@ -137,7 +137,8 @@ namespace SGApp.Repository.Application
                 name = "Net Sales",
                 pointPadding = 0.4M,
                 pointPlacement = -0.2M,
-                yAxis = 1
+                yAxis = 0,
+                type = "column"
             };
             var seriesData3 = new ChartDTO.Series
             {
@@ -146,14 +147,23 @@ namespace SGApp.Repository.Application
                 name = "Net Quantity",
                 pointPadding = 0.26M,
                 pointPlacement = 0.1M,
+                yAxis = 0,
+                type = "column"
+            };
+            var seriesData4 = new ChartDTO.Series
+            {
+                data = asps.ToArray(),
+                type = "spline",
+                color = "rgba(186,60,61,.9)",
+                name = "ASP",
                 yAxis = 1
             };
 
-            ChartDTO.Series[] seriesarray = new ChartDTO.Series[3];
+            ChartDTO.Series[] seriesarray = new ChartDTO.Series[4];
             seriesarray[0] = seriesData1;
             seriesarray[1] = seriesData2;
             seriesarray[2] = seriesData3;
-            //seriesarray[3] = seriesData4;
+            seriesarray[3] = seriesData4;
 
             var cht = new ChartDTO();
             cht.ChartSeries = seriesarray;
@@ -163,24 +173,27 @@ namespace SGApp.Repository.Application
                 var ddGross = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year == year).GroupBy(x => x.Date_2.Value.Month)
             .Select(lg => new ChartDTO.Series.dataitem
             {
+                ordering = lg.Key,
                 name = lg.Key.ToString(),
-                y = lg.Sum(w => w.GrossSalesAmt != null ? (int)w.GrossSalesAmt.Value : 0),
+                y = lg.Sum(w => w.GrossSalesAmt != null ? w.GrossSalesAmt.Value : 0),
                 drilldown = "Month" + lg.Key.ToString()
-            }).OrderBy(o => o.name).ToArray();
+            }).OrderBy(o => o.ordering).ToArray();
                 var ddNet = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year == year).GroupBy(x => x.Date_2.Value.Month)
                     .Select(lg => new ChartDTO.Series.dataitem
                     {
+                        ordering = lg.Key,
                         name = lg.Key.ToString(),
-                        y = (int)lg.Sum(w => w.NetSalesAmt != null ? (int)w.NetSalesAmt.Value : 0),
+                        y = lg.Sum(w => w.NetSalesAmt != null ? w.NetSalesAmt.Value : 0),
                         drilldown = "Month" + lg.Key.ToString()
-                    }).OrderBy(o => o.name).ToArray();
+                    }).OrderBy(o => o.ordering).ToArray();
                 var ddQty = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year == year).GroupBy(x => x.Date_2.Value.Month)
                     .Select(lg => new ChartDTO.Series.dataitem
                     {
+                        ordering = lg.Key,
                         name = lg.Key.ToString(),
-                        y = (int)lg.Sum(w => w.NetQtySold != null ? (int)w.NetQtySold.Value : 0),
+                        y = lg.Sum(w => w.NetQtySold != null ? w.NetQtySold.Value : 0),
                         drilldown = "Month" + lg.Key.ToString()
-                    }).OrderBy(o => o.name).ToArray();
+                    }).OrderBy(o => o.ordering).ToArray();
 
                 var ddseriesData1 = new ChartDTO.Series
                 {
@@ -228,18 +241,19 @@ namespace SGApp.Repository.Application
 
         public ChartDTO GetAvgSellingPrice()
         {
-            var bLbs = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2000).GroupBy(x => x.Date_2.Value.Year)
+            var bLbs = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2016).GroupBy(x => x.Date_2.Value.Month)
             .Select(lg => new ChartDTO.SeriesDec.dataitem
             {
+                ordering = lg.Key,
                 name = lg.Key.ToString(),
                 y = lg.Sum(w => w.GrossSalesAmt != null ? w.GrossSalesAmt.Value : 0) / lg.Sum(w => w.NetQtySold != null && w.NetQtySold != 0 ? w.NetQtySold.Value : 1)
-            }).OrderBy(o => o.name).ToArray();
+            }).OrderBy(o => o.ordering).ToArray();
 
             var seriesData1 = new ChartDTO.SeriesDec
             {
                 data = bLbs.ToArray(),
                 color = "rgba(165,170,217,1)",
-                name = "Gross Sales",
+                name = "ASP",
                 pointPadding = 0.26M,
                 pointPlacement = -0.2M,
                 yAxis = 1
@@ -260,15 +274,47 @@ namespace SGApp.Repository.Application
             
             return cht;
         }
-
+        public string GetMonthName(int monthnum)
+        {
+            switch (monthnum)
+            {
+                case 1:
+                    return "Jan";
+                case 2:
+                    return "Feb";
+                case 3:
+                    return "Mar";
+                case 4:
+                    return "Apr";
+                case 5:
+                    return "May";
+                case 6:
+                    return "June";
+                case 7:
+                    return "July";
+                case 8:
+                    return "August";
+                case 9:
+                    return "Sep";
+                case 10:
+                    return "Oct";
+                case 11:
+                    return "Nov";
+                case 12:
+                    return "Dec";
+                default:
+                    return "N/A";
+            }
+        }
         public ChartDTO GetYTDSales()
         {
             var bLbs = DbContext.ADAGIOSalesStatitics.Where(x => x.Date_2.Value.Year > 2016).GroupBy(x => x.Date_2.Value.Month)
             .Select(lg => new ChartDTO.SeriesPie.dataitem
             {
+                ordering = lg.Key,
                 name = lg.Key.ToString(),
                 y = lg.Sum(w => w.GrossSalesAmt != null ? w.GrossSalesAmt.Value : 0)
-            }).OrderBy(o => o.name).ToArray();
+            }).OrderBy(o => o.ordering).ToArray();
 
             var seriesData1 = new ChartDTO.SeriesPie
             {
