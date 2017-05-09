@@ -256,7 +256,7 @@ namespace SGApp.Repository.Application
                 name = "ASP",
                 pointPadding = 0.26M,
                 pointPlacement = -0.2M,
-                yAxis = 1
+                yAxis = 0
 
 
             };
@@ -320,7 +320,8 @@ namespace SGApp.Repository.Application
             {
                 data = bLbs.ToArray(),
                 color = "rgba(165,170,217,1)",
-                name = "Month"
+                name = "Month",
+                yAxis = 0
 
 
             };

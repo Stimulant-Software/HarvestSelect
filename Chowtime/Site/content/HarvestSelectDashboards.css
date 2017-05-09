@@ -132,6 +132,21 @@ input[type="text"], input[type="time"], input[type="number"] { width: 20%; font-
 .op.production p, .op.shift-end p { line-height: 34px; }
 .op.shift-end label { min-width: 175px; padding-left: 10px; }
 .op.production button, .op.shift-end button { margin: 0 7px !important; }
+
+.op.dashboard .widget {
+}
+.op.dashboard .text-widget {
+    padding: 1em;
+    margin: 1em;
+    min-height: 200px;
+    background-color: white;
+}
+.op.dashboard h2 {
+    font-size: 30px;
+    font-weight: bold; 
+    color: blue; 
+    margin-bottom: 1em;
+}
 #headerReading { background-color: transparent; padding: 10px 0; }
 #headerReading input { background-color: #fff; }
 #headerReading input:disabled { background-color: #ccc; color: #333; }

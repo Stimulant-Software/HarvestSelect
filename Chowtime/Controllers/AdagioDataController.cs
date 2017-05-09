@@ -277,6 +277,10 @@ namespace SGApp.Controllers
             var wer = new AD_WeekDataRepository();
 
             var data = wer.GetSalesStats();
+            data.TopCustomer = "Harper";
+            data.TopCustomerDollars = 345.67M;
+            data.TopProduct = "1/2 lb Fillet";
+            data.TopProductDollars = 987.90M;
             return Request.CreateResponse(HttpStatusCode.OK, data);
 
         }

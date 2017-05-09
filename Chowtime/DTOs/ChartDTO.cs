@@ -22,10 +22,14 @@ namespace SGApp.DTOs
             public decimal? yAxis { get; set; }
             public string id { get; set; }
             public string type { get; set; }
+            
 
         }
 
-       
+        public string TopCustomer { get; set; }
+        public decimal TopCustomerDollars { get; set; }
+        public string TopProduct { get; set; }
+        public decimal TopProductDollars { get; set; }
         
         public Series[] ChartSeries { get; set; }
         
