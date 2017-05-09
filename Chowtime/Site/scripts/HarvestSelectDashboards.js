@@ -1292,7 +1292,7 @@ function dashboard() {
         window.location.reload();
     });
     
-    $.when($.ajax('../api/AdagioData/SalesStats', {
+    $.ajax('../api/AdagioData/SalesStats', {
         type: 'GET',
         success: function (msg) {
             localStorage['CT_key'] = msg['Key'];
@@ -1353,102 +1353,105 @@ function dashboard() {
                     }
                 });
             }
+
+            $.ajax('../api/AdagioData/AvgSellingPrice', {
+                type: 'GET',
+                success: function (msg) {
+                    localStorage['CT_key'] = msg['Key'];
+                    startTimer(msg.Key);
+                    var series = msg.ChartSeriesDec;
+
+                    if ($('.dashboard').length > 0) {
+                        Highcharts.chart('widgetASP', {
+                            chart: {
+                                type: 'spline'
+                            },
+                            title: {
+                                text: 'Sales'
+                            },
+                            xAxis: {
+                                type: 'category'
+                            },
+                            yAxis: [{
+                                labels: {
+                                    format: '${value}',
+
+                                },
+                                title: {
+                                    text: 'Dollars'
+                                }
+                            }],
+                            legend: {
+                                shadow: false
+                            },
+                            tooltip: {
+                                shared: true
+                            },
+                            plotOptions: {
+                                column: {
+                                    grouping: false,
+                                    shadow: false,
+                                    borderWidth: 0
+                                }
+                            },
+                            series: series
+                        });
+                    }
+
+                    $.ajax('../api/AdagioData/YTDSales', {
+                        type: 'GET',
+                        success: function (msg) {
+                            localStorage['CT_key'] = msg['Key'];
+                            startTimer(msg.Key);
+                            console.log(msg);
+                            var series = msg.ChartSeriesPie;
+
+                            var seriesArray = [];
+
+                            if ($('.dashboard').length > 0) {
+                                Highcharts.chart('widgetYTD', {
+                                    chart: {
+                                        type: 'column'
+                                    },
+                                    title: {
+                                        text: 'Sales'
+                                    },
+                                    xAxis: {
+                                        type: 'category'
+                                    },
+                                    yAxis: [{
+                                        labels: {
+                                            format: '${value}',
+
+                                        },
+                                        title: {
+                                            text: 'Dollars'
+                                        }
+                                    }],
+                                    legend: {
+                                        shadow: false
+                                    },
+                                    tooltip: {
+                                        shared: true
+                                    },
+                                    plotOptions: {
+                                        column: {
+                                            grouping: false,
+                                            shadow: false,
+                                            borderWidth: 0
+                                        }
+                                    },
+                                    series: series
+                                });
+                            }
+
+                            hideProgress();
+                        }
+                    });
+                }
+            })
         }
-    }),
-    $.ajax('../api/AdagioData/AvgSellingPrice', {
-        type: 'GET',
-        success: function (msg) {
-            localStorage['CT_key'] = msg['Key'];
-            startTimer(msg.Key);
-            console.log(msg);
-            var series = msg.ChartSeriesDec;
-
-            if ($('.dashboard').length > 0) {
-                Highcharts.chart('widgetASP', {
-                    chart: {
-                        type: 'spline'
-                    },
-                    title: {
-                        text: 'Sales'
-                    },
-                    xAxis: {
-                        type: 'category'
-                    },
-                    yAxis: [{
-                        labels: {
-                            format: '${value}',
-
-                        },
-                        title: {
-                            text: 'Dollars'
-                        }
-                    }],
-                    legend: {
-                        shadow: false
-                    },
-                    tooltip: {
-                        shared: true
-                    },
-                    plotOptions: {
-                        column: {
-                            grouping: false,
-                            shadow: false,
-                            borderWidth: 0
-                        }
-                    },
-                    series: series
-                });
-            }
-        }
-    }),
-    $.ajax('../api/AdagioData/YTDSales', {
-        type: 'GET',
-        success: function (msg) {
-            localStorage['CT_key'] = msg['Key'];
-            startTimer(msg.Key);
-            console.log(msg);
-            var series = msg.ChartSeriesPie;
-
-            var seriesArray = [];
-
-            if ($('.dashboard').length > 0) {
-                Highcharts.chart('widgetYTD', {
-                    chart: {
-                        type: 'column'
-                    },
-                    title: {
-                        text: 'Sales'
-                    },
-                    xAxis: {
-                        type: 'category'
-                    },
-                    yAxis: [{
-                        labels: {
-                            format: '${value}',
-
-                        },
-                        title: {
-                            text: 'Dollars'
-                        }
-                    }],
-                    legend: {
-                        shadow: false
-                    },
-                    tooltip: {
-                        shared: true
-                    },
-                    plotOptions: {
-                        column: {
-                            grouping: false,
-                            shadow: false,
-                            borderWidth: 0
-                        }
-                    },
-                    series: series
-                });
-            }
-        }
-    })).then(function (e) { hideProgress(); });
+    })    
 }
 
 /**** DELETE FROM HERE DOWN WHEN PRODUCTION IS READY ****/
