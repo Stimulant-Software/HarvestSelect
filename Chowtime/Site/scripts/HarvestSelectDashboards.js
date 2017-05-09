@@ -1286,16 +1286,14 @@ function budgetVsActual() {
 
 /* DASHBOARD */
 function dashboard() {
+    showProgress('body');
     $('#pageRefresh').off().click(function (e) {
         e.preventDefault();
         window.location.reload();
     });
-
     
-
-    $.ajax('../api/AdagioData/SalesStats', {
+    $.when($.ajax('../api/AdagioData/SalesStats', {
         type: 'GET',
-        //data: data,
         success: function (msg) {
             localStorage['CT_key'] = msg['Key'];
             startTimer(msg.Key);
@@ -1306,42 +1304,13 @@ function dashboard() {
             $('#topProduct').html(msg.TopProduct);
             $('#topProductDollars').html(msg.TopProductDollars);
 
-
-
             var drilldown = msg.DrillDownData.DrillDownSeries;
 
             var seriesArray = [], drilldownArray = [];
 
-            //$(series).each(function () {
-            //    console.log(this);
-            //    $(this).each(function () {
-            //        var tempObj = new Object();
-            //        tempObj.data = [];
-            //        tempObj.name = this.name;
-            //        tempObj.color = this.color;
-            //        $(this.data).each(function () {
-            //            tempObj.data.push(this);
-            //        });
-            //        tempObj.pointPadding = this.pointPadding;
-            //        tempObj.pointPlacement = this.pointPlacement;
-            //        seriesArray.push(tempObj);
-            //    });
-            //});
-
-            //$(drilldown).each(function(){
-            //    $(this).series.each(function(value) {
-            //        var tempObj = new Object();
-            //        tempObj.id = value.id;
-            //        tempObj.data = value.data;
-            //        drilldownArray.push(tempObj)
-            //    }
-            //    }
-
-
             if ($('.dashboard').length > 0) {
 
                 Highcharts.chart('widgetSales', {
-                    
                     title: {
                         text: 'Sales'
                     },
@@ -1351,7 +1320,7 @@ function dashboard() {
                     yAxis: [{
                         labels: {
                             format: '${value}',
-                           
+
                         },
                         title: {
                             text: 'Dollars'
@@ -1378,145 +1347,23 @@ function dashboard() {
                             borderWidth: 0
                         }
                     },
-                    series: series
-                    //    [{
-                    //    name: 'Budget Lbs',
-                    //    color: 'rgba(165,170,217,1)',
-                    //    data: [{
-                    //        name: 'March',
-                    //        y: 150,
-                    //        drilldown: 'BudgetLbsMarch'
-                    //    }, {
-                    //        name: 'April',
-                    //        y: 73,
-                    //        drilldown: 'BudgetLbsApril'
-                    //    }, {
-                    //        name: 'May',
-                    //        y: 20,
-                    //        drilldown: 'BudgetLbsMay'
-                    //    }, {
-                    //        name: 'June',
-                    //        y: 65,
-                    //        drilldown: 'BudgetLbsMay'
-                    //    }],
-
-                    //    pointPadding: 0.26,
-                    //    pointPlacement: -0.2
-                    //}, {
-                    //    name: 'Actual Lbs',
-                    //    color: 'rgba(126,86,134,.9)',
-                    //    data: [{
-                    //        name: 'March',
-                    //        y: 150,
-                    //        drilldown: 'ActualLbsMarch'
-                    //    }, {
-                    //        name: 'April',
-                    //        y: 73,
-                    //        drilldown: 'ActualLbsApril'
-                    //    }, {
-                    //        name: 'May',
-                    //        y: 20,
-                    //        drilldown: 'ActualLbsMay'
-                    //    }, {
-                    //        name: 'June',
-                    //        y: 65,
-                    //        drilldown: 'ActualLbsMay'
-                    //    }],
-                    //    pointPadding: 0.4,
-                    //    pointPlacement: -0.2
-                    //}, {
-                    //    name: 'Budget Dollars',
-                    //    color: 'rgba(248,161,63,1)',
-                    //    data: [{
-                    //        name: 'March',
-                    //        y: 150,
-                    //        drilldown: 'BudgetDollarsMarch'
-                    //    }, {
-                    //        name: 'April',
-                    //        y: 73,
-                    //        drilldown: 'BudgetDollarsApril'
-                    //    }, {
-                    //        name: 'May',
-                    //        y: 20,
-                    //        drilldown: 'BudgetDollarsMay'
-                    //    }, {
-                    //        name: 'June',
-                    //        y: 65,
-                    //        drilldown: 'BudgetDollarsMay'
-                    //    }],
-                    //    tooltip: {
-                    //        valuePrefix: '$',
-                    //        valueSuffix: ' M'
-                    //    },
-                    //    pointPadding: 0.26,
-                    //    pointPlacement: 0.1,
-                    //    yAxis: 1
-                    //}, {
-                    //    name: 'Actual Dollars',
-                    //    color: 'rgba(186,60,61,.9)',
-                    //    data: [{
-                    //        name: 'March',
-                    //        y: 150,
-                    //        drilldown: 'ActualDollarsMarch'
-                    //    }, {
-                    //        name: 'April',
-                    //        y: 73,
-                    //        drilldown: 'ActualDollarsApril'
-                    //    }, {
-                    //        name: 'May',
-                    //        y: 20,
-                    //        drilldown: 'ActualDollarsMay'
-                    //    }, {
-                    //        name: 'June',
-                    //        y: 65,
-                    //        drilldown: 'ActualDollarsMay'
-                    //    }],
-                    //    tooltip: {
-                    //        valuePrefix: '$',
-                    //        valueSuffix: ' M'
-                    //    },
-                    //    pointPadding: 0.4,
-                    //    pointPlacement: 0.1,
-                    //    yAxis: 1
-                    //}],
-                    ,
+                    series: series,
                     drilldown: {
                         series: msg.DrillDownData.DrillDownSeries
                     }
                 });
             }
         }
-    });
-
+    }),
     $.ajax('../api/AdagioData/AvgSellingPrice', {
         type: 'GET',
-        //data: data,
         success: function (msg) {
             localStorage['CT_key'] = msg['Key'];
             startTimer(msg.Key);
             console.log(msg);
             var series = msg.ChartSeriesDec;
 
-            //var seriesArray = [];
-
-            //$(series).each(function () {
-            //    console.log(this);
-            //    $(this).each(function () {
-            //        var tempObj = new Object();
-            //        tempObj.data = [];
-            //        tempObj.name = this.name;
-            //        tempObj.color = this.color;
-            //        $(this.data).each(function () {
-            //            tempObj.data.push(this);
-            //        });
-            //        tempObj.pointPadding = this.pointPadding;
-            //        tempObj.pointPlacement = this.pointPlacement;
-            //        seriesArray.push(tempObj);
-            //    });
-            //});
-
             if ($('.dashboard').length > 0) {
-
                 Highcharts.chart('widgetASP', {
                     chart: {
                         type: 'spline'
@@ -1550,17 +1397,12 @@ function dashboard() {
                         }
                     },
                     series: series
-                    
-                    
-                    
                 });
             }
         }
-    });
-
+    }),
     $.ajax('../api/AdagioData/YTDSales', {
         type: 'GET',
-        //data: data,
         success: function (msg) {
             localStorage['CT_key'] = msg['Key'];
             startTimer(msg.Key);
@@ -1569,24 +1411,7 @@ function dashboard() {
 
             var seriesArray = [];
 
-            //$(series).each(function () {
-            //    console.log(this);
-            //    $(this).each(function () {
-            //        var tempObj = new Object();
-            //        tempObj.data = [];
-            //        tempObj.name = this.name;
-            //        tempObj.color = this.color;
-            //        $(this.data).each(function () {
-            //            tempObj.data.push(this);
-            //        });
-            //        tempObj.pointPadding = this.pointPadding;
-            //        tempObj.pointPlacement = this.pointPlacement;
-            //        seriesArray.push(tempObj);
-            //    });
-            //});
-
             if ($('.dashboard').length > 0) {
-
                 Highcharts.chart('widgetYTD', {
                     chart: {
                         type: 'column'
@@ -1620,13 +1445,10 @@ function dashboard() {
                         }
                     },
                     series: series
-
-
-
                 });
             }
         }
-    });
+    })).then(function (e) { hideProgress(); });
 }
 
 /**** DELETE FROM HERE DOWN WHEN PRODUCTION IS READY ****/
