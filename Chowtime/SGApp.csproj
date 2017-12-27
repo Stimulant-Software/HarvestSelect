@@ -8,7 +8,7 @@
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{ECDDD467-C588-475A-AB28-C368DED333B3}</ProjectGuid>
-    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SGApp</RootNamespace>
@@ -24,6 +24,8 @@
     <SccLocalPath>Svn</SccLocalPath>
     <SccAuxPath>Svn</SccAuxPath>
     <SccProvider>SubversionScc</SccProvider>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -178,6 +180,10 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WeighBackController.cs" />
     <Compile Include="DTOs\AbsenceDTO.cs" />
+    <Compile Include="DTOs\Adagio_N_ItemDTO.cs" />
+    <Compile Include="DTOs\Adagio_N_ItemLocationDTO.cs" />
+    <Compile Include="DTOs\Adagio_O_OrderDetailDTO.cs" />
+    <Compile Include="DTOs\Adagio_O_OrderHeaderDTO.cs" />
     <Compile Include="DTOs\BOLDTO.cs" />
     <Compile Include="DTOs\ChartDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
@@ -224,6 +230,18 @@
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\ADAGIOSalesStatitic.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Adagio_N_Item.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Adagio_N_ItemLocation.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Adagio_O_OrderDetail.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Adagio_O_OrderHeader.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\AD_Groups.cs">
@@ -305,6 +323,9 @@
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Role.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Sampling.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\ShiftEnd.cs">

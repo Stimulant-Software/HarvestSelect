@@ -12,14 +12,17 @@ namespace SGApp.Models.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Harvest
+    public partial class Sampling
     {
-        public int HarvestId { get; set; }
-        public int PondId { get; set; }
-        public System.DateTime HarvestDate { get; set; }
-        public Nullable<System.DateTime> PreviousHarvestDate { get; set; }
-        public Nullable<int> PoundsFedSincePrev { get; set; }
-    
-        public virtual Pond Pond { get; set; }
+        public int AppID { get; set; }
+        public string code { get; set; }
+        public string farmname { get; set; }
+        public string shname { get; set; }
+        public string pondname { get; set; }
+        public Nullable<System.DateTime> regtime { get; set; }
+        public string code2 { get; set; }
+        public string codename { get; set; }
+        public Nullable<double> weight { get; set; }
+        public Nullable<int> pondid { get; set; }
     }
 }

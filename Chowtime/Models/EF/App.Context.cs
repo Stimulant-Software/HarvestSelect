@@ -56,5 +56,10 @@ namespace SGApp.Models.EF
         public DbSet<AD_Products> AD_Products { get; set; }
         public DbSet<AD_WeekData> AD_WeekData { get; set; }
         public DbSet<ADAGIOSalesStatitic> ADAGIOSalesStatitics { get; set; }
+        public DbSet<Adagio_O_OrderHeader> Adagio_O_OrderHeader { get; set; }
+        public DbSet<Adagio_N_Item> Adagio_N_Item { get; set; }
+        public DbSet<Adagio_N_ItemLocation> Adagio_N_ItemLocation { get; set; }
+        public DbSet<Adagio_O_OrderDetail> Adagio_O_OrderDetail { get; set; }
+        public DbSet<Sampling> Samplings { get; set; }
     }
 }

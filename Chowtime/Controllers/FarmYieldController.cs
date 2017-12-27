@@ -301,7 +301,7 @@ namespace SGApp.Controllers
                 SGApp.DTOs.GenericDTO dto = new GenericDTO();
                 dto.StartDate = DateTime.Parse(cqDTO.Start_YieldDate);
                 dto.EndDate = DateTime.Parse(cqDTO.End_YieldDate);
-                List<Sampling> samplingResults = new List<Sampling>();
+                List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
                 PondRepository pr = new PondRepository();
                 var client = new HttpClient
                 {
@@ -318,7 +318,7 @@ namespace SGApp.Controllers
                     //Sampling[] samplingResultsArray = response.Content.ReadAsAsync<Sampling[]>().Result;
                     //samplingResults = samplingResultsArray.ToList();
                     //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
-                    Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
+                    DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(Constants.testdata);
                     samplingResults = samplingResultsArray.ToList();
                     samplingResults = samplingResults.GroupBy(x => x.farmPond).Select(group => group.First()).ToList();
                     //var result = response.Content.ReadAsStringAsync().Result;
@@ -334,7 +334,7 @@ namespace SGApp.Controllers
                 var col = new Collection<Dictionary<string, string>>();
                 data = data.OrderBy(x => x.YieldDate).ToList();
                 
-                foreach (Sampling sam in samplingResults)
+                foreach (DTOs.Sampling sam in samplingResults)
                 {
                     
                     FarmYield fy = data.Where(x => x.Pond.InnovaName == sam.farmPond).FirstOrDefault();
@@ -373,7 +373,7 @@ namespace SGApp.Controllers
                 foreach (FarmYield fy in data)
                 {
 
-                    Sampling samp = samplingResults.Where(x => x.farmPond == fy.Pond.InnovaName).FirstOrDefault();
+                    DTOs.Sampling samp = samplingResults.Where(x => x.farmPond == fy.Pond.InnovaName).FirstOrDefault();
                     var dic = new Dictionary<string, string>();
                     if (samp == null)
                     {

@@ -64,6 +64,11 @@
         <AssociationConnector Association="AppModel.FK_AD_Products_AD_Groups" />
         <AssociationConnector Association="AppModel.FK_AD_WeekData_AD_Products" />
         <EntityTypeShape EntityType="AppModel.ADAGIOSalesStatitic" Width="1.5" PointX="5.375" PointY="6.75" />
+        <EntityTypeShape EntityType="AppModel.Adagio_O_OrderHeader" Width="1.5" PointX="13.625" PointY="9.75" />
+        <EntityTypeShape EntityType="AppModel.Adagio_N_Item" Width="1.5" PointX="15.625" PointY="9.75" />
+        <EntityTypeShape EntityType="AppModel.Adagio_N_ItemLocation" Width="1.5" PointX="3.625" PointY="13.75" />
+        <EntityTypeShape EntityType="AppModel.Adagio_O_OrderDetail" Width="1.5" PointX="17.625" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.Sampling" Width="1.5" PointX="14.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

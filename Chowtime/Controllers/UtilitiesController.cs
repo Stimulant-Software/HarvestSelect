@@ -18,6 +18,10 @@ using System.Net.Mail;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
+using System.Text;
+using System.Data;
+using System.Xml;
+using System.IO;
 
 
 
@@ -283,6 +287,54 @@ namespace SGApp.Controllers
 
         }
         [HttpGet]
+        public HttpResponseMessage UpdateSamplingData()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            var sDate = DateTime.ParseExact(dic.First().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            var eDate = DateTime.ParseExact(dic.Last().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            dto.StartDate = sDate;
+            dto.EndDate = eDate;
+            var db = new AppEntities();
+            var dontUpdate = db.Samplings.Where(x => x.regtime >= sDate).Any();
+            if (dontUpdate)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "Table already updated");
+            }
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                samplingResults = samplingResultsArray.ToList();
+                var dbSamples = samplingResults.Select(x => new Models.EF.Sampling
+                {
+                    code = x.rangeValue,
+                    code2 = x.rangeValue,
+                    codename = x.rangeName,
+                    farmname = x.farm,
+                    pondname = x.farmPond,
+                    shname = x.pond,
+                    regtime = DateTime.Parse(x.date),
+                    weight = System.Convert.ToDouble(decimal.Parse(x.weight))
+                });
+                db.Samplings.AddRange(dbSamples);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+        [HttpGet]
         public HttpResponseMessage EmailDailyReport()
         {
 
@@ -416,7 +468,7 @@ namespace SGApp.Controllers
 
             dtr.SaveRepoChanges();
             
-            List<Sampling> samplingResults = new List<Sampling>();
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
 
             try
             {
@@ -428,17 +480,37 @@ namespace SGApp.Controllers
                 //samplingResults = samplingResultsArray.ToList();
                 //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                 //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-                Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(response.Content.ReadAsStringAsync().Result);
                 samplingResults = samplingResultsArray.ToList();
+                //var dbSamples = new IEnumerable<Models.EF.Sampling>();
+                var db = new AppEntities();
+                 var  dbSamples = samplingResults.Select(x => new Models.EF.Sampling
+                {
+                    code = x.rangeValue,
+                    code2 = x.rangeValue,
+                    codename = x.rangeName,
+                    farmname = x.farm,
+                    pondname = x.farmPond,
+                    shname = x.pond,
+                    regtime = DateTime.Parse(x.date),
+                    weight = System.Convert.ToDouble(decimal.Parse(x.weight))//,
+                    //pondid = db.Ponds.Where(y => y.InnovaName == x.farmPond).FirstOrDefault().PondId
+
+
+
+
+                });
+                db.Samplings.AddRange(dbSamples);
+                db.SaveChanges();
                 var samplingResultsData = samplingResults.GroupBy(x => new { x.farm, x.pond, x.farmPond, x.rangeName })
                     .Select(group => new { Key = group.Key, Weight = group.Sum(s => decimal.Parse(s.weight)), Count = group.Count() }).ToList();
                 //var result = response.Content.ReadAsStringAsync().Result;
 
                 //return Request.CreateResponse(HttpStatusCode.OK, result);
-                List<Sampling> samplingReport = new List<Sampling>(samplingResultsData.Capacity);
+                List<DTOs.Sampling> samplingReport = new List<DTOs.Sampling>(samplingResultsData.Capacity);
                 foreach (var rec in samplingResultsData)
                 {
-                    Sampling fee2 = new Sampling();
+                    DTOs.Sampling fee2 = new DTOs.Sampling();
                     fee2.farm = rec.Key.farm;
                     fee2.pond = rec.Key.pond;
                     fee2.farmPond = rec.Key.farmPond;
@@ -533,9 +605,9 @@ namespace SGApp.Controllers
             body += "<th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>% of Weight</th>";
             body += "<th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Avg Weight (lbs)</th>";
             body += "</tr>";
-            List<Sampling> sresultsRanges = new List<Sampling>();
-            List<Sampling> sresultsPonds = new List<Sampling>();
-            List<Sampling> sresultsFarms = new List<Sampling>();
+            List<DTOs.Sampling> sresultsRanges = new List<DTOs.Sampling>();
+            List<DTOs.Sampling> sresultsPonds = new List<DTOs.Sampling>();
+            List<DTOs.Sampling> sresultsFarms = new List<DTOs.Sampling>();
             sresultsRanges = samplingResults.GroupBy(x => x.rangeName).Select(group => group.First()).ToList();            
             sresultsFarms = samplingResults.GroupBy(x => x.farm).Select(group => group.First()).ToList();
             sresultsPonds = samplingResults.GroupBy(x => x.pond).Select(group => group.First()).ToList();
@@ -552,7 +624,7 @@ namespace SGApp.Controllers
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalSaverage) + "</td>";
             body += "</tr>";
-            foreach (Sampling sam3 in sresultsRanges)
+            foreach (DTOs.Sampling sam3 in sresultsRanges)
             {
                 body += "<tr>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
@@ -571,7 +643,7 @@ namespace SGApp.Controllers
                 body += "</tr>";
             }
 
-            foreach (Sampling sam in sresultsFarms)
+            foreach (DTOs.Sampling sam in sresultsFarms)
             {
                 var totalfarmcount = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.count));
                 var totalfarmweight = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.weight));
@@ -587,7 +659,7 @@ namespace SGApp.Controllers
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalfarmaverage) + "</td>";
                 body += "</tr>";
                 
-                foreach (Sampling sam1 in sresultsPonds.Where(x => x.farm == sam.farm))
+                foreach (DTOs.Sampling sam1 in sresultsPonds.Where(x => x.farm == sam.farm))
                 {
                     bool pNameLabel = true;
                     var totalpondcount = samplingResults.Where(x => x.pond == sam1.pond && x.farm == sam.farm).Sum(x => decimal.Parse(x.count));
@@ -603,7 +675,7 @@ namespace SGApp.Controllers
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalaverage) + "</td>";
                     body += "</tr>";
-                    foreach (Sampling sam2 in sresultsRanges)
+                    foreach (DTOs.Sampling sam2 in sresultsRanges)
                     {
                         body += "<tr>";
                         
@@ -910,7 +982,7 @@ namespace SGApp.Controllers
             //    dtr.Save(bagw);
             //}
             //dtr.SaveRepoChanges();
-            List<Sampling> samplingResults = new List<Sampling>();
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
 
             try
             {
@@ -923,17 +995,17 @@ namespace SGApp.Controllers
                 //samplingResults = samplingResultsArray.ToList();
                 //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                 //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-                Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(response.Content.ReadAsStringAsync().Result);
                 samplingResults = samplingResultsArray.ToList();
                 var samplingResultsData = samplingResults.GroupBy(x => new { x.farm, x.pond, x.farmPond, x.rangeName })
                     .Select(group => new { Key = group.Key, Weight = group.Sum(s => decimal.Parse(s.weight)), Count = group.Count() }).ToList();
                 //var result = response.Content.ReadAsStringAsync().Result;
 
                 //return Request.CreateResponse(HttpStatusCode.OK, result);
-                List<Sampling> samplingReport = new List<Sampling>(samplingResultsData.Capacity);
+                List<DTOs.Sampling> samplingReport = new List<DTOs.Sampling>(samplingResultsData.Capacity);
                 foreach (var rec in samplingResultsData)
                 {
-                    Sampling fee2 = new Sampling();
+                    DTOs.Sampling fee2 = new DTOs.Sampling();
                     fee2.farm = rec.Key.farm;
                     fee2.pond = rec.Key.pond;
                     fee2.farmPond = rec.Key.farmPond;
@@ -1036,9 +1108,9 @@ namespace SGApp.Controllers
             body += "<th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>% of Weight</th>";
             body += "<th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Avg Weight (lbs)</th>";
             body += "</tr>";
-            List<Sampling> sresultsRanges = new List<Sampling>();
-            List<Sampling> sresultsPonds = new List<Sampling>();
-            List<Sampling> sresultsFarms = new List<Sampling>();
+            List<DTOs.Sampling> sresultsRanges = new List<DTOs.Sampling>();
+            List<DTOs.Sampling> sresultsPonds = new List<DTOs.Sampling>();
+            List<DTOs.Sampling> sresultsFarms = new List<DTOs.Sampling>();
             sresultsRanges = samplingResults.GroupBy(x => x.rangeName).Select(group => group.First()).ToList();
             sresultsFarms = samplingResults.GroupBy(x => x.farm).Select(group => group.First()).ToList();
             sresultsPonds = samplingResults.GroupBy(x => x.pond).Select(group => group.First()).ToList();
@@ -1055,7 +1127,7 @@ namespace SGApp.Controllers
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalSaverage) + "</td>";
             body += "</tr>";
-            foreach (Sampling sam3 in sresultsRanges)
+            foreach (DTOs.Sampling sam3 in sresultsRanges)
             {
                 body += "<tr>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
@@ -1074,7 +1146,7 @@ namespace SGApp.Controllers
                 body += "</tr>";
             }
 
-            foreach (Sampling sam in sresultsFarms)
+            foreach (DTOs.Sampling sam in sresultsFarms)
             {
                 var totalfarmcount = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.count));
                 var totalfarmweight = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.weight));
@@ -1106,7 +1178,7 @@ namespace SGApp.Controllers
                     //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
                     //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalaverage) + "</td>";
                     //body += "</tr>";
-                    foreach (Sampling sam2 in sresultsRanges)
+                    foreach (DTOs.Sampling sam2 in sresultsRanges)
                     {
                         body += "<tr>";
 
@@ -1492,7 +1564,7 @@ namespace SGApp.Controllers
 
             dtr.SaveRepoChanges();
 
-            List<Sampling> samplingResults = new List<Sampling>();
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
 
 
 
@@ -1679,6 +1751,106 @@ namespace SGApp.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK);
 
+        }
+        [HttpGet]
+        public HttpResponseMessage UpdateSalesData()
+        {
+
+
+            List<BOL> BOLResults = new List<BOL>();
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            DataSet myData = new DataSet();
+            var client = new HttpClient
+            {
+
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+             
+            };
+            try
+            {
+                var response = client.GetAsync("api/Remote/UpdateSalesData").Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                //BOL[] BOLResultsArray = json_serializer.Deserialize<BOL[]>(response.Content.ReadAsStringAsync().Result);
+                //DataSet SalesArray = json_serializer.Deserialize<DataSet>(response.Content.ReadAsStringAsync().Result);
+                //myData = SalesArray;
+                var xd = new XmlDocument();
+
+                //// Note:Json convertor needs a json with one node as root
+                //string jsonString = "{ \"rootNode\": {" + Constants.testsales.Trim().TrimStart('{').TrimEnd('}') + @"} }";
+                //// Now it is secure that we have always a Json with one node as root 
+                xd = JsonConvert.DeserializeXmlNode(response.Content.ReadAsStringAsync().Result, "table");
+                //xd = JsonConvert.DeserializeXmlNode(jsonString);
+                
+
+                //// DataSet is able to read from XML and return a proper DataSet
+                var result = new DataSet();
+                result.ReadXml(new XmlNodeReader(xd));
+                myData = result;
+
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            StringBuilder sb = new StringBuilder();
+
+            //IEnumerable<string> columnNames = myData.Tables[0].Columns.Cast<DataColumn>().
+            //                                  Select(column => column.ColumnName);
+            //string columnames = string.Join(",", columnNames);
+
+            foreach (DataRow row in myData.Tables[0].Rows)
+            {
+                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString().Replace(",", " "));
+                sb.AppendLine(string.Join(",", fields));
+            }
+            File.AppendAllText("C:\\Users\\Administrator\\Documents\\AS90ATRN.csv", sb.ToString());
+
+            return Request.CreateResponse(HttpStatusCode.OK, BOLResults);
+
+
+        }
+
+        [HttpGet]
+        public HttpResponseMessage UpdateAdagioFile()
+        {
+            var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            var fileToUpdate = dic.First().Value;
+            DataSet myData = new DataSet();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            try
+            {
+                var response = client.GetAsync("api/Remote/UpdateAdagioFile?ftu=" + fileToUpdate).Result;
+                response.EnsureSuccessStatusCode();
+                var xd = new XmlDocument();
+                xd = JsonConvert.DeserializeXmlNode(response.Content.ReadAsStringAsync().Result, "table");
+                var result = new DataSet();
+                result.ReadXml(new XmlNodeReader(xd));
+                myData = result;
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            StringBuilder sb = new StringBuilder();
+            string columnLine = "";
+            foreach(DataColumn dc in myData.Tables[0].Columns)
+            {
+                columnLine += dc.ColumnName + ",";
+            }
+            columnLine = columnLine.TrimEnd(',');
+            sb.AppendLine(columnLine);
+            foreach (DataRow row in myData.Tables[0].Rows)
+            {
+                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString().Replace(",", " "));
+                sb.AppendLine(string.Join(",", fields));
+            }
+            File.WriteAllText("C:\\Users\\Administrator\\Documents\\" + fileToUpdate + ".csv", sb.ToString());
+            return Request.CreateResponse(HttpStatusCode.OK, "Success");
         }
     }
 
