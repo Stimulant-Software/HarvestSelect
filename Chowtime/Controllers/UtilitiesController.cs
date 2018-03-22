@@ -334,6 +334,50 @@ namespace SGApp.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
         }
+
+        [HttpGet]
+        public HttpResponseMessage UpdateCurrentShipping()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            
+            
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+
+            List<DTOs.CurrentShippingDTO> shippingResults = new List<DTOs.CurrentShippingDTO>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetCurrentShipping", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                DTOs.CurrentShippingDTO[] shippingResultsArray = json_serializer.Deserialize<DTOs.CurrentShippingDTO[]>(response.Content.ReadAsStringAsync().Result);
+                shippingResults = shippingResultsArray.ToList();
+                if (shippingResults.Count() > 0)
+                {
+                    db.Database.ExecuteSqlCommand("DELETE FROM CurrentShipping");
+                    var dbShippings = shippingResults.Select(x => new Models.EF.CurrentShipping
+                    {
+                        CustomerName = x.CustomerName,
+                        ItemCode = x.ItemCode,
+                        ItemDescription = x.ItemDescription,
+                        QuantityOnHand = x.QuantityOnHand,
+                        OrderAmount = x.OrderAmount,
+                        OrderDate = DateTime.Parse(x.OrderDate)
+                    });
+                    db.CurrentShippings.AddRange(dbShippings);
+                    db.SaveChanges();
+                }
+                
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
         [HttpGet]
         public HttpResponseMessage EmailDailyReport()
         {

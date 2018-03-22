@@ -69,6 +69,15 @@
         <EntityTypeShape EntityType="AppModel.Adagio_N_ItemLocation" Width="1.5" PointX="3.625" PointY="13.75" />
         <EntityTypeShape EntityType="AppModel.Adagio_O_OrderDetail" Width="1.5" PointX="17.625" PointY="0.75" />
         <EntityTypeShape EntityType="AppModel.Sampling" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.CurrentShipping" Width="1.5" PointX="18.375" PointY="15.75" />
+        <EntityTypeShape EntityType="AppModel.BinDispersement" Width="1.5" PointX="11.375" PointY="16.125" />
+        <EntityTypeShape EntityType="AppModel.BinLoad" Width="1.5" PointX="11.375" PointY="26.875" />
+        <EntityTypeShape EntityType="AppModel.Bin" Width="1.5" PointX="9.125" PointY="26.625" />
+        <AssociationConnector Association="AppModel.FK_BinDispersements_Bins" />
+        <AssociationConnector Association="AppModel.FK_BinDispersements_Feedings" />
+        <AssociationConnector Association="AppModel.FK_BinLoads_Bins" />
+        <AssociationConnector Association="AppModel.FK_Bins_Farms" />
+        <AssociationConnector Association="AppModel.FK_Feedings_Bins" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

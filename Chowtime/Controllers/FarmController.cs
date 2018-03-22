@@ -45,6 +45,8 @@ namespace SGApp.Controllers
                     dic.Add("FarmId", item.FarmId.ToString());
                     dic.Add("FarmName", item.FarmName);
                     dic.Add("StatusId", item.StatusId.ToString());
+                    dic.Add("InnovaName", item.InnovaName != null ? item.InnovaName : "");
+                    dic.Add("InnovaCode", item.InnovaCode != null ? item.InnovaCode : "");
                     col.Add(dic);
 
                 }

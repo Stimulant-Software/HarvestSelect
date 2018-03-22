@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fb6f85f993c640fd8f951f5d696f54ba" Name="Diagram1" ZoomLevel="85">
+      <Diagram DiagramId="fb6f85f993c640fd8f951f5d696f54ba" Name="Diagram1" ZoomLevel="83">
         <EntityTypeShape EntityType="innova01Model.proc_sizes" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="innova01Model.base_companies" Width="1.5" PointX="12.125" PointY="1.25" />
         <EntityTypeShape EntityType="innova01Model.proc_lots" Width="1.5" PointX="9" PointY="0.625" />
@@ -29,6 +29,34 @@
         <AssociationConnector Association="innova01Model.fk_proc_packs_material_material" />
         <AssociationConnector Association="innova01Model.fk_proc_packs_packaging_material" />
         <AssociationConnector Association="innova01Model.fk_proc_packs_recordingmaterial_material" />
+        <EntityTypeShape EntityType="innova01Model.proc_invstatus" Width="1.5" PointX="16.625" PointY="10" />
+        <EntityTypeShape EntityType="innova01Model.proc_orderl" Width="1.5" PointX="19.625" PointY="0.75" />
+        <EntityTypeShape EntityType="innova01Model.proc_orders" Width="1.5" PointX="14.375" PointY="1.625" />
+        <AssociationConnector Association="innova01Model.fk_proc_invstatus_supplier_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_sourceowner_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_sourcesupplier_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_orders_agent_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_orders_customer_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_orders_deliverycustomer_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_orders_transporter_company" />
+        <AssociationConnector Association="innova01Model.fk_proc_invstatus_lot_lot" />
+        <AssociationConnector Association="innova01Model.fk_proc_invstatus_material_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_invstatus_order_order" />
+        <AssociationConnector Association="innova01Model.fk_proc_invstatus_porder_order" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_sourcelot_lot" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_itpackaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_material_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_papackaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_pkpackaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_stpackaging_material" />
+        <AssociationConnector Association="innova01Model.fk_proc_orderl_order_order" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_orderline_id" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_porderline_id" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_rorderline_id" />
+        <AssociationConnector Association="innova01Model.fk_proc_orders_parentorder_order" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_order_order" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_porder_order" />
+        <AssociationConnector Association="innova01Model.fk_proc_packs_rorder_order" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

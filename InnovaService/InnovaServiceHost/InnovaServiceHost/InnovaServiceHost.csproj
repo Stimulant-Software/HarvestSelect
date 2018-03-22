@@ -190,6 +190,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RemoteController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DTOs\CurrentShipping.cs" />
     <Compile Include="DTOs\InnovaDto.cs" />
     <Compile Include="Formatters\JsonpFormatter.cs" />
     <Compile Include="Global.asax.cs">

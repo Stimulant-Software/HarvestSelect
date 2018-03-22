@@ -111,6 +111,35 @@ namespace InnovaServiceHost.Controllers {
             con.Close();
             return ds;
         }
+
+        [HttpPost]
+        public object GetCurrentShipping([FromBody] InnovaDto dto)
+        {
+
+            var context = new innova01Entities();
+            var startDate = DateTime.Now.Date;
+            var endDate = startDate.AddDays(5);
+            return (from a in context.proc_orders.Where(x => x.dispatchtime >= startDate && x.dispatchtime <= endDate)
+                    join b in context.proc_orderl
+                    on a.order equals b.order
+                    join p in context.proc_invstatus.Where(x => x.regtime >= startDate)
+                    on b.material equals p.material
+                    join l in context.proc_materials
+                    on b.material equals l.material
+                    join bc in context.base_companies
+                    on a.customer equals bc.company
+
+                    select new
+                    {
+                                CustomerName = bc.name,
+                                ItemDescription = l.name,
+                                ItemCode = l.code,
+                                OrderAmount = b.maxamount,
+                                QuantityOnHand = p.units,
+                                OrderDate = a.dispatchtime
+                    }
+                    );
+        }
         [HttpPost]
         public object GetKeithsData([FromBody] InnovaDto dto) {
             //  validate the key

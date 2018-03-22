@@ -88,11 +88,19 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Innova.edmx</DependentUpon>
     </Compile>
-    <Compile Include="PartialClasses\proc_sizes.cs" />
+    <Compile Include="proc_invstatus.cs">
+      <DependentUpon>Innova.tt</DependentUpon>
+    </Compile>
     <Compile Include="proc_lots.cs">
       <DependentUpon>Innova.tt</DependentUpon>
     </Compile>
     <Compile Include="proc_materials.cs">
+      <DependentUpon>Innova.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proc_orderl.cs">
+      <DependentUpon>Innova.tt</DependentUpon>
+    </Compile>
+    <Compile Include="proc_orders.cs">
       <DependentUpon>Innova.tt</DependentUpon>
     </Compile>
     <Compile Include="proc_packs.cs">
@@ -153,6 +161,9 @@
       <DependentUpon>DB323.edmx</DependentUpon>
       <LastGenOutput>DB323.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PartialClasses\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

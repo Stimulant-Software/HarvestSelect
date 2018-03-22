@@ -22,6 +22,13 @@ namespace InnovaService
             this.proc_lots2 = new HashSet<proc_lots>();
             this.proc_lots3 = new HashSet<proc_lots>();
             this.proc_packs = new HashSet<proc_packs>();
+            this.proc_invstatus = new HashSet<proc_invstatus>();
+            this.proc_orderl = new HashSet<proc_orderl>();
+            this.proc_orderl1 = new HashSet<proc_orderl>();
+            this.proc_orders = new HashSet<proc_orders>();
+            this.proc_orders1 = new HashSet<proc_orders>();
+            this.proc_orders2 = new HashSet<proc_orders>();
+            this.proc_orders3 = new HashSet<proc_orders>();
         }
     
         public int company { get; set; }
@@ -83,5 +90,12 @@ namespace InnovaService
         public virtual ICollection<proc_lots> proc_lots2 { get; set; }
         public virtual ICollection<proc_lots> proc_lots3 { get; set; }
         public virtual ICollection<proc_packs> proc_packs { get; set; }
+        public virtual ICollection<proc_invstatus> proc_invstatus { get; set; }
+        public virtual ICollection<proc_orderl> proc_orderl { get; set; }
+        public virtual ICollection<proc_orderl> proc_orderl1 { get; set; }
+        public virtual ICollection<proc_orders> proc_orders { get; set; }
+        public virtual ICollection<proc_orders> proc_orders1 { get; set; }
+        public virtual ICollection<proc_orders> proc_orders2 { get; set; }
+        public virtual ICollection<proc_orders> proc_orders3 { get; set; }
     }
 }

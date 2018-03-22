@@ -150,8 +150,8 @@ function bindButtons() {
         $('#lightboxBG').fadeIn('100', function () { centerModal('#addNew' + objectType + 'Modal'); $('#addNew' + objectType + 'Modal').fadeIn('100'); });
 
         switch (pageType) {
-            case "farm": var searchQuery = { "key": _key, "FarmId": objectID }, farmInfo = {}; data = JSON.stringify(searchQuery); $.when($.ajax('../api/Farm/FarmDetail', { type: 'POST', data: data, success: function (msg) { _key = msg['Key']; localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); farmInfo = msg['ReturnData'][0]; } })).then(function () { $('#farmName').val(farmInfo.FarmName); $('#farmID').val(farmInfo.FarmId); $('#statusID').val(farmInfo.StatusId); }); break;
-            case "pond": var searchQuery = { "key": _key, "PondId": objectID }, pondInfo = {}; data = JSON.stringify(searchQuery); $.when($.ajax('../api/Pond/PondDetail', { type: 'POST', data: data, success: function (msg) { _key = msg['Key']; localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); pondInfo = msg['ReturnData'][0]; } })).then(function () { $('#PondName').val(pondInfo.PondName); $('#PondId').val(pondInfo.PondId); $('#StatusId').val(pondInfo.StatusId); $('#Size').val(pondInfo.Size); $('#NoFeed').val(pondInfo.NoFeed); loadFarmsForPonds(farmID); }); break;
+            case "farm": var searchQuery = { "key": _key, "FarmId": objectID }, farmInfo = {}; data = JSON.stringify(searchQuery); $.when($.ajax('../api/Farm/FarmDetail', { type: 'POST', data: data, success: function (msg) { _key = msg['Key']; localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); farmInfo = msg['ReturnData'][0]; } })).then(function () { $('#farmName').val(farmInfo.FarmName); $('#farmID').val(farmInfo.FarmId); $('#statusID').val(farmInfo.StatusId); $('#InnovaName').val(farmInfo.InnovaName); $('#InnovaCode').val(farmInfo.InnovaCode); }); break;
+            case "pond": var searchQuery = { "key": _key, "PondId": objectID }, pondInfo = {}; data = JSON.stringify(searchQuery); $.when($.ajax('../api/Pond/PondDetail', { type: 'POST', data: data, success: function (msg) { _key = msg['Key']; localStorage['CT_key'] = msg['Key']; startTimer(msg['Key']); pondInfo = msg['ReturnData'][0]; } })).then(function () { $('#PondName').val(pondInfo.PondName); $('#PondId').val(pondInfo.PondId); $('#StatusId').val(pondInfo.StatusId); $('#Size').val(pondInfo.Size); $('#NoFeed').val(pondInfo.NoFeed); $('#InnovaName').val(pondInfo.InnovaName); $('#InnovaCode').val(pondInfo.InnovaCode); loadFarmsForPonds(farmID); }); break;
             case "user":
                 var searchQuery = { "key": _key, "UserId": objectID };
                 data = JSON.stringify(searchQuery);
@@ -415,8 +415,17 @@ function initialSetup() {
                 if (def != "") { def == "on" ? def = true : def = def; submitObject[term] = def; }
             });
             if (formType != "submitCompany") submitObject['CompanyId'] = newCompanyID;
-            if (formType == "submitFarm") submitObject['StatusId'] = $('#farmStatusID').val();
-            if (formType == "submitPond") { submitObject['StatusId'] = $('#pondStatusID').val(); submitObject['FarmID'] = newFarmID; }
+            if (formType == "submitFarm") {
+                submitObject['StatusId'] = $('#farmStatusID').val();
+                submitObject['InnovaName'] = $('#innovaName').val();
+                submitObject['InnovaCode'] = $('#innovaCode').val();
+            }
+            if (formType == "submitPond") {
+                submitObject['StatusId'] = $('#pondStatusID').val();
+                submitObject['FarmID'] = newFarmID;
+                submitObject['InnovaName'] = $('#innovaName').val();
+                submitObject['InnovaCode'] = $('#innovaCode').val();
+            }
             var data = JSON.stringify(submitObject);
 
             switch (formType) {

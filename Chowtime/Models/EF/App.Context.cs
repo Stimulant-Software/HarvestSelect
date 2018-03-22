@@ -61,5 +61,9 @@ namespace SGApp.Models.EF
         public DbSet<Adagio_N_ItemLocation> Adagio_N_ItemLocation { get; set; }
         public DbSet<Adagio_O_OrderDetail> Adagio_O_OrderDetail { get; set; }
         public DbSet<Sampling> Samplings { get; set; }
+        public DbSet<CurrentShipping> CurrentShippings { get; set; }
+        public DbSet<BinDispersement> BinDispersements { get; set; }
+        public DbSet<BinLoad> BinLoads { get; set; }
+        public DbSet<Bin> Bins { get; set; }
     }
 }

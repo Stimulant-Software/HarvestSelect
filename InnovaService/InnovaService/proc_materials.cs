@@ -26,6 +26,12 @@ namespace InnovaService
             this.proc_packs = new HashSet<proc_packs>();
             this.proc_packs1 = new HashSet<proc_packs>();
             this.proc_packs2 = new HashSet<proc_packs>();
+            this.proc_invstatus = new HashSet<proc_invstatus>();
+            this.proc_orderl = new HashSet<proc_orderl>();
+            this.proc_orderl1 = new HashSet<proc_orderl>();
+            this.proc_orderl2 = new HashSet<proc_orderl>();
+            this.proc_orderl3 = new HashSet<proc_orderl>();
+            this.proc_orderl4 = new HashSet<proc_orderl>();
         }
     
         public int material { get; set; }
@@ -140,5 +146,11 @@ namespace InnovaService
         public virtual ICollection<proc_packs> proc_packs { get; set; }
         public virtual ICollection<proc_packs> proc_packs1 { get; set; }
         public virtual ICollection<proc_packs> proc_packs2 { get; set; }
+        public virtual ICollection<proc_invstatus> proc_invstatus { get; set; }
+        public virtual ICollection<proc_orderl> proc_orderl { get; set; }
+        public virtual ICollection<proc_orderl> proc_orderl1 { get; set; }
+        public virtual ICollection<proc_orderl> proc_orderl2 { get; set; }
+        public virtual ICollection<proc_orderl> proc_orderl3 { get; set; }
+        public virtual ICollection<proc_orderl> proc_orderl4 { get; set; }
     }
 }

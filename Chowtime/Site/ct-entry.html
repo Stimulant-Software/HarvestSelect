@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -9,6 +9,7 @@
     <script type="text/javascript">
         if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
     </script>
+    <script src="scripts/jquery.sticky.js"></script>
 </head>
 <body>
     <header>
@@ -28,6 +29,7 @@
             <select id="changeFarm"></select>
         </header>
         <!-- "header" row; represents the rolling totals. Visually similar to individual ponds -->
+        <div id="feedLotDiv"></div>
         <section id="farmContainer" data-farmid="0"></section>
     </section>
     <footer></footer>

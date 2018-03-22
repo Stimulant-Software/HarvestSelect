@@ -14,13 +14,21 @@ namespace SGApp.Models.EF
     
     public partial class Feeding
     {
+        public Feeding()
+        {
+            this.BinDispersements = new HashSet<BinDispersement>();
+        }
+    
         public int FeedingId { get; set; }
         public int PondId { get; set; }
         public System.DateTime FeedDate { get; set; }
         public int PoundsFed { get; set; }
         public int UsersFarmId { get; set; }
+        public Nullable<int> BinID { get; set; }
     
         public virtual UserFarm UserFarm { get; set; }
         public virtual Pond Pond { get; set; }
+        public virtual ICollection<BinDispersement> BinDispersements { get; set; }
+        public virtual Bin Bin { get; set; }
     }
 }

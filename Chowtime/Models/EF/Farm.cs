@@ -18,6 +18,7 @@ namespace SGApp.Models.EF
         {
             this.UserFarms = new HashSet<UserFarm>();
             this.Ponds = new HashSet<Pond>();
+            this.Bins = new HashSet<Bin>();
         }
     
         public int FarmId { get; set; }
@@ -32,5 +33,6 @@ namespace SGApp.Models.EF
         public virtual Status Status { get; set; }
         public virtual ICollection<UserFarm> UserFarms { get; set; }
         public virtual ICollection<Pond> Ponds { get; set; }
+        public virtual ICollection<Bin> Bins { get; set; }
     }
 }

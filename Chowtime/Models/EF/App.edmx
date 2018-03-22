@@ -426,6 +426,43 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="RNumAS90ASTA" Type="int" />
           <Property Name="StatsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="BinDispersements">
+          <Key>
+            <PropertyRef Name="BinDispersementID" />
+          </Key>
+          <Property Name="BinDispersementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinID" Type="int" Nullable="false" />
+          <Property Name="TicketNumber" Type="int" Nullable="false" />
+          <Property Name="Pounds" Type="int" Nullable="false" />
+          <Property Name="Note" Type="varchar" MaxLength="250" />
+          <Property Name="DispersementType" Type="int" />
+          <Property Name="DispersementDate" Type="datetime" Nullable="false" />
+          <Property Name="FeedID" Type="int" />
+        </EntityType>
+        <EntityType Name="BinLoads">
+          <Key>
+            <PropertyRef Name="BinTicketID" />
+          </Key>
+          <Property Name="BinTicketID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinID" Type="int" Nullable="false" />
+          <Property Name="TicketNumber" Type="int" Nullable="false" />
+          <Property Name="DateLoaded" Type="datetime" Nullable="false" />
+          <Property Name="PoundsLoaded" Type="int" Nullable="false" />
+          <Property Name="Vendor" Type="varchar" MaxLength="50" />
+          <Property Name="Note" Type="varchar" MaxLength="250" />
+        </EntityType>
+        <EntityType Name="Bins">
+          <Key>
+            <PropertyRef Name="BinID" />
+          </Key>
+          <Property Name="BinID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinName" Type="varchar" MaxLength="50" />
+          <Property Name="FarmID" Type="int" />
+          <Property Name="CurrentTicket" Type="int" />
+          <Property Name="CurrentPounds" Type="int" />
+          <Property Name="LastDispersement" Type="datetime" />
+          <Property Name="LastLoaded" Type="datetime" />
+        </EntityType>
         <EntityType Name="Companies">
           <Key>
             <PropertyRef Name="CompanyId" />
@@ -438,6 +475,18 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="State" Type="varchar" MaxLength="20" />
           <Property Name="Zip" Type="varchar" MaxLength="15" />
           <Property Name="Phone" Type="varchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="CurrentShipping">
+          <Key>
+            <PropertyRef Name="AppID" />
+          </Key>
+          <Property Name="AppID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" />
+          <Property Name="ItemDescription" Type="varchar" MaxLength="50" />
+          <Property Name="ItemCode" Type="varchar" MaxLength="50" />
+          <Property Name="OrderAmount" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="QuantityOnHand" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="OrderDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Departments">
           <Key>
@@ -528,6 +577,7 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="FeedDate" Type="datetime" Nullable="false" />
           <Property Name="PoundsFed" Type="int" Nullable="false" />
           <Property Name="UsersFarmId" Type="int" Nullable="false" />
+          <Property Name="BinID" Type="int" />
         </EntityType>
         <EntityType Name="FilletScaleReadings">
           <Key>
@@ -754,6 +804,54 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BinDispersements_Bins">
+          <End Role="Bins" Type="Self.Bins" Multiplicity="1" />
+          <End Role="BinDispersements" Type="Self.BinDispersements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bins">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="BinDispersements">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinDispersements_Feedings">
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="0..1" />
+          <End Role="BinDispersements" Type="Self.BinDispersements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feedings">
+              <PropertyRef Name="FeedingId" />
+            </Principal>
+            <Dependent Role="BinDispersements">
+              <PropertyRef Name="FeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinLoads_Bins">
+          <End Role="Bins" Type="Self.Bins" Multiplicity="1" />
+          <End Role="BinLoads" Type="Self.BinLoads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bins">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="BinLoads">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bins_Farms">
+          <End Role="Farms" Type="Self.Farms" Multiplicity="0..1" />
+          <End Role="Bins" Type="Self.Bins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Farms">
+              <PropertyRef Name="FarmId" />
+            </Principal>
+            <Dependent Role="Bins">
+              <PropertyRef Name="FarmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DepartmentTotals_Departments">
           <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
           <End Role="DepartmentTotals" Type="Self.DepartmentTotals" Multiplicity="*" />
@@ -835,6 +933,18 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
             </Principal>
             <Dependent Role="FarmYields">
               <PropertyRef Name="PondID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedings_Bins">
+          <End Role="Bins" Type="Self.Bins" Multiplicity="0..1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bins">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="Feedings">
+              <PropertyRef Name="BinID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1073,7 +1183,11 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <EntitySet Name="AD_WeekData" EntityType="Self.AD_WeekData" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Adagio_O_OrderHeader" EntityType="Self.Adagio_O_OrderHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADAGIOSalesStatitics" EntityType="Self.ADAGIOSalesStatitics" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BinDispersements" EntityType="Self.BinDispersements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BinLoads" EntityType="Self.BinLoads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bins" EntityType="Self.Bins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CurrentShipping" EntityType="Self.CurrentShipping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentTotals" EntityType="Self.DepartmentTotals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DownTimes" EntityType="Self.DownTimes" Schema="dbo" store:Type="Tables" />
@@ -1337,6 +1451,22 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
             <End Role="AD_Products" EntitySet="AD_Products" />
             <End Role="AD_WeekData" EntitySet="AD_WeekData" />
           </AssociationSet>
+          <AssociationSet Name="FK_BinDispersements_Bins" Association="Self.FK_BinDispersements_Bins">
+            <End Role="Bins" EntitySet="Bins" />
+            <End Role="BinDispersements" EntitySet="BinDispersements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinDispersements_Feedings" Association="Self.FK_BinDispersements_Feedings">
+            <End Role="Feedings" EntitySet="Feedings" />
+            <End Role="BinDispersements" EntitySet="BinDispersements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinLoads_Bins" Association="Self.FK_BinLoads_Bins">
+            <End Role="Bins" EntitySet="Bins" />
+            <End Role="BinLoads" EntitySet="BinLoads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bins_Farms" Association="Self.FK_Bins_Farms">
+            <End Role="Farms" EntitySet="Farms" />
+            <End Role="Bins" EntitySet="Bins" />
+          </AssociationSet>
           <AssociationSet Name="FK_DepartmentTotals_Departments" Association="Self.FK_DepartmentTotals_Departments">
             <End Role="Departments" EntitySet="Departments" />
             <End Role="DepartmentTotals" EntitySet="DepartmentTotals" />
@@ -1364,6 +1494,10 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <AssociationSet Name="FK_FarmYields_Ponds" Association="Self.FK_FarmYields_Ponds">
             <End Role="Ponds" EntitySet="Ponds" />
             <End Role="FarmYields" EntitySet="FarmYields" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedings_Bins" Association="Self.FK_Feedings_Bins">
+            <End Role="Bins" EntitySet="Bins" />
+            <End Role="Feedings" EntitySet="Feedings" />
           </AssociationSet>
           <AssociationSet Name="FK_Feedings_Ponds" Association="Self.FK_Feedings_Ponds">
             <End Role="Ponds" EntitySet="Ponds" />
@@ -1598,6 +1732,30 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <EntitySet Name="Adagio_N_ItemLocation" EntityType="AppModel.Adagio_N_ItemLocation" />
           <EntitySet Name="Adagio_O_OrderDetail" EntityType="AppModel.Adagio_O_OrderDetail" />
           <EntitySet Name="Samplings" EntityType="AppModel.Sampling" />
+          <EntitySet Name="CurrentShippings" EntityType="AppModel.CurrentShipping" />
+          <EntitySet Name="BinDispersements" EntityType="AppModel.BinDispersement" />
+          <EntitySet Name="BinLoads" EntityType="AppModel.BinLoad" />
+          <EntitySet Name="Bins" EntityType="AppModel.Bin" />
+          <AssociationSet Name="FK_BinDispersements_Bins" Association="AppModel.FK_BinDispersements_Bins">
+            <End Role="Bin" EntitySet="Bins" />
+            <End Role="BinDispersement" EntitySet="BinDispersements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinDispersements_Feedings" Association="AppModel.FK_BinDispersements_Feedings">
+            <End Role="Feeding" EntitySet="Feedings" />
+            <End Role="BinDispersement" EntitySet="BinDispersements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinLoads_Bins" Association="AppModel.FK_BinLoads_Bins">
+            <End Role="Bin" EntitySet="Bins" />
+            <End Role="BinLoad" EntitySet="BinLoads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bins_Farms" Association="AppModel.FK_Bins_Farms">
+            <End Role="Farm" EntitySet="Farms" />
+            <End Role="Bin" EntitySet="Bins" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedings_Bins" Association="AppModel.FK_Feedings_Bins">
+            <End Role="Bin" EntitySet="Bins" />
+            <End Role="Feeding" EntitySet="Feedings" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -1666,6 +1824,9 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <Property Type="Int32" Name="UsersFarmId" Nullable="false" />
           <NavigationProperty Name="UserFarm" Relationship="AppModel.FK_Feedings_UserFarms" FromRole="Feeding" ToRole="UserFarm" />
           <NavigationProperty Name="Pond" Relationship="AppModel.FK_Feedings_Ponds" FromRole="Feeding" ToRole="Pond" />
+          <Property Name="BinID" Type="Int32" />
+          <NavigationProperty Name="BinDispersements" Relationship="AppModel.FK_BinDispersements_Feedings" FromRole="Feeding" ToRole="BinDispersement" />
+          <NavigationProperty Name="Bin" Relationship="AppModel.FK_Feedings_Bins" FromRole="Feeding" ToRole="Bin" />
         </EntityType>
         <EntityType Name="Harvest">
           <Key>
@@ -1878,6 +2039,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <NavigationProperty Name="Status" Relationship="AppModel.FK_Farms_Statuses" FromRole="Farm" ToRole="Status" />
           <NavigationProperty Name="UserFarms" Relationship="AppModel.FK_UserFarms_Farms" FromRole="Farm" ToRole="UserFarm" />
           <NavigationProperty Name="Ponds" Relationship="AppModel.FK_Ponds_Farms" FromRole="Farm" ToRole="Pond" />
+          <NavigationProperty Name="Bins" Relationship="AppModel.FK_Bins_Farms" FromRole="Farm" ToRole="Bin" />
         </EntityType>
         <Association Name="FK_Farms_Companies">
           <End Type="AppModel.Company" Role="Company" Multiplicity="1" />
@@ -2712,6 +2874,122 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <Property Name="weight" Type="Double" />
           <Property Name="pondid" Type="Int32" />
         </EntityType>
+        <EntityType Name="CurrentShipping">
+          <Key>
+            <PropertyRef Name="AppID" />
+          </Key>
+          <Property Name="AppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderAmount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="QuantityOnHand" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="BinDispersement">
+          <Key>
+            <PropertyRef Name="BinDispersementID" />
+          </Key>
+          <Property Name="BinDispersementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinID" Type="Int32" Nullable="false" />
+          <Property Name="TicketNumber" Type="Int32" Nullable="false" />
+          <Property Name="Pounds" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DispersementType" Type="Int32" />
+          <Property Name="DispersementDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FeedID" Type="Int32" />
+          <NavigationProperty Name="Bin" Relationship="AppModel.FK_BinDispersements_Bins" FromRole="BinDispersement" ToRole="Bin" />
+          <NavigationProperty Name="Feeding" Relationship="AppModel.FK_BinDispersements_Feedings" FromRole="BinDispersement" ToRole="Feeding" />
+        </EntityType>
+        <EntityType Name="BinLoad">
+          <Key>
+            <PropertyRef Name="BinTicketID" />
+          </Key>
+          <Property Name="BinTicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinID" Type="Int32" Nullable="false" />
+          <Property Name="TicketNumber" Type="Int32" Nullable="false" />
+          <Property Name="DateLoaded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PoundsLoaded" Type="Int32" Nullable="false" />
+          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Bin" Relationship="AppModel.FK_BinLoads_Bins" FromRole="BinLoad" ToRole="Bin" />
+        </EntityType>
+        <EntityType Name="Bin">
+          <Key>
+            <PropertyRef Name="BinID" />
+          </Key>
+          <Property Name="BinID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FarmID" Type="Int32" />
+          <Property Name="CurrentTicket" Type="Int32" />
+          <Property Name="CurrentPounds" Type="Int32" />
+          <Property Name="LastDispersement" Type="DateTime" Precision="3" />
+          <Property Name="LastLoaded" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BinDispersements" Relationship="AppModel.FK_BinDispersements_Bins" FromRole="Bin" ToRole="BinDispersement" />
+          <NavigationProperty Name="BinLoads" Relationship="AppModel.FK_BinLoads_Bins" FromRole="Bin" ToRole="BinLoad" />
+          <NavigationProperty Name="Farm" Relationship="AppModel.FK_Bins_Farms" FromRole="Bin" ToRole="Farm" />
+          <NavigationProperty Name="Feedings" Relationship="AppModel.FK_Feedings_Bins" FromRole="Bin" ToRole="Feeding" />
+        </EntityType>
+        <Association Name="FK_BinDispersements_Bins">
+          <End Type="AppModel.Bin" Role="Bin" Multiplicity="1" />
+          <End Type="AppModel.BinDispersement" Role="BinDispersement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bin">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="BinDispersement">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinDispersements_Feedings">
+          <End Type="AppModel.Feeding" Role="Feeding" Multiplicity="0..1" />
+          <End Type="AppModel.BinDispersement" Role="BinDispersement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feeding">
+              <PropertyRef Name="FeedingId" />
+            </Principal>
+            <Dependent Role="BinDispersement">
+              <PropertyRef Name="FeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinLoads_Bins">
+          <End Type="AppModel.Bin" Role="Bin" Multiplicity="1" />
+          <End Type="AppModel.BinLoad" Role="BinLoad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bin">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="BinLoad">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Bins_Farms">
+          <End Type="AppModel.Farm" Role="Farm" Multiplicity="0..1" />
+          <End Type="AppModel.Bin" Role="Bin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Farm">
+              <PropertyRef Name="FarmId" />
+            </Principal>
+            <Dependent Role="Bin">
+              <PropertyRef Name="FarmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedings_Bins">
+          <End Type="AppModel.Bin" Role="Bin" Multiplicity="0..1" />
+          <End Type="AppModel.Feeding" Role="Feeding" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bin">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="Feeding">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2760,6 +3038,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <EntitySetMapping Name="Feedings">
             <EntityTypeMapping TypeName="AppModel.Feeding">
               <MappingFragment StoreEntitySet="Feedings">
+                <ScalarProperty Name="BinID" ColumnName="BinID" />
                 <ScalarProperty Name="UsersFarmId" ColumnName="UsersFarmId" />
                 <ScalarProperty Name="PoundsFed" ColumnName="PoundsFed" />
                 <ScalarProperty Name="FeedDate" ColumnName="FeedDate" />
@@ -3457,6 +3736,59 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
                 <ScalarProperty Name="farmname" ColumnName="farmname" />
                 <ScalarProperty Name="code" ColumnName="code" />
                 <ScalarProperty Name="AppID" ColumnName="AppID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CurrentShippings">
+            <EntityTypeMapping TypeName="AppModel.CurrentShipping">
+              <MappingFragment StoreEntitySet="CurrentShipping">
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BinDispersements">
+            <EntityTypeMapping TypeName="AppModel.BinDispersement">
+              <MappingFragment StoreEntitySet="BinDispersements">
+                <ScalarProperty Name="FeedID" ColumnName="FeedID" />
+                <ScalarProperty Name="DispersementDate" ColumnName="DispersementDate" />
+                <ScalarProperty Name="DispersementType" ColumnName="DispersementType" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Pounds" ColumnName="Pounds" />
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+                <ScalarProperty Name="BinID" ColumnName="BinID" />
+                <ScalarProperty Name="BinDispersementID" ColumnName="BinDispersementID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BinLoads">
+            <EntityTypeMapping TypeName="AppModel.BinLoad">
+              <MappingFragment StoreEntitySet="BinLoads">
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Vendor" ColumnName="Vendor" />
+                <ScalarProperty Name="PoundsLoaded" ColumnName="PoundsLoaded" />
+                <ScalarProperty Name="DateLoaded" ColumnName="DateLoaded" />
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+                <ScalarProperty Name="BinID" ColumnName="BinID" />
+                <ScalarProperty Name="BinTicketID" ColumnName="BinTicketID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bins">
+            <EntityTypeMapping TypeName="AppModel.Bin">
+              <MappingFragment StoreEntitySet="Bins">
+                <ScalarProperty Name="LastLoaded" ColumnName="LastLoaded" />
+                <ScalarProperty Name="LastDispersement" ColumnName="LastDispersement" />
+                <ScalarProperty Name="CurrentPounds" ColumnName="CurrentPounds" />
+                <ScalarProperty Name="CurrentTicket" ColumnName="CurrentTicket" />
+                <ScalarProperty Name="FarmID" ColumnName="FarmID" />
+                <ScalarProperty Name="BinName" ColumnName="BinName" />
+                <ScalarProperty Name="BinID" ColumnName="BinID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

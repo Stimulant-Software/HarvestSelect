@@ -17,6 +17,8 @@ namespace InnovaService
         public proc_lots()
         {
             this.proc_packs1 = new HashSet<proc_packs>();
+            this.proc_invstatus = new HashSet<proc_invstatus>();
+            this.proc_orderl = new HashSet<proc_orderl>();
         }
     
         public int lot { get; set; }
@@ -88,5 +90,7 @@ namespace InnovaService
         public virtual base_companies base_companies3 { get; set; }
         public virtual proc_packs proc_packs { get; set; }
         public virtual ICollection<proc_packs> proc_packs1 { get; set; }
+        public virtual ICollection<proc_invstatus> proc_invstatus { get; set; }
+        public virtual ICollection<proc_orderl> proc_orderl { get; set; }
     }
 }
