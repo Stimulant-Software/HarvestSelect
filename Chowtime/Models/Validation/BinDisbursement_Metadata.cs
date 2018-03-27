@@ -18,7 +18,7 @@ namespace SGApp.Models.Validation {
 		public DateTime DisbursementDate { get; set; }
 		public int? FeedID { get; set; }
 		[Required]
-		public DateTime CreatedDate { get; set; }
+		public DateTime DateCreated { get; set; }
 		[Required]
 		public int UserID { get; set; }
 	}

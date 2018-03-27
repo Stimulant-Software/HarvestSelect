@@ -38,6 +38,10 @@ namespace SGApp.Repository.Application
             return entity;
         }
 
+		internal List<Farm> GetAllFarms() {
+			return DbContext.Farms.Where(x => x.StatusId == 1).ToList();
+		}
+
 		internal List<UserFarm> GetUserFarmsWithBins(int userId, int statusId) {
 			return DbContext.UserFarms.Include("Farm.Bins").Where(x => x.UserId == userId && x.StatusId == statusId && x.Farm.StatusId == statusId).ToList();
 		}
