@@ -1,7 +1,7 @@
 $.when(showProgress('body', 'loadATEntryPage'),checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
     
     if ($('body').hasClass('entry')) {
-        $('#changeFarm').change(function () {
+		$('#changeFarm').change(function () {
             farmID = $('option:selected', this).val();
             farmName = $('option:selected', this).text();
             $('#currentFarm').empty().text(farmName);
@@ -56,7 +56,8 @@ function atLoadReport7Day() {
 function pondReport(farmID, dateEnd) {
     showProgress('body', 'farmRepeater');
     if (!dateEnd) { dateEnd = new Date(); }
-    var farmPondsHtml = '', resultsPonds = {}, searchQuery = { "key": _key, "userID": userID, "FarmId": farmID, "StatusId": "1" }, data = JSON.stringify(searchQuery);
+	var farmPondsHtml = '', resultsPonds = {}, searchQuery = { "key": _key, "userID": userID, "FarmId": farmID, "StatusId": "1" }, data = JSON.stringify(searchQuery);
+	debugger;
     $.ajax('../api/Pond/PondList', {
         type: 'POST',
         data: data,
@@ -101,7 +102,8 @@ function pondReport7Day(farmID, dateEnd) {
     showProgress('body', 'farmRepeater');
     if (!dateEnd) { dateEnd = new Date(); }
     var farmPondsHtml = '', resultsPonds = {}, searchQuery = { "key": _key, "userID": userID, "FarmId": farmID, "StatusId": "1" }, data = JSON.stringify(searchQuery);
-    $.ajax('../api/Pond/PondList', {
+	debugger;
+	$.ajax('../api/Pond/PondList', {
         type: 'POST',
         data: data,
         success: function (msg) {
@@ -162,7 +164,8 @@ function reportRepeater7Day(pondInfo) {
 function farmRepeater(farmID) {
     showProgress('body', 'farmRepeater');
     var farmPondsHtml = '', resultsPonds = {}, searchQuery = { "key": _key, "userID": userID, "FarmId": farmID, "StatusId" : "1" }, data = JSON.stringify(searchQuery);
-    $.ajax('../api/Pond/PondList', {
+	debugger;
+	$.ajax('../api/Pond/PondList', {
         type: 'POST',
         data: data,
         success: function (msg) {

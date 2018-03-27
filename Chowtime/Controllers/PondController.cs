@@ -34,17 +34,13 @@ namespace SGApp.Controllers
                 var predicate = ur.GetPredicate(cqDTO, u, companyId);
                 var data = ur.GetByPredicate(predicate);
                 var col = new Collection<Dictionary<string, string>>();
-
-                foreach (var item in data)
-                {
-
+	            var bins = new Collection<Dictionary<string, string>>();
+				var farmCol = new Collection<Tuple<int, int>>();
+				foreach (var item in data) {
                     var dic = new Dictionary<string, string>();
-
                     dic.Add("PondId", item.PondId.ToString());
                     dic.Add("PondName", item.PondName);
                     dic.Add("StatusId", item.StatusId.ToString());
-                    dic.Add("InnovaName", item.InnovaName != null ? item.InnovaName : "");
-                    dic.Add("InnovaCode", item.InnovaCode != null ? item.InnovaCode : "");
                     dic.Add("Size", item.Size.ToString());
                     dic.Add("NoFeed", item.NoFeed.ToString());
                     int poundsfedsinceharvest = 0;
@@ -64,13 +60,30 @@ namespace SGApp.Controllers
                     dic.Add("SalesPoundsSinceHarvest", salepounds.ToString());
                     dic.Add("HealthStatus", item.HealthStatus.ToString());
                     col.Add(dic);
-
+					foreach (var bin in item.Farm.Bins) {
+						var match = farmCol.SingleOrDefault(x => x.Item1 == bin.FarmID && x.Item2 == bin.BinID);
+						if (match == null) {
+							farmCol.Add(new Tuple<int, int>(bin.FarmID.Value, bin.BinID));
+							bins.Add(
+								new Dictionary<string, string>() {
+									{"BinID", bin.BinID.ToString()},
+									{"BinName", bin.BinName},
+									{"FarmID", bin.FarmID.HasValue ? bin.FarmID.Value.ToString() : ""},
+									{"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
+									{"CurrentPounds", bin.CurrentPounds.HasValue ? bin.CurrentPounds.Value.ToString() : ""},
+									{"LastDispersement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : ""},
+									{"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : ""}
+								}
+							);
+						}						
+					}
                 }
 
                 var retVal = new GenericDTO
                 {
                     Key = key,
-                    ReturnData = col
+                    ReturnData = col,
+					Bins = bins
                 };
                 return Request.CreateResponse(HttpStatusCode.OK, retVal);
             }
@@ -690,27 +703,44 @@ namespace SGApp.Controllers
             return response;
         }
 
-        private HttpResponseMessage ProcessNewFeedRecord(HttpRequestMessage request, FeedingDTO uDto, string key, int companyId, int UserId)
-        {
+        private HttpResponseMessage ProcessNewFeedRecord(HttpRequestMessage request, FeedingDTO uDto, string key, int companyId, int UserId) {
             var ur = new FeedingRepository();
             var o2 = new Feeding();
-
             var validationErrors = GetFeedValidationErrors(ur, o2, uDto, companyId, UserId);
-
-
-            if (validationErrors.Any())
-            {
+            if (validationErrors.Any()) {
                 return ProcessValidationErrors(request, validationErrors, key);
             }
             //  no validation errors... 
             //Pond.CompanyId = companyId;
-
             o2 = ur.Save(o2);
-
-            uDto.Key = key;
+			var br = new BinRepository();
+	        var binDisb = br.GetNewBinDisbursementRecord();
+	        var disbType = br.GetDisbursementType("Routine Feeding");
+	        var ticketNbr = br.GetLastBinLoadTicketNumber(uDto.BinID);
+	        if (ticketNbr == 0) {
+		        return request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+			        string.Format("{0}{1}", "There are no Tickets in BinLoads for BinID ", uDto.BinID));
+	        }
+			var dto = new BinDisbursementDto() {
+				BinID = uDto.BinID,
+				TicketNumber = ticketNbr,
+				Pounds = int.Parse(uDto.PoundsFed),
+				Note = "Record created from daily feed disbursement input screen",
+				DisbursementType = disbType,
+				DisbursementDate = DateTime.Now,
+				CreatedDate = DateTime.Now,
+				UserID = UserId,
+				FeedID = o2.FeedingId
+			};
+	        validationErrors = GetBinDisbursementErrors(br, binDisb, dto, companyId, UserId);
+	        if (validationErrors.Any()) {
+		        return ProcessValidationErrors(request, validationErrors, key);
+	        }			
+	        br.SaveChanges();
+	        br.UpdateBinCurrentPounds(null, binDisb);
+			uDto.Key = key;
             var response = request.CreateResponse(HttpStatusCode.Created, uDto);
-            response.Headers.Location = new Uri(Url.Link("Default", new
-            {
+            response.Headers.Location = new Uri(Url.Link("Default", new {
                 id = o2.FeedingId
             }));
             return response;
@@ -838,8 +868,13 @@ namespace SGApp.Controllers
             return pr.Validate(contact);
         }
 
+	    private List<DbValidationError> GetBinDisbursementErrors(BinRepository pr, BinDisbursement bd, BinDisbursementDto dto, int companyId, int PondId) {
+		    bd.ProcessRecord(dto);
+		    return pr.Validate(bd);
+	    }
 
-        private List<DbValidationError> GetHarvestValidationErrors(HarvestRepository pr, Harvest contact, HarvestDTO cqDto, int companyId, int PondId)
+
+		private List<DbValidationError> GetHarvestValidationErrors(HarvestRepository pr, Harvest contact, HarvestDTO cqDto, int companyId, int PondId)
         {
             contact.ProcessRecord(cqDto);
 

@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Airtime</title>
+	<link href="content/global.css" rel="stylesheet" type="text/css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript">
+		if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+	</script>
+	<script src="scripts/underscore.js"></script>	
+</head>
+<body id="adminBinsBody">
+	<header>
+		<h1>Admin</h1>
+		<nav>
+			<ol>
+				<li><a href="admin-pond.html">Pond Admin</a></li>
+				<li><a href="admin-farm.html">Farm Admin</a></li>
+				<li><a href="admin-bins.html">Bin Admin</a></li>
+				<li><a href="admin-user.html">User Admin</a></li>
+				<li><a href="admin-email.html">Email Admin</a></li>
+				<li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+			</ol>
+		</nav>
+	</header>
+
+	<section id="main_content">
+		<header class="admin">
+			<h2>Bin Administration</h2>
+			<button id="addNewBin">+ Create New Bin</button>
+		</header>
+		<form>
+			<ol class="active">
+				<li class="header">ACTIVE BINS</li>
+				<li id="adminBins_noActiveBins"><span style="width: 250px;">There are no active bins</span></li>
+			</ol>
+			<ol class="inactive">
+				<li class="header">INACTIVE BINS</li>
+				<li><span style="width: 250px;">There are no inactive bins</span></li>
+			</ol>
+		</form>
+	</section>
+
+	<footer></footer>
+
+	<section id="addNewBinModal" class="admin-modal modal">
+		<form>
+			<header>New Bin</header>
+			<fieldset>
+				<label>Bin Name</label>
+				<input type="text" id="binName" placeholder="Bin Name" required />
+			</fieldset>
+			<fieldset>
+				<label>Assign Bin To Farm</label>
+				<select id="adminBins_farmSelect"></select>
+			</fieldset>
+			<fieldset>
+				<label>Current Ticket</label>
+				<input type="number" id="adminBins_currentTicket" />
+			</fieldset>
+			<fieldset>
+				<label>Current Pounds</label>
+				<input type="number" id="adminBins_currentPounds" />
+			</fieldset>
+			<fieldset>
+				<label>Last Disbursement</label>
+				<input type="date" id="adminBins_lastDisbursement" />
+			</fieldset>
+			<fieldset>
+				<label>Last Loaded</label>
+				<input type="date" id="adminBins_lastLoaded" />
+			</fieldset>
+			<div id="binReconciliation">
+				<header>Reconciliation</header>
+				<fieldset>
+					<label>Reconciliation Amount</label>
+					<input type="number" id="adminBins_reconciliation" />
+					<fieldset class="buttons"><button id="submitReconciliation" class="submit">Submit</button><button id="adminBins_cancelReconciliationButton">Cancel</button></fieldset>
+				</fieldset>
+			</div>
+			<fieldset class="buttons"><button id="submitBin">Submit</button><button id="adminBins_cancelBinCreation">Cancel</button></fieldset>
+		</form>
+	</section>
+
+	<section id="alertBox" class="modal">
+		<i class="fa fa-exclamation-circle"></i>
+		<div id="alertMessage"></div>
+		<fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+	</section>
+	<script src="scripts/admin-bins.js"></script>
+	<script type="text/javascript" src="scripts/functions.js"></script>
+	<script type="text/javascript" src="scripts/admin-functions.js"></script>
+</body>
+</html>

@@ -1,25 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Security.Cryptography;
-using System.Text;
-using SGApp.Utility;
 using SGApp.Models.EF;
-using System.Data.Objects;
 using MoreLinq;
 
 
-namespace SGApp.Repository.Application
-{
-    public class FeedingRepository : RepositoryBase<Feeding>
+namespace SGApp.Repository.Application {
+	public class FeedingRepository : RepositoryBase<Feeding>
     {
-        public override System.Linq.IQueryable<Feeding> EntityCollection
-        {
+        public override System.Linq.IQueryable<Feeding> EntityCollection {
             get
             {
                 return DbContext.Feedings.AsQueryable();

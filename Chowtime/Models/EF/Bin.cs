@@ -16,9 +16,9 @@ namespace SGApp.Models.EF
     {
         public Bin()
         {
-            this.BinDispersements = new HashSet<BinDispersement>();
-            this.BinLoads = new HashSet<BinLoad>();
             this.Feedings = new HashSet<Feeding>();
+            this.BinDisbursements = new HashSet<BinDisbursement>();
+            this.BinLoads = new HashSet<BinLoad>();
         }
     
         public int BinID { get; set; }
@@ -26,12 +26,12 @@ namespace SGApp.Models.EF
         public Nullable<int> FarmID { get; set; }
         public Nullable<int> CurrentTicket { get; set; }
         public Nullable<int> CurrentPounds { get; set; }
-        public Nullable<System.DateTime> LastDispersement { get; set; }
+        public Nullable<System.DateTime> LastDisbursement { get; set; }
         public Nullable<System.DateTime> LastLoaded { get; set; }
     
-        public virtual ICollection<BinDispersement> BinDispersements { get; set; }
-        public virtual ICollection<BinLoad> BinLoads { get; set; }
         public virtual Farm Farm { get; set; }
         public virtual ICollection<Feeding> Feedings { get; set; }
+        public virtual ICollection<BinDisbursement> BinDisbursements { get; set; }
+        public virtual ICollection<BinLoad> BinLoads { get; set; }
     }
 }

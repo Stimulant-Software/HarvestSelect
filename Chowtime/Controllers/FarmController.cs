@@ -1,10 +1,6 @@
-﻿using SGApp.BusinessLogic.Application;
-using SGApp.Controllers;
-using SGApp.Repository.Application;
-using SGApp.Utility;
+﻿using SGApp.Repository.Application;
 using SGApp.DTOs;
 using SGApp.Models.EF;
-using SGApp.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,9 +13,196 @@ using System.Web.Http;
 
 namespace SGApp.Controllers
 {
-    public class FarmController : BaseApiController
-    {
-        internal HttpResponseMessage Farms(HttpRequestMessage request, FarmDTO cqDTO)
+    public class FarmController : BaseApiController {
+
+	    private HttpResponseMessage GetBinsForAdminPage(HttpRequestMessage request, BinDto dto) {
+			string key;
+		    var aur = new AppUserRepository();
+		    var companyId = 0;
+		    var UserId = 1; //aur.ValidateUser(dto.Key, out key, ref companyId);
+		    var aur1 = new AppUserRoleRepository();
+		    if (UserId > 0 && aur1.IsInRole(UserId, "Admin")) {
+			    var br = new BinRepository();
+			    var binCol = new Collection<Dictionary<string, string>>();
+			    var bins = br.GetBins();
+			    foreach (var bin in bins) {
+				    binCol.Add(new Dictionary<string, string>() {
+					    {"BinID", bin.BinID.ToString()},
+					    {"BinName", bin.BinName},
+					    {"FarmID", bin.FarmID.HasValue ? bin.FarmID.Value.ToString() : ""},
+					    {"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
+					    {"CurrentPounds", bin.CurrentPounds.HasValue ?bin.CurrentPounds.Value.ToString() : ""},
+					    {"LastDisbursement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : ""},
+					    {"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : ""}
+				    });
+			    }
+			    var retVal = new GenericDTO() {
+				    //Key = key,
+				    Bins = binCol
+			    };
+			    return request.CreateResponse(HttpStatusCode.OK, retVal);
+		    };
+		    var message = "validation failed";
+		    return request.CreateResponse(HttpStatusCode.NotFound, message);
+		}
+
+		private HttpResponseMessage AddOrEditBin(HttpRequestMessage request, BinDto dto) {
+			string key;
+		    var aur = new AppUserRepository();
+		    var companyId = 0;
+		    var UserId = aur.ValidateUser(dto.Key, out key, ref companyId);
+		    var aur1 = new AppUserRoleRepository();
+		    if (UserId > 0 && aur1.IsInRole(UserId, "Admin")) {
+			    var br = new BinRepository();
+			    var binId = dto.BinID;
+			    var bin = new Bin();
+			    if (binId == -1) {
+				    //	adding bin
+					bin = br.GetNewBinRecord();
+				} else {
+					// editing bin
+				    bin = br.GetById(binId);
+			    }
+				bin.BinName = dto.BinName;
+			    bin.FarmID = dto.FarmID;
+			    bin.CurrentTicket = dto.CurrentTicket;
+			    bin.CurrentPounds = dto.CurrentPounds;
+			    bin.LastDisbursement = dto.LastDisbursement;
+			    bin.LastLoaded = dto.LastLoaded;
+			    br.SaveChanges();
+			    dto.Key = key;
+			    dto.BinID = bin.BinID;
+			    return request.CreateResponse(HttpStatusCode.OK, dto);
+			};
+		    var message = "validation failed";
+		    return request.CreateResponse(HttpStatusCode.NotFound, message);
+		}
+
+		private HttpResponseMessage AddBinLoad(HttpRequestMessage request, BinLoadDto dto) {
+		    string key;
+		    var aur = new AppUserRepository();
+		    var companyId = 0;
+		    var UserId = aur.ValidateUser(dto.Key, out key, ref companyId);
+		    var aur1 = new AppUserRoleRepository();
+		    if (UserId > 0 && aur1.IsInRole(UserId, "User")) {
+			    var br = new BinRepository();
+			    var binLoad = br.GetNewBinLoadRecord();
+			    binLoad.BinID = dto.BinID;
+			    binLoad.TicketNumber = dto.TicketNumber;
+			    binLoad.DateLoaded = dto.DateLoaded;
+			    binLoad.PoundsLoaded = dto.PoundsLoaded;
+			    binLoad.Vendor = dto.Vendor;
+			    binLoad.Note = dto.Note;
+			    binLoad.CreatedDate = DateTime.Now;
+			    binLoad.UserID = UserId;
+			    br.SaveChanges();
+				br.UpdateBinCurrentPounds(binLoad, null);
+				var retVal = new FarmDTO() {
+				    Key = key,
+					loadSkipCount = 0,
+					Bin = new BinDto() {
+						BinID = binLoad.BinID
+					}
+			    };
+			    return GetBinLoads(request, retVal);
+		    }
+		    var message = "validation failed";
+		    return request.CreateResponse(HttpStatusCode.NotFound, message);
+		}
+
+		private HttpResponseMessage FarmsForBinLoads(HttpRequestMessage request, FarmDTO dto) {
+			string key;
+		    var aur = new AppUserRepository();
+		    var companyId = 0;
+		    var UserId = aur.ValidateUser(dto.Key, out key, ref companyId);
+		    var aur1 = new AppUserRoleRepository();
+		    if (UserId > 0 && aur1.IsInRole(UserId, "User")) {
+			    var statusId = int.Parse(dto.StatusId);
+			    var fr = new FarmRepository();
+			    var f = new Farm();
+			    var userFarms = fr.GetUserFarmsWithBins(UserId, statusId);
+				var col = new Collection<Dictionary<string, string>>();
+				var binCol = new Collection<Dictionary<string, string>>();
+			    foreach (var farm in userFarms.Select(x => x.Farm)) {
+				    if (farm.Bins.Any()) {
+						var dic = new Dictionary<string, string> {
+						    { "FarmId", farm.FarmId.ToString() },
+						    { "FarmName", farm.FarmName },
+						    { "StatusId", farm.StatusId.ToString() }
+					    };
+					    col.Add(dic);
+					    foreach (var bin in farm.Bins.OrderBy((x => x.BinName))) {
+						    dic = new Dictionary<string, string>() {
+							    {"BinID", bin.BinID.ToString()},
+							    {"BinName", bin.BinName },
+							    {"FarmID", bin.FarmID.ToString()},
+							    {"CurrentTicket", bin.CurrentTicket.ToString() },
+							    {"CurrentPounds", bin.CurrentPounds.ToString() },
+							    {"LastDisbursement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : "" },
+							    {"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : "" }
+						    };
+						    binCol.Add(dic);
+					    }
+					}					
+			    }
+
+			    var retVal = new GenericDTO {
+				    Key = key,
+				    ReturnData = col,
+				    Bins = binCol
+			    };
+			    return Request.CreateResponse(HttpStatusCode.OK, retVal);
+		    }
+		    var message = "validation failed";
+		    return request.CreateResponse(HttpStatusCode.NotFound, message);
+		}
+
+		private HttpResponseMessage GetBinLoads(HttpRequestMessage request, FarmDTO dto) {
+			string key;
+			var aur = new AppUserRepository();
+			var companyId = 0;
+			var UserId = aur.ValidateUser(dto.Key, out key, ref companyId);
+			var aur1 = new AppUserRoleRepository();
+			if (UserId > 0 && aur1.IsInRole(UserId, "User")) {
+				var br = new BinRepository();
+				var binId = dto.Bin.BinID;
+				var skip = dto.loadSkipCount;
+				var binLoads = br.GetBinLoads(binId, skip.HasValue ? skip.Value : 0);
+				var col = new Collection<Dictionary<string, string>>();
+				foreach (var binLoad in binLoads) {
+					var dic = new Dictionary<string, string>() {
+							{"BinTicketID", binLoad.BinTicketID.ToString()},
+							{"BinID", binLoad.BinID.ToString()},
+							{"TicketNumber", binLoad.TicketNumber.ToString() },
+							{"DateLoaded", binLoad.DateLoaded.ToShortDateString()},
+							{"PoundsLoaded", binLoad.PoundsLoaded.ToString() },
+							{"Vendor", binLoad.Vendor },
+							{"Note", binLoad.Note }
+						};
+					col.Add(dic);
+				}
+				var bin = br.GetBinData(binId);
+				var retVal = new GenericDTO {
+					Key = key,
+					ReturnData = col,
+					Bins = new Collection<Dictionary<string, string>>() {
+						new Dictionary<string, string>() {
+							{"BinID", bin.BinID.ToString()},
+							{"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
+							{"CurrentPounds", bin.CurrentPounds.HasValue ? bin.CurrentPounds.Value.ToString() : ""},
+							{"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : ""},
+							{"LastDisbursement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : ""}
+						}
+					}
+				};
+				return request.CreateResponse(HttpStatusCode.OK, retVal);
+			}
+			var message = "validation failed";
+			return request.CreateResponse(HttpStatusCode.NotFound, message);
+		}
+
+
+		internal HttpResponseMessage Farms(HttpRequestMessage request, FarmDTO cqDTO)
         {
             string key;
             var aur = new AppUserRepository();
@@ -36,26 +219,33 @@ namespace SGApp.Controllers
                 var predicate = ur.GetPredicate(cqDTO, u, companyId);
                 var data = ur.GetByPredicate(predicate);
                 var col = new Collection<Dictionary<string, string>>();
-
-                foreach (var item in data)
-                {
-
+				//var binCol = new Collection<Dictionary<string, string>>();
+				foreach (var item in data) {
                     var dic = new Dictionary<string, string>();
-
                     dic.Add("FarmId", item.FarmId.ToString());
                     dic.Add("FarmName", item.FarmName);
                     dic.Add("StatusId", item.StatusId.ToString());
-                    dic.Add("InnovaName", item.InnovaName != null ? item.InnovaName : "");
-                    dic.Add("InnovaCode", item.InnovaCode != null ? item.InnovaCode : "");
                     col.Add(dic);
-
+					//foreach (var bin in item.Bins.OrderBy((x => x.BinName))) {
+					//	dic = new Dictionary<string, string>() {
+					//		{"BinID", bin.BinID.ToString()},
+					//		{"BinName", bin.BinName },
+					//		{"FarmID", bin.FarmID.ToString()},
+					//		{"CurrentTicket", bin.CurrentTicket.ToString() },
+					//		{"CurrentPounds", bin.CurrentPounds.ToString() },
+					//		{"LastDisbursement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : "" },
+					//		{"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : "" }
+					//	};
+					//	binCol.Add(dic);
+					//}
                 }
 
                 var retVal = new GenericDTO
                 {
                     Key = key,
-                    ReturnData = col
-                };
+                    ReturnData = col//,
+					//Bins = binCol
+				};
                 return Request.CreateResponse(HttpStatusCode.OK, retVal);
             }
             var message = "validation failed";
@@ -411,8 +601,23 @@ namespace SGApp.Controllers
             return Request.CreateResponse(HttpStatusCode.NotFound, message);
         }
 
+	    [HttpPost]
+	    public HttpResponseMessage AddBinLoad([FromBody] BinLoadDto dto) {
+		    return AddBinLoad(Request, dto);
 
-        [HttpPost]
+	    }
+
+	    [HttpPost]
+	    public HttpResponseMessage GetBinLoads([FromBody] FarmDTO dto) {
+		    return GetBinLoads(Request, dto);
+	    }
+
+		[HttpPost] HttpResponseMessage AddOrEditBin([FromBody] BinDto dto) {
+			return AddOrEditBin(Request, dto);
+		}
+
+
+		[HttpPost]
         public HttpResponseMessage Farms([FromBody] FarmDTO cqDTO)
         {
             return Farms(Request, cqDTO);
@@ -423,7 +628,19 @@ namespace SGApp.Controllers
             return Farms(Request, cqDTO);
         }
 
-        [HttpPost]
+	    [HttpPost]
+	    public HttpResponseMessage FarmsForBinLoads([FromBody] FarmDTO dto) {
+		    return FarmsForBinLoads(Request, dto);
+	    }
+
+		[HttpPost]
+		public HttpResponseMessage GetBinsForAdminPage([FromBody] BinDto dto) {
+			return GetBinsForAdminPage(Request, dto);
+		}
+
+		
+
+		[HttpPost]
         public HttpResponseMessage FarmDetail([FromBody] FarmDTO cqDTO)
         {
             return Farms(Request, cqDTO);

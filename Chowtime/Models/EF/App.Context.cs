@@ -8,6 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.Web.Providers.Entities;
+
 namespace SGApp.Models.EF
 {
     using System;
@@ -56,14 +58,9 @@ namespace SGApp.Models.EF
         public DbSet<AD_Products> AD_Products { get; set; }
         public DbSet<AD_WeekData> AD_WeekData { get; set; }
         public DbSet<ADAGIOSalesStatitic> ADAGIOSalesStatitics { get; set; }
-        public DbSet<Adagio_O_OrderHeader> Adagio_O_OrderHeader { get; set; }
-        public DbSet<Adagio_N_Item> Adagio_N_Item { get; set; }
-        public DbSet<Adagio_N_ItemLocation> Adagio_N_ItemLocation { get; set; }
-        public DbSet<Adagio_O_OrderDetail> Adagio_O_OrderDetail { get; set; }
-        public DbSet<Sampling> Samplings { get; set; }
-        public DbSet<CurrentShipping> CurrentShippings { get; set; }
-        public DbSet<BinDispersement> BinDispersements { get; set; }
-        public DbSet<BinLoad> BinLoads { get; set; }
         public DbSet<Bin> Bins { get; set; }
+        public DbSet<DisbursementType> DisbursementTypes { get; set; }
+        public DbSet<BinDisbursement> BinDisbursements { get; set; }
+        public DbSet<BinLoad> BinLoads { get; set; }
     }
 }

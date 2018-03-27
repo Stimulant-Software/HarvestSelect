@@ -16,7 +16,7 @@ namespace SGApp.Models.EF
     {
         public Feeding()
         {
-            this.BinDispersements = new HashSet<BinDispersement>();
+            this.BinDisbursements = new HashSet<BinDisbursement>();
         }
     
         public int FeedingId { get; set; }
@@ -28,7 +28,7 @@ namespace SGApp.Models.EF
     
         public virtual UserFarm UserFarm { get; set; }
         public virtual Pond Pond { get; set; }
-        public virtual ICollection<BinDispersement> BinDispersements { get; set; }
         public virtual Bin Bin { get; set; }
+        public virtual ICollection<BinDisbursement> BinDisbursements { get; set; }
     }
 }

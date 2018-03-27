@@ -1,22 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
-using SGApp.Utility;
-using System;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
-namespace SGApp.Models.Validation
-{
-    class Bin_Metadata
-    {
-        [Required]
-        [Key]
-        public int BinID { get; set; }
-        public string BinName { get; set; }
-        public int FarmID { get; set; }
-        public int CurrentTicket { get; set; }
-        public int CurrentPounds { get; set; }
-        public DateTime LastDispersement { get; set; }
-        public DateTime LastLoaded { get; set; }
-
-
-
-    }
+namespace SGApp.Models.Validation {
+	class Bin_Metadata {
+		[Required]
+		[Key]
+		public int BinID {
+			get;
+			set;
+		}
+		public string BinName { get; set; }
+		public int? FarmID { get; set; }
+		public int? CurrentTicket { get; set; }
+		public int? CurrentPounds { get; set; }
+		public DateTime? LastDisbursement { get; set; }
+		public DateTime? LastLoaded { get; set; }		
+	}
 }

@@ -43,17 +43,7 @@ namespace SGApp.DTOs
             get;
             set;
         }
-        public string InnovaName
-        {
-            get;
-            set;
-        }
 
-        public string InnovaCode
-        {
-            get;
-            set;
-        }
 
 
 

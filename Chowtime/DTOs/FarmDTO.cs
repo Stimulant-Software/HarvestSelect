@@ -1,4 +1,6 @@
-﻿using SGApp.Models.Common;
+﻿using System.Collections;
+using SGApp.Models.Common;
+using System.Collections.Generic;
 
 namespace SGApp.DTOs
 {
@@ -42,23 +44,12 @@ namespace SGApp.DTOs
             set;
         }
 
-        public string InnovaName
-        {
-            get;
-            set;
-        }
+		public BinDto Bin { get; set; }
 
-        public string InnovaCode
-        {
-            get;
-            set;
-        }
+		public int? loadSkipCount { get; set; }
 
 
 
 
-
-
-
-    }
+	}
 }

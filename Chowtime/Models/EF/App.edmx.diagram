@@ -64,20 +64,16 @@
         <AssociationConnector Association="AppModel.FK_AD_Products_AD_Groups" />
         <AssociationConnector Association="AppModel.FK_AD_WeekData_AD_Products" />
         <EntityTypeShape EntityType="AppModel.ADAGIOSalesStatitic" Width="1.5" PointX="5.375" PointY="6.75" />
-        <EntityTypeShape EntityType="AppModel.Adagio_O_OrderHeader" Width="1.5" PointX="13.625" PointY="9.75" />
-        <EntityTypeShape EntityType="AppModel.Adagio_N_Item" Width="1.5" PointX="15.625" PointY="9.75" />
-        <EntityTypeShape EntityType="AppModel.Adagio_N_ItemLocation" Width="1.5" PointX="3.625" PointY="13.75" />
-        <EntityTypeShape EntityType="AppModel.Adagio_O_OrderDetail" Width="1.5" PointX="17.625" PointY="0.75" />
-        <EntityTypeShape EntityType="AppModel.Sampling" Width="1.5" PointX="14.375" PointY="0.75" />
-        <EntityTypeShape EntityType="AppModel.CurrentShipping" Width="1.5" PointX="18.375" PointY="15.75" />
-        <EntityTypeShape EntityType="AppModel.BinDispersement" Width="1.5" PointX="11.375" PointY="16.125" />
-        <EntityTypeShape EntityType="AppModel.BinLoad" Width="1.5" PointX="11.375" PointY="26.875" />
-        <EntityTypeShape EntityType="AppModel.Bin" Width="1.5" PointX="9.125" PointY="26.625" />
-        <AssociationConnector Association="AppModel.FK_BinDispersements_Bins" />
-        <AssociationConnector Association="AppModel.FK_BinDispersements_Feedings" />
-        <AssociationConnector Association="AppModel.FK_BinLoads_Bins" />
+        <EntityTypeShape EntityType="AppModel.Bin" Width="1.5" PointX="9.125" PointY="34.625" />
         <AssociationConnector Association="AppModel.FK_Bins_Farms" />
         <AssociationConnector Association="AppModel.FK_Feedings_Bins" />
+        <EntityTypeShape EntityType="AppModel.DisbursementType" Width="1.5" PointX="12.375" PointY="9.875" />
+        <EntityTypeShape EntityType="AppModel.BinDisbursement" Width="1.5" PointX="14.625" PointY="18.75" />
+        <EntityTypeShape EntityType="AppModel.BinLoad" Width="1.5" PointX="11.375" PointY="34.75" />
+        <AssociationConnector Association="AppModel.FK__BinDisbur__Disbu__681373AD" />
+        <AssociationConnector Association="AppModel.FK__BinDisbur__FeedI__690797E6" />
+        <AssociationConnector Association="AppModel.FK_BinDisbursements_Bins" />
+        <AssociationConnector Association="AppModel.FK_BinLoads_Bins" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

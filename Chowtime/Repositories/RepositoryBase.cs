@@ -593,7 +593,7 @@ namespace SGApp.Repository {
                 }
             }
             foreach (var field in dto.GetType().GetProperties().Where(x => x.Name != "Key" && x.GetValue(dto) != null)) {
-                var value = field.GetValue(dto).ToString();
+                var value = field.GetValue(dto).ToString();	            
                 if (!string.IsNullOrEmpty(value)) {
                     if (sb.Length > 0) {
                         sb.Append(" && ");
@@ -610,62 +610,62 @@ namespace SGApp.Repository {
                         } else {
                             fieldName = field.Name;
                         }
-                        var type = entity.GetDataType(fieldName);
-                        if (type == typeof(string)) {
-                            sb.Append(fieldName + ".Contains('");
-                            sb.Append(String.Format("{0}{1}", field.GetValue(dto), "')"));
-                            //sb.Append(field.GetValue(dto) + ")");
-                            continue;
-                        }
-                        if (type == typeof(int)) {
-                            sb.Append(string.Format("{0}{1}{2}", fieldName, "==", int.Parse(field.GetValue(dto).ToString())));
-                            continue;
-                        }
-                        if (type == typeof(int?)) {
-                            sb.Append(string.Format("{0}{1}{2}{3}", fieldName, ".Value", "==", int.Parse(field.GetValue(dto).ToString())));
-                            continue;
-                        }
-                        if (type == typeof(bool)) {
-                            sb.Append(string.Format("{0}{1}{2}", fieldName, "==", bool.Parse(field.GetValue(dto).ToString())));
-                            continue;
-                        }
-                        if (type == typeof(bool?)) {
-                            sb.Append(string.Format("{0}{1}{2}{3}", fieldName, ".Value", "==", bool.Parse(field.GetValue(dto).ToString())));
-                            continue;
-                        }
-                        if (type == typeof(DateTime?)) {
-                            var comparer = string.Empty;
-                            var date = string.Empty;
-                            if (field.Name.StartsWith("Start_")) {
-                                comparer = ">";
-                                date = DateTime.Parse(field.GetValue(dto).ToString()).AddDays(-1).ToShortDateString();
-                            } else {
-                                comparer = "<";
-                                date = DateTime.Parse(field.GetValue(dto).ToString()).AddDays(1).ToShortDateString();
-                            }
-                            fieldName = fieldName + ".Value";
-                            sb.Append(String.Format("{0}{1}{2}{3}{2}", fieldName, comparer, "'", date));
-                            continue;
-                        }
-                        if (type == typeof(DateTime)) {
-                            var comparer = string.Empty;
-                            var date = string.Empty;
-                            if (field.Name.StartsWith("Start_")) {
-                                comparer = ">";
-                                date = DateTime.Parse(field.GetValue(dto).ToString()).AddDays(-1).ToShortDateString();
-                            } else {
-                                comparer = "<";
-                                date = DateTime.Parse(field.GetValue(dto).ToString()).AddDays(1).ToShortDateString();
-                            }
-                            sb.Append(String.Format("{0}{1}{2}{3}{2}", fieldName, comparer, "'", date));
-                            continue;
-                        }
-                        if (type == typeof(decimal)) {
-                            sb.Append(string.Format("{0}{1}{2}", fieldName, "==", decimal.Parse(field.GetValue(dto).ToString())));
-                        }
-                        if (type == typeof(decimal?)) {
-                            sb.Append(string.Format("{0}{1}{2}{3}", fieldName, ".Value", "==", decimal.Parse(field.GetValue(dto).ToString())));
-                        }
+						var type = entity.GetDataType(fieldName);
+						if (type == typeof(string)) {
+							sb.Append(fieldName + ".Contains('");
+							sb.Append(String.Format("{0}{1}", field.GetValue(dto), "')"));
+							//sb.Append(field.GetValue(dto) + ")");
+							continue;
+						}
+						if (type == typeof(int)) {
+							sb.Append(string.Format("{0}{1}{2}", fieldName, "==", int.Parse(field.GetValue(dto).ToString())));
+							continue;
+						}
+						if (type == typeof(int?)) {
+							sb.Append(string.Format("{0}{1}{2}{3}", fieldName, ".Value", "==", int.Parse(field.GetValue(dto).ToString())));
+							continue;
+						}
+						if (type == typeof(bool)) {
+							sb.Append(string.Format("{0}{1}{2}", fieldName, "==", bool.Parse(field.GetValue(dto).ToString())));
+							continue;
+						}
+						if (type == typeof(bool?)) {
+							sb.Append(string.Format("{0}{1}{2}{3}", fieldName, ".Value", "==", bool.Parse(field.GetValue(dto).ToString())));
+							continue;
+						}
+						if (type == typeof(DateTime?)) {
+							var comparer = string.Empty;
+							var date = string.Empty;
+							if (field.Name.StartsWith("Start_")) {
+								comparer = ">";
+								date = DateTime.Parse(field.GetValue(dto).ToString()).AddDays(-1).ToShortDateString();
+							} else {
+								comparer = "<";
+								date = DateTime.Parse(field.GetValue(dto).ToString()).AddDays(1).ToShortDateString();
+							}
+							fieldName = fieldName + ".Value";
+							sb.Append(String.Format("{0}{1}{2}{3}{2}", fieldName, comparer, "'", date));
+							continue;
+						}
+						if (type == typeof(DateTime)) {
+							var comparer = string.Empty;
+							var date = string.Empty;
+							if (field.Name.StartsWith("Start_")) {
+								comparer = ">";
+								date = DateTime.Parse(field.GetValue(dto).ToString()).AddDays(-1).ToShortDateString();
+							} else {
+								comparer = "<";
+								date = DateTime.Parse(field.GetValue(dto).ToString()).AddDays(1).ToShortDateString();
+							}
+							sb.Append(String.Format("{0}{1}{2}{3}{2}", fieldName, comparer, "'", date));
+							continue;
+						}
+						if (type == typeof(decimal)) {
+							sb.Append(string.Format("{0}{1}{2}", fieldName, "==", decimal.Parse(field.GetValue(dto).ToString())));
+						}
+						if (type == typeof(decimal?)) {
+							sb.Append(string.Format("{0}{1}{2}{3}", fieldName, ".Value", "==", decimal.Parse(field.GetValue(dto).ToString())));
+						}
                     }
                 }
             }

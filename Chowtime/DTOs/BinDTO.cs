@@ -1,25 +1,15 @@
-﻿using SGApp.Models.Common;
-using System;
+﻿using System;
+using SGApp.Models.Common;
 
-namespace SGApp.DTOs
-{
-    public class BinDTO : IKey
-    {
-        public string Key { get; set; }
-        public string BinID { get; set; }
-        public string BinName { get; set; }
-        public string FarmID { get; set; }
-        public string CurrentTicket { get; set; }
-        public string CurrentPounds { get; set; }
-        public string LastDispersement { get; set; }
-        public string LastLoaded { get; set; }
-        public string CompanyId { get; set; }
-
-
-
-
-
-
-
-    }
+namespace SGApp.DTOs {
+	public class BinDto :IKey {
+		public int BinID { get; set; }
+		public string BinName { get; set; }
+		public int? FarmID { get; set; }
+		public int? CurrentTicket { get; set; }
+		public int? CurrentPounds { get; set; }
+		public DateTime? LastDisbursement { get; set; }
+		public DateTime? LastLoaded { get; set; }
+		public string Key { get; set; }
+	}
 }

@@ -21,6 +21,8 @@ namespace SGApp.Models.EF
         public int PoundsLoaded { get; set; }
         public string Vendor { get; set; }
         public string Note { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public int UserID { get; set; }
     
         public virtual Bin Bin { get; set; }
     }

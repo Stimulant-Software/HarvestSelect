@@ -50,353 +50,6 @@
           <Property Name="AD_ActualDollars" Type="decimal" Precision="18" Scale="2" />
           <Property Name="AD_WeekEnd" Type="datetime" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'App.dbo.Adagio_N_Item' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Adagio_N_Item">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Item" Type="int" />
-          <Property Name="SetKey" Type="smallint" />
-          <Property Name="Item2" Type="int" />
-          <Property Name="Description" Type="varchar" MaxLength="40" />
-          <Property Name="Category" Type="varchar" MaxLength="3" />
-          <Property Name="ReportGroup" Type="varchar" MaxLength="3" />
-          <Property Name="StockItem" Type="smallint" />
-          <Property Name="ItemsUsedinBOMCount" Type="smallint" />
-          <Property Name="SerialCount" Type="smallint" />
-          <Property Name="LayawayCounter" Type="smallint" />
-          <Property Name="Unit" Type="varchar" MaxLength="2" />
-          <Property Name="AltUnit1" Type="varchar" MaxLength="2" />
-          <Property Name="AltUnit2" Type="varchar(max)" />
-          <Property Name="AltUnit3" Type="varchar(max)" />
-          <Property Name="AltUnit4" Type="varchar(max)" />
-          <Property Name="PurchaseUnit" Type="varchar" MaxLength="2" />
-          <Property Name="PriceUnit" Type="varchar" MaxLength="2" />
-          <Property Name="AltFactor1" Type="smallint" />
-          <Property Name="AltFactor2" Type="smallint" />
-          <Property Name="AltFactor3" Type="smallint" />
-          <Property Name="AltFactor4" Type="smallint" />
-          <Property Name="BasePrice" Type="real" />
-          <Property Name="PickingSeq" Type="varchar" MaxLength="3" />
-          <Property Name="StdCost" Type="smallint" />
-          <Property Name="UnitWeight" Type="smallint" />
-          <Property Name="SaleStartDate" Type="datetime" />
-          <Property Name="SaleEndDate" Type="datetime" />
-          <Property Name="SalePrice" Type="real" />
-          <Property Name="CtrlAcctSet" Type="smallint" />
-          <Property Name="TaxStatus" Type="smallint" />
-          <Property Name="UserDefinedCost1" Type="smallint" />
-          <Property Name="UserDefinedCost2" Type="smallint" />
-          <Property Name="DiscType_T" Type="varchar" MaxLength="8" />
-          <Property Name="DiscFormat_T" Type="varchar" MaxLength="7" />
-          <Property Name="DiscBase_T" Type="varchar" MaxLength="8" />
-          <Property Name="DiscMarkupQty1" Type="smallint" />
-          <Property Name="DiscMarkupQty2" Type="smallint" />
-          <Property Name="DiscMarkupQty3" Type="smallint" />
-          <Property Name="DiscMarkupQty4" Type="smallint" />
-          <Property Name="DiscMarkupQty5" Type="smallint" />
-          <Property Name="QtyonPO" Type="smallint" />
-          <Property Name="QtyonSO" Type="smallint" />
-          <Property Name="QtyTempCommitted" Type="smallint" />
-          <Property Name="QtyShippednotCost" Type="smallint" />
-          <Property Name="LastShipmentDate" Type="datetime" />
-          <Property Name="LastRcptDate" Type="datetime" />
-          <Property Name="MostRecentCost" Type="real" />
-          <Property Name="MarkupFactor" Type="smallint" />
-          <Property Name="PrevPriceChangeDate" Type="datetime" />
-          <Property Name="PrevPrice" Type="real" />
-          <Property Name="PrevStdCostDate" Type="datetime" />
-          <Property Name="PrevStdCost" Type="smallint" />
-          <Property Name="PrevRecentCostDate" Type="datetime" />
-          <Property Name="PrevRecentCost" Type="real" />
-          <Property Name="Rcpt1" Type="varchar" MaxLength="6" />
-          <Property Name="Rcpt2" Type="varchar" MaxLength="6" />
-          <Property Name="Rcpt3" Type="varchar" MaxLength="6" />
-          <Property Name="Rcpt4" Type="varchar" MaxLength="6" />
-          <Property Name="Rcpt5" Type="varchar" MaxLength="6" />
-          <Property Name="RcptDate1" Type="datetime" />
-          <Property Name="RcptDate2" Type="datetime" />
-          <Property Name="RcptDate3" Type="datetime" />
-          <Property Name="RcptDate4" Type="datetime" />
-          <Property Name="RcptDate5" Type="datetime" />
-          <Property Name="QtyonHand1" Type="int" />
-          <Property Name="QtyonHand2" Type="smallint" />
-          <Property Name="QtyonHand3" Type="smallint" />
-          <Property Name="QtyonHand4" Type="smallint" />
-          <Property Name="QtyonHand5" Type="smallint" />
-          <Property Name="TotalCost1" Type="real" />
-          <Property Name="TotalCost2" Type="real" />
-          <Property Name="TotalCost3" Type="smallint" />
-          <Property Name="TotalCost4" Type="smallint" />
-          <Property Name="TotalCost5" Type="smallint" />
-          <Property Name="AvgDaysBetweenShipments" Type="smallint" />
-          <Property Name="AvgUnitsShipped" Type="real" />
-          <Property Name="ShipmentCount" Type="int" />
-          <Property Name="UnitsSoldPeriod1" Type="int" />
-          <Property Name="UnitsSoldPeriod2" Type="int" />
-          <Property Name="UnitsSoldPeriod3" Type="int" />
-          <Property Name="UnitsSoldPeriod4" Type="int" />
-          <Property Name="UnitsSoldPeriod5" Type="int" />
-          <Property Name="UnitsSoldPeriod6" Type="int" />
-          <Property Name="UnitsSoldPeriod7" Type="int" />
-          <Property Name="UnitsSoldPeriod8" Type="int" />
-          <Property Name="UnitsSoldPeriod9" Type="int" />
-          <Property Name="UnitsSoldPeriod10" Type="int" />
-          <Property Name="UnitsSoldPeriod11" Type="int" />
-          <Property Name="UnitsSoldPeriod12" Type="int" />
-          <Property Name="UnitsSoldPeriod13" Type="int" />
-          <Property Name="UnitsSoldYTD" Type="int" />
-          <Property Name="UnitsSoldLY" Type="int" />
-          <Property Name="AmtSoldPeriod1" Type="real" />
-          <Property Name="AmtSoldPeriod2" Type="real" />
-          <Property Name="AmtSoldPeriod3" Type="real" />
-          <Property Name="AmtSoldPeriod4" Type="real" />
-          <Property Name="AmtSoldPeriod5" Type="real" />
-          <Property Name="AmtSoldPeriod6" Type="real" />
-          <Property Name="AmtSoldPeriod7" Type="real" />
-          <Property Name="AmtSoldPeriod8" Type="real" />
-          <Property Name="AmtSoldPeriod9" Type="real" />
-          <Property Name="AmtSoldPeriod10" Type="real" />
-          <Property Name="AmtSoldPeriod11" Type="real" />
-          <Property Name="AmtSoldPeriod12" Type="real" />
-          <Property Name="AmtSoldPeriod13" Type="real" />
-          <Property Name="AmtSoldYTD" Type="real" />
-          <Property Name="AmtSoldLY" Type="real" />
-          <Property Name="TotalCostsPeriod1" Type="real" />
-          <Property Name="TotalCostsPeriod2" Type="real" />
-          <Property Name="TotalCostsPeriod3" Type="real" />
-          <Property Name="TotalCostsPeriod4" Type="real" />
-          <Property Name="TotalCostsPeriod5" Type="real" />
-          <Property Name="TotalCostsPeriod6" Type="real" />
-          <Property Name="TotalCostsPeriod7" Type="real" />
-          <Property Name="TotalCostsPeriod8" Type="real" />
-          <Property Name="TotalCostsPeriod9" Type="real" />
-          <Property Name="TotalCostsPeriod10" Type="real" />
-          <Property Name="TotalCostsPeriod11" Type="real" />
-          <Property Name="TotalCostsPeriod12" Type="real" />
-          <Property Name="TotalCostsPeriod13" Type="real" />
-          <Property Name="TotalCostsYTD" Type="real" />
-          <Property Name="TotalCostsLY" Type="real" />
-          <Property Name="UnitsLostYTD" Type="int" />
-          <Property Name="UnitsLostLY" Type="int" />
-          <Property Name="DiscDecimals" Type="smallint" />
-          <Property Name="DiscMarkupAmt1" Type="smallint" />
-          <Property Name="DiscMarkupAmt2" Type="smallint" />
-          <Property Name="DiscMarkupAmt3" Type="smallint" />
-          <Property Name="DiscMarkupAmt4" Type="smallint" />
-          <Property Name="DiscMarkupAmt5" Type="smallint" />
-          <Property Name="QtyOnHand" Type="int" />
-          <Property Name="Selected" Type="smallint" />
-          <Property Name="ActiveItem" Type="varchar" MaxLength="1" />
-          <Property Name="RNumAN81CITM" Type="smallint" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'App.dbo.Adagio_N_ItemLocation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Adagio_N_ItemLocation">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Item" Type="int" />
-          <Property Name="Loc" Type="smallint" />
-          <Property Name="Item2" Type="int" />
-          <Property Name="PickingSeq" Type="varchar(max)" />
-          <Property Name="CarriedinLoc" Type="smallint" />
-          <Property Name="QtyonHandPlus" Type="smallint" />
-          <Property Name="QtyonPO" Type="smallint" />
-          <Property Name="QtyonSO" Type="smallint" />
-          <Property Name="QtyTempCommitted" Type="smallint" />
-          <Property Name="QtyShippednotCost" Type="smallint" />
-          <Property Name="RNumAN81CILO" Type="smallint" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="Adagio_O_OrderDetail">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="OrderKey" Type="varchar" MaxLength="9" />
-          <Property Name="Line" Type="smallint" />
-          <Property Name="DDocType_T" Type="varchar" MaxLength="11" />
-          <Property Name="DDoc" Type="int" />
-          <Property Name="LineType_T" Type="varchar" MaxLength="12" />
-          <Property Name="Item" Type="int" />
-          <Property Name="Description" Type="varchar" MaxLength="38" />
-          <Property Name="Unit" Type="varchar" MaxLength="4" />
-          <Property Name="PickingSeq" Type="varchar" MaxLength="3" />
-          <Property Name="DiscLevel" Type="varchar(max)" />
-          <Property Name="DCategory" Type="smallint" />
-          <Property Name="PriceUnit" Type="varchar" MaxLength="3" />
-          <Property Name="PriceOverride" Type="smallint" />
-          <Property Name="ExtensionOverride" Type="smallint" />
-          <Property Name="ReturntoInventory" Type="smallint" />
-          <Property Name="SerialCount" Type="smallint" />
-          <Property Name="TaxStatus" Type="smallint" />
-          <Property Name="Commissionable" Type="smallint" />
-          <Property Name="UnitFactor" Type="smallint" />
-          <Property Name="UnitWeight" Type="smallint" />
-          <Property Name="QtyOriginalOrdered" Type="smallint" />
-          <Property Name="QtyOrdered" Type="smallint" />
-          <Property Name="QtyShippedtoDate" Type="smallint" />
-          <Property Name="QtyShipped" Type="smallint" />
-          <Property Name="QtyBackordered" Type="smallint" />
-          <Property Name="ExtWeight" Type="smallint" />
-          <Property Name="ShipStockingUnits" Type="smallint" />
-          <Property Name="Loc" Type="smallint" />
-          <Property Name="Complete" Type="smallint" />
-          <Property Name="Curr" Type="varchar" MaxLength="3" />
-          <Property Name="Decimals" Type="varchar" MaxLength="3" />
-          <Property Name="PriceList" Type="smallint" />
-          <Property Name="OrderedInPO" Type="smallint" />
-          <Property Name="UnitDecimals" Type="smallint" />
-          <Property Name="UnitPrice" Type="int" />
-          <Property Name="UnitCost" Type="real" />
-          <Property Name="ExtPrice" Type="real" />
-          <Property Name="ExtCost" Type="real" />
-          <Property Name="TaxAmt" Type="real" />
-          <Property Name="DTax1" Type="real" />
-          <Property Name="DTax2" Type="real" />
-          <Property Name="DTax3" Type="real" />
-          <Property Name="DTax4" Type="smallint" />
-          <Property Name="DTax5" Type="smallint" />
-          <Property Name="DBase1" Type="real" />
-          <Property Name="DBase2" Type="real" />
-          <Property Name="DBase3" Type="real" />
-          <Property Name="DBase4" Type="smallint" />
-          <Property Name="DBase5" Type="smallint" />
-          <Property Name="DiscAmt" Type="real" />
-          <Property Name="DiscExtension" Type="real" />
-          <Property Name="BasePrice" Type="int" />
-          <Property Name="ExtOrderPrice" Type="real" />
-          <Property Name="PriceFactor" Type="smallint" />
-          <Property Name="Serial1" Type="varchar" MaxLength="15" />
-          <Property Name="Serial2" Type="varchar" MaxLength="15" />
-          <Property Name="Serial3" Type="int" />
-          <Property Name="Serial4" Type="varchar" MaxLength="4" />
-          <Property Name="Serial5" Type="varchar(max)" />
-          <Property Name="DExpectedShipDate" Type="datetime" />
-          <Property Name="MiscAmount" Type="real" />
-          <Property Name="MiscBasePrice" Type="datetime" />
-          <Property Name="MiscShortDescription" Type="varchar" MaxLength="38" />
-          <Property Name="MiscQuantity" Type="smallint" />
-          <Property Name="MiscFiller" Type="varchar" MaxLength="20" />
-          <Property Name="RNumAO80ALIN" Type="varchar" MaxLength="4" />
-        </EntityType>
-        <EntityType Name="Adagio_O_OrderHeader">
-          <Key>
-            <PropertyRef Name="AppId" />
-          </Key>
-          <Property Name="AppId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustPrefix" Type="varchar" MaxLength="1" />
-          <Property Name="Cust" Type="smallint" />
-          <Property Name="OrderKey" Type="varchar" MaxLength="9" />
-          <Property Name="DocType_T" Type="varchar" MaxLength="11" />
-          <Property Name="Doc" Type="int" />
-          <Property Name="Order_2" Type="int" />
-          <Property Name="Inv" Type="int" />
-          <Property Name="OrderType_T" Type="varchar" MaxLength="14" />
-          <Property Name="OrderRelease" Type="smallint" />
-          <Property Name="PrintStatus_T" Type="varchar" MaxLength="21" />
-          <Property Name="CostedStatus" Type="smallint" />
-          <Property Name="OnHold" Type="smallint" />
-          <Property Name="Posting" Type="int" />
-          <Property Name="InventoryUpdated" Type="smallint" />
-          <Property Name="OrderComplete" Type="smallint" />
-          <Property Name="OrderDate" Type="datetime" />
-          <Property Name="InvDate" Type="datetime" />
-          <Property Name="ShipmentDate" Type="datetime" />
-          <Property Name="ExpectedShipDate" Type="datetime" />
-          <Property Name="ShipVia" Type="varchar" MaxLength="18" />
-          <Property Name="Comment1" Type="varchar(max)" />
-          <Property Name="Comment2" Type="varchar" MaxLength="6" />
-          <Property Name="Loc" Type="smallint" />
-          <Property Name="CreditApprovalPerson" Type="varchar" MaxLength="3" />
-          <Property Name="FOBPoint" Type="varchar(max)" />
-          <Property Name="TaxGroup" Type="varchar" MaxLength="6" />
-          <Property Name="TotalOrderValueHome" Type="real" />
-          <Property Name="LinesinOrder" Type="smallint" />
-          <Property Name="InvDisc" Type="smallint" />
-          <Property Name="Reference" Type="varchar" MaxLength="11" />
-          <Property Name="Contact" Type="varchar" MaxLength="17" />
-          <Property Name="TaxExempt1" Type="varchar(max)" />
-          <Property Name="TaxExempt2" Type="varchar" MaxLength="5" />
-          <Property Name="Terms" Type="varchar" MaxLength="11" />
-          <Property Name="Salesperson" Type="smallint" />
-          <Property Name="CustTaxStatus" Type="smallint" />
-          <Property Name="PreAR90Territory" Type="varchar" MaxLength="2" />
-          <Property Name="CustDiscLevel" Type="varchar" MaxLength="1" />
-          <Property Name="Name" Type="varchar" MaxLength="32" />
-          <Property Name="BillingAddress1" Type="varchar" MaxLength="29" />
-          <Property Name="BillingAddress2" Type="varchar" MaxLength="28" />
-          <Property Name="BillingAddress3" Type="varchar" MaxLength="29" />
-          <Property Name="BillingAddress4" Type="varchar" MaxLength="18" />
-          <Property Name="BillingZipPostal" Type="varchar" MaxLength="10" />
-          <Property Name="ShipName" Type="smallint" />
-          <Property Name="ShipAddress1" Type="varchar" MaxLength="32" />
-          <Property Name="ShipAddress2" Type="varchar" MaxLength="28" />
-          <Property Name="ShipAddress3" Type="varchar" MaxLength="30" />
-          <Property Name="ShipAddress4" Type="varchar" MaxLength="29" />
-          <Property Name="ShipZipPostal" Type="varchar" MaxLength="21" />
-          <Property Name="LabelsCount" Type="varchar" MaxLength="10" />
-          <Property Name="GLPosting" Type="smallint" />
-          <Property Name="ARPosting" Type="smallint" />
-          <Property Name="TermsCode" Type="smallint" />
-          <Property Name="Bank" Type="varchar" MaxLength="6" />
-          <Property Name="CashAcct" Type="varchar" MaxLength="6" />
-          <Property Name="CashDept" Type="smallint" />
-          <Property Name="Cheque" Type="varchar" MaxLength="6" />
-          <Property Name="DateDue" Type="varchar" MaxLength="12" />
-          <Property Name="DateDisc" Type="datetime" />
-          <Property Name="TermsDisc" Type="datetime" />
-          <Property Name="SourceDecimals" Type="smallint" />
-          <Property Name="HomeCurr" Type="smallint" />
-          <Property Name="RateType" Type="varchar" MaxLength="3" />
-          <Property Name="SourceCurr" Type="varchar" MaxLength="2" />
-          <Property Name="RateDate" Type="varchar" MaxLength="3" />
-          <Property Name="ExchgRate" Type="datetime" />
-          <Property Name="ExchgSpread" Type="smallint" />
-          <Property Name="RateRep" Type="smallint" />
-          <Property Name="DateMatching" Type="varchar" MaxLength="1" />
-          <Property Name="BillingTelephone" Type="varchar" MaxLength="1" />
-          <Property Name="BillingFax" Type="varchar" MaxLength="12" />
-          <Property Name="ShipTelephone" Type="bigint" />
-          <Property Name="ShipFax" Type="varchar" MaxLength="20" />
-          <Property Name="PriceList" Type="varchar(max)" />
-          <Property Name="CashDisc" Type="varchar" MaxLength="6" />
-          <Property Name="ForeignHomeCurr" Type="smallint" />
-          <Property Name="ForeignRateType" Type="varchar" MaxLength="3" />
-          <Property Name="ForeignSourceCurr" Type="varchar" MaxLength="2" />
-          <Property Name="ForeignRateDate" Type="varchar" MaxLength="3" />
-          <Property Name="ForeignRate" Type="datetime" />
-          <Property Name="ForeignSpread" Type="smallint" />
-          <Property Name="ForeignRateRep" Type="smallint" />
-          <Property Name="ForeignDateMatching" Type="varchar" MaxLength="1" />
-          <Property Name="RateOverride" Type="varchar" MaxLength="1" />
-          <Property Name="ForeignRateOverride" Type="smallint" />
-          <Property Name="ForeignDecimals" Type="smallint" />
-          <Property Name="DiscAcct" Type="smallint" />
-          <Property Name="DiscDept" Type="smallint" />
-          <Property Name="RoundAcct" Type="varchar" MaxLength="6" />
-          <Property Name="RoundDept" Type="varchar" MaxLength="6" />
-          <Property Name="TaxByInv" Type="varchar" MaxLength="6" />
-          <Property Name="TotalOrderValue" Type="smallint" />
-          <Property Name="TotalDollarValue" Type="real" />
-          <Property Name="InvDiscAmt" Type="real" />
-          <Property Name="Tax1" Type="smallint" />
-          <Property Name="Tax2" Type="real" />
-          <Property Name="Tax3" Type="real" />
-          <Property Name="Tax4" Type="real" />
-          <Property Name="Tax5" Type="smallint" />
-          <Property Name="TotalCostValue" Type="smallint" />
-          <Property Name="CashPayment" Type="real" />
-          <Property Name="DiscBase" Type="smallint" />
-          <Property Name="ForeignAmt" Type="real" />
-          <Property Name="MovedtoHistory" Type="smallint" />
-          <Property Name="RNumAO80AHED" Type="smallint" />
-        </EntityType>
         <EntityType Name="ADAGIOSalesStatitics">
           <Key>
             <PropertyRef Name="StatsID" />
@@ -426,18 +79,20 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="RNumAS90ASTA" Type="int" />
           <Property Name="StatsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <EntityType Name="BinDispersements">
+        <EntityType Name="BinDisbursements">
           <Key>
-            <PropertyRef Name="BinDispersementID" />
+            <PropertyRef Name="BinDisbursementID" />
           </Key>
-          <Property Name="BinDispersementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinDisbursementID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BinID" Type="int" Nullable="false" />
           <Property Name="TicketNumber" Type="int" Nullable="false" />
           <Property Name="Pounds" Type="int" Nullable="false" />
           <Property Name="Note" Type="varchar" MaxLength="250" />
-          <Property Name="DispersementType" Type="int" />
-          <Property Name="DispersementDate" Type="datetime" Nullable="false" />
+          <Property Name="DisbursementType" Type="int" />
+          <Property Name="DisbursementDate" Type="datetime" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="FeedID" Type="int" />
+          <Property Name="UserID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="BinLoads">
           <Key>
@@ -450,6 +105,8 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="PoundsLoaded" Type="int" Nullable="false" />
           <Property Name="Vendor" Type="varchar" MaxLength="50" />
           <Property Name="Note" Type="varchar" MaxLength="250" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Bins">
           <Key>
@@ -460,7 +117,7 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="FarmID" Type="int" />
           <Property Name="CurrentTicket" Type="int" />
           <Property Name="CurrentPounds" Type="int" />
-          <Property Name="LastDispersement" Type="datetime" />
+          <Property Name="LastDisbursement" Type="datetime" />
           <Property Name="LastLoaded" Type="datetime" />
         </EntityType>
         <EntityType Name="Companies">
@@ -475,18 +132,6 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="State" Type="varchar" MaxLength="20" />
           <Property Name="Zip" Type="varchar" MaxLength="15" />
           <Property Name="Phone" Type="varchar" MaxLength="15" />
-        </EntityType>
-        <EntityType Name="CurrentShipping">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerName" Type="varchar" MaxLength="50" />
-          <Property Name="ItemDescription" Type="varchar" MaxLength="50" />
-          <Property Name="ItemCode" Type="varchar" MaxLength="50" />
-          <Property Name="OrderAmount" Type="decimal" Precision="9" Scale="2" />
-          <Property Name="QuantityOnHand" Type="decimal" Precision="9" Scale="2" />
-          <Property Name="OrderDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Departments">
           <Key>
@@ -506,6 +151,13 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="DownTime" Type="int" />
           <Property Name="ShiftWeight" Type="decimal" Precision="16" Scale="2" />
           <Property Name="Absences" Type="int" />
+        </EntityType>
+        <EntityType Name="DisbursementTypes">
+          <Key>
+            <PropertyRef Name="DisbursementTypeID" />
+          </Key>
+          <Property Name="DisbursementTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DisbursementTypeName" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="DownTimes">
           <Key>
@@ -672,21 +324,6 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="RoleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="varchar" MaxLength="25" Nullable="false" />
         </EntityType>
-        <EntityType Name="Samplings">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="code" Type="varchar" MaxLength="250" />
-          <Property Name="farmname" Type="varchar" MaxLength="500" />
-          <Property Name="shname" Type="varchar" MaxLength="120" />
-          <Property Name="pondname" Type="varchar" MaxLength="500" />
-          <Property Name="regtime" Type="datetime" />
-          <Property Name="code2" Type="varchar" MaxLength="240" />
-          <Property Name="codename" Type="varchar" MaxLength="500" />
-          <Property Name="weight" Type="float" />
-          <Property Name="pondid" Type="int" />
-        </EntityType>
         <EntityType Name="ShiftEnd">
           <Key>
             <PropertyRef Name="ShiftEndID" />
@@ -768,6 +405,30 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <Property Name="BigFish" Type="decimal" Precision="10" Scale="2" />
           <Property Name="DOAs" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
+        <Association Name="FK__BinDisbur__Disbu__681373AD">
+          <End Role="DisbursementTypes" Type="Self.DisbursementTypes" Multiplicity="0..1" />
+          <End Role="BinDisbursements" Type="Self.BinDisbursements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DisbursementTypes">
+              <PropertyRef Name="DisbursementTypeID" />
+            </Principal>
+            <Dependent Role="BinDisbursements">
+              <PropertyRef Name="DisbursementType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BinDisbur__FeedI__690797E6">
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="0..1" />
+          <End Role="BinDisbursements" Type="Self.BinDisbursements" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feedings">
+              <PropertyRef Name="FeedingId" />
+            </Principal>
+            <Dependent Role="BinDisbursements">
+              <PropertyRef Name="FeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Absences_Departments">
           <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
           <End Role="Absences" Type="Self.Absences" Multiplicity="*" />
@@ -804,27 +465,15 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BinDispersements_Bins">
+        <Association Name="FK_BinDisbursements_Bins">
           <End Role="Bins" Type="Self.Bins" Multiplicity="1" />
-          <End Role="BinDispersements" Type="Self.BinDispersements" Multiplicity="*" />
+          <End Role="BinDisbursements" Type="Self.BinDisbursements" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bins">
               <PropertyRef Name="BinID" />
             </Principal>
-            <Dependent Role="BinDispersements">
+            <Dependent Role="BinDisbursements">
               <PropertyRef Name="BinID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BinDispersements_Feedings">
-          <End Role="Feedings" Type="Self.Feedings" Multiplicity="0..1" />
-          <End Role="BinDispersements" Type="Self.BinDispersements" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Feedings">
-              <PropertyRef Name="FeedingId" />
-            </Principal>
-            <Dependent Role="BinDispersements">
-              <PropertyRef Name="FeedID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1181,15 +830,14 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <EntitySet Name="AD_Groups" EntityType="Self.AD_Groups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AD_Products" EntityType="Self.AD_Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AD_WeekData" EntityType="Self.AD_WeekData" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Adagio_O_OrderHeader" EntityType="Self.Adagio_O_OrderHeader" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADAGIOSalesStatitics" EntityType="Self.ADAGIOSalesStatitics" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BinDispersements" EntityType="Self.BinDispersements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BinDisbursements" EntityType="Self.BinDisbursements" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BinLoads" EntityType="Self.BinLoads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bins" EntityType="Self.Bins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CurrentShipping" EntityType="Self.CurrentShipping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Departments" EntityType="Self.Departments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DepartmentTotals" EntityType="Self.DepartmentTotals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DisbursementTypes" EntityType="Self.DisbursementTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DownTimes" EntityType="Self.DownTimes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DownTimeTypes" EntityType="Self.DownTimeTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Emails" EntityType="Self.Emails" Schema="dbo" store:Type="Tables" />
@@ -1206,239 +854,20 @@ warning 6002: The table/view 'App.dbo.Adagio_O_OrderDetail' does not have a prim
           <EntitySet Name="Ponds" EntityType="Self.Ponds" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductionTotals" EntityType="Self.ProductionTotals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Samplings" EntityType="Self.Samplings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShiftEnd" EntityType="Self.ShiftEnd" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Statuses" EntityType="Self.Statuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserFarms" EntityType="Self.UserFarms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRoles" EntityType="Self.UserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WeighBacks" EntityType="Self.WeighBacks" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Adagio_N_Item" EntityType="Self.Adagio_N_Item" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Adagio_N_Item].[AppID] AS [AppID], 
-[Adagio_N_Item].[Item] AS [Item], 
-[Adagio_N_Item].[SetKey] AS [SetKey], 
-[Adagio_N_Item].[Item2] AS [Item2], 
-[Adagio_N_Item].[Description] AS [Description], 
-[Adagio_N_Item].[Category] AS [Category], 
-[Adagio_N_Item].[ReportGroup] AS [ReportGroup], 
-[Adagio_N_Item].[StockItem] AS [StockItem], 
-[Adagio_N_Item].[ItemsUsedinBOMCount] AS [ItemsUsedinBOMCount], 
-[Adagio_N_Item].[SerialCount] AS [SerialCount], 
-[Adagio_N_Item].[LayawayCounter] AS [LayawayCounter], 
-[Adagio_N_Item].[Unit] AS [Unit], 
-[Adagio_N_Item].[AltUnit1] AS [AltUnit1], 
-[Adagio_N_Item].[AltUnit2] AS [AltUnit2], 
-[Adagio_N_Item].[AltUnit3] AS [AltUnit3], 
-[Adagio_N_Item].[AltUnit4] AS [AltUnit4], 
-[Adagio_N_Item].[PurchaseUnit] AS [PurchaseUnit], 
-[Adagio_N_Item].[PriceUnit] AS [PriceUnit], 
-[Adagio_N_Item].[AltFactor1] AS [AltFactor1], 
-[Adagio_N_Item].[AltFactor2] AS [AltFactor2], 
-[Adagio_N_Item].[AltFactor3] AS [AltFactor3], 
-[Adagio_N_Item].[AltFactor4] AS [AltFactor4], 
-[Adagio_N_Item].[BasePrice] AS [BasePrice], 
-[Adagio_N_Item].[PickingSeq] AS [PickingSeq], 
-[Adagio_N_Item].[StdCost] AS [StdCost], 
-[Adagio_N_Item].[UnitWeight] AS [UnitWeight], 
-[Adagio_N_Item].[SaleStartDate] AS [SaleStartDate], 
-[Adagio_N_Item].[SaleEndDate] AS [SaleEndDate], 
-[Adagio_N_Item].[SalePrice] AS [SalePrice], 
-[Adagio_N_Item].[CtrlAcctSet] AS [CtrlAcctSet], 
-[Adagio_N_Item].[TaxStatus] AS [TaxStatus], 
-[Adagio_N_Item].[UserDefinedCost1] AS [UserDefinedCost1], 
-[Adagio_N_Item].[UserDefinedCost2] AS [UserDefinedCost2], 
-[Adagio_N_Item].[DiscType_T] AS [DiscType_T], 
-[Adagio_N_Item].[DiscFormat_T] AS [DiscFormat_T], 
-[Adagio_N_Item].[DiscBase_T] AS [DiscBase_T], 
-[Adagio_N_Item].[DiscMarkupQty1] AS [DiscMarkupQty1], 
-[Adagio_N_Item].[DiscMarkupQty2] AS [DiscMarkupQty2], 
-[Adagio_N_Item].[DiscMarkupQty3] AS [DiscMarkupQty3], 
-[Adagio_N_Item].[DiscMarkupQty4] AS [DiscMarkupQty4], 
-[Adagio_N_Item].[DiscMarkupQty5] AS [DiscMarkupQty5], 
-[Adagio_N_Item].[QtyonPO] AS [QtyonPO], 
-[Adagio_N_Item].[QtyonSO] AS [QtyonSO], 
-[Adagio_N_Item].[QtyTempCommitted] AS [QtyTempCommitted], 
-[Adagio_N_Item].[QtyShippednotCost] AS [QtyShippednotCost], 
-[Adagio_N_Item].[LastShipmentDate] AS [LastShipmentDate], 
-[Adagio_N_Item].[LastRcptDate] AS [LastRcptDate], 
-[Adagio_N_Item].[MostRecentCost] AS [MostRecentCost], 
-[Adagio_N_Item].[MarkupFactor] AS [MarkupFactor], 
-[Adagio_N_Item].[PrevPriceChangeDate] AS [PrevPriceChangeDate], 
-[Adagio_N_Item].[PrevPrice] AS [PrevPrice], 
-[Adagio_N_Item].[PrevStdCostDate] AS [PrevStdCostDate], 
-[Adagio_N_Item].[PrevStdCost] AS [PrevStdCost], 
-[Adagio_N_Item].[PrevRecentCostDate] AS [PrevRecentCostDate], 
-[Adagio_N_Item].[PrevRecentCost] AS [PrevRecentCost], 
-[Adagio_N_Item].[Rcpt1] AS [Rcpt1], 
-[Adagio_N_Item].[Rcpt2] AS [Rcpt2], 
-[Adagio_N_Item].[Rcpt3] AS [Rcpt3], 
-[Adagio_N_Item].[Rcpt4] AS [Rcpt4], 
-[Adagio_N_Item].[Rcpt5] AS [Rcpt5], 
-[Adagio_N_Item].[RcptDate1] AS [RcptDate1], 
-[Adagio_N_Item].[RcptDate2] AS [RcptDate2], 
-[Adagio_N_Item].[RcptDate3] AS [RcptDate3], 
-[Adagio_N_Item].[RcptDate4] AS [RcptDate4], 
-[Adagio_N_Item].[RcptDate5] AS [RcptDate5], 
-[Adagio_N_Item].[QtyonHand1] AS [QtyonHand1], 
-[Adagio_N_Item].[QtyonHand2] AS [QtyonHand2], 
-[Adagio_N_Item].[QtyonHand3] AS [QtyonHand3], 
-[Adagio_N_Item].[QtyonHand4] AS [QtyonHand4], 
-[Adagio_N_Item].[QtyonHand5] AS [QtyonHand5], 
-[Adagio_N_Item].[TotalCost1] AS [TotalCost1], 
-[Adagio_N_Item].[TotalCost2] AS [TotalCost2], 
-[Adagio_N_Item].[TotalCost3] AS [TotalCost3], 
-[Adagio_N_Item].[TotalCost4] AS [TotalCost4], 
-[Adagio_N_Item].[TotalCost5] AS [TotalCost5], 
-[Adagio_N_Item].[AvgDaysBetweenShipments] AS [AvgDaysBetweenShipments], 
-[Adagio_N_Item].[AvgUnitsShipped] AS [AvgUnitsShipped], 
-[Adagio_N_Item].[ShipmentCount] AS [ShipmentCount], 
-[Adagio_N_Item].[UnitsSoldPeriod1] AS [UnitsSoldPeriod1], 
-[Adagio_N_Item].[UnitsSoldPeriod2] AS [UnitsSoldPeriod2], 
-[Adagio_N_Item].[UnitsSoldPeriod3] AS [UnitsSoldPeriod3], 
-[Adagio_N_Item].[UnitsSoldPeriod4] AS [UnitsSoldPeriod4], 
-[Adagio_N_Item].[UnitsSoldPeriod5] AS [UnitsSoldPeriod5], 
-[Adagio_N_Item].[UnitsSoldPeriod6] AS [UnitsSoldPeriod6], 
-[Adagio_N_Item].[UnitsSoldPeriod7] AS [UnitsSoldPeriod7], 
-[Adagio_N_Item].[UnitsSoldPeriod8] AS [UnitsSoldPeriod8], 
-[Adagio_N_Item].[UnitsSoldPeriod9] AS [UnitsSoldPeriod9], 
-[Adagio_N_Item].[UnitsSoldPeriod10] AS [UnitsSoldPeriod10], 
-[Adagio_N_Item].[UnitsSoldPeriod11] AS [UnitsSoldPeriod11], 
-[Adagio_N_Item].[UnitsSoldPeriod12] AS [UnitsSoldPeriod12], 
-[Adagio_N_Item].[UnitsSoldPeriod13] AS [UnitsSoldPeriod13], 
-[Adagio_N_Item].[UnitsSoldYTD] AS [UnitsSoldYTD], 
-[Adagio_N_Item].[UnitsSoldLY] AS [UnitsSoldLY], 
-[Adagio_N_Item].[AmtSoldPeriod1] AS [AmtSoldPeriod1], 
-[Adagio_N_Item].[AmtSoldPeriod2] AS [AmtSoldPeriod2], 
-[Adagio_N_Item].[AmtSoldPeriod3] AS [AmtSoldPeriod3], 
-[Adagio_N_Item].[AmtSoldPeriod4] AS [AmtSoldPeriod4], 
-[Adagio_N_Item].[AmtSoldPeriod5] AS [AmtSoldPeriod5], 
-[Adagio_N_Item].[AmtSoldPeriod6] AS [AmtSoldPeriod6], 
-[Adagio_N_Item].[AmtSoldPeriod7] AS [AmtSoldPeriod7], 
-[Adagio_N_Item].[AmtSoldPeriod8] AS [AmtSoldPeriod8], 
-[Adagio_N_Item].[AmtSoldPeriod9] AS [AmtSoldPeriod9], 
-[Adagio_N_Item].[AmtSoldPeriod10] AS [AmtSoldPeriod10], 
-[Adagio_N_Item].[AmtSoldPeriod11] AS [AmtSoldPeriod11], 
-[Adagio_N_Item].[AmtSoldPeriod12] AS [AmtSoldPeriod12], 
-[Adagio_N_Item].[AmtSoldPeriod13] AS [AmtSoldPeriod13], 
-[Adagio_N_Item].[AmtSoldYTD] AS [AmtSoldYTD], 
-[Adagio_N_Item].[AmtSoldLY] AS [AmtSoldLY], 
-[Adagio_N_Item].[TotalCostsPeriod1] AS [TotalCostsPeriod1], 
-[Adagio_N_Item].[TotalCostsPeriod2] AS [TotalCostsPeriod2], 
-[Adagio_N_Item].[TotalCostsPeriod3] AS [TotalCostsPeriod3], 
-[Adagio_N_Item].[TotalCostsPeriod4] AS [TotalCostsPeriod4], 
-[Adagio_N_Item].[TotalCostsPeriod5] AS [TotalCostsPeriod5], 
-[Adagio_N_Item].[TotalCostsPeriod6] AS [TotalCostsPeriod6], 
-[Adagio_N_Item].[TotalCostsPeriod7] AS [TotalCostsPeriod7], 
-[Adagio_N_Item].[TotalCostsPeriod8] AS [TotalCostsPeriod8], 
-[Adagio_N_Item].[TotalCostsPeriod9] AS [TotalCostsPeriod9], 
-[Adagio_N_Item].[TotalCostsPeriod10] AS [TotalCostsPeriod10], 
-[Adagio_N_Item].[TotalCostsPeriod11] AS [TotalCostsPeriod11], 
-[Adagio_N_Item].[TotalCostsPeriod12] AS [TotalCostsPeriod12], 
-[Adagio_N_Item].[TotalCostsPeriod13] AS [TotalCostsPeriod13], 
-[Adagio_N_Item].[TotalCostsYTD] AS [TotalCostsYTD], 
-[Adagio_N_Item].[TotalCostsLY] AS [TotalCostsLY], 
-[Adagio_N_Item].[UnitsLostYTD] AS [UnitsLostYTD], 
-[Adagio_N_Item].[UnitsLostLY] AS [UnitsLostLY], 
-[Adagio_N_Item].[DiscDecimals] AS [DiscDecimals], 
-[Adagio_N_Item].[DiscMarkupAmt1] AS [DiscMarkupAmt1], 
-[Adagio_N_Item].[DiscMarkupAmt2] AS [DiscMarkupAmt2], 
-[Adagio_N_Item].[DiscMarkupAmt3] AS [DiscMarkupAmt3], 
-[Adagio_N_Item].[DiscMarkupAmt4] AS [DiscMarkupAmt4], 
-[Adagio_N_Item].[DiscMarkupAmt5] AS [DiscMarkupAmt5], 
-[Adagio_N_Item].[QtyOnHand] AS [QtyOnHand], 
-[Adagio_N_Item].[Selected] AS [Selected], 
-[Adagio_N_Item].[ActiveItem] AS [ActiveItem], 
-[Adagio_N_Item].[RNumAN81CITM] AS [RNumAN81CITM]
-FROM [dbo].[Adagio_N_Item] AS [Adagio_N_Item]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Adagio_N_ItemLocation" EntityType="Self.Adagio_N_ItemLocation" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Adagio_N_ItemLocation].[AppID] AS [AppID], 
-[Adagio_N_ItemLocation].[Item] AS [Item], 
-[Adagio_N_ItemLocation].[Loc] AS [Loc], 
-[Adagio_N_ItemLocation].[Item2] AS [Item2], 
-[Adagio_N_ItemLocation].[PickingSeq] AS [PickingSeq], 
-[Adagio_N_ItemLocation].[CarriedinLoc] AS [CarriedinLoc], 
-[Adagio_N_ItemLocation].[QtyonHandPlus] AS [QtyonHandPlus], 
-[Adagio_N_ItemLocation].[QtyonPO] AS [QtyonPO], 
-[Adagio_N_ItemLocation].[QtyonSO] AS [QtyonSO], 
-[Adagio_N_ItemLocation].[QtyTempCommitted] AS [QtyTempCommitted], 
-[Adagio_N_ItemLocation].[QtyShippednotCost] AS [QtyShippednotCost], 
-[Adagio_N_ItemLocation].[RNumAN81CILO] AS [RNumAN81CILO]
-FROM [dbo].[Adagio_N_ItemLocation] AS [Adagio_N_ItemLocation]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Adagio_O_OrderDetail" EntityType="Self.Adagio_O_OrderDetail" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Adagio_O_OrderDetail].[AppID] AS [AppID], 
-[Adagio_O_OrderDetail].[OrderKey] AS [OrderKey], 
-[Adagio_O_OrderDetail].[Line] AS [Line], 
-[Adagio_O_OrderDetail].[DDocType_T] AS [DDocType_T], 
-[Adagio_O_OrderDetail].[DDoc] AS [DDoc], 
-[Adagio_O_OrderDetail].[LineType_T] AS [LineType_T], 
-[Adagio_O_OrderDetail].[Item] AS [Item], 
-[Adagio_O_OrderDetail].[Description] AS [Description], 
-[Adagio_O_OrderDetail].[Unit] AS [Unit], 
-[Adagio_O_OrderDetail].[PickingSeq] AS [PickingSeq], 
-[Adagio_O_OrderDetail].[DiscLevel] AS [DiscLevel], 
-[Adagio_O_OrderDetail].[DCategory] AS [DCategory], 
-[Adagio_O_OrderDetail].[PriceUnit] AS [PriceUnit], 
-[Adagio_O_OrderDetail].[PriceOverride] AS [PriceOverride], 
-[Adagio_O_OrderDetail].[ExtensionOverride] AS [ExtensionOverride], 
-[Adagio_O_OrderDetail].[ReturntoInventory] AS [ReturntoInventory], 
-[Adagio_O_OrderDetail].[SerialCount] AS [SerialCount], 
-[Adagio_O_OrderDetail].[TaxStatus] AS [TaxStatus], 
-[Adagio_O_OrderDetail].[Commissionable] AS [Commissionable], 
-[Adagio_O_OrderDetail].[UnitFactor] AS [UnitFactor], 
-[Adagio_O_OrderDetail].[UnitWeight] AS [UnitWeight], 
-[Adagio_O_OrderDetail].[QtyOriginalOrdered] AS [QtyOriginalOrdered], 
-[Adagio_O_OrderDetail].[QtyOrdered] AS [QtyOrdered], 
-[Adagio_O_OrderDetail].[QtyShippedtoDate] AS [QtyShippedtoDate], 
-[Adagio_O_OrderDetail].[QtyShipped] AS [QtyShipped], 
-[Adagio_O_OrderDetail].[QtyBackordered] AS [QtyBackordered], 
-[Adagio_O_OrderDetail].[ExtWeight] AS [ExtWeight], 
-[Adagio_O_OrderDetail].[ShipStockingUnits] AS [ShipStockingUnits], 
-[Adagio_O_OrderDetail].[Loc] AS [Loc], 
-[Adagio_O_OrderDetail].[Complete] AS [Complete], 
-[Adagio_O_OrderDetail].[Curr] AS [Curr], 
-[Adagio_O_OrderDetail].[Decimals] AS [Decimals], 
-[Adagio_O_OrderDetail].[PriceList] AS [PriceList], 
-[Adagio_O_OrderDetail].[OrderedInPO] AS [OrderedInPO], 
-[Adagio_O_OrderDetail].[UnitDecimals] AS [UnitDecimals], 
-[Adagio_O_OrderDetail].[UnitPrice] AS [UnitPrice], 
-[Adagio_O_OrderDetail].[UnitCost] AS [UnitCost], 
-[Adagio_O_OrderDetail].[ExtPrice] AS [ExtPrice], 
-[Adagio_O_OrderDetail].[ExtCost] AS [ExtCost], 
-[Adagio_O_OrderDetail].[TaxAmt] AS [TaxAmt], 
-[Adagio_O_OrderDetail].[DTax1] AS [DTax1], 
-[Adagio_O_OrderDetail].[DTax2] AS [DTax2], 
-[Adagio_O_OrderDetail].[DTax3] AS [DTax3], 
-[Adagio_O_OrderDetail].[DTax4] AS [DTax4], 
-[Adagio_O_OrderDetail].[DTax5] AS [DTax5], 
-[Adagio_O_OrderDetail].[DBase1] AS [DBase1], 
-[Adagio_O_OrderDetail].[DBase2] AS [DBase2], 
-[Adagio_O_OrderDetail].[DBase3] AS [DBase3], 
-[Adagio_O_OrderDetail].[DBase4] AS [DBase4], 
-[Adagio_O_OrderDetail].[DBase5] AS [DBase5], 
-[Adagio_O_OrderDetail].[DiscAmt] AS [DiscAmt], 
-[Adagio_O_OrderDetail].[DiscExtension] AS [DiscExtension], 
-[Adagio_O_OrderDetail].[BasePrice] AS [BasePrice], 
-[Adagio_O_OrderDetail].[ExtOrderPrice] AS [ExtOrderPrice], 
-[Adagio_O_OrderDetail].[PriceFactor] AS [PriceFactor], 
-[Adagio_O_OrderDetail].[Serial1] AS [Serial1], 
-[Adagio_O_OrderDetail].[Serial2] AS [Serial2], 
-[Adagio_O_OrderDetail].[Serial3] AS [Serial3], 
-[Adagio_O_OrderDetail].[Serial4] AS [Serial4], 
-[Adagio_O_OrderDetail].[Serial5] AS [Serial5], 
-[Adagio_O_OrderDetail].[DExpectedShipDate] AS [DExpectedShipDate], 
-[Adagio_O_OrderDetail].[MiscAmount] AS [MiscAmount], 
-[Adagio_O_OrderDetail].[MiscBasePrice] AS [MiscBasePrice], 
-[Adagio_O_OrderDetail].[MiscShortDescription] AS [MiscShortDescription], 
-[Adagio_O_OrderDetail].[MiscQuantity] AS [MiscQuantity], 
-[Adagio_O_OrderDetail].[MiscFiller] AS [MiscFiller], 
-[Adagio_O_OrderDetail].[RNumAO80ALIN] AS [RNumAO80ALIN]
-FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
-          </EntitySet>
+          <AssociationSet Name="FK__BinDisbur__Disbu__681373AD" Association="Self.FK__BinDisbur__Disbu__681373AD">
+            <End Role="DisbursementTypes" EntitySet="DisbursementTypes" />
+            <End Role="BinDisbursements" EntitySet="BinDisbursements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BinDisbur__FeedI__690797E6" Association="Self.FK__BinDisbur__FeedI__690797E6">
+            <End Role="Feedings" EntitySet="Feedings" />
+            <End Role="BinDisbursements" EntitySet="BinDisbursements" />
+          </AssociationSet>
           <AssociationSet Name="FK_Absences_Departments" Association="Self.FK_Absences_Departments">
             <End Role="Departments" EntitySet="Departments" />
             <End Role="Absences" EntitySet="Absences" />
@@ -1451,13 +880,9 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
             <End Role="AD_Products" EntitySet="AD_Products" />
             <End Role="AD_WeekData" EntitySet="AD_WeekData" />
           </AssociationSet>
-          <AssociationSet Name="FK_BinDispersements_Bins" Association="Self.FK_BinDispersements_Bins">
+          <AssociationSet Name="FK_BinDisbursements_Bins" Association="Self.FK_BinDisbursements_Bins">
             <End Role="Bins" EntitySet="Bins" />
-            <End Role="BinDispersements" EntitySet="BinDispersements" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BinDispersements_Feedings" Association="Self.FK_BinDispersements_Feedings">
-            <End Role="Feedings" EntitySet="Feedings" />
-            <End Role="BinDispersements" EntitySet="BinDispersements" />
+            <End Role="BinDisbursements" EntitySet="BinDisbursements" />
           </AssociationSet>
           <AssociationSet Name="FK_BinLoads_Bins" Association="Self.FK_BinLoads_Bins">
             <End Role="Bins" EntitySet="Bins" />
@@ -1727,27 +1152,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
             <End Role="AD_WeekData" EntitySet="AD_WeekData" />
           </AssociationSet>
           <EntitySet Name="ADAGIOSalesStatitics" EntityType="AppModel.ADAGIOSalesStatitic" />
-          <EntitySet Name="Adagio_O_OrderHeader" EntityType="AppModel.Adagio_O_OrderHeader" />
-          <EntitySet Name="Adagio_N_Item" EntityType="AppModel.Adagio_N_Item" />
-          <EntitySet Name="Adagio_N_ItemLocation" EntityType="AppModel.Adagio_N_ItemLocation" />
-          <EntitySet Name="Adagio_O_OrderDetail" EntityType="AppModel.Adagio_O_OrderDetail" />
-          <EntitySet Name="Samplings" EntityType="AppModel.Sampling" />
-          <EntitySet Name="CurrentShippings" EntityType="AppModel.CurrentShipping" />
-          <EntitySet Name="BinDispersements" EntityType="AppModel.BinDispersement" />
-          <EntitySet Name="BinLoads" EntityType="AppModel.BinLoad" />
           <EntitySet Name="Bins" EntityType="AppModel.Bin" />
-          <AssociationSet Name="FK_BinDispersements_Bins" Association="AppModel.FK_BinDispersements_Bins">
-            <End Role="Bin" EntitySet="Bins" />
-            <End Role="BinDispersement" EntitySet="BinDispersements" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BinDispersements_Feedings" Association="AppModel.FK_BinDispersements_Feedings">
-            <End Role="Feeding" EntitySet="Feedings" />
-            <End Role="BinDispersement" EntitySet="BinDispersements" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BinLoads_Bins" Association="AppModel.FK_BinLoads_Bins">
-            <End Role="Bin" EntitySet="Bins" />
-            <End Role="BinLoad" EntitySet="BinLoads" />
-          </AssociationSet>
           <AssociationSet Name="FK_Bins_Farms" Association="AppModel.FK_Bins_Farms">
             <End Role="Farm" EntitySet="Farms" />
             <End Role="Bin" EntitySet="Bins" />
@@ -1755,6 +1160,25 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <AssociationSet Name="FK_Feedings_Bins" Association="AppModel.FK_Feedings_Bins">
             <End Role="Bin" EntitySet="Bins" />
             <End Role="Feeding" EntitySet="Feedings" />
+          </AssociationSet>
+          <EntitySet Name="DisbursementTypes" EntityType="AppModel.DisbursementType" />
+          <EntitySet Name="BinDisbursements" EntityType="AppModel.BinDisbursement" />
+          <EntitySet Name="BinLoads" EntityType="AppModel.BinLoad" />
+          <AssociationSet Name="FK__BinDisbur__Disbu__681373AD" Association="AppModel.FK__BinDisbur__Disbu__681373AD">
+            <End Role="DisbursementType" EntitySet="DisbursementTypes" />
+            <End Role="BinDisbursement" EntitySet="BinDisbursements" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BinDisbur__FeedI__690797E6" Association="AppModel.FK__BinDisbur__FeedI__690797E6">
+            <End Role="Feeding" EntitySet="Feedings" />
+            <End Role="BinDisbursement" EntitySet="BinDisbursements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinDisbursements_Bins" Association="AppModel.FK_BinDisbursements_Bins">
+            <End Role="Bin" EntitySet="Bins" />
+            <End Role="BinDisbursement" EntitySet="BinDisbursements" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinLoads_Bins" Association="AppModel.FK_BinLoads_Bins">
+            <End Role="Bin" EntitySet="Bins" />
+            <End Role="BinLoad" EntitySet="BinLoads" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Company">
@@ -1825,8 +1249,8 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <NavigationProperty Name="UserFarm" Relationship="AppModel.FK_Feedings_UserFarms" FromRole="Feeding" ToRole="UserFarm" />
           <NavigationProperty Name="Pond" Relationship="AppModel.FK_Feedings_Ponds" FromRole="Feeding" ToRole="Pond" />
           <Property Name="BinID" Type="Int32" />
-          <NavigationProperty Name="BinDispersements" Relationship="AppModel.FK_BinDispersements_Feedings" FromRole="Feeding" ToRole="BinDispersement" />
           <NavigationProperty Name="Bin" Relationship="AppModel.FK_Feedings_Bins" FromRole="Feeding" ToRole="Bin" />
+          <NavigationProperty Name="BinDisbursements" Relationship="AppModel.FK__BinDisbur__FeedI__690797E6" FromRole="Feeding" ToRole="BinDisbursement" />
         </EntityType>
         <EntityType Name="Harvest">
           <Key>
@@ -2518,402 +1942,6 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <Property Name="RNumAS90ASTA" Type="Int32" />
           <Property Name="StatsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
-        <EntityType Name="Adagio_O_OrderHeader">
-          <Key>
-            <PropertyRef Name="AppId" />
-          </Key>
-          <Property Name="AppId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustPrefix" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Cust" Type="Int16" />
-          <Property Name="OrderKey" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="DocType_T" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="Doc" Type="Int32" />
-          <Property Name="Order_2" Type="Int32" />
-          <Property Name="Inv" Type="Int32" />
-          <Property Name="OrderType_T" Type="String" MaxLength="14" FixedLength="false" Unicode="false" />
-          <Property Name="OrderRelease" Type="Int16" />
-          <Property Name="PrintStatus_T" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
-          <Property Name="CostedStatus" Type="Int16" />
-          <Property Name="OnHold" Type="Int16" />
-          <Property Name="Posting" Type="Int32" />
-          <Property Name="InventoryUpdated" Type="Int16" />
-          <Property Name="OrderComplete" Type="Int16" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-          <Property Name="InvDate" Type="DateTime" Precision="3" />
-          <Property Name="ShipmentDate" Type="DateTime" Precision="3" />
-          <Property Name="ExpectedShipDate" Type="DateTime" Precision="3" />
-          <Property Name="ShipVia" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
-          <Property Name="Comment1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Comment2" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Loc" Type="Int16" />
-          <Property Name="CreditApprovalPerson" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="FOBPoint" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="TaxGroup" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="TotalOrderValueHome" Type="Single" />
-          <Property Name="LinesinOrder" Type="Int16" />
-          <Property Name="InvDisc" Type="Int16" />
-          <Property Name="Reference" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="Contact" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
-          <Property Name="TaxExempt1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="TaxExempt2" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Name="Terms" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="Salesperson" Type="Int16" />
-          <Property Name="CustTaxStatus" Type="Int16" />
-          <Property Name="PreAR90Territory" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="CustDiscLevel" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="BillingAddress1" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
-          <Property Name="BillingAddress2" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
-          <Property Name="BillingAddress3" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
-          <Property Name="BillingAddress4" Type="String" MaxLength="18" FixedLength="false" Unicode="false" />
-          <Property Name="BillingZipPostal" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ShipName" Type="Int16" />
-          <Property Name="ShipAddress1" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
-          <Property Name="ShipAddress2" Type="String" MaxLength="28" FixedLength="false" Unicode="false" />
-          <Property Name="ShipAddress3" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="ShipAddress4" Type="String" MaxLength="29" FixedLength="false" Unicode="false" />
-          <Property Name="ShipZipPostal" Type="String" MaxLength="21" FixedLength="false" Unicode="false" />
-          <Property Name="LabelsCount" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="GLPosting" Type="Int16" />
-          <Property Name="ARPosting" Type="Int16" />
-          <Property Name="TermsCode" Type="Int16" />
-          <Property Name="Bank" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="CashAcct" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="CashDept" Type="Int16" />
-          <Property Name="Cheque" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="DateDue" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="DateDisc" Type="DateTime" Precision="3" />
-          <Property Name="TermsDisc" Type="DateTime" Precision="3" />
-          <Property Name="SourceDecimals" Type="Int16" />
-          <Property Name="HomeCurr" Type="Int16" />
-          <Property Name="RateType" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="SourceCurr" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="RateDate" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ExchgRate" Type="DateTime" Precision="3" />
-          <Property Name="ExchgSpread" Type="Int16" />
-          <Property Name="RateRep" Type="Int16" />
-          <Property Name="DateMatching" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="BillingTelephone" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="BillingFax" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="ShipTelephone" Type="Int64" />
-          <Property Name="ShipFax" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="PriceList" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CashDisc" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="ForeignHomeCurr" Type="Int16" />
-          <Property Name="ForeignRateType" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ForeignSourceCurr" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="ForeignRateDate" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ForeignRate" Type="DateTime" Precision="3" />
-          <Property Name="ForeignSpread" Type="Int16" />
-          <Property Name="ForeignRateRep" Type="Int16" />
-          <Property Name="ForeignDateMatching" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="RateOverride" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="ForeignRateOverride" Type="Int16" />
-          <Property Name="ForeignDecimals" Type="Int16" />
-          <Property Name="DiscAcct" Type="Int16" />
-          <Property Name="DiscDept" Type="Int16" />
-          <Property Name="RoundAcct" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="RoundDept" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="TaxByInv" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="TotalOrderValue" Type="Int16" />
-          <Property Name="TotalDollarValue" Type="Single" />
-          <Property Name="InvDiscAmt" Type="Single" />
-          <Property Name="Tax1" Type="Int16" />
-          <Property Name="Tax2" Type="Single" />
-          <Property Name="Tax3" Type="Single" />
-          <Property Name="Tax4" Type="Single" />
-          <Property Name="Tax5" Type="Int16" />
-          <Property Name="TotalCostValue" Type="Int16" />
-          <Property Name="CashPayment" Type="Single" />
-          <Property Name="DiscBase" Type="Int16" />
-          <Property Name="ForeignAmt" Type="Single" />
-          <Property Name="MovedtoHistory" Type="Int16" />
-          <Property Name="RNumAO80AHED" Type="Int16" />
-        </EntityType>
-        <EntityType Name="Adagio_N_Item">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Item" Type="Int32" />
-          <Property Name="SetKey" Type="Int16" />
-          <Property Name="Item2" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
-          <Property Name="Category" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ReportGroup" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="StockItem" Type="Int16" />
-          <Property Name="ItemsUsedinBOMCount" Type="Int16" />
-          <Property Name="SerialCount" Type="Int16" />
-          <Property Name="LayawayCounter" Type="Int16" />
-          <Property Name="Unit" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="AltUnit1" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="AltUnit2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="AltUnit3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="AltUnit4" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PurchaseUnit" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="PriceUnit" Type="String" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Name="AltFactor1" Type="Int16" />
-          <Property Name="AltFactor2" Type="Int16" />
-          <Property Name="AltFactor3" Type="Int16" />
-          <Property Name="AltFactor4" Type="Int16" />
-          <Property Name="BasePrice" Type="Single" />
-          <Property Name="PickingSeq" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="StdCost" Type="Int16" />
-          <Property Name="UnitWeight" Type="Int16" />
-          <Property Name="SaleStartDate" Type="DateTime" Precision="3" />
-          <Property Name="SaleEndDate" Type="DateTime" Precision="3" />
-          <Property Name="SalePrice" Type="Single" />
-          <Property Name="CtrlAcctSet" Type="Int16" />
-          <Property Name="TaxStatus" Type="Int16" />
-          <Property Name="UserDefinedCost1" Type="Int16" />
-          <Property Name="UserDefinedCost2" Type="Int16" />
-          <Property Name="DiscType_T" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="DiscFormat_T" Type="String" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="DiscBase_T" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
-          <Property Name="DiscMarkupQty1" Type="Int16" />
-          <Property Name="DiscMarkupQty2" Type="Int16" />
-          <Property Name="DiscMarkupQty3" Type="Int16" />
-          <Property Name="DiscMarkupQty4" Type="Int16" />
-          <Property Name="DiscMarkupQty5" Type="Int16" />
-          <Property Name="QtyonPO" Type="Int16" />
-          <Property Name="QtyonSO" Type="Int16" />
-          <Property Name="QtyTempCommitted" Type="Int16" />
-          <Property Name="QtyShippednotCost" Type="Int16" />
-          <Property Name="LastShipmentDate" Type="DateTime" Precision="3" />
-          <Property Name="LastRcptDate" Type="DateTime" Precision="3" />
-          <Property Name="MostRecentCost" Type="Single" />
-          <Property Name="MarkupFactor" Type="Int16" />
-          <Property Name="PrevPriceChangeDate" Type="DateTime" Precision="3" />
-          <Property Name="PrevPrice" Type="Single" />
-          <Property Name="PrevStdCostDate" Type="DateTime" Precision="3" />
-          <Property Name="PrevStdCost" Type="Int16" />
-          <Property Name="PrevRecentCostDate" Type="DateTime" Precision="3" />
-          <Property Name="PrevRecentCost" Type="Single" />
-          <Property Name="Rcpt1" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Rcpt2" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Rcpt3" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Rcpt4" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="Rcpt5" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
-          <Property Name="RcptDate1" Type="DateTime" Precision="3" />
-          <Property Name="RcptDate2" Type="DateTime" Precision="3" />
-          <Property Name="RcptDate3" Type="DateTime" Precision="3" />
-          <Property Name="RcptDate4" Type="DateTime" Precision="3" />
-          <Property Name="RcptDate5" Type="DateTime" Precision="3" />
-          <Property Name="QtyonHand1" Type="Int32" />
-          <Property Name="QtyonHand2" Type="Int16" />
-          <Property Name="QtyonHand3" Type="Int16" />
-          <Property Name="QtyonHand4" Type="Int16" />
-          <Property Name="QtyonHand5" Type="Int16" />
-          <Property Name="TotalCost1" Type="Single" />
-          <Property Name="TotalCost2" Type="Single" />
-          <Property Name="TotalCost3" Type="Int16" />
-          <Property Name="TotalCost4" Type="Int16" />
-          <Property Name="TotalCost5" Type="Int16" />
-          <Property Name="AvgDaysBetweenShipments" Type="Int16" />
-          <Property Name="AvgUnitsShipped" Type="Single" />
-          <Property Name="ShipmentCount" Type="Int32" />
-          <Property Name="UnitsSoldPeriod1" Type="Int32" />
-          <Property Name="UnitsSoldPeriod2" Type="Int32" />
-          <Property Name="UnitsSoldPeriod3" Type="Int32" />
-          <Property Name="UnitsSoldPeriod4" Type="Int32" />
-          <Property Name="UnitsSoldPeriod5" Type="Int32" />
-          <Property Name="UnitsSoldPeriod6" Type="Int32" />
-          <Property Name="UnitsSoldPeriod7" Type="Int32" />
-          <Property Name="UnitsSoldPeriod8" Type="Int32" />
-          <Property Name="UnitsSoldPeriod9" Type="Int32" />
-          <Property Name="UnitsSoldPeriod10" Type="Int32" />
-          <Property Name="UnitsSoldPeriod11" Type="Int32" />
-          <Property Name="UnitsSoldPeriod12" Type="Int32" />
-          <Property Name="UnitsSoldPeriod13" Type="Int32" />
-          <Property Name="UnitsSoldYTD" Type="Int32" />
-          <Property Name="UnitsSoldLY" Type="Int32" />
-          <Property Name="AmtSoldPeriod1" Type="Single" />
-          <Property Name="AmtSoldPeriod2" Type="Single" />
-          <Property Name="AmtSoldPeriod3" Type="Single" />
-          <Property Name="AmtSoldPeriod4" Type="Single" />
-          <Property Name="AmtSoldPeriod5" Type="Single" />
-          <Property Name="AmtSoldPeriod6" Type="Single" />
-          <Property Name="AmtSoldPeriod7" Type="Single" />
-          <Property Name="AmtSoldPeriod8" Type="Single" />
-          <Property Name="AmtSoldPeriod9" Type="Single" />
-          <Property Name="AmtSoldPeriod10" Type="Single" />
-          <Property Name="AmtSoldPeriod11" Type="Single" />
-          <Property Name="AmtSoldPeriod12" Type="Single" />
-          <Property Name="AmtSoldPeriod13" Type="Single" />
-          <Property Name="AmtSoldYTD" Type="Single" />
-          <Property Name="AmtSoldLY" Type="Single" />
-          <Property Name="TotalCostsPeriod1" Type="Single" />
-          <Property Name="TotalCostsPeriod2" Type="Single" />
-          <Property Name="TotalCostsPeriod3" Type="Single" />
-          <Property Name="TotalCostsPeriod4" Type="Single" />
-          <Property Name="TotalCostsPeriod5" Type="Single" />
-          <Property Name="TotalCostsPeriod6" Type="Single" />
-          <Property Name="TotalCostsPeriod7" Type="Single" />
-          <Property Name="TotalCostsPeriod8" Type="Single" />
-          <Property Name="TotalCostsPeriod9" Type="Single" />
-          <Property Name="TotalCostsPeriod10" Type="Single" />
-          <Property Name="TotalCostsPeriod11" Type="Single" />
-          <Property Name="TotalCostsPeriod12" Type="Single" />
-          <Property Name="TotalCostsPeriod13" Type="Single" />
-          <Property Name="TotalCostsYTD" Type="Single" />
-          <Property Name="TotalCostsLY" Type="Single" />
-          <Property Name="UnitsLostYTD" Type="Int32" />
-          <Property Name="UnitsLostLY" Type="Int32" />
-          <Property Name="DiscDecimals" Type="Int16" />
-          <Property Name="DiscMarkupAmt1" Type="Int16" />
-          <Property Name="DiscMarkupAmt2" Type="Int16" />
-          <Property Name="DiscMarkupAmt3" Type="Int16" />
-          <Property Name="DiscMarkupAmt4" Type="Int16" />
-          <Property Name="DiscMarkupAmt5" Type="Int16" />
-          <Property Name="QtyOnHand" Type="Int32" />
-          <Property Name="Selected" Type="Int16" />
-          <Property Name="ActiveItem" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
-          <Property Name="RNumAN81CITM" Type="Int16" />
-        </EntityType>
-        <EntityType Name="Adagio_N_ItemLocation">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Item" Type="Int32" />
-          <Property Name="Loc" Type="Int16" />
-          <Property Name="Item2" Type="Int32" />
-          <Property Name="PickingSeq" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="CarriedinLoc" Type="Int16" />
-          <Property Name="QtyonHandPlus" Type="Int16" />
-          <Property Name="QtyonPO" Type="Int16" />
-          <Property Name="QtyonSO" Type="Int16" />
-          <Property Name="QtyTempCommitted" Type="Int16" />
-          <Property Name="QtyShippednotCost" Type="Int16" />
-          <Property Name="RNumAN81CILO" Type="Int16" />
-        </EntityType>
-        <EntityType Name="Adagio_O_OrderDetail">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderKey" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="Line" Type="Int16" />
-          <Property Name="DDocType_T" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
-          <Property Name="DDoc" Type="Int32" />
-          <Property Name="LineType_T" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Name="Item" Type="Int32" />
-          <Property Name="Description" Type="String" MaxLength="38" FixedLength="false" Unicode="false" />
-          <Property Name="Unit" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="PickingSeq" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="DiscLevel" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DCategory" Type="Int16" />
-          <Property Name="PriceUnit" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="PriceOverride" Type="Int16" />
-          <Property Name="ExtensionOverride" Type="Int16" />
-          <Property Name="ReturntoInventory" Type="Int16" />
-          <Property Name="SerialCount" Type="Int16" />
-          <Property Name="TaxStatus" Type="Int16" />
-          <Property Name="Commissionable" Type="Int16" />
-          <Property Name="UnitFactor" Type="Int16" />
-          <Property Name="UnitWeight" Type="Int16" />
-          <Property Name="QtyOriginalOrdered" Type="Int16" />
-          <Property Name="QtyOrdered" Type="Int16" />
-          <Property Name="QtyShippedtoDate" Type="Int16" />
-          <Property Name="QtyShipped" Type="Int16" />
-          <Property Name="QtyBackordered" Type="Int16" />
-          <Property Name="ExtWeight" Type="Int16" />
-          <Property Name="ShipStockingUnits" Type="Int16" />
-          <Property Name="Loc" Type="Int16" />
-          <Property Name="Complete" Type="Int16" />
-          <Property Name="Curr" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Decimals" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="PriceList" Type="Int16" />
-          <Property Name="OrderedInPO" Type="Int16" />
-          <Property Name="UnitDecimals" Type="Int16" />
-          <Property Name="UnitPrice" Type="Int32" />
-          <Property Name="UnitCost" Type="Single" />
-          <Property Name="ExtPrice" Type="Single" />
-          <Property Name="ExtCost" Type="Single" />
-          <Property Name="TaxAmt" Type="Single" />
-          <Property Name="DTax1" Type="Single" />
-          <Property Name="DTax2" Type="Single" />
-          <Property Name="DTax3" Type="Single" />
-          <Property Name="DTax4" Type="Int16" />
-          <Property Name="DTax5" Type="Int16" />
-          <Property Name="DBase1" Type="Single" />
-          <Property Name="DBase2" Type="Single" />
-          <Property Name="DBase3" Type="Single" />
-          <Property Name="DBase4" Type="Int16" />
-          <Property Name="DBase5" Type="Int16" />
-          <Property Name="DiscAmt" Type="Single" />
-          <Property Name="DiscExtension" Type="Single" />
-          <Property Name="BasePrice" Type="Int32" />
-          <Property Name="ExtOrderPrice" Type="Single" />
-          <Property Name="PriceFactor" Type="Int16" />
-          <Property Name="Serial1" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Serial2" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="Serial3" Type="Int32" />
-          <Property Name="Serial4" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-          <Property Name="Serial5" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="DExpectedShipDate" Type="DateTime" Precision="3" />
-          <Property Name="MiscAmount" Type="Single" />
-          <Property Name="MiscBasePrice" Type="DateTime" Precision="3" />
-          <Property Name="MiscShortDescription" Type="String" MaxLength="38" FixedLength="false" Unicode="false" />
-          <Property Name="MiscQuantity" Type="Int16" />
-          <Property Name="MiscFiller" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="RNumAO80ALIN" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Sampling">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="code" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="farmname" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="shname" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="pondname" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="regtime" Type="DateTime" Precision="3" />
-          <Property Name="code2" Type="String" MaxLength="240" FixedLength="false" Unicode="false" />
-          <Property Name="codename" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="weight" Type="Double" />
-          <Property Name="pondid" Type="Int32" />
-        </EntityType>
-        <EntityType Name="CurrentShipping">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ItemDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="OrderAmount" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="QuantityOnHand" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="BinDispersement">
-          <Key>
-            <PropertyRef Name="BinDispersementID" />
-          </Key>
-          <Property Name="BinDispersementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BinID" Type="Int32" Nullable="false" />
-          <Property Name="TicketNumber" Type="Int32" Nullable="false" />
-          <Property Name="Pounds" Type="Int32" Nullable="false" />
-          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="DispersementType" Type="Int32" />
-          <Property Name="DispersementDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="FeedID" Type="Int32" />
-          <NavigationProperty Name="Bin" Relationship="AppModel.FK_BinDispersements_Bins" FromRole="BinDispersement" ToRole="Bin" />
-          <NavigationProperty Name="Feeding" Relationship="AppModel.FK_BinDispersements_Feedings" FromRole="BinDispersement" ToRole="Feeding" />
-        </EntityType>
-        <EntityType Name="BinLoad">
-          <Key>
-            <PropertyRef Name="BinTicketID" />
-          </Key>
-          <Property Name="BinTicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="BinID" Type="Int32" Nullable="false" />
-          <Property Name="TicketNumber" Type="Int32" Nullable="false" />
-          <Property Name="DateLoaded" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PoundsLoaded" Type="Int32" Nullable="false" />
-          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Bin" Relationship="AppModel.FK_BinLoads_Bins" FromRole="BinLoad" ToRole="Bin" />
-        </EntityType>
         <EntityType Name="Bin">
           <Key>
             <PropertyRef Name="BinID" />
@@ -2923,49 +1951,13 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <Property Name="FarmID" Type="Int32" />
           <Property Name="CurrentTicket" Type="Int32" />
           <Property Name="CurrentPounds" Type="Int32" />
-          <Property Name="LastDispersement" Type="DateTime" Precision="3" />
+          <Property Name="LastDisbursement" Type="DateTime" Precision="3" />
           <Property Name="LastLoaded" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="BinDispersements" Relationship="AppModel.FK_BinDispersements_Bins" FromRole="Bin" ToRole="BinDispersement" />
-          <NavigationProperty Name="BinLoads" Relationship="AppModel.FK_BinLoads_Bins" FromRole="Bin" ToRole="BinLoad" />
           <NavigationProperty Name="Farm" Relationship="AppModel.FK_Bins_Farms" FromRole="Bin" ToRole="Farm" />
           <NavigationProperty Name="Feedings" Relationship="AppModel.FK_Feedings_Bins" FromRole="Bin" ToRole="Feeding" />
+          <NavigationProperty Name="BinDisbursements" Relationship="AppModel.FK_BinDisbursements_Bins" FromRole="Bin" ToRole="BinDisbursement" />
+          <NavigationProperty Name="BinLoads" Relationship="AppModel.FK_BinLoads_Bins" FromRole="Bin" ToRole="BinLoad" />
         </EntityType>
-        <Association Name="FK_BinDispersements_Bins">
-          <End Type="AppModel.Bin" Role="Bin" Multiplicity="1" />
-          <End Type="AppModel.BinDispersement" Role="BinDispersement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Bin">
-              <PropertyRef Name="BinID" />
-            </Principal>
-            <Dependent Role="BinDispersement">
-              <PropertyRef Name="BinID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BinDispersements_Feedings">
-          <End Type="AppModel.Feeding" Role="Feeding" Multiplicity="0..1" />
-          <End Type="AppModel.BinDispersement" Role="BinDispersement" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Feeding">
-              <PropertyRef Name="FeedingId" />
-            </Principal>
-            <Dependent Role="BinDispersement">
-              <PropertyRef Name="FeedID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BinLoads_Bins">
-          <End Type="AppModel.Bin" Role="Bin" Multiplicity="1" />
-          <End Type="AppModel.BinLoad" Role="BinLoad" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Bin">
-              <PropertyRef Name="BinID" />
-            </Principal>
-            <Dependent Role="BinLoad">
-              <PropertyRef Name="BinID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Bins_Farms">
           <End Type="AppModel.Farm" Role="Farm" Multiplicity="0..1" />
           <End Type="AppModel.Bin" Role="Bin" Multiplicity="*" />
@@ -2986,6 +1978,95 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
               <PropertyRef Name="BinID" />
             </Principal>
             <Dependent Role="Feeding">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DisbursementType">
+          <Key>
+            <PropertyRef Name="DisbursementTypeID" />
+          </Key>
+          <Property Name="DisbursementTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DisbursementTypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BinDisbursements" Relationship="AppModel.FK__BinDisbur__Disbu__681373AD" FromRole="DisbursementType" ToRole="BinDisbursement" />
+        </EntityType>
+        <EntityType Name="BinDisbursement">
+          <Key>
+            <PropertyRef Name="BinDisbursementID" />
+          </Key>
+          <Property Name="BinDisbursementID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinID" Type="Int32" Nullable="false" />
+          <Property Name="TicketNumber" Type="Int32" Nullable="false" />
+          <Property Name="Pounds" Type="Int32" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="DisbursementType" Type="Int32" />
+          <Property Name="DisbursementDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FeedID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DisbursementType1" Relationship="AppModel.FK__BinDisbur__Disbu__681373AD" FromRole="BinDisbursement" ToRole="DisbursementType" />
+          <NavigationProperty Name="Feeding" Relationship="AppModel.FK__BinDisbur__FeedI__690797E6" FromRole="BinDisbursement" ToRole="Feeding" />
+          <NavigationProperty Name="Bin" Relationship="AppModel.FK_BinDisbursements_Bins" FromRole="BinDisbursement" ToRole="Bin" />
+        </EntityType>
+        <EntityType Name="BinLoad">
+          <Key>
+            <PropertyRef Name="BinTicketID" />
+          </Key>
+          <Property Name="BinTicketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinID" Type="Int32" Nullable="false" />
+          <Property Name="TicketNumber" Type="Int32" Nullable="false" />
+          <Property Name="DateLoaded" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PoundsLoaded" Type="Int32" Nullable="false" />
+          <Property Name="Vendor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bin" Relationship="AppModel.FK_BinLoads_Bins" FromRole="BinLoad" ToRole="Bin" />
+        </EntityType>
+        <Association Name="FK__BinDisbur__Disbu__681373AD">
+          <End Type="AppModel.DisbursementType" Role="DisbursementType" Multiplicity="0..1" />
+          <End Type="AppModel.BinDisbursement" Role="BinDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DisbursementType">
+              <PropertyRef Name="DisbursementTypeID" />
+            </Principal>
+            <Dependent Role="BinDisbursement">
+              <PropertyRef Name="DisbursementType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BinDisbur__FeedI__690797E6">
+          <End Type="AppModel.Feeding" Role="Feeding" Multiplicity="0..1" />
+          <End Type="AppModel.BinDisbursement" Role="BinDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Feeding">
+              <PropertyRef Name="FeedingId" />
+            </Principal>
+            <Dependent Role="BinDisbursement">
+              <PropertyRef Name="FeedID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinDisbursements_Bins">
+          <End Type="AppModel.Bin" Role="Bin" Multiplicity="1" />
+          <End Type="AppModel.BinDisbursement" Role="BinDisbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bin">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="BinDisbursement">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinLoads_Bins">
+          <End Type="AppModel.Bin" Role="Bin" Multiplicity="1" />
+          <End Type="AppModel.BinLoad" Role="BinLoad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bin">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="BinLoad">
               <PropertyRef Name="BinID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3378,397 +2459,48 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Adagio_O_OrderHeader">
-            <EntityTypeMapping TypeName="AppModel.Adagio_O_OrderHeader">
-              <MappingFragment StoreEntitySet="Adagio_O_OrderHeader">
-                <ScalarProperty Name="RNumAO80AHED" ColumnName="RNumAO80AHED" />
-                <ScalarProperty Name="MovedtoHistory" ColumnName="MovedtoHistory" />
-                <ScalarProperty Name="ForeignAmt" ColumnName="ForeignAmt" />
-                <ScalarProperty Name="DiscBase" ColumnName="DiscBase" />
-                <ScalarProperty Name="CashPayment" ColumnName="CashPayment" />
-                <ScalarProperty Name="TotalCostValue" ColumnName="TotalCostValue" />
-                <ScalarProperty Name="Tax5" ColumnName="Tax5" />
-                <ScalarProperty Name="Tax4" ColumnName="Tax4" />
-                <ScalarProperty Name="Tax3" ColumnName="Tax3" />
-                <ScalarProperty Name="Tax2" ColumnName="Tax2" />
-                <ScalarProperty Name="Tax1" ColumnName="Tax1" />
-                <ScalarProperty Name="InvDiscAmt" ColumnName="InvDiscAmt" />
-                <ScalarProperty Name="TotalDollarValue" ColumnName="TotalDollarValue" />
-                <ScalarProperty Name="TotalOrderValue" ColumnName="TotalOrderValue" />
-                <ScalarProperty Name="TaxByInv" ColumnName="TaxByInv" />
-                <ScalarProperty Name="RoundDept" ColumnName="RoundDept" />
-                <ScalarProperty Name="RoundAcct" ColumnName="RoundAcct" />
-                <ScalarProperty Name="DiscDept" ColumnName="DiscDept" />
-                <ScalarProperty Name="DiscAcct" ColumnName="DiscAcct" />
-                <ScalarProperty Name="ForeignDecimals" ColumnName="ForeignDecimals" />
-                <ScalarProperty Name="ForeignRateOverride" ColumnName="ForeignRateOverride" />
-                <ScalarProperty Name="RateOverride" ColumnName="RateOverride" />
-                <ScalarProperty Name="ForeignDateMatching" ColumnName="ForeignDateMatching" />
-                <ScalarProperty Name="ForeignRateRep" ColumnName="ForeignRateRep" />
-                <ScalarProperty Name="ForeignSpread" ColumnName="ForeignSpread" />
-                <ScalarProperty Name="ForeignRate" ColumnName="ForeignRate" />
-                <ScalarProperty Name="ForeignRateDate" ColumnName="ForeignRateDate" />
-                <ScalarProperty Name="ForeignSourceCurr" ColumnName="ForeignSourceCurr" />
-                <ScalarProperty Name="ForeignRateType" ColumnName="ForeignRateType" />
-                <ScalarProperty Name="ForeignHomeCurr" ColumnName="ForeignHomeCurr" />
-                <ScalarProperty Name="CashDisc" ColumnName="CashDisc" />
-                <ScalarProperty Name="PriceList" ColumnName="PriceList" />
-                <ScalarProperty Name="ShipFax" ColumnName="ShipFax" />
-                <ScalarProperty Name="ShipTelephone" ColumnName="ShipTelephone" />
-                <ScalarProperty Name="BillingFax" ColumnName="BillingFax" />
-                <ScalarProperty Name="BillingTelephone" ColumnName="BillingTelephone" />
-                <ScalarProperty Name="DateMatching" ColumnName="DateMatching" />
-                <ScalarProperty Name="RateRep" ColumnName="RateRep" />
-                <ScalarProperty Name="ExchgSpread" ColumnName="ExchgSpread" />
-                <ScalarProperty Name="ExchgRate" ColumnName="ExchgRate" />
-                <ScalarProperty Name="RateDate" ColumnName="RateDate" />
-                <ScalarProperty Name="SourceCurr" ColumnName="SourceCurr" />
-                <ScalarProperty Name="RateType" ColumnName="RateType" />
-                <ScalarProperty Name="HomeCurr" ColumnName="HomeCurr" />
-                <ScalarProperty Name="SourceDecimals" ColumnName="SourceDecimals" />
-                <ScalarProperty Name="TermsDisc" ColumnName="TermsDisc" />
-                <ScalarProperty Name="DateDisc" ColumnName="DateDisc" />
-                <ScalarProperty Name="DateDue" ColumnName="DateDue" />
-                <ScalarProperty Name="Cheque" ColumnName="Cheque" />
-                <ScalarProperty Name="CashDept" ColumnName="CashDept" />
-                <ScalarProperty Name="CashAcct" ColumnName="CashAcct" />
-                <ScalarProperty Name="Bank" ColumnName="Bank" />
-                <ScalarProperty Name="TermsCode" ColumnName="TermsCode" />
-                <ScalarProperty Name="ARPosting" ColumnName="ARPosting" />
-                <ScalarProperty Name="GLPosting" ColumnName="GLPosting" />
-                <ScalarProperty Name="LabelsCount" ColumnName="LabelsCount" />
-                <ScalarProperty Name="ShipZipPostal" ColumnName="ShipZipPostal" />
-                <ScalarProperty Name="ShipAddress4" ColumnName="ShipAddress4" />
-                <ScalarProperty Name="ShipAddress3" ColumnName="ShipAddress3" />
-                <ScalarProperty Name="ShipAddress2" ColumnName="ShipAddress2" />
-                <ScalarProperty Name="ShipAddress1" ColumnName="ShipAddress1" />
-                <ScalarProperty Name="ShipName" ColumnName="ShipName" />
-                <ScalarProperty Name="BillingZipPostal" ColumnName="BillingZipPostal" />
-                <ScalarProperty Name="BillingAddress4" ColumnName="BillingAddress4" />
-                <ScalarProperty Name="BillingAddress3" ColumnName="BillingAddress3" />
-                <ScalarProperty Name="BillingAddress2" ColumnName="BillingAddress2" />
-                <ScalarProperty Name="BillingAddress1" ColumnName="BillingAddress1" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CustDiscLevel" ColumnName="CustDiscLevel" />
-                <ScalarProperty Name="PreAR90Territory" ColumnName="PreAR90Territory" />
-                <ScalarProperty Name="CustTaxStatus" ColumnName="CustTaxStatus" />
-                <ScalarProperty Name="Salesperson" ColumnName="Salesperson" />
-                <ScalarProperty Name="Terms" ColumnName="Terms" />
-                <ScalarProperty Name="TaxExempt2" ColumnName="TaxExempt2" />
-                <ScalarProperty Name="TaxExempt1" ColumnName="TaxExempt1" />
-                <ScalarProperty Name="Contact" ColumnName="Contact" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
-                <ScalarProperty Name="InvDisc" ColumnName="InvDisc" />
-                <ScalarProperty Name="LinesinOrder" ColumnName="LinesinOrder" />
-                <ScalarProperty Name="TotalOrderValueHome" ColumnName="TotalOrderValueHome" />
-                <ScalarProperty Name="TaxGroup" ColumnName="TaxGroup" />
-                <ScalarProperty Name="FOBPoint" ColumnName="FOBPoint" />
-                <ScalarProperty Name="CreditApprovalPerson" ColumnName="CreditApprovalPerson" />
-                <ScalarProperty Name="Loc" ColumnName="Loc" />
-                <ScalarProperty Name="Comment2" ColumnName="Comment2" />
-                <ScalarProperty Name="Comment1" ColumnName="Comment1" />
-                <ScalarProperty Name="ShipVia" ColumnName="ShipVia" />
-                <ScalarProperty Name="ExpectedShipDate" ColumnName="ExpectedShipDate" />
-                <ScalarProperty Name="ShipmentDate" ColumnName="ShipmentDate" />
-                <ScalarProperty Name="InvDate" ColumnName="InvDate" />
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="OrderComplete" ColumnName="OrderComplete" />
-                <ScalarProperty Name="InventoryUpdated" ColumnName="InventoryUpdated" />
-                <ScalarProperty Name="Posting" ColumnName="Posting" />
-                <ScalarProperty Name="OnHold" ColumnName="OnHold" />
-                <ScalarProperty Name="CostedStatus" ColumnName="CostedStatus" />
-                <ScalarProperty Name="PrintStatus_T" ColumnName="PrintStatus_T" />
-                <ScalarProperty Name="OrderRelease" ColumnName="OrderRelease" />
-                <ScalarProperty Name="OrderType_T" ColumnName="OrderType_T" />
-                <ScalarProperty Name="Inv" ColumnName="Inv" />
-                <ScalarProperty Name="Order_2" ColumnName="Order_2" />
-                <ScalarProperty Name="Doc" ColumnName="Doc" />
-                <ScalarProperty Name="DocType_T" ColumnName="DocType_T" />
-                <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
-                <ScalarProperty Name="Cust" ColumnName="Cust" />
-                <ScalarProperty Name="CustPrefix" ColumnName="CustPrefix" />
-                <ScalarProperty Name="AppId" ColumnName="AppId" />
+          <EntitySetMapping Name="Bins">
+            <EntityTypeMapping TypeName="AppModel.Bin">
+              <MappingFragment StoreEntitySet="Bins">
+                <ScalarProperty Name="LastLoaded" ColumnName="LastLoaded" />
+                <ScalarProperty Name="LastDisbursement" ColumnName="LastDisbursement" />
+                <ScalarProperty Name="CurrentPounds" ColumnName="CurrentPounds" />
+                <ScalarProperty Name="CurrentTicket" ColumnName="CurrentTicket" />
+                <ScalarProperty Name="FarmID" ColumnName="FarmID" />
+                <ScalarProperty Name="BinName" ColumnName="BinName" />
+                <ScalarProperty Name="BinID" ColumnName="BinID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Adagio_N_Item">
-            <EntityTypeMapping TypeName="AppModel.Adagio_N_Item">
-              <MappingFragment StoreEntitySet="Adagio_N_Item">
-                <ScalarProperty Name="RNumAN81CITM" ColumnName="RNumAN81CITM" />
-                <ScalarProperty Name="ActiveItem" ColumnName="ActiveItem" />
-                <ScalarProperty Name="Selected" ColumnName="Selected" />
-                <ScalarProperty Name="QtyOnHand" ColumnName="QtyOnHand" />
-                <ScalarProperty Name="DiscMarkupAmt5" ColumnName="DiscMarkupAmt5" />
-                <ScalarProperty Name="DiscMarkupAmt4" ColumnName="DiscMarkupAmt4" />
-                <ScalarProperty Name="DiscMarkupAmt3" ColumnName="DiscMarkupAmt3" />
-                <ScalarProperty Name="DiscMarkupAmt2" ColumnName="DiscMarkupAmt2" />
-                <ScalarProperty Name="DiscMarkupAmt1" ColumnName="DiscMarkupAmt1" />
-                <ScalarProperty Name="DiscDecimals" ColumnName="DiscDecimals" />
-                <ScalarProperty Name="UnitsLostLY" ColumnName="UnitsLostLY" />
-                <ScalarProperty Name="UnitsLostYTD" ColumnName="UnitsLostYTD" />
-                <ScalarProperty Name="TotalCostsLY" ColumnName="TotalCostsLY" />
-                <ScalarProperty Name="TotalCostsYTD" ColumnName="TotalCostsYTD" />
-                <ScalarProperty Name="TotalCostsPeriod13" ColumnName="TotalCostsPeriod13" />
-                <ScalarProperty Name="TotalCostsPeriod12" ColumnName="TotalCostsPeriod12" />
-                <ScalarProperty Name="TotalCostsPeriod11" ColumnName="TotalCostsPeriod11" />
-                <ScalarProperty Name="TotalCostsPeriod10" ColumnName="TotalCostsPeriod10" />
-                <ScalarProperty Name="TotalCostsPeriod9" ColumnName="TotalCostsPeriod9" />
-                <ScalarProperty Name="TotalCostsPeriod8" ColumnName="TotalCostsPeriod8" />
-                <ScalarProperty Name="TotalCostsPeriod7" ColumnName="TotalCostsPeriod7" />
-                <ScalarProperty Name="TotalCostsPeriod6" ColumnName="TotalCostsPeriod6" />
-                <ScalarProperty Name="TotalCostsPeriod5" ColumnName="TotalCostsPeriod5" />
-                <ScalarProperty Name="TotalCostsPeriod4" ColumnName="TotalCostsPeriod4" />
-                <ScalarProperty Name="TotalCostsPeriod3" ColumnName="TotalCostsPeriod3" />
-                <ScalarProperty Name="TotalCostsPeriod2" ColumnName="TotalCostsPeriod2" />
-                <ScalarProperty Name="TotalCostsPeriod1" ColumnName="TotalCostsPeriod1" />
-                <ScalarProperty Name="AmtSoldLY" ColumnName="AmtSoldLY" />
-                <ScalarProperty Name="AmtSoldYTD" ColumnName="AmtSoldYTD" />
-                <ScalarProperty Name="AmtSoldPeriod13" ColumnName="AmtSoldPeriod13" />
-                <ScalarProperty Name="AmtSoldPeriod12" ColumnName="AmtSoldPeriod12" />
-                <ScalarProperty Name="AmtSoldPeriod11" ColumnName="AmtSoldPeriod11" />
-                <ScalarProperty Name="AmtSoldPeriod10" ColumnName="AmtSoldPeriod10" />
-                <ScalarProperty Name="AmtSoldPeriod9" ColumnName="AmtSoldPeriod9" />
-                <ScalarProperty Name="AmtSoldPeriod8" ColumnName="AmtSoldPeriod8" />
-                <ScalarProperty Name="AmtSoldPeriod7" ColumnName="AmtSoldPeriod7" />
-                <ScalarProperty Name="AmtSoldPeriod6" ColumnName="AmtSoldPeriod6" />
-                <ScalarProperty Name="AmtSoldPeriod5" ColumnName="AmtSoldPeriod5" />
-                <ScalarProperty Name="AmtSoldPeriod4" ColumnName="AmtSoldPeriod4" />
-                <ScalarProperty Name="AmtSoldPeriod3" ColumnName="AmtSoldPeriod3" />
-                <ScalarProperty Name="AmtSoldPeriod2" ColumnName="AmtSoldPeriod2" />
-                <ScalarProperty Name="AmtSoldPeriod1" ColumnName="AmtSoldPeriod1" />
-                <ScalarProperty Name="UnitsSoldLY" ColumnName="UnitsSoldLY" />
-                <ScalarProperty Name="UnitsSoldYTD" ColumnName="UnitsSoldYTD" />
-                <ScalarProperty Name="UnitsSoldPeriod13" ColumnName="UnitsSoldPeriod13" />
-                <ScalarProperty Name="UnitsSoldPeriod12" ColumnName="UnitsSoldPeriod12" />
-                <ScalarProperty Name="UnitsSoldPeriod11" ColumnName="UnitsSoldPeriod11" />
-                <ScalarProperty Name="UnitsSoldPeriod10" ColumnName="UnitsSoldPeriod10" />
-                <ScalarProperty Name="UnitsSoldPeriod9" ColumnName="UnitsSoldPeriod9" />
-                <ScalarProperty Name="UnitsSoldPeriod8" ColumnName="UnitsSoldPeriod8" />
-                <ScalarProperty Name="UnitsSoldPeriod7" ColumnName="UnitsSoldPeriod7" />
-                <ScalarProperty Name="UnitsSoldPeriod6" ColumnName="UnitsSoldPeriod6" />
-                <ScalarProperty Name="UnitsSoldPeriod5" ColumnName="UnitsSoldPeriod5" />
-                <ScalarProperty Name="UnitsSoldPeriod4" ColumnName="UnitsSoldPeriod4" />
-                <ScalarProperty Name="UnitsSoldPeriod3" ColumnName="UnitsSoldPeriod3" />
-                <ScalarProperty Name="UnitsSoldPeriod2" ColumnName="UnitsSoldPeriod2" />
-                <ScalarProperty Name="UnitsSoldPeriod1" ColumnName="UnitsSoldPeriod1" />
-                <ScalarProperty Name="ShipmentCount" ColumnName="ShipmentCount" />
-                <ScalarProperty Name="AvgUnitsShipped" ColumnName="AvgUnitsShipped" />
-                <ScalarProperty Name="AvgDaysBetweenShipments" ColumnName="AvgDaysBetweenShipments" />
-                <ScalarProperty Name="TotalCost5" ColumnName="TotalCost5" />
-                <ScalarProperty Name="TotalCost4" ColumnName="TotalCost4" />
-                <ScalarProperty Name="TotalCost3" ColumnName="TotalCost3" />
-                <ScalarProperty Name="TotalCost2" ColumnName="TotalCost2" />
-                <ScalarProperty Name="TotalCost1" ColumnName="TotalCost1" />
-                <ScalarProperty Name="QtyonHand5" ColumnName="QtyonHand5" />
-                <ScalarProperty Name="QtyonHand4" ColumnName="QtyonHand4" />
-                <ScalarProperty Name="QtyonHand3" ColumnName="QtyonHand3" />
-                <ScalarProperty Name="QtyonHand2" ColumnName="QtyonHand2" />
-                <ScalarProperty Name="QtyonHand1" ColumnName="QtyonHand1" />
-                <ScalarProperty Name="RcptDate5" ColumnName="RcptDate5" />
-                <ScalarProperty Name="RcptDate4" ColumnName="RcptDate4" />
-                <ScalarProperty Name="RcptDate3" ColumnName="RcptDate3" />
-                <ScalarProperty Name="RcptDate2" ColumnName="RcptDate2" />
-                <ScalarProperty Name="RcptDate1" ColumnName="RcptDate1" />
-                <ScalarProperty Name="Rcpt5" ColumnName="Rcpt5" />
-                <ScalarProperty Name="Rcpt4" ColumnName="Rcpt4" />
-                <ScalarProperty Name="Rcpt3" ColumnName="Rcpt3" />
-                <ScalarProperty Name="Rcpt2" ColumnName="Rcpt2" />
-                <ScalarProperty Name="Rcpt1" ColumnName="Rcpt1" />
-                <ScalarProperty Name="PrevRecentCost" ColumnName="PrevRecentCost" />
-                <ScalarProperty Name="PrevRecentCostDate" ColumnName="PrevRecentCostDate" />
-                <ScalarProperty Name="PrevStdCost" ColumnName="PrevStdCost" />
-                <ScalarProperty Name="PrevStdCostDate" ColumnName="PrevStdCostDate" />
-                <ScalarProperty Name="PrevPrice" ColumnName="PrevPrice" />
-                <ScalarProperty Name="PrevPriceChangeDate" ColumnName="PrevPriceChangeDate" />
-                <ScalarProperty Name="MarkupFactor" ColumnName="MarkupFactor" />
-                <ScalarProperty Name="MostRecentCost" ColumnName="MostRecentCost" />
-                <ScalarProperty Name="LastRcptDate" ColumnName="LastRcptDate" />
-                <ScalarProperty Name="LastShipmentDate" ColumnName="LastShipmentDate" />
-                <ScalarProperty Name="QtyShippednotCost" ColumnName="QtyShippednotCost" />
-                <ScalarProperty Name="QtyTempCommitted" ColumnName="QtyTempCommitted" />
-                <ScalarProperty Name="QtyonSO" ColumnName="QtyonSO" />
-                <ScalarProperty Name="QtyonPO" ColumnName="QtyonPO" />
-                <ScalarProperty Name="DiscMarkupQty5" ColumnName="DiscMarkupQty5" />
-                <ScalarProperty Name="DiscMarkupQty4" ColumnName="DiscMarkupQty4" />
-                <ScalarProperty Name="DiscMarkupQty3" ColumnName="DiscMarkupQty3" />
-                <ScalarProperty Name="DiscMarkupQty2" ColumnName="DiscMarkupQty2" />
-                <ScalarProperty Name="DiscMarkupQty1" ColumnName="DiscMarkupQty1" />
-                <ScalarProperty Name="DiscBase_T" ColumnName="DiscBase_T" />
-                <ScalarProperty Name="DiscFormat_T" ColumnName="DiscFormat_T" />
-                <ScalarProperty Name="DiscType_T" ColumnName="DiscType_T" />
-                <ScalarProperty Name="UserDefinedCost2" ColumnName="UserDefinedCost2" />
-                <ScalarProperty Name="UserDefinedCost1" ColumnName="UserDefinedCost1" />
-                <ScalarProperty Name="TaxStatus" ColumnName="TaxStatus" />
-                <ScalarProperty Name="CtrlAcctSet" ColumnName="CtrlAcctSet" />
-                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
-                <ScalarProperty Name="SaleEndDate" ColumnName="SaleEndDate" />
-                <ScalarProperty Name="SaleStartDate" ColumnName="SaleStartDate" />
-                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
-                <ScalarProperty Name="StdCost" ColumnName="StdCost" />
-                <ScalarProperty Name="PickingSeq" ColumnName="PickingSeq" />
-                <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
-                <ScalarProperty Name="AltFactor4" ColumnName="AltFactor4" />
-                <ScalarProperty Name="AltFactor3" ColumnName="AltFactor3" />
-                <ScalarProperty Name="AltFactor2" ColumnName="AltFactor2" />
-                <ScalarProperty Name="AltFactor1" ColumnName="AltFactor1" />
-                <ScalarProperty Name="PriceUnit" ColumnName="PriceUnit" />
-                <ScalarProperty Name="PurchaseUnit" ColumnName="PurchaseUnit" />
-                <ScalarProperty Name="AltUnit4" ColumnName="AltUnit4" />
-                <ScalarProperty Name="AltUnit3" ColumnName="AltUnit3" />
-                <ScalarProperty Name="AltUnit2" ColumnName="AltUnit2" />
-                <ScalarProperty Name="AltUnit1" ColumnName="AltUnit1" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="LayawayCounter" ColumnName="LayawayCounter" />
-                <ScalarProperty Name="SerialCount" ColumnName="SerialCount" />
-                <ScalarProperty Name="ItemsUsedinBOMCount" ColumnName="ItemsUsedinBOMCount" />
-                <ScalarProperty Name="StockItem" ColumnName="StockItem" />
-                <ScalarProperty Name="ReportGroup" ColumnName="ReportGroup" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Item2" ColumnName="Item2" />
-                <ScalarProperty Name="SetKey" ColumnName="SetKey" />
-                <ScalarProperty Name="Item" ColumnName="Item" />
-                <ScalarProperty Name="AppID" ColumnName="AppID" />
+          <EntitySetMapping Name="DisbursementTypes">
+            <EntityTypeMapping TypeName="AppModel.DisbursementType">
+              <MappingFragment StoreEntitySet="DisbursementTypes">
+                <ScalarProperty Name="DisbursementTypeName" ColumnName="DisbursementTypeName" />
+                <ScalarProperty Name="DisbursementTypeID" ColumnName="DisbursementTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Adagio_N_ItemLocation">
-            <EntityTypeMapping TypeName="AppModel.Adagio_N_ItemLocation">
-              <MappingFragment StoreEntitySet="Adagio_N_ItemLocation">
-                <ScalarProperty Name="RNumAN81CILO" ColumnName="RNumAN81CILO" />
-                <ScalarProperty Name="QtyShippednotCost" ColumnName="QtyShippednotCost" />
-                <ScalarProperty Name="QtyTempCommitted" ColumnName="QtyTempCommitted" />
-                <ScalarProperty Name="QtyonSO" ColumnName="QtyonSO" />
-                <ScalarProperty Name="QtyonPO" ColumnName="QtyonPO" />
-                <ScalarProperty Name="QtyonHandPlus" ColumnName="QtyonHandPlus" />
-                <ScalarProperty Name="CarriedinLoc" ColumnName="CarriedinLoc" />
-                <ScalarProperty Name="PickingSeq" ColumnName="PickingSeq" />
-                <ScalarProperty Name="Item2" ColumnName="Item2" />
-                <ScalarProperty Name="Loc" ColumnName="Loc" />
-                <ScalarProperty Name="Item" ColumnName="Item" />
-                <ScalarProperty Name="AppID" ColumnName="AppID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Adagio_O_OrderDetail">
-            <EntityTypeMapping TypeName="AppModel.Adagio_O_OrderDetail">
-              <MappingFragment StoreEntitySet="Adagio_O_OrderDetail">
-                <ScalarProperty Name="RNumAO80ALIN" ColumnName="RNumAO80ALIN" />
-                <ScalarProperty Name="MiscFiller" ColumnName="MiscFiller" />
-                <ScalarProperty Name="MiscQuantity" ColumnName="MiscQuantity" />
-                <ScalarProperty Name="MiscShortDescription" ColumnName="MiscShortDescription" />
-                <ScalarProperty Name="MiscBasePrice" ColumnName="MiscBasePrice" />
-                <ScalarProperty Name="MiscAmount" ColumnName="MiscAmount" />
-                <ScalarProperty Name="DExpectedShipDate" ColumnName="DExpectedShipDate" />
-                <ScalarProperty Name="Serial5" ColumnName="Serial5" />
-                <ScalarProperty Name="Serial4" ColumnName="Serial4" />
-                <ScalarProperty Name="Serial3" ColumnName="Serial3" />
-                <ScalarProperty Name="Serial2" ColumnName="Serial2" />
-                <ScalarProperty Name="Serial1" ColumnName="Serial1" />
-                <ScalarProperty Name="PriceFactor" ColumnName="PriceFactor" />
-                <ScalarProperty Name="ExtOrderPrice" ColumnName="ExtOrderPrice" />
-                <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
-                <ScalarProperty Name="DiscExtension" ColumnName="DiscExtension" />
-                <ScalarProperty Name="DiscAmt" ColumnName="DiscAmt" />
-                <ScalarProperty Name="DBase5" ColumnName="DBase5" />
-                <ScalarProperty Name="DBase4" ColumnName="DBase4" />
-                <ScalarProperty Name="DBase3" ColumnName="DBase3" />
-                <ScalarProperty Name="DBase2" ColumnName="DBase2" />
-                <ScalarProperty Name="DBase1" ColumnName="DBase1" />
-                <ScalarProperty Name="DTax5" ColumnName="DTax5" />
-                <ScalarProperty Name="DTax4" ColumnName="DTax4" />
-                <ScalarProperty Name="DTax3" ColumnName="DTax3" />
-                <ScalarProperty Name="DTax2" ColumnName="DTax2" />
-                <ScalarProperty Name="DTax1" ColumnName="DTax1" />
-                <ScalarProperty Name="TaxAmt" ColumnName="TaxAmt" />
-                <ScalarProperty Name="ExtCost" ColumnName="ExtCost" />
-                <ScalarProperty Name="ExtPrice" ColumnName="ExtPrice" />
-                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="UnitDecimals" ColumnName="UnitDecimals" />
-                <ScalarProperty Name="OrderedInPO" ColumnName="OrderedInPO" />
-                <ScalarProperty Name="PriceList" ColumnName="PriceList" />
-                <ScalarProperty Name="Decimals" ColumnName="Decimals" />
-                <ScalarProperty Name="Curr" ColumnName="Curr" />
-                <ScalarProperty Name="Complete" ColumnName="Complete" />
-                <ScalarProperty Name="Loc" ColumnName="Loc" />
-                <ScalarProperty Name="ShipStockingUnits" ColumnName="ShipStockingUnits" />
-                <ScalarProperty Name="ExtWeight" ColumnName="ExtWeight" />
-                <ScalarProperty Name="QtyBackordered" ColumnName="QtyBackordered" />
-                <ScalarProperty Name="QtyShipped" ColumnName="QtyShipped" />
-                <ScalarProperty Name="QtyShippedtoDate" ColumnName="QtyShippedtoDate" />
-                <ScalarProperty Name="QtyOrdered" ColumnName="QtyOrdered" />
-                <ScalarProperty Name="QtyOriginalOrdered" ColumnName="QtyOriginalOrdered" />
-                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
-                <ScalarProperty Name="UnitFactor" ColumnName="UnitFactor" />
-                <ScalarProperty Name="Commissionable" ColumnName="Commissionable" />
-                <ScalarProperty Name="TaxStatus" ColumnName="TaxStatus" />
-                <ScalarProperty Name="SerialCount" ColumnName="SerialCount" />
-                <ScalarProperty Name="ReturntoInventory" ColumnName="ReturntoInventory" />
-                <ScalarProperty Name="ExtensionOverride" ColumnName="ExtensionOverride" />
-                <ScalarProperty Name="PriceOverride" ColumnName="PriceOverride" />
-                <ScalarProperty Name="PriceUnit" ColumnName="PriceUnit" />
-                <ScalarProperty Name="DCategory" ColumnName="DCategory" />
-                <ScalarProperty Name="DiscLevel" ColumnName="DiscLevel" />
-                <ScalarProperty Name="PickingSeq" ColumnName="PickingSeq" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Item" ColumnName="Item" />
-                <ScalarProperty Name="LineType_T" ColumnName="LineType_T" />
-                <ScalarProperty Name="DDoc" ColumnName="DDoc" />
-                <ScalarProperty Name="DDocType_T" ColumnName="DDocType_T" />
-                <ScalarProperty Name="Line" ColumnName="Line" />
-                <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
-                <ScalarProperty Name="AppID" ColumnName="AppID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Samplings">
-            <EntityTypeMapping TypeName="AppModel.Sampling">
-              <MappingFragment StoreEntitySet="Samplings">
-                <ScalarProperty Name="pondid" ColumnName="pondid" />
-                <ScalarProperty Name="weight" ColumnName="weight" />
-                <ScalarProperty Name="codename" ColumnName="codename" />
-                <ScalarProperty Name="code2" ColumnName="code2" />
-                <ScalarProperty Name="regtime" ColumnName="regtime" />
-                <ScalarProperty Name="pondname" ColumnName="pondname" />
-                <ScalarProperty Name="shname" ColumnName="shname" />
-                <ScalarProperty Name="farmname" ColumnName="farmname" />
-                <ScalarProperty Name="code" ColumnName="code" />
-                <ScalarProperty Name="AppID" ColumnName="AppID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CurrentShippings">
-            <EntityTypeMapping TypeName="AppModel.CurrentShipping">
-              <MappingFragment StoreEntitySet="CurrentShipping">
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
-                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-                <ScalarProperty Name="AppID" ColumnName="AppID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BinDispersements">
-            <EntityTypeMapping TypeName="AppModel.BinDispersement">
-              <MappingFragment StoreEntitySet="BinDispersements">
+          <EntitySetMapping Name="BinDisbursements">
+            <EntityTypeMapping TypeName="AppModel.BinDisbursement">
+              <MappingFragment StoreEntitySet="BinDisbursements">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="FeedID" ColumnName="FeedID" />
-                <ScalarProperty Name="DispersementDate" ColumnName="DispersementDate" />
-                <ScalarProperty Name="DispersementType" ColumnName="DispersementType" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DisbursementDate" ColumnName="DisbursementDate" />
+                <ScalarProperty Name="DisbursementType" ColumnName="DisbursementType" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Pounds" ColumnName="Pounds" />
                 <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
                 <ScalarProperty Name="BinID" ColumnName="BinID" />
-                <ScalarProperty Name="BinDispersementID" ColumnName="BinDispersementID" />
+                <ScalarProperty Name="BinDisbursementID" ColumnName="BinDisbursementID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="BinLoads">
             <EntityTypeMapping TypeName="AppModel.BinLoad">
               <MappingFragment StoreEntitySet="BinLoads">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="Vendor" ColumnName="Vendor" />
                 <ScalarProperty Name="PoundsLoaded" ColumnName="PoundsLoaded" />
@@ -3776,19 +2508,6 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
                 <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
                 <ScalarProperty Name="BinID" ColumnName="BinID" />
                 <ScalarProperty Name="BinTicketID" ColumnName="BinTicketID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Bins">
-            <EntityTypeMapping TypeName="AppModel.Bin">
-              <MappingFragment StoreEntitySet="Bins">
-                <ScalarProperty Name="LastLoaded" ColumnName="LastLoaded" />
-                <ScalarProperty Name="LastDispersement" ColumnName="LastDispersement" />
-                <ScalarProperty Name="CurrentPounds" ColumnName="CurrentPounds" />
-                <ScalarProperty Name="CurrentTicket" ColumnName="CurrentTicket" />
-                <ScalarProperty Name="FarmID" ColumnName="FarmID" />
-                <ScalarProperty Name="BinName" ColumnName="BinName" />
-                <ScalarProperty Name="BinID" ColumnName="BinID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

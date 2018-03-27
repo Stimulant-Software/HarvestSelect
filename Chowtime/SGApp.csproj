@@ -159,7 +159,6 @@
     <Compile Include="Controllers\AbsenceController.cs" />
     <Compile Include="Controllers\AdagioDataController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
-    <Compile Include="Controllers\BinController.cs" />
     <Compile Include="Controllers\DepartmentTotalController.cs" />
     <Compile Include="Controllers\DowntimeController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
@@ -181,15 +180,12 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WeighBackController.cs" />
     <Compile Include="DTOs\AbsenceDTO.cs" />
-    <Compile Include="DTOs\Adagio_N_ItemDTO.cs" />
-    <Compile Include="DTOs\Adagio_N_ItemLocationDTO.cs" />
-    <Compile Include="DTOs\Adagio_O_OrderDetailDTO.cs" />
-    <Compile Include="DTOs\Adagio_O_OrderHeaderDTO.cs" />
-    <Compile Include="DTOs\BinDTO.cs" />
+    <Compile Include="DTOs\BinDisbursementDto.cs" />
+    <Compile Include="DTOs\BinDto.cs" />
+    <Compile Include="DTOs\BinLoadDto.cs" />
     <Compile Include="DTOs\BOLDTO.cs" />
     <Compile Include="DTOs\ChartDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
-    <Compile Include="DTOs\CurrentShippingDTO.cs" />
     <Compile Include="DTOs\DailyReportDTO.cs" />
     <Compile Include="DTOs\DepartmentDTO.cs" />
     <Compile Include="DTOs\DepartmentTotalDTO.cs" />
@@ -235,18 +231,6 @@
     <Compile Include="Models\EF\ADAGIOSalesStatitic.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EF\Adagio_N_Item.cs">
-      <DependentUpon>App.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EF\Adagio_N_ItemLocation.cs">
-      <DependentUpon>App.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EF\Adagio_O_OrderDetail.cs">
-      <DependentUpon>App.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\EF\Adagio_O_OrderHeader.cs">
-      <DependentUpon>App.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EF\AD_Groups.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
@@ -274,7 +258,7 @@
     <Compile Include="Models\EF\Bin.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EF\BinDispersement.cs">
+    <Compile Include="Models\EF\BinDisbursement.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\BinLoad.cs">
@@ -283,13 +267,13 @@
     <Compile Include="Models\EF\Company.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EF\CurrentShipping.cs">
-      <DependentUpon>App.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EF\Department.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\DepartmentTotal.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\DisbursementType.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\DownTime.cs">
@@ -340,9 +324,6 @@
     <Compile Include="Models\EF\Role.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\EF\Sampling.cs">
-      <DependentUpon>App.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EF\ShiftEnd.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
@@ -366,6 +347,8 @@
     <Compile Include="Models\Partials\AD_Product.Partial.cs" />
     <Compile Include="Models\Partials\AD_WeekData.Partial.cs" />
     <Compile Include="Models\Partials\Bin.Partial.cs" />
+    <Compile Include="Models\Partials\BinDisbursement.Partial.cs" />
+    <Compile Include="Models\Partials\BinLoad.Partial.cs" />
     <Compile Include="Models\Partials\Company.Partial.cs" />
     <Compile Include="Models\Partials\Department.Partial.cs" />
     <Compile Include="Models\Partials\DepartmentTotal.Partial.cs" />
@@ -391,6 +374,8 @@
     <Compile Include="Models\Partials\UserRole.Partial.cs" />
     <Compile Include="Models\Partials\Weighback.Partial.cs" />
     <Compile Include="Models\Validation\Absence_Metadata.cs" />
+    <Compile Include="Models\Validation\BinDisbursement_Metadata.cs" />
+    <Compile Include="Models\Validation\BinLoad_Metadata.cs" />
     <Compile Include="Models\Validation\Bin_Metadata.cs" />
     <Compile Include="Models\Validation\Company_Metadata.cs" />
     <Compile Include="Models\Validation\DepartmentTotal_Metadata.cs" />
@@ -528,6 +513,9 @@
       <LastGenOutput>App.cs</LastGenOutput>
     </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
+    <Content Include="Site\admin-bins.html" />
+    <Content Include="Site\scripts\admin-bins.js" />
+    <Content Include="Site\scripts\ct-binLoads.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -579,6 +567,7 @@
     <Content Include="Site\content\images\save.png" />
     <Content Include="Site\content\images\shift-end.png" />
     <Content Include="Site\content\images\yellow_body_bg.jpg" />
+    <Content Include="Site\ct-binLoads.html" />
     <Content Include="Site\ct-entry.html" />
     <Content Include="Site\ct-reports.html" />
     <Content Include="Site\op-bol-reports.html" />
@@ -602,7 +591,6 @@
     <Content Include="Site\scripts\HarvestSelectDashboards.js" />
     <Content Include="Site\scripts\highcharts.js" />
     <Content Include="Site\scripts\jquery-1.10.2.min.js" />
-    <Content Include="Site\scripts\jquery.sticky.js" />
     <Content Include="Site\scripts\moment.js" />
     <Content Include="Site\scripts\reports-menu.js" />
     <Content Include="Site\scripts\underscore.js" />

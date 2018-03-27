@@ -1139,7 +1139,7 @@ form .windows8 {
     #tablePrintOnly {
         display: block;
     }
-
+	
     header, #main_content, footer {
         display: none;
     }
@@ -1228,6 +1228,10 @@ form .windows8 {
     text-align: right;
 }
 
+#binsContainer, #binLoadData, #binLoads_priorHistory {
+	display: none;
+}
+
 .w150 {
     width: 150px;
 }
@@ -1235,4 +1239,4 @@ form .windows8 {
 
 
 #calendarModal { width: 90%; margin: 0 auto; top: 5%; left: 5%; z-index: -1; position: fixed; }
-#calendarModal.in { z-index: 3000; }
+#calendarModal.in { z-index: 3000; }s

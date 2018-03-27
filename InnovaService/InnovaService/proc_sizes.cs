@@ -19,30 +19,30 @@ namespace InnovaService
             this.proc_materials = new HashSet<proc_materials>();
         }
     
-        public int size { get; set; }
-        public string code { get; set; }
-        public string name { get; set; }
-        public string shname { get; set; }
-        public string extcode { get; set; }
-        public string pattern { get; set; }
-        public Nullable<int> dimension1 { get; set; }
-        public Nullable<int> dimension2 { get; set; }
-        public Nullable<int> dimension3 { get; set; }
-        public Nullable<int> dimension4 { get; set; }
-        public string description1 { get; set; }
-        public string description2 { get; set; }
-        public string description3 { get; set; }
-        public string description4 { get; set; }
-        public string description5 { get; set; }
-        public string description6 { get; set; }
-        public string description7 { get; set; }
-        public string description8 { get; set; }
-        public string xmldata { get; set; }
-        public Nullable<int> itgrsite { get; set; }
-        public string itgrstatus { get; set; }
-        public bool active { get; set; }
-        public Nullable<float> minweight { get; set; }
-        public Nullable<float> maxweight { get; set; }
+        //public int size { get; set; }
+        //public string code { get; set; }
+        //public string name { get; set; }
+        //public string shname { get; set; }
+        //public string extcode { get; set; }
+        //public string pattern { get; set; }
+        //public Nullable<int> dimension1 { get; set; }
+        //public Nullable<int> dimension2 { get; set; }
+        //public Nullable<int> dimension3 { get; set; }
+        //public Nullable<int> dimension4 { get; set; }
+        //public string description1 { get; set; }
+        //public string description2 { get; set; }
+        //public string description3 { get; set; }
+        //public string description4 { get; set; }
+        //public string description5 { get; set; }
+        //public string description6 { get; set; }
+        //public string description7 { get; set; }
+        //public string description8 { get; set; }
+        //public string xmldata { get; set; }
+        //public Nullable<int> itgrsite { get; set; }
+        //public string itgrstatus { get; set; }
+        //public bool active { get; set; }
+        //public Nullable<float> minweight { get; set; }
+        //public Nullable<float> maxweight { get; set; }
     
         public virtual ICollection<proc_materials> proc_materials { get; set; }
     }

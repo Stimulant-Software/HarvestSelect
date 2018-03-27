@@ -1,10 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using SGApp.Utility;
 using System;
 
-namespace SGApp.Models.Validation
-{
-    class Feeding_Metadata
+namespace SGApp.Models.Validation {
+	class Feeding_Metadata
     {
         [Required]
         [Key]

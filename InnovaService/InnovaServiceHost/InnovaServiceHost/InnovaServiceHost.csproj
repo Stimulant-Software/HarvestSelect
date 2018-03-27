@@ -63,13 +63,9 @@
       <HintPath>..\..\..\Chowtime\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Chowtime\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\..\Chowtime\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <!--<Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\..\Chowtime\packages\Newtonsoft.Json.5.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>-->
     <Reference Include="NReco.PdfGenerator, Version=1.1.12.0, Culture=neutral, PublicKeyToken=231663d50a41b451, processorArchitecture=MSIL">
       <HintPath>..\..\..\Chowtime\packages\NReco.PdfGenerator.1.1.12.0\lib\net20\NReco.PdfGenerator.dll</HintPath>
       <Private>True</Private>
@@ -78,8 +74,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Linq.Dynamic, Version=1.0.6132.35681, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\System.Linq.Dynamic.dll</HintPath>
+      <HintPath>..\..\..\Chowtime\packages\System.Linq.Dynamic.1.0.7\lib\net40\System.Linq.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -190,7 +185,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RemoteController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="DTOs\CurrentShipping.cs" />
     <Compile Include="DTOs\InnovaDto.cs" />
     <Compile Include="Formatters\JsonpFormatter.cs" />
     <Compile Include="Global.asax.cs">

@@ -44,7 +44,7 @@ namespace SGApp.DTOs
         }
 
 
-
+		public int BinID { get; set; }
 
 
 

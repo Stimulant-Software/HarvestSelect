@@ -129,7 +129,7 @@ namespace SGApp.Controllers
                 SGApp.DTOs.GenericDTO dto = new GenericDTO();
                 dto.StartDate = DateTime.Parse(cqDTO.Start_ProductionDate);
                 dto.EndDate = DateTime.Parse(cqDTO.End_ProductionDate);
-                List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
+                List<Sampling> samplingResults = new List<Sampling>();
                 PondRepository pr = new PondRepository();
                 var client = new HttpClient
                 {
@@ -147,7 +147,7 @@ namespace SGApp.Controllers
                     //samplingResults = samplingResultsArray.ToList();
                     //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                     //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-                    DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                    Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result);
                     samplingResults = samplingResultsArray.ToList();
                     samplingResults = samplingResults.GroupBy(x => x.farmPond).Select(group => group.First()).ToList();
                     //var result = response.Content.ReadAsStringAsync().Result;
@@ -163,7 +163,7 @@ namespace SGApp.Controllers
                 var col = new Collection<Dictionary<string, string>>();
                 data = data.OrderBy(x => x.ProductionDate).ToList();
 
-                foreach (DTOs.Sampling sam in samplingResults)
+                foreach (Sampling sam in samplingResults)
                 {
 
                     ProductionTotal fy = data.Where(x => x.Pond.InnovaName == sam.farmPond).FirstOrDefault();

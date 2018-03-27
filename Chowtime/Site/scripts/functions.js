@@ -14,7 +14,9 @@ $(function(){
             var u = localStorage['CTuser'], p = localStorage['CTpass'];
             $.when(refreshKey(u, p)).then(function () {
                 logoutControls();
-                if ($('#changeFarm').length) loadFarmsDDL(userID);
+				if ($('#changeFarm').length) {
+					loadFarmsDDL(userID);					
+				}
                 userNameFill();
                 
                 $('body > footer').load('footer.html', function () { $('body > footer').addClass(supports_html5_storage() ? localStorage['CTuserRole'] : readRemember('CTuserRole')) });
@@ -97,12 +99,25 @@ function loadFarmsDDL(userID, currentFarm){
                 } else {
                     ddlHtml += '<option value="' + farmList[i].FarmId + '">' + farmList[i].FarmName + '</option>';
                 }
-            }
+			}
             $('#changeFarm').empty().html(ddlHtml);
             if ($('#changePonds').length)
                 $('#changePonds').removeAttr('disabled');
         }
     });
+}
+
+function load_binSelectDDL(bins) {
+	var html = "<option selected>Select Bin</option>";
+	_(bins).each(function(value) {
+		html += '<option value="' + value.BinID + '">' + value.BinName + '</option>';
+	});
+	var $binSelect = $("#binSelect");
+	$binSelect.empty().html(html);
+	$binSelect.attr("disabled", false);
+	$binSelect.off().on("change", function() {
+		
+	});
 }
 
 function loadPondsDDL(userID, currentFarm, currentPond) {
@@ -132,7 +147,18 @@ function loadPondsDDL(userID, currentFarm, currentPond) {
 
 function numberCommas(x) { return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); }
 
-function alertError(errorMsg) { $('#alertMessage').html(errorMsg); $('body').append('<div id="lightboxBG" class="modal"></div>'); $('#alertBox, #lightboxBG').fadeIn('100', function(){ centerModal('#alertBox'); }); $('#closeAlert').unbind().click(function(e){ errorMsg = ""; $('#alertMessage').empty(); $('#alertBox, #lightboxBG').fadeOut('100'); $('#lightboxBG').remove(); }); }
+function alertError(errorMsg) {
+	$('#alertMessage').html(errorMsg); $('body').append('<div id="lightboxBG" class="modal"></div>');
+	$('#alertBox, #lightboxBG').fadeIn('100', function() {
+		 centerModal('#alertBox');
+	});
+	$('#closeAlert').unbind().click(function(e) {
+		errorMsg = "";
+		$('#alertMessage').empty();
+		$('#alertBox, #lightboxBG').fadeOut('100');
+		$('#lightboxBG').remove();
+	});
+}
 
 // Key check for security/validation
 function checkKey() { if (!_key) { alertError("Session key is undefined; please log in."); window.location.href = "login.html"; } }

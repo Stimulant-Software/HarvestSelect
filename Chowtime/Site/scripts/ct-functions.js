@@ -1,5 +1,6 @@
 showProgress('body', 'loadCTEntryPage');
 $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
+	var farmID, selectedDate;	
     if ($('body').hasClass('entry')) {
         $('#changeFarm').unbind().change(function () {
             showProgress('body', 'farmRepeater');
@@ -7,12 +8,15 @@ $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
             farmName = $('option:selected', this).text();
             $('#currentFarm').empty().text(farmName);
             var now = new Date(), searchQueryPonds = { "key": _key, "userID": userID, "FarmId": farmID, "StatusId": "1" }, dataPonds = JSON.stringify(searchQueryPonds), searchQueryFeeds = { "key": _key, "userID": userID, "FarmId": farmID, "CurrentTime": now }, dataFeeds = JSON.stringify(searchQueryFeeds), pondList = {}, feedlist = {};
-            $.when($.ajax('../api/Pond/PondList', {
+	        var bins;
+	        $.when($.ajax('../api/Pond/PondList', {
                 type: 'POST',
                 data: dataPonds,
                 success: function (msg) {
                     startTimer(msg['Key']);
-                    pondList = msg['ReturnData'];
+					pondList = msg['ReturnData'];
+					bins = msg["Bins"];
+	                load_binSelectDDL(bins);
                 }
             }), $.ajax('../api/Farm/FarmLast7Feeds', {
                 // also available: ../api/Farm/FarmFeedLast7Days
@@ -24,17 +28,17 @@ $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
                 }
             })).then(function () {
                 $('#farmContainer').attr('data-farmid', farmID);
-                farmRepeater(7, farmID, pondList, feedList)
-            });
+				farmRepeater(7, farmID, pondList, feedList);		        
+	        });
         });
-    } else {
-        var farmID, selectedDate;
+    } else {        
         $('#reportEndDate').change(function () {
             showProgress('body', 'farmRepeater');
             selectedDate = $(this).val() == "" ? new Date() : $(this).val();
             if (typeof farmID == "string" && farmID != "") {
                 var searchQueryPonds = { "key": _key, "userID": userID, "FarmId": farmID, "StatusId": "1" }, dataPonds = JSON.stringify(searchQueryPonds), searchQueryFeeds = { "key": _key, "userID": userID, "FarmId": farmID, "CurrentTime": selectedDate }, dataFeeds = JSON.stringify(searchQueryFeeds), pondList = {}, feedlist = {};
-                $.when($.ajax('../api/Pond/PondList', {
+				debugger;
+	            $.when($.ajax('../api/Pond/PondList', {
                     type: 'POST',
                     data: dataPonds,
                     success: function (msg) {
@@ -54,29 +58,45 @@ $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
             } 
         });
 
-        $('#changeFarm').change(function () {
+		$('#changeFarm').change(function () {
             showProgress('body', 'farmRepeater');
             farmID = $('option:selected', this).val();
             farmName = $('option:selected', this).text();
             $('#currentFarm').empty().text(farmName);
             $('#currentFarmPrint').empty().text(farmName);
             if (selectedDate != "") { selectedDate = new Date(); }
-            var searchQueryPonds = { "key": _key, "userID": userID, "FarmId": farmID, "StatusId": "1" }, dataPonds = JSON.stringify(searchQueryPonds), searchQueryFeeds = { "key": _key, "userID": userID, "FarmId": farmID, "CurrentTime": selectedDate }, dataFeeds = JSON.stringify(searchQueryFeeds), pondList = {}, feedlist = {};
-            $.when($.ajax('../api/Pond/PondList', {
+	        var searchQueryPonds = {
+		        "key": _key,
+		        "userID": userID,
+		        "FarmId": farmID,
+		        "StatusId": "1"
+	        };
+	        var dataPonds = JSON.stringify(searchQueryPonds);
+	        var searchQueryFeeds = {
+		        "key": _key,
+		        "userID": userID,
+		        "FarmId": farmID,
+		        "CurrentTime": selectedDate
+	        };
+	        var dataFeeds = JSON.stringify(searchQueryFeeds);
+			var pondList = {}, feedlist = {};
+			debugger;
+			$.when($.ajax('../api/Pond/PondList', {
                 type: 'POST',
                 data: dataPonds,
                 success: function (msg) {
-                    startTimer(msg['Key']);
-                    pondList = msg['ReturnData'];
-                }
-            }), $.ajax('../api/Farm/FarmFeedLast7Days', {
-                // also available: ../api/Farm/FarmLast7Feeds
-                type: 'POST',
-                data: dataFeeds,
-                success: function (msg) {
-                    startTimer(msg['Key']);
-                    feedList = (msg['ReturnData']);
-                }
+						startTimer(msg['Key']);
+						pondList = msg['ReturnData'];
+					}
+				}),
+	            $.ajax('../api/Farm/FarmFeedLast7Days', {
+					// also available: ../api/Farm/FarmLast7Feeds
+					type: 'POST',
+					data: dataFeeds,
+					success: function (msg) {
+						startTimer(msg['Key']);
+						feedList = (msg['ReturnData']);
+					}
             })).then(function () {
                 farmReportRepeater(7, farmID, pondList, feedList, selectedDate);
             });
@@ -242,21 +262,15 @@ function farmRepeater(numberOfDays, farmID, pondList, feedList) {
                 }
             }
         }
-        var farmTotalHtml = "";
-        farmTotalHtml += '<section ID="pondTotal" class="pond clear">' + farmTotalHeader(numberOfDays, headerFeedList) + '</section>';
-        farmTotalHtml += '<section ID="feedLot" class="pond clear"><span class="feed-lot">Feed Lot: <input /></span></section>';
-        var farmTotalHtml2 = "";
-        farmTotalHtml2 += '<section ID="farmPonds">' + farmPondsHtml + '</section>';
-        $('#feedLotDiv').empty().html(farmTotalHtml);
+
+        farmTotalHtml = '<section ID="pondTotal" class="pond clear">' + farmTotalHeader(numberOfDays, headerFeedList) + '</section>';
+        farmTotalHtml += '<section ID="farmPonds">' + farmPondsHtml + '</section>';
         $.when(
-            $('#farmContainer').empty().html(farmTotalHtml2)
+            $('#farmContainer').empty().html(farmTotalHtml)
         ).then(function () {
             bindButtons();
             hideProgress('farmRepeater');
-
-            $("#feedLotDiv").sticky({ topSpacing: 0, center: true, className: "hey" });
         });
-
     });
 }
 
@@ -325,9 +339,7 @@ function pondFeedsRepeater(numberOfDays, pondInfo, feedInfo){
     pondFeedsHtml += '<section class="' + classDays + '"><header><span class="last-seven-days"><strong>Last 7 Days Feeding:</strong> ' + feedsTotal + '</span><span class="last-harvest"><strong>Last Harvest Date:</strong> ' + lastHarvestDate + '</span></header>';
     pondFeedsHtml += pondDaysHtml;
     pondFeedsHtml += '<footer><span class="seven-day-avg"><strong>7 Day Feed Average:</strong> ' + Math.round(feedsTotal / numberOfDays) + '</span><span class="sale-pounds"><strong>Sale Pounds</strong>: ' + pondInfo.SalesPoundsSinceHarvest + '</span><span class="avg-feed-per-acre"><strong>Average Feed/Acre:</strong> ' + Math.round((feedsTotal / pondInfo.Size) / 7) + '</span><span class="total-feed-per-acre"><strong>Total Feed/Acre:</strong> ' + Math.round(pondInfo.PoundsFedSinceHarvest / pondInfo.Size) + '</span></footer></section>';
-    //pondFeedsHtml += disabled ? '<section class="summary"><header>Fed Today:</header><form><input type="number" disabled class="feed-amount" placeholder="N/A" title="Fed Today" required /><button class="submit-feed" disabled title="Only One Feed Per Day Allowed" data-pondid="' + pondInfo.PondId + '">Submit</button></form></section>' : '<section class="summary"><header>Fed Today:</header><form><input type="number" class="feed-amount" placeholder="0" title="Fed Today" required /><button class="submit-feed" data-pondid="' + pondInfo.PondId + '">Submit</button></form></section>';
-    pondFeedsHtml += '<section class="summary"><header>Fed Today:</header><form><input type="number" class="feed-amount" placeholder="0" title="Fed Today" required /><button class="submit-feed" data-pondid="' + pondInfo.PondId + '">Submit</button></form></section>';
-
+    pondFeedsHtml += disabled ? '<section class="summary"><header>Fed Today:</header><form><input type="number" disabled class="feed-amount" placeholder="N/A" title="Fed Today" required /><button class="submit-feed" disabled title="Only One Feed Per Day Allowed" data-pondid="' + pondInfo.PondId + '">Submit</button></form></section>' : '<section class="summary"><header>Fed Today:</header><form><input type="number" class="feed-amount" placeholder="0" title="Fed Today" required /><button class="submit-feed" data-pondid="' + pondInfo.PondId + '">Submit</button></form></section>';
     return pondFeedsHtml;
 }
 
@@ -369,18 +381,35 @@ function bindButtons(){
     });
 
     $('.submit-feed').unbind().click(function (e) {
-        e.preventDefault();
-        var pondID = $(this).data('pondid'), now = new Date(), currentSection = $(this).parent().parent().parent('.pond'), feedAmount = $(this).prev('.feed-amount').val(), pondInfo = {}, feedInfo = {}, numberOfDays = $(this).parent().parent().prev('section').hasClass('five-day') ? 5 : 7;
-        showProgress(currentSection, 'submitCTEntry');
-
-        var searchQuery = { "key": _key, "FeedDate": now.toLocaleDateString() + " " + now.toLocaleTimeString().split(" ")[0] + " " + now.toLocaleTimeString().split(" ")[1], "FeedingId": -1, "PondId": pondID, "PoundsFed": feedAmount }, data = JSON.stringify(searchQuery);
-        $.ajax('../api/Pond/FeedAddOrEdit', {
-            type: 'PUT', data: data,
-            success: function (msg) {
-                startTimer(msg['Key']); localStorage['CT_key'] = msg['Key']; 
-                reloadPond(pondID, currentSection, 'submitCTEntry');
-            }
-        });
+		e.preventDefault();
+	    var $binSelect = $("#binSelect");
+	    var currentSection = $(this).parent().parent().parent('.pond'),
+		    feedAmount = $(this).prev('.feed-amount').val();			
+		if ($binSelect.val() === "Select Bin") {
+			alertError("Please Select a Bin and try again");
+		} else if (feedAmount <= 0) {
+			alertError("Please enter an amount greater than zero and try again");
+		} else {
+			var pondID = $(this).data('pondid'), now = new Date();
+			var pondInfo = {},
+				feedInfo = {},
+				binId = $binSelect.val();
+				numberOfDays = $(this).parent().parent().prev('section').hasClass('five-day') ? 5 : 7;
+			showProgress(currentSection, 'submitCTEntry');
+			var searchQuery = {
+				"key": _key, "FeedDate": now.toLocaleDateString() + " " + now.toLocaleTimeString().split(" ")[0] + " " + now.toLocaleTimeString().split(" ")[1],
+				"FeedingId": -1,
+				"PondId": pondID, "PoundsFed": feedAmount,
+				"BinID": binId
+			    }, data = JSON.stringify(searchQuery);
+			$.ajax('../api/Pond/FeedAddOrEdit', {
+				type: 'PUT', data: data,
+				success: function (msg) {
+					startTimer(msg['Key']); localStorage['CT_key'] = msg['Key'];
+					reloadPond(pondID, currentSection, 'submitCTEntry');
+				}
+			});	
+		}        
     });
 
     $('.cancel').unbind().click(function (e) { e.preventDefault(); resetFeedModal(); closeAdminModal(); }); 

@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Airtime</title>
+	<link href="content/global.css" rel="stylesheet" type="text/css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+	</script>
+</head>
+<body>
+	<header>
+		<h1>ChowTime</h1>
+		<nav>
+			<ol>
+				<li><a href="ct-entry.html">Enter Feed Data</a></li>
+				<li><a href="ct-reports.html">Reports</a></li>
+				<li><a href="ct-binLoads.html">Enter Bin Data</a></li>
+				<li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+			</ol>
+		</nav>
+	</header>
+
+	<section id="binLoads_mainContent">
+		<header class="farm">
+			<h2>Current Farm: <span id="binLoads_currentFarm"></span></h2>
+			<label>Farm: </label><select id="binLoads_changeFarm"></select>
+			<label>Select Bin:</label><select id="binLoads_currentBin"></select>
+		</header>
+		<section id="binsContainer" style="background-color: #698591;
+	                                        width: 850px; border: 1px solid #000;
+	                                                                   margin: 10px auto; 
+	                                                                   border-radius: 4px;
+	                                                                   padding: 10px 20px">
+			<section id="binData" style="text-align: justify;">
+				<label style="color: #fff;">Current Ticket#:</label>
+				<label id="binLoads_currentTicket" style="color: #fff; margin-left: 3px;"></label>
+				<label style="color: #fff;margin-left: 10px;">Current Pounds:</label>
+				<label id="binLoads_currentPounds" style="color: #fff;margin-left: 3px;"></label>
+				<label style="color: #fff;margin-left: 10px;">Last Disbursement:</label>
+				<label id="binLoads_lastDisbursement" style="color: #fff; margin-left: 3px;"></label>
+				<label style="color: #fff;margin-left: 10px;">Last Loaded:</label>
+				<label id="binLoads_lastLoaded" style="color: #fff;margin-left: 3px;"></label>
+				<input type="button" id="binLoads_viewHistory" value="Prior Loads" style="margin-left: 4px;padding: 10px 10px; font-weight: bold; border-radius: 10px; color: #000;" />
+			</section>			
+		</section>
+		<section id="binLoadData">
+			<div id="binLoadElements" style="border: 1px solid #000; width: 850px; margin: 10px auto; padding: 10px 20px; display: block;">
+				<div class="row">
+					<label for="binLoads_newTicketNumber">Ticket Number:</label>
+					<input type="number" id="binLoads_newTicketNumber" style="width: 100px;"/>
+					<label for="binLoads_dateLoaded">Date Loaded:</label>
+					<input type="date" id="binLoads_dateLoaded" style="width: 200px; padding: 2px;"/>
+					<label for="binLoads_poundsLoaded">Pounds Loaded:</label>
+					<input type="number" id="binLoads_poundsLoaded" style="width: 100px;"/>
+				</div>
+				<div class="row">
+					<label for="binLoads_vendor">Vendor:</label>
+					<input type="text" id="binLoads_vendor"/>
+					<label for="binLoads_note">Note:</label>
+					<input type="text" id="binLoads_note" style="width: 420px;"/>
+					<input type="button" id="binLoads_save" value="Submit" style="padding: 10px 10px; font-weight: bold; border-radius: 10px; color: #000;"/>
+				</div>
+			</div>
+		</section>
+		<section id="binLoads_priorHistory" style="width: 850px;border: 1px solid rgb(0, 0, 0);margin: 10px auto;border-radius: 4px;padding: 10px 20px;display: block;">
+			<table id="binLoads_historyTable">
+				<thead>
+					<tr>
+						<th>Bin Ticket ID</th>
+						<th>Bin ID</th>
+						<th>Ticket #</th>
+						<th>Date Loaded</th>
+						<th>Pounds Loaded</th>
+						<th>Vendor</th>
+						<th>Note</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</table>
+			<input type="button" id="binLoads_movePrevious" value="Previous" />
+			<input type="button" id="binLoads_moveNext" value="Next" />
+		</section>
+	</section>
+
+	<footer></footer>
+
+	<section id="alertBox" class="modal">
+		<i class="fa fa-exclamation-circle"></i>
+		<div id="alertMessage"></div>
+		<fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+	</section>
+
+	<script src="scripts/underscore.min.js"></script>
+	<script type="text/javascript" src="scripts/functions.js"></script>
+	<script type="text/javascript" src="scripts/ct-functions.js"></script>
+	<script type="text/javascript" src="scripts/highcharts.js"></script>
+	<script type="text/javascript" src="scripts/exporting.js"></script>
+	<script src="scripts/ct-binLoads.js"></script>
+</body>
+</html>

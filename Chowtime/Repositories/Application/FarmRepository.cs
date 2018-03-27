@@ -38,7 +38,11 @@ namespace SGApp.Repository.Application
             return entity;
         }
 
-        protected override Farm UpdateRecord(Farm entity)
+		internal List<UserFarm> GetUserFarmsWithBins(int userId, int statusId) {
+			return DbContext.UserFarms.Include("Farm.Bins").Where(x => x.UserId == userId && x.StatusId == statusId && x.Farm.StatusId == statusId).ToList();
+		}
+
+		protected override Farm UpdateRecord(Farm entity)
         {
             DbContext.SaveChanges();
             return entity;
@@ -47,7 +51,7 @@ namespace SGApp.Repository.Application
 
         public override List<Farm> GetByPredicate(string predicate)
         {
-            var iq = DbContext.Farms.AsQueryable();
+            var iq = DbContext.Farms.Include("Bins").AsQueryable();
             return predicate.Length > 0 ? iq.Where(predicate, null).ToList() : iq.ToList();
         }
 

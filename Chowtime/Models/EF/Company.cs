@@ -16,7 +16,7 @@ namespace SGApp.Models.EF
     {
         public Company()
         {
-            this.Users = new HashSet<User>();
+            this.Users = new HashSet<SGApp.Models.EF.User>();
             this.Farms = new HashSet<Farm>();
         }
     

@@ -30,8 +30,5 @@ namespace InnovaService
         public virtual DbSet<proc_lots> proc_lots { get; set; }
         public virtual DbSet<proc_materials> proc_materials { get; set; }
         public virtual DbSet<proc_packs> proc_packs { get; set; }
-        public virtual DbSet<proc_invstatus> proc_invstatus { get; set; }
-        public virtual DbSet<proc_orderl> proc_orderl { get; set; }
-        public virtual DbSet<proc_orders> proc_orders { get; set; }
     }
 }
