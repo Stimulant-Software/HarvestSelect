@@ -36,8 +36,9 @@
 				type: 'POST',
 				data: data,
 				success: function(msg) {
-					//localStorage['CT_key'] = msg['Key'];
-					//startTimer(msg['Key']);
+					localStorage['CT_key'] = msg['Key'];
+					startTimer(msg['Key']);
+                    console.log("I was here");
 					binList = msg['Bins'];
 				}
 		})).then(function () {
