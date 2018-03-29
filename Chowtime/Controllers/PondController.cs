@@ -505,12 +505,12 @@ namespace SGApp.Controllers
                 {
                     if (NEFeedingId == -1)
                     {
-                        //  creating new Pond record   
+                        //  creating new Feeding record   
                         return ProcessNewFeedRecord(Request, uDto, key, companyId, UserId);
                     }
                     else
                     {
-                        //  editing existing Pond record  
+                        //  editing existing Feeding record  
                         return ProcessExistingFeedRecord(Request, uDto, NEFeedingId, key, companyId, UserId);
                     }
                 }
@@ -715,6 +715,7 @@ namespace SGApp.Controllers
             o2 = ur.Save(o2);
 			var br = new BinRepository();
 	        var binDisb = br.GetNewBinDisbursementRecord();
+	        binDisb.DateCreated = DateTime.Now;
 	        var disbType = br.GetDisbursementType("Routine Feeding");
 	        var ticketNbr = br.GetLastBinLoadTicketNumber(uDto.BinID);
 	        if (ticketNbr == 0) {
@@ -723,7 +724,7 @@ namespace SGApp.Controllers
 	        }
 			var dto = new BinDisbursementDto() {
 				BinID = uDto.BinID,
-				TicketNumber = ticketNbr,
+				TicketNumber = ticketNbr,				
 				Pounds = int.Parse(uDto.PoundsFed),
 				Note = "Record created from daily feed disbursement input screen",
 				DisbursementType = disbType,
@@ -796,11 +797,22 @@ namespace SGApp.Controllers
             {
                 return ProcessValidationErrors(request, validationErrors, key);
             }
-            //  no validation errors...
-            o2r.Save(o2);
+			//  no validation errors...
+	        var binDisb = o2r.GetBinDisbursement(o2.FeedingId);
+	        if (binDisb != null) {
+		        //	there is a BinDisbursement record which has to be modified
+		        binDisb.Pounds = o2.PoundsFed;
+		        binDisb.UserID = UserId; 
+		        o2r.SaveChanges();
+				var br = new BinRepository();
+				br.UpdateBinCurrentPounds(null, binDisb);
+	        }
+	        else {
+				//	there is no BinDisbursement record to mofify
+				o2r.SaveChanges();
+			}
             cqDto.Key = key;
             return request.CreateResponse(HttpStatusCode.Accepted, cqDto);
-
         }
 
         private HttpResponseMessage ChangePondStatus(HttpRequestMessage request, PondDTO cqDto, int contactId, string key, int companyId, int UserId)
