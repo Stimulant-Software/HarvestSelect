@@ -1,22 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Linq.Dynamic;
-using System.Security.Cryptography;
-using System.Text;
-using SGApp.Utility;
 using SGApp.Models.EF;
-using SGApp.Models.Common;
-using System.Web;
 using System.Data.Objects;
 
-namespace SGApp.Repository.Application
-{
-    public class FarmRepository : RepositoryBase<Farm>
+namespace SGApp.Repository.Application {
+	public class FarmRepository : RepositoryBase<Farm>
     {
         public override System.Linq.IQueryable<Farm> EntityCollection
         {
@@ -37,6 +28,10 @@ namespace SGApp.Repository.Application
             DbContext.SaveChanges();
             return entity;
         }
+
+		internal List<Farm> GetAllFarms() {
+			return DbContext.Farms.Where(x => x.StatusId == 1).ToList();
+		}
 
 		internal List<UserFarm> GetUserFarmsWithBins(int userId, int statusId) {
 			return DbContext.UserFarms.Include("Farm.Bins").Where(x => x.UserId == userId && x.StatusId == statusId && x.Farm.StatusId == statusId).ToList();

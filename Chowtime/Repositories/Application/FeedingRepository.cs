@@ -86,6 +86,14 @@ namespace SGApp.Repository.Application {
 
             return DbContext.Feedings.Where(x => x.Pond.FarmId == farmid).OrderByDescending(x => x.FeedDate).Take(7).ToList();
         }
+
+	    public BinDisbursement GetBinDisbursement(int feedingId) {
+		    return DbContext.BinDisbursements.SingleOrDefault(x => x.FeedID == feedingId);
+	    }
+
+	    public void SaveChanges() {
+		    DbContext.SaveChanges();
+	    }
     }
 
 

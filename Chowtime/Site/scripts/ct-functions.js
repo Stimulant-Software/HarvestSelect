@@ -380,7 +380,7 @@ function bindButtons(){
         });
     });
 
-    $('.submit-feed').unbind().click(function (e) {
+	$('.submit-feed').unbind().click(function (e) {
 		e.preventDefault();
 	    var $binSelect = $("#binSelect");
 	    var currentSection = $(this).parent().parent().parent('.pond'),
@@ -394,14 +394,14 @@ function bindButtons(){
 			var pondInfo = {},
 				feedInfo = {},
 				binId = $binSelect.val();
-				numberOfDays = $(this).parent().parent().prev('section').hasClass('five-day') ? 5 : 7;
+			numberOfDays = $(this).parent().parent().prev('section').hasClass('five-day') ? 5 : 7;
 			showProgress(currentSection, 'submitCTEntry');
 			var searchQuery = {
 				"key": _key, "FeedDate": now.toLocaleDateString() + " " + now.toLocaleTimeString().split(" ")[0] + " " + now.toLocaleTimeString().split(" ")[1],
 				"FeedingId": -1,
 				"PondId": pondID, "PoundsFed": feedAmount,
 				"BinID": binId
-			    }, data = JSON.stringify(searchQuery);
+			}, data = JSON.stringify(searchQuery);
 			$.ajax('../api/Pond/FeedAddOrEdit', {
 				type: 'PUT', data: data,
 				success: function (msg) {
@@ -416,12 +416,12 @@ function bindButtons(){
 }
 
 function bindEditButtons(numberOfDays, currentSection) {
-    $('#submitEditFeed').unbind().click(function (e) {
+	$('#submitEditFeed').unbind().click(function (e) {
         e.preventDefault();
         var now = new Date(), pondID = $('#pondID').val(), feedDate = $('#feedDate').val(), feedID = $('#feedID').val(), feedAmount = $('#poundsFed').val(), pondInfo = {};
         showProgress('#editFeedModal', 'submitCTEdit');
-
-        var searchQuery = { "key": _key, "FeedDate": feedDate, "FeedingId": feedID, "PoundsFed": feedAmount, "PondId": pondID }, data = JSON.stringify(searchQuery);
+		var binId = $("#binSelect").val();
+        var searchQuery = { "key": _key, "BinID": binId, "FeedDate": feedDate, "FeedingId": feedID, "PoundsFed": feedAmount, "PondId": pondID }, data = JSON.stringify(searchQuery);
         $.ajax('../api/Pond/FeedAddOrEdit', {
             type: 'PUT', data: data,
             success: function (msg) {
