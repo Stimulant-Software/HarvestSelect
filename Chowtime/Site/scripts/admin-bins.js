@@ -97,6 +97,10 @@
 				success: function(msg) {
 					localStorage['CT_key'] = msg['Key'];
 					startTimer(msg['Key']);
+<<<<<<< HEAD
+                    console.log("I was here");
+=======
+>>>>>>> bacf4134831926a7584fef1245e06d302e7b78b8
 					binList = msg['Bins'];
 				}
 		})).then(function () {
