@@ -235,7 +235,9 @@
 		$binLoads_save = $("#binLoads_save");
 		$binLoads_historyTable = $("#binLoads_historyTable");
 		$binLoads_movePrevious = $("#binLoads_movePrevious");
+		$binLoads_movePrevious.hide();
 		$binLoads_moveNext = $("#binLoads_moveNext");
+		$binLoads_moveNext.hide();
 		$alertBox = $("#alertBox");
 		loadFarms();
 		wireUpEvents();

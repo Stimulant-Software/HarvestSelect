@@ -80,7 +80,6 @@ $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
 	        };
 	        var dataFeeds = JSON.stringify(searchQueryFeeds);
 			var pondList = {}, feedlist = {};
-			debugger;
 			$.when($.ajax('../api/Pond/PondList', {
                 type: 'POST',
                 data: dataPonds,

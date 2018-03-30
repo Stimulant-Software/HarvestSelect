@@ -43,7 +43,7 @@
 				<label id="binLoads_lastDisbursement" style="color: #fff; margin-left: 3px;"></label>
 				<label style="color: #fff;margin-left: 10px;">Last Loaded:</label>
 				<label id="binLoads_lastLoaded" style="color: #fff;margin-left: 3px;"></label>
-				<input type="button" id="binLoads_viewHistory" value="Prior Loads" style="margin-left: 4px;padding: 10px 10px; font-weight: bold; border-radius: 10px; color: #000;" />
+				<input type="button" id="binLoads_viewHistory" value="Prior 10 Loads" style="margin-left: 4px;padding: 10px 10px; font-weight: bold; border-radius: 10px; color: #000;" />
 			</section>			
 		</section>
 		<section id="binLoadData">
@@ -66,8 +66,8 @@
 			</div>
 		</section>
 		<section id="binLoads_priorHistory" style="width: 850px;border: 1px solid rgb(0, 0, 0);margin: 10px auto;border-radius: 4px;padding: 10px 20px;display: block;">
-			<table id="binLoads_historyTable">
-				<thead>
+			<table id="binLoads_historyTable" style="width: 100%;">
+				<thead style="background-color: #698591; color:#fff">
 					<tr>
 						<th>Bin Ticket ID</th>
 						<th>Bin ID</th>
