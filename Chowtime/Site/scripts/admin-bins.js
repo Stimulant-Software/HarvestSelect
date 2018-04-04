@@ -1,5 +1,6 @@
 ﻿(function () {
 	var $adminBins_modalHeader;
+	var $adminBins_header;
 	var $adminBinsBody;
 	var $addNewBin;
 	var $addNewBinModal;
@@ -58,7 +59,7 @@
 						startTimer(msg['Key']);
 						bin = {};
 						_(binList).find(function(value) {
-							if (value.BinID.toString() === msg["BinID"]) {
+							if (value.BinID.toString() === msg["BinID"].toString()) {
 								value.BinName = msg["BinName"];
 								value.FarmID = msg["FarmID"];
 								value.CurrentTicket = msg["CurrentTicket"];
@@ -68,7 +69,7 @@
 							}
 						});
 						closeAdminModal();
-						//$("#lightboxBG").remove();						
+						reloadBinListItems();
 					}
 				});
 			}
@@ -99,40 +100,41 @@
 					binList = msg['Bins'];
 				}
 		})).then(function () {
-			var html = '';
-			if (binList.length > 0) {
-				$adminBins_noActiveBins.remove();
-			}
-			_(binList).each(function(value) {
-				html += '<li data-binid="' + value.BinID + '">';
-				html += '<span>' + value.BinName + '</span>';
-				html += '<span style="margin-left:10px;width:250px;">' + "Assigned to Farm:  " + getFarmName(value.FarmID) + '</span>';
-				html += '<input data-binid="' + value.BinID + '" type="button" value="Edit" /></li>';
-			});
-			$('ol.active').append(html);
-			$('ol.active').find("input").each(function () {
-				var $this = $(this);
-				$this.off().on("click",
-					function (e) {
-						var binId = $this.data("binid");
-						var qry = JSON.stringify({
-							"Key": localStorage.getItem("CT_key"),
-							"BinID": binId
-						});
-						$.when($.ajax('../api/Farm/GetBinInfo', {
-							type: 'POST',
-							data: qry,
-							success: function (msg) {
-								localStorage['CT_key'] = msg['Key'];
-								startTimer(msg['Key']);
-								bin = msg.Bins[0];
-							}
-						})).then(function () {
-							editBin();
-						});
-					}
-				);
-			});
+			reloadBinListItems();
+			//var html = '';
+			//if (binList.length > 0) {
+			//	$adminBins_noActiveBins.remove();
+			//}
+			//_(binList).each(function(value) {
+			//	html += '<li data-binid="' + value.BinID + '">';
+			//	html += '<span>' + value.BinName + '</span>';
+			//	html += '<span style="margin-left:10px;width:250px;">' + "Assigned to Farm:  " + getFarmName(value.FarmID) + '</span>';
+			//	html += '<input data-binid="' + value.BinID + '" type="button" value="Edit" /></li>';
+			//});
+			//$('ol.active').append(html);
+			//$('ol.active').find("input").each(function () {
+			//	var $this = $(this);
+			//	$this.off().on("click",
+			//		function (e) {
+			//			var binId = $this.data("binid");
+			//			var qry = JSON.stringify({
+			//				"Key": localStorage.getItem("CT_key"),
+			//				"BinID": binId
+			//			});
+			//			$.when($.ajax('../api/Farm/GetBinInfo', {
+			//				type: 'POST',
+			//				data: qry,
+			//				success: function (msg) {
+			//					localStorage['CT_key'] = msg['Key'];
+			//					startTimer(msg['Key']);
+			//					bin = msg.Bins[0];
+			//				}
+			//			})).then(function () {
+			//				editBin();
+			//			});
+			//		}
+			//	);
+			//});
 		});
 	}
 
@@ -166,6 +168,49 @@
 			});
 			$adminBins_farmSelect.empty().html(html);
 		}
+	}
+
+	function reloadBinListItems() {
+		if (binList.length > 0) {
+			$adminBins_noActiveBins.remove();
+		}
+		$("ol.active li").each(function () {
+			var $this = $(this);
+			if ($this.attr("id") !== "adminBins_header") {
+				$this.remove();
+			}
+		});
+		var html = '';
+		_(binList).each(function (value) {
+			html += '<li data-binid="' + value.BinID + '">';
+			html += '<span>' + value.BinName + '</span>';
+			html += '<span style="margin-left:10px;width:250px;">' + "Assigned to Farm:  " + getFarmName(value.FarmID) + '</span>';
+			html += '<input data-binid="' + value.BinID + '" type="button" value="Edit" /></li>';
+		});
+		$('ol.active').append(html);
+		$('ol.active').find("input").each(function () {
+			var $this = $(this);
+			$this.off().on("click",
+				function (e) {
+					var binId = $this.data("binid");
+					var qry = JSON.stringify({
+						"Key": localStorage.getItem("CT_key"),
+						"BinID": binId
+					});
+					$.when($.ajax('../api/Farm/GetBinInfo', {
+						type: 'POST',
+						data: qry,
+						success: function (msg) {
+							localStorage['CT_key'] = msg['Key'];
+							startTimer(msg['Key']);
+							bin = msg.Bins[0];
+						}
+					})).then(function () {
+						editBin();
+					});
+				}
+			);
+		});
 	}
 
 	function showBin() {
@@ -207,6 +252,7 @@
 						localStorage['CT_key'] = msg['Key'];
 						startTimer(msg['Key']);
 						farmList = msg['ReturnData'];
+						debugger;
 					}
 				})).then(function () {
 					var html = '<option value="0">Select Farm</option>';
@@ -221,6 +267,7 @@
 
 	(function () {
 		$adminBinsBody = $("#adminBinsBody");
+		$adminBins_header = $("#adminBins_header");
 		$adminBins_modalHeader = $("#adminBins_modalHeader");
 		$addNewBin = $("#addNewBin");
 		$addNewBinModal = $("#addNewBinModal");

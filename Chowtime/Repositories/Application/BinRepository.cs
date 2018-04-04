@@ -110,7 +110,7 @@ namespace SGApp.Repository.Application {
 		}
 
 		internal List<BinLoad> GetBinLoads(int binId, int skip) {
-			return DbContext.BinLoads.Where(x => x.BinID == binId).OrderByDescending(x => x.BinID).Skip(skip).Take(10).ToList();
+			return DbContext.BinLoads.Where(x => x.BinID == binId).OrderByDescending(x => x.DateLoaded).Skip(skip).Take(10).ToList();
 		}
 
 		public Bin GetBinData(int binId) {
