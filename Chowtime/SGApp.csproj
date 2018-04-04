@@ -180,16 +180,24 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WeighBackController.cs" />
     <Compile Include="DTOs\AbsenceDTO.cs" />
+    <Compile Include="DTOs\Adagio_N_ItemDTO.cs" />
+    <Compile Include="DTOs\Adagio_N_ItemLocationDTO.cs" />
+    <Compile Include="DTOs\Adagio_O_OrderDetailDTO.cs" />
+    <Compile Include="DTOs\Adagio_O_OrderHeaderDTO.cs" />
     <Compile Include="DTOs\BinDisbursementDto.cs" />
     <Compile Include="DTOs\BinDto.cs" />
     <Compile Include="DTOs\BinLoadDto.cs" />
     <Compile Include="DTOs\BOLDTO.cs" />
     <Compile Include="DTOs\ChartDTO.cs" />
     <Compile Include="DTOs\CompanyDTO.cs" />
+    <Compile Include="DTOs\CurrentShippingDTO.cs" />
     <Compile Include="DTOs\DailyReportDTO.cs" />
     <Compile Include="DTOs\DepartmentDTO.cs" />
     <Compile Include="DTOs\DepartmentTotalDTO.cs" />
     <Compile Include="DTOs\DownTimeDTO.cs" />
+    <Compile Include="DTOs\dtoAdagioCustomer.cs" />
+    <Compile Include="DTOs\dtoAdagioItem.cs" />
+    <Compile Include="DTOs\dtoAdagioSalesTransaction.cs" />
     <Compile Include="DTOs\EmailDTO.cs" />
     <Compile Include="DTOs\FarmDTO.cs" />
     <Compile Include="DTOs\FarmFeedDTO.cs" />
@@ -228,7 +236,37 @@
     <Compile Include="Models\EF\Absence.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\AdagioCustomer.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\AdagioItem.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\AdagioOrderDetail.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\AdagioOrderHeader.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\ADAGIOSalesStatitic.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\AdagioSalesTransaction.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\AdagioTodayOrder.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Adagio_N_Item.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Adagio_N_ItemLocation.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Adagio_O_OrderDetail.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\Adagio_O_OrderHeader.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\AD_Groups.cs">
@@ -265,6 +303,9 @@
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Company.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\CurrentShipping.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Department.cs">
@@ -324,10 +365,19 @@
     <Compile Include="Models\EF\Role.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\Sampling.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\ShiftEnd.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Status.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\TodaySampling.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\TodaysProductionTotal.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\User.cs">
@@ -591,6 +641,7 @@
     <Content Include="Site\scripts\HarvestSelectDashboards.js" />
     <Content Include="Site\scripts\highcharts.js" />
     <Content Include="Site\scripts\jquery-1.10.2.min.js" />
+    <Content Include="Site\scripts\jquery.sticky.js" />
     <Content Include="Site\scripts\moment.js" />
     <Content Include="Site\scripts\reports-menu.js" />
     <Content Include="Site\scripts\underscore.js" />

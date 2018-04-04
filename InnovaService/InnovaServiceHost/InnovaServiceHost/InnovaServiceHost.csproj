@@ -185,6 +185,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RemoteController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="DTOs\Adagio_O_OrderDetailDTO.cs" />
+    <Compile Include="DTOs\Adagio_O_OrderHeaderDTO.cs" />
+    <Compile Include="DTOs\CurrentShipping.cs" />
+    <Compile Include="DTOs\dtoAdagioItem.cs" />
     <Compile Include="DTOs\InnovaDto.cs" />
     <Compile Include="Formatters\JsonpFormatter.cs" />
     <Compile Include="Global.asax.cs">

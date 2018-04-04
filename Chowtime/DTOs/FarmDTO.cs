@@ -48,8 +48,18 @@ namespace SGApp.DTOs
 
 		public int? loadSkipCount { get; set; }
 
+        public string InnovaName
+        {
+            get;
+            set;
+        }
+
+        public string InnovaCode
+        {
+            get;
+            set;
+        }
 
 
-
-	}
+    }
 }

@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fc14307dfb524359ad527ca392d78ad7" Name="Diagram1">
+      <Diagram DiagramId="fc14307dfb524359ad527ca392d78ad7" Name="Diagram1" ZoomLevel="10">
         <EntityTypeShape EntityType="AppModel.Company" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="AppModel.Role" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
         <EntityTypeShape EntityType="AppModel.Status" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
@@ -74,6 +74,20 @@
         <AssociationConnector Association="AppModel.FK__BinDisbur__FeedI__690797E6" />
         <AssociationConnector Association="AppModel.FK_BinDisbursements_Bins" />
         <AssociationConnector Association="AppModel.FK_BinLoads_Bins" />
+        <EntityTypeShape EntityType="AppModel.Adagio_O_OrderHeader" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.CurrentShipping" Width="1.5" PointX="12.375" PointY="12.75" />
+        <EntityTypeShape EntityType="AppModel.Sampling" Width="1.5" PointX="3.375" PointY="13.75" />
+        <EntityTypeShape EntityType="AppModel.Adagio_N_Item" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.Adagio_N_ItemLocation" Width="1.5" PointX="14.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.Adagio_O_OrderDetail" Width="1.5" PointX="21.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.AdagioCustomer" Width="1.5" PointX="21.375" PointY="15.75" />
+        <EntityTypeShape EntityType="AppModel.AdagioItem" Width="1.5" PointX="23.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.AdagioOrderDetail" Width="1.5" PointX="13.375" PointY="23.75" />
+        <EntityTypeShape EntityType="AppModel.AdagioOrderHeader" Width="1.5" PointX="15.375" PointY="23.75" />
+        <EntityTypeShape EntityType="AppModel.AdagioSalesTransaction" Width="1.5" PointX="25.375" PointY="0.75" />
+        <EntityTypeShape EntityType="AppModel.AdagioTodayOrder" Width="1.5" PointX="25.375" PointY="13.75" />
+        <EntityTypeShape EntityType="AppModel.TodaysProductionTotal" Width="1.5" PointX="7.375" PointY="11.75" />
+        <EntityTypeShape EntityType="AppModel.TodaySampling" Width="1.5" PointX="14.375" PointY="9.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

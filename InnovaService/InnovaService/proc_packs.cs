@@ -120,5 +120,11 @@ namespace InnovaService
         public virtual proc_materials proc_materials { get; set; }
         public virtual proc_materials proc_materials1 { get; set; }
         public virtual proc_materials proc_materials2 { get; set; }
+        public virtual proc_orderl proc_orderl { get; set; }
+        public virtual proc_orderl proc_orderl1 { get; set; }
+        public virtual proc_orderl proc_orderl2 { get; set; }
+        public virtual proc_orders proc_orders { get; set; }
+        public virtual proc_orders proc_orders1 { get; set; }
+        public virtual proc_orders proc_orders2 { get; set; }
     }
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="da7ec4e95234458faef1c5fc5e77d2aa" Name="Diagram1" ZoomLevel="10" >
+        <EntityTypeShape EntityType="StimulantStageModel.OrderDetail" Width="1.5" PointX="4.75" PointY="0.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.OrderHeader" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.SalesTransaction" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.TodayOrder" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.AdagioItem" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.AdagioItemsImport" Width="1.5" PointX="15.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.CustomersImport" Width="1.5" PointX="3.375" PointY="15.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.OrderHeadersImport" Width="1.5" PointX="17.375" PointY="15.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.SalesTransactionsImport" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.TodayOrdersImport" Width="1.5" PointX="19.375" PointY="13.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.Customer" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="StimulantStageModel.OrderDetailsImport" Width="1.5" PointX="21.75" PointY="0.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

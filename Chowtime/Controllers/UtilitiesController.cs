@@ -18,6 +18,10 @@ using System.Net.Mail;
 using System.Web;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
+using System.Text;
+using System.Data;
+using System.Xml;
+using System.IO;
 
 
 
@@ -416,7 +420,7 @@ namespace SGApp.Controllers
 
             dtr.SaveRepoChanges();
             
-            List<Sampling> samplingResults = new List<Sampling>();
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
 
             try
             {
@@ -428,17 +432,17 @@ namespace SGApp.Controllers
                 //samplingResults = samplingResultsArray.ToList();
                 //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                 //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-                Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(response.Content.ReadAsStringAsync().Result);
                 samplingResults = samplingResultsArray.ToList();
                 var samplingResultsData = samplingResults.GroupBy(x => new { x.farm, x.pond, x.farmPond, x.rangeName })
                     .Select(group => new { Key = group.Key, Weight = group.Sum(s => decimal.Parse(s.weight)), Count = group.Count() }).ToList();
                 //var result = response.Content.ReadAsStringAsync().Result;
 
                 //return Request.CreateResponse(HttpStatusCode.OK, result);
-                List<Sampling> samplingReport = new List<Sampling>(samplingResultsData.Capacity);
+                List<DTOs.Sampling> samplingReport = new List<DTOs.Sampling>(samplingResultsData.Capacity);
                 foreach (var rec in samplingResultsData)
                 {
-                    Sampling fee2 = new Sampling();
+                    DTOs.Sampling fee2 = new DTOs.Sampling();
                     fee2.farm = rec.Key.farm;
                     fee2.pond = rec.Key.pond;
                     fee2.farmPond = rec.Key.farmPond;
@@ -533,9 +537,9 @@ namespace SGApp.Controllers
             body += "<th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>% of Weight</th>";
             body += "<th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Avg Weight (lbs)</th>";
             body += "</tr>";
-            List<Sampling> sresultsRanges = new List<Sampling>();
-            List<Sampling> sresultsPonds = new List<Sampling>();
-            List<Sampling> sresultsFarms = new List<Sampling>();
+            List<DTOs.Sampling> sresultsRanges = new List<DTOs.Sampling>();
+            List<DTOs.Sampling> sresultsPonds = new List<DTOs.Sampling>();
+            List<DTOs.Sampling> sresultsFarms = new List<DTOs.Sampling>();
             sresultsRanges = samplingResults.GroupBy(x => x.rangeName).Select(group => group.First()).ToList();            
             sresultsFarms = samplingResults.GroupBy(x => x.farm).Select(group => group.First()).ToList();
             sresultsPonds = samplingResults.GroupBy(x => x.pond).Select(group => group.First()).ToList();
@@ -552,7 +556,7 @@ namespace SGApp.Controllers
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalSaverage) + "</td>";
             body += "</tr>";
-            foreach (Sampling sam3 in sresultsRanges)
+            foreach (DTOs.Sampling sam3 in sresultsRanges)
             {
                 body += "<tr>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
@@ -571,7 +575,7 @@ namespace SGApp.Controllers
                 body += "</tr>";
             }
 
-            foreach (Sampling sam in sresultsFarms)
+            foreach (DTOs.Sampling sam in sresultsFarms)
             {
                 var totalfarmcount = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.count));
                 var totalfarmweight = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.weight));
@@ -587,7 +591,7 @@ namespace SGApp.Controllers
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalfarmaverage) + "</td>";
                 body += "</tr>";
                 
-                foreach (Sampling sam1 in sresultsPonds.Where(x => x.farm == sam.farm))
+                foreach (DTOs.Sampling sam1 in sresultsPonds.Where(x => x.farm == sam.farm))
                 {
                     bool pNameLabel = true;
                     var totalpondcount = samplingResults.Where(x => x.pond == sam1.pond && x.farm == sam.farm).Sum(x => decimal.Parse(x.count));
@@ -603,7 +607,7 @@ namespace SGApp.Controllers
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
                     body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalaverage) + "</td>";
                     body += "</tr>";
-                    foreach (Sampling sam2 in sresultsRanges)
+                    foreach (DTOs.Sampling sam2 in sresultsRanges)
                     {
                         body += "<tr>";
                         
@@ -910,7 +914,7 @@ namespace SGApp.Controllers
             //    dtr.Save(bagw);
             //}
             //dtr.SaveRepoChanges();
-            List<Sampling> samplingResults = new List<Sampling>();
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
 
             try
             {
@@ -923,17 +927,17 @@ namespace SGApp.Controllers
                 //samplingResults = samplingResultsArray.ToList();
                 //JavaScriptSerializer json_serializer = new JavaScriptSerializer();
                 //Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(Constants.testdata);
-                Sampling[] samplingResultsArray = json_serializer.Deserialize<Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(response.Content.ReadAsStringAsync().Result);
                 samplingResults = samplingResultsArray.ToList();
                 var samplingResultsData = samplingResults.GroupBy(x => new { x.farm, x.pond, x.farmPond, x.rangeName })
                     .Select(group => new { Key = group.Key, Weight = group.Sum(s => decimal.Parse(s.weight)), Count = group.Count() }).ToList();
                 //var result = response.Content.ReadAsStringAsync().Result;
 
                 //return Request.CreateResponse(HttpStatusCode.OK, result);
-                List<Sampling> samplingReport = new List<Sampling>(samplingResultsData.Capacity);
+                List<DTOs.Sampling> samplingReport = new List<DTOs.Sampling>(samplingResultsData.Capacity);
                 foreach (var rec in samplingResultsData)
                 {
-                    Sampling fee2 = new Sampling();
+                    DTOs.Sampling fee2 = new DTOs.Sampling();
                     fee2.farm = rec.Key.farm;
                     fee2.pond = rec.Key.pond;
                     fee2.farmPond = rec.Key.farmPond;
@@ -1036,9 +1040,9 @@ namespace SGApp.Controllers
             body += "<th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>% of Weight</th>";
             body += "<th style='border: 1px solid #ddd; text-align:left; padding: 5px; background-color: #ddd;'>Avg Weight (lbs)</th>";
             body += "</tr>";
-            List<Sampling> sresultsRanges = new List<Sampling>();
-            List<Sampling> sresultsPonds = new List<Sampling>();
-            List<Sampling> sresultsFarms = new List<Sampling>();
+            List<DTOs.Sampling> sresultsRanges = new List<DTOs.Sampling>();
+            List<DTOs.Sampling> sresultsPonds = new List<DTOs.Sampling>();
+            List<DTOs.Sampling> sresultsFarms = new List<DTOs.Sampling>();
             sresultsRanges = samplingResults.GroupBy(x => x.rangeName).Select(group => group.First()).ToList();
             sresultsFarms = samplingResults.GroupBy(x => x.farm).Select(group => group.First()).ToList();
             sresultsPonds = samplingResults.GroupBy(x => x.pond).Select(group => group.First()).ToList();
@@ -1055,7 +1059,7 @@ namespace SGApp.Controllers
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
             body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalSaverage) + "</td>";
             body += "</tr>";
-            foreach (Sampling sam3 in sresultsRanges)
+            foreach (DTOs.Sampling sam3 in sresultsRanges)
             {
                 body += "<tr>";
                 body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
@@ -1074,7 +1078,7 @@ namespace SGApp.Controllers
                 body += "</tr>";
             }
 
-            foreach (Sampling sam in sresultsFarms)
+            foreach (DTOs.Sampling sam in sresultsFarms)
             {
                 var totalfarmcount = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.count));
                 var totalfarmweight = samplingResults.Where(x => x.farm == sam.farm).Sum(x => decimal.Parse(x.weight));
@@ -1106,7 +1110,7 @@ namespace SGApp.Controllers
                     //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'></td>";
                     //body += "<td style='border: 1px solid #ddd; text-align:left; padding: 5px;'>" + string.Format("{0:N2}", totalaverage) + "</td>";
                     //body += "</tr>";
-                    foreach (Sampling sam2 in sresultsRanges)
+                    foreach (DTOs.Sampling sam2 in sresultsRanges)
                     {
                         body += "<tr>";
 
@@ -1492,7 +1496,7 @@ namespace SGApp.Controllers
 
             dtr.SaveRepoChanges();
 
-            List<Sampling> samplingResults = new List<Sampling>();
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
 
 
 
@@ -1679,6 +1683,1193 @@ namespace SGApp.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK);
 
+        }
+        [HttpGet]
+        public HttpResponseMessage UpdateSalesData()
+        {
+
+
+            List<BOL> BOLResults = new List<BOL>();
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            DataSet myData = new DataSet();
+            var client = new HttpClient
+            {
+
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+
+            };
+            try
+            {
+                var response = client.GetAsync("api/Remote/UpdateSalesData").Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                //BOL[] BOLResultsArray = json_serializer.Deserialize<BOL[]>(response.Content.ReadAsStringAsync().Result);
+                //DataSet SalesArray = json_serializer.Deserialize<DataSet>(response.Content.ReadAsStringAsync().Result);
+                //myData = SalesArray;
+                var xd = new XmlDocument();
+
+                //// Note:Json convertor needs a json with one node as root
+                //string jsonString = "{ \"rootNode\": {" + Constants.testsales.Trim().TrimStart('{').TrimEnd('}') + @"} }";
+                //// Now it is secure that we have always a Json with one node as root 
+                xd = JsonConvert.DeserializeXmlNode(response.Content.ReadAsStringAsync().Result, "table");
+                //xd = JsonConvert.DeserializeXmlNode(jsonString);
+
+
+                //// DataSet is able to read from XML and return a proper DataSet
+                var result = new DataSet();
+                result.ReadXml(new XmlNodeReader(xd));
+                myData = result;
+
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            StringBuilder sb = new StringBuilder();
+
+            //IEnumerable<string> columnNames = myData.Tables[0].Columns.Cast<DataColumn>().
+            //                                  Select(column => column.ColumnName);
+            //string columnames = string.Join(",", columnNames);
+
+            foreach (DataRow row in myData.Tables[0].Rows)
+            {
+                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString().Replace(",", " "));
+                sb.AppendLine(string.Join(",", fields));
+            }
+            File.AppendAllText("C:\\Users\\Administrator\\Documents\\AS90ATRN.csv", sb.ToString());
+
+            return Request.CreateResponse(HttpStatusCode.OK, BOLResults);
+
+
+        }
+
+        [HttpGet]
+        public HttpResponseMessage UpdateAdagioFile()
+        {
+            var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            var fileToUpdate = dic.First().Value;
+            DataSet myData = new DataSet();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            try
+            {
+                var response = client.GetAsync("api/Remote/UpdateAdagioFile?ftu=" + fileToUpdate).Result;
+                response.EnsureSuccessStatusCode();
+                var xd = new XmlDocument();
+                xd = JsonConvert.DeserializeXmlNode(response.Content.ReadAsStringAsync().Result, "table");
+                var result = new DataSet();
+                result.ReadXml(new XmlNodeReader(xd));
+                myData = result;
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            StringBuilder sb = new StringBuilder();
+            string columnLine = "";
+            foreach (DataColumn dc in myData.Tables[0].Columns)
+            {
+                columnLine += dc.ColumnName + ",";
+            }
+            columnLine = columnLine.TrimEnd(',');
+            sb.AppendLine(columnLine);
+            foreach (DataRow row in myData.Tables[0].Rows)
+            {
+                IEnumerable<string> fields = row.ItemArray.Select(field => field.ToString().Replace(",", " "));
+                sb.AppendLine(string.Join(",", fields));
+            }
+            File.WriteAllText("C:\\Users\\Administrator\\Documents\\" + fileToUpdate + ".csv", sb.ToString());
+            return Request.CreateResponse(HttpStatusCode.OK, "Success");
+        }
+
+        [HttpGet]
+        public HttpResponseMessage UpdateSamplingData()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            var sDate = DateTime.ParseExact(dic.First().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            var eDate = DateTime.ParseExact(dic.Last().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            dto.StartDate = sDate;
+            dto.EndDate = eDate;
+            var db = new AppEntities();
+            var dontUpdate = db.Samplings.Where(x => x.regtime >= sDate).Any();
+            if (dontUpdate)
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, "Table already updated");
+            }
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                samplingResults = samplingResultsArray.ToList();
+                var dbSamples = samplingResults.Select(x => new Models.EF.Sampling
+                {
+                    code = x.rangeValue,
+                    code2 = x.rangeValue,
+                    codename = x.rangeName,
+                    farmname = x.farm,
+                    pondname = x.farmPond,
+                    shname = x.pond,
+                    regtime = DateTime.Parse(x.date),
+                    weight = System.Convert.ToDouble(decimal.Parse(x.weight))
+                });
+                db.Samplings.AddRange(dbSamples);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+        [HttpGet]
+        public HttpResponseMessage UpdateTodaySamplingData()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            var sDate = DateTime.ParseExact(dic.First().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            var eDate = DateTime.ParseExact(dic.Last().Value, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture).Date;
+            dto.StartDate = sDate;
+            dto.EndDate = eDate;
+            var db = new AppEntities();
+            //var dontUpdate = db.Samplings.Where(x => x.regtime >= sDate).Any();
+            //if (dontUpdate)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.OK, "Table already updated");
+            //}
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+
+            List<DTOs.Sampling> samplingResults = new List<DTOs.Sampling>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetKeithsData", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                DTOs.Sampling[] samplingResultsArray = json_serializer.Deserialize<DTOs.Sampling[]>(response.Content.ReadAsStringAsync().Result);
+                samplingResults = samplingResultsArray.ToList();
+                var dbSamples = samplingResults.Select(x => new Models.EF.TodaySampling
+                {
+                    code = x.rangeValue,
+                    code2 = x.rangeValue,
+                    codename = x.rangeName,
+                    farmname = x.farm,
+                    pondname = x.farmPond,
+                    shname = x.pond,
+                    regtime = DateTime.Parse(x.date),
+                    weight = System.Convert.ToDouble(decimal.Parse(x.weight))
+                });
+                db.Database.ExecuteSqlCommand("DELETE FROM TodaySamplings");
+                db.TodaySamplings.AddRange(dbSamples);
+                db.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+        [HttpGet]
+        public HttpResponseMessage UpdateCurrentShipping()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+
+
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+
+            List<DTOs.CurrentShippingDTO> shippingResults = new List<DTOs.CurrentShippingDTO>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetCurrentShipping", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                DTOs.CurrentShippingDTO[] shippingResultsArray = json_serializer.Deserialize<DTOs.CurrentShippingDTO[]>(response.Content.ReadAsStringAsync().Result);
+                shippingResults = shippingResultsArray.ToList();
+                if (shippingResults.Count() > 0)
+                {
+                    db.Database.ExecuteSqlCommand("DELETE FROM CurrentShipping");
+                    var dbShippings = shippingResults.Select(x => new Models.EF.CurrentShipping
+                    {
+                        CustomerName = x.CustomerName,
+                        ItemCode = x.ItemCode,
+                        ItemDescription = x.ItemDescription,
+                        QuantityOnHand = x.QuantityOnHand,
+                        OrderAmount = x.OrderAmount,
+                        OrderDate = DateTime.Parse(x.OrderDate)
+                    });
+                    db.CurrentShippings.AddRange(dbShippings);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetDailySalesUpdate()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            List<dtoAdagioSalesTransaction> results = new List<dtoAdagioSalesTransaction>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetAdagioSalesTransactions", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                json_serializer.MaxJsonLength = Int32.MaxValue;
+                dtoAdagioSalesTransaction[] resultsArray = json_serializer.Deserialize<dtoAdagioSalesTransaction[]>(response.Content.ReadAsStringAsync().Result);
+                results = resultsArray.ToList();
+                if (results.Count() > 0)
+                {
+                    List<AdagioSalesTransaction> castedResults = results.Select(x => new AdagioSalesTransaction
+                    {
+                        Cust = double.Parse(x.Cust),
+                        Shipto = x.Shipto,
+                        JulianDateKey = x.JulianDateKey,
+                        HexUniquifer = x.HexUniquifer,
+                        TransactionUnquifier = x.TransactionUnquifier,
+                        Item = double.Parse(x.Item),
+                        ItemSegment1CATEGORY = double.Parse(x.ItemSegment1CATEGORY),
+                        ItemSegment2ITEM = double.Parse(x.ItemSegment2ITEM),
+                        ItemSegment3CTNWGT = double.Parse(x.ItemSegment3CTNWGT),
+                        QIItem = double.Parse(x.QIItem),
+                        PrefixDocumentNumber = x.PrefixDocumentNumber,
+                        Prefix = x.Prefix,
+                        DocumentNumber = x.DocumentNumber,
+                        //Uniquifier = x.Uniquifier,
+                        Type_T = x.Type_T,
+                        Date_2 = DateTime.Parse(x.Date_2),
+                        Salesperson = double.Parse(x.Salesperson),
+                        Qty = double.Parse(x.Qty),
+                        Amt = double.Parse(x.Amt),
+                        Cost = double.Parse(x.Cost),
+                        BasePrice = double.Parse(x.BasePrice),
+                        CustomerTaxStatus = double.Parse(x.CustomerTaxStatus),
+                        ItemTaxStatus = double.Parse(x.ItemTaxStatus),
+                        Location = double.Parse(x.Location),
+                        Category = x.Category,
+                        Order_2 = x.Order_2,
+                        TaxGroup = x.TaxGroup,
+                        RecordSource_T = x.RecordSource_T,
+                        ItemSource_T = x.ItemSource_T,
+                        PriceList = x.PriceList,
+                        DiscountDate = x.DiscountDate,
+                        DueDate = DateTime.Parse(x.DueDate),
+                        DatePaid = x.DatePaid,
+                        InvoicePaid_T = x.InvoicePaid_T,
+                        Reference = x.Reference,
+                        PONumber = x.PONumber,
+                        OrginalInvoice = x.OrginalInvoice,
+                        Line = double.Parse(x.Line),
+                        Territory = x.Territory,
+                        Itemreportgroup = x.Itemreportgroup,
+                        Customerreportgroup = x.Customerreportgroup,
+                        ManualStyleCode = x.ManualStyleCode,
+                        AutomaticStyleCode = x.AutomaticStyleCode,
+                        //SourceDecimals = x.SourceDecimals,
+                        HomeCurr = x.HomeCurr,
+                        RateType = x.RateType,
+                        SourceCurr = x.SourceCurr,
+                        RateDate = DateTime.Parse(x.RateDate),
+                        Rate = double.Parse(x.Rate),
+                        RateRep = x.RateRep,
+                        DateMatching = x.DateMatching,
+                        SourceAmt = double.Parse(x.SourceAmt),
+                        SourceCost = double.Parse(x.SourceCost),
+                        SourceBasePrice = double.Parse(x.SourceBasePrice),
+                        LineItemDescription = x.LineItemDescription,
+                        RNumAS90ATRN = x.RNumAS90ATRN,
+
+                    }).ToList();
+                    db.AdagioSalesTransactions.AddRange(castedResults);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+
+        [HttpGet]
+        public HttpResponseMessage GetAdagioItems()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            List<dtoAdagioItem> results = new List<dtoAdagioItem>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetAdagioItems", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                json_serializer.MaxJsonLength = Int32.MaxValue;
+                dtoAdagioItem[] resultsArray = json_serializer.Deserialize<dtoAdagioItem[]>(response.Content.ReadAsStringAsync().Result);
+                results = resultsArray.ToList();
+                if (results.Count() > 0)
+                {
+                    db.Database.ExecuteSqlCommand("DELETE FROM AdagioItems");
+                    List<AdagioItem> castedResults = results.Select(x => new AdagioItem
+                    {
+                        Item = double.Parse(x.Item),
+                        SetKey = double.Parse(x.SetKey),
+                        Item2 = double.Parse(x.Item2),
+                        Description = x.Description,
+                        Category = x.Category,
+                        //ReportGroup = x.ReportGroup,
+                        //StockItem = double.Parse(x.StockItem),
+                        //ItemsUsedinBOMCount = double.Parse(x.ItemsUsedinBOMCount),
+                        //SerialCount = double.Parse(x.SerialCount),
+                        //LayawayCounter = double.Parse(x.LayawayCounter),
+                        Unit = x.Unit,
+                        //AltUnit1 = x.AltUnit1,
+                        //AltUnit2 = x.AltUnit2,
+                        //AltUnit3 = x.AltUnit3,
+                        //AltUnit4 = x.AltUnit4,
+                        PurchaseUnit = x.PurchaseUnit,
+                        PriceUnit = x.PriceUnit,
+                        //AltFactor1 = double.Parse(x.AltFactor1),
+                        //AltFactor2 = double.Parse(x.AltFactor2),
+                        //AltFactor3 = double.Parse(x.AltFactor3),
+                        //AltFactor4 = double.Parse(x.AltFactor4),
+                        BasePrice = double.Parse(x.BasePrice),
+                        PickingSeq = x.PickingSeq,
+                        StdCost = double.Parse(x.StdCost),
+                        UnitWeight = double.Parse(x.UnitWeight),
+                        SaleStartDate = x.SaleStartDate,
+                        SaleEndDate = x.SaleEndDate,
+                        SalePrice = double.Parse(x.SalePrice),
+                        //CtrlAcctSet = double.Parse(x.CtrlAcctSet),
+                        //TaxStatus = double.Parse(x.TaxStatus),
+                        //UserDefinedCost1 = double.Parse(x.UserDefinedCost1),
+                        //UserDefinedCost2 = double.Parse(x.UserDefinedCost2),
+                        //DiscType_T = x.DiscType_T,
+                        //DiscFormat_T = x.DiscFormat_T,
+                        //DiscBase_T = x.DiscBase_T,
+                        //DiscMarkupQty1 = double.Parse(x.DiscMarkupQty1),
+                        //DiscMarkupQty2 = double.Parse(x.DiscMarkupQty2),
+                        //DiscMarkupQty3 = double.Parse(x.DiscMarkupQty3),
+                        //DiscMarkupQty4 = double.Parse(x.DiscMarkupQty4),
+                        //DiscMarkupQty5 = double.Parse(x.DiscMarkupQty5),
+                        QtyonPO = double.Parse(x.QtyonPO),
+                        QtyonSO = double.Parse(x.QtyonSO),
+                        QtyTempCommitted = double.Parse(x.QtyTempCommitted),
+                        QtyShippednotCost = double.Parse(x.QtyShippednotCost),
+                        LastShipmentDate = DateTime.Parse(x.LastShipmentDate),
+                        LastRcptDate = DateTime.Parse(x.LastRcptDate),
+                        MostRecentCost = double.Parse(x.MostRecentCost),
+                        MarkupFactor = double.Parse(x.MarkupFactor),
+                        PrevPriceChangeDate = DateTime.Parse(x.PrevPriceChangeDate),
+                        PrevPrice = double.Parse(x.PrevPrice),
+                        PrevStdCostDate = DateTime.Parse(x.PrevStdCostDate),
+                        PrevStdCost = double.Parse(x.PrevStdCost),
+                        PrevRecentCostDate = DateTime.Parse(x.PrevRecentCostDate),
+                        PrevRecentCost = double.Parse(x.PrevRecentCost),
+                        //Rcpt1 = x.Rcpt1,
+                        //Rcpt2 = x.Rcpt2,
+                        //Rcpt3 = x.Rcpt3,
+                        //Rcpt4 = x.Rcpt4,
+                        //Rcpt5 = x.Rcpt5,
+                        //RcptDate1 = x.RcptDate1,
+                        //RcptDate2 = x.RcptDate2,
+                        //RcptDate3 = x.RcptDate3,
+                        //RcptDate4 = x.RcptDate4,
+                        //RcptDate5 = x.RcptDate5,
+                        QtyonHand1 = double.Parse(x.QtyonHand1),
+                        QtyonHand2 = double.Parse(x.QtyonHand2),
+                        QtyonHand3 = double.Parse(x.QtyonHand3),
+                        QtyonHand4 = double.Parse(x.QtyonHand4),
+                        QtyonHand5 = double.Parse(x.QtyonHand5),
+                        TotalCost1 = double.Parse(x.TotalCost1),
+                        TotalCost2 = double.Parse(x.TotalCost2),
+                        TotalCost3 = double.Parse(x.TotalCost3),
+                        TotalCost4 = double.Parse(x.TotalCost4),
+                        TotalCost5 = double.Parse(x.TotalCost5),
+                        AvgDaysBetweenShipments = double.Parse(x.AvgDaysBetweenShipments),
+                        AvgUnitsShipped = double.Parse(x.AvgUnitsShipped),
+                        ShipmentCount = double.Parse(x.ShipmentCount),
+                        UnitsSoldPeriod1 = double.Parse(x.UnitsSoldPeriod1),
+                        UnitsSoldPeriod2 = double.Parse(x.UnitsSoldPeriod2),
+                        UnitsSoldPeriod3 = double.Parse(x.UnitsSoldPeriod3),
+                        UnitsSoldPeriod4 = double.Parse(x.UnitsSoldPeriod4),
+                        UnitsSoldPeriod5 = double.Parse(x.UnitsSoldPeriod5),
+                        UnitsSoldPeriod6 = double.Parse(x.UnitsSoldPeriod6),
+                        UnitsSoldPeriod7 = double.Parse(x.UnitsSoldPeriod7),
+                        UnitsSoldPeriod8 = double.Parse(x.UnitsSoldPeriod8),
+                        UnitsSoldPeriod9 = double.Parse(x.UnitsSoldPeriod9),
+                        UnitsSoldPeriod10 = double.Parse(x.UnitsSoldPeriod10),
+                        UnitsSoldPeriod11 = double.Parse(x.UnitsSoldPeriod11),
+                        UnitsSoldPeriod12 = double.Parse(x.UnitsSoldPeriod12),
+                        UnitsSoldPeriod13 = double.Parse(x.UnitsSoldPeriod13),
+                        UnitsSoldYTD = double.Parse(x.UnitsSoldYTD),
+                        UnitsSoldLY = double.Parse(x.UnitsSoldLY),
+                        AmtSoldPeriod1 = double.Parse(x.AmtSoldPeriod1),
+                        AmtSoldPeriod2 = double.Parse(x.AmtSoldPeriod2),
+                        AmtSoldPeriod3 = double.Parse(x.AmtSoldPeriod3),
+                        AmtSoldPeriod4 = double.Parse(x.AmtSoldPeriod4),
+                        AmtSoldPeriod5 = double.Parse(x.AmtSoldPeriod5),
+                        AmtSoldPeriod6 = double.Parse(x.AmtSoldPeriod6),
+                        AmtSoldPeriod7 = double.Parse(x.AmtSoldPeriod7),
+                        AmtSoldPeriod8 = double.Parse(x.AmtSoldPeriod8),
+                        AmtSoldPeriod9 = double.Parse(x.AmtSoldPeriod9),
+                        AmtSoldPeriod10 = double.Parse(x.AmtSoldPeriod10),
+                        AmtSoldPeriod11 = double.Parse(x.AmtSoldPeriod11),
+                        AmtSoldPeriod12 = double.Parse(x.AmtSoldPeriod12),
+                        AmtSoldPeriod13 = double.Parse(x.AmtSoldPeriod13),
+                        AmtSoldYTD = double.Parse(x.AmtSoldYTD),
+                        AmtSoldLY = double.Parse(x.AmtSoldLY),
+                        TotalCostsPeriod1 = double.Parse(x.TotalCostsPeriod1),
+                        TotalCostsPeriod2 = double.Parse(x.TotalCostsPeriod2),
+                        TotalCostsPeriod3 = double.Parse(x.TotalCostsPeriod3),
+                        TotalCostsPeriod4 = double.Parse(x.TotalCostsPeriod4),
+                        TotalCostsPeriod5 = double.Parse(x.TotalCostsPeriod5),
+                        TotalCostsPeriod6 = double.Parse(x.TotalCostsPeriod6),
+                        TotalCostsPeriod7 = double.Parse(x.TotalCostsPeriod7),
+                        TotalCostsPeriod8 = double.Parse(x.TotalCostsPeriod8),
+                        TotalCostsPeriod9 = double.Parse(x.TotalCostsPeriod9),
+                        TotalCostsPeriod10 = double.Parse(x.TotalCostsPeriod10),
+                        TotalCostsPeriod11 = double.Parse(x.TotalCostsPeriod11),
+                        TotalCostsPeriod12 = double.Parse(x.TotalCostsPeriod12),
+                        TotalCostsPeriod13 = double.Parse(x.TotalCostsPeriod13),
+                        TotalCostsYTD = double.Parse(x.TotalCostsYTD),
+                        TotalCostsLY = double.Parse(x.TotalCostsLY),
+                        UnitsLostYTD = double.Parse(x.UnitsLostYTD),
+                        UnitsLostLY = double.Parse(x.UnitsLostLY),
+                        DiscMarkupAmt1 = double.Parse(x.DiscMarkupAmt1),
+                        DiscMarkupAmt2 = double.Parse(x.DiscMarkupAmt2),
+                        DiscMarkupAmt3 = double.Parse(x.DiscMarkupAmt3),
+                        DiscMarkupAmt4 = double.Parse(x.DiscMarkupAmt4),
+                        DiscMarkupAmt5 = double.Parse(x.DiscMarkupAmt5),
+                        QtyOnHand = double.Parse(x.QtyOnHand),
+                        Selected = double.Parse(x.Selected),
+                        ActiveItem = x.ActiveItem,
+                        RNumAN81CITM = x.RNumAN81CITM
+
+                    }).ToList();
+                    db.AdagioItems.AddRange(castedResults);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetTodaysProductionTotal()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            List<TodaysProductionTotal> results = new List<TodaysProductionTotal>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetTodaysProductionTotal", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                json_serializer.MaxJsonLength = Int32.MaxValue;
+                TodaysProductionTotal[] resultsArray = json_serializer.Deserialize<TodaysProductionTotal[]>(response.Content.ReadAsStringAsync().Result);
+                results = resultsArray.ToList();
+                if (results.Count() > 0)
+                {
+                    db.Database.ExecuteSqlCommand("DELETE FROM TodaysProductionTotals");
+                    List<TodaysProductionTotal> castedResults = results.Select(x => new TodaysProductionTotal
+                    {
+                       Weight = x.Weight,
+                       Nominal = x.Nominal,
+                       Station = x.Station
+
+                    }).ToList();
+                    db.TodaysProductionTotals.AddRange(castedResults);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetAdagioCustomers()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            List<dtoAdagioCustomer> results = new List<dtoAdagioCustomer>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetAdagioCustomers", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                json_serializer.MaxJsonLength = Int32.MaxValue;
+                dtoAdagioCustomer[] resultsArray = json_serializer.Deserialize<dtoAdagioCustomer[]>(response.Content.ReadAsStringAsync().Result);
+                results = resultsArray.ToList();
+                if (results.Count() > 0)
+                {
+                    db.Database.ExecuteSqlCommand("DELETE FROM AdagioCustomers");
+                    double value = 0;
+                    DateTime dValue = DateTime.Now;
+                    List<AdagioCustomer> castedResults = results.Select(x => new AdagioCustomer
+                    {
+                        Activestatus = x.Activestatus,
+                        Cust = x.Cust,
+                        CtrlAcctSet = x.CtrlAcctSet,
+                        BillingCycle = x.BillingCycle,
+                        Name = x.Name,
+                        Name2 = x.Name2,
+                        //CustDecimals = double.Parse(x.CustDecimals),
+                        //CreditLimit = double.Parse(x.CreditLimit),
+                        OnHold = double.TryParse(x.OnHold, out value) ? double.Parse(x.OnHold) : 0,
+                        Alert = double.TryParse(x.Alert, out value) ? double.Parse(x.Alert) : 0,
+                        Terms = x.Terms,
+                        CustCurrency = x.CustCurrency,
+                        Accounttype_T = x.Accounttype_T,
+                        BalanceOutstanding = double.TryParse(x.BalanceOutstanding, out value) ? double.Parse(x.BalanceOutstanding) : 0,
+                        ShortName = x.ShortName,
+                        Address1 = x.Address1,
+                        Address2 = x.Address2,
+                        Address3 = x.Address3,
+                        Address4 = x.Address4,
+                        ZipPostal = x.ZipPostal,
+                        //Formataddress = x.Formataddress,
+                        City = x.City,
+                        StateProvince = x.StateProvince,
+                        Country = x.Country,
+                        Telephone = x.Telephone,
+                        Fax = x.Fax,
+                        Comments1 = x.Comments1,
+                        Comments2 = x.Comments2,
+                        Contact = x.Contact,
+                        Salesperson = double.TryParse(x.Salesperson, out value) ? double.Parse(x.Salesperson) : 0,
+                        //PrintStmts = x.PrintStmts,
+                        //ChargeInt = x.ChargeInt,
+                        TaxExemptID1 = x.TaxExemptID1,
+                        TaxExemptID2 = x.TaxExemptID2,
+                        //TaxStatus = x.TaxStatus,
+                        TaxGroup = x.TaxGroup,
+                        CustType = x.CustType,
+                        ReportGroup = x.ReportGroup,
+                        DefaultDistributionSet = x.DefaultDistributionSet,
+                        DefaultDistributionCode = x.DefaultDistributionCode,
+                        Territory = x.Territory,
+                        ShipVia = x.ShipVia,
+                        StartDate = DateTime.TryParse(x.StartDate, out dValue) ? DateTime.Parse(x.StartDate) : DateTime.Now,
+                        CustID = x.CustID,
+                        BalanceOutstandingHome = double.TryParse(x.BalanceOutstandingHome, out value) ? double.Parse(x.BalanceOutstandingHome) : 0,
+                        BalanceasofLastStmt = double.TryParse(x.BalanceasofLastStmt, out value) ? double.Parse(x.BalanceasofLastStmt) : 0,
+                        OpenInvsCount = double.TryParse(x.OpenInvsCount, out value) ? double.Parse(x.OpenInvsCount) : 0,
+                        RetainageTrxsCount = double.TryParse(x.RetainageTrxsCount, out value) ? double.Parse(x.RetainageTrxsCount) : 0,
+                        RetainageOutstanding = double.TryParse(x.RetainageOutstanding, out value) ? double.Parse(x.RetainageOutstanding) : 0,
+                        RetainageOutstandingHome = double.TryParse(x.RetainageOutstandingHome, out value) ? double.Parse(x.RetainageOutstandingHome) : 0,
+                        InvTotalPTD = double.TryParse(x.InvTotalPTD, out value) ? double.Parse(x.InvTotalPTD) : 0,
+                        InvCountPTD = double.TryParse(x.InvCountPTD, out value) ? double.Parse(x.InvCountPTD) : 0,
+                        PaymentTotalPTD = double.TryParse(x.PaymentTotalPTD, out value) ? double.Parse(x.PaymentTotalPTD) : 0,
+                        PaymentCountPTD = double.TryParse(x.PaymentCountPTD, out value) ? double.Parse(x.PaymentCountPTD) : 0,
+                        CNTotalPTD = double.TryParse(x.CNTotalPTD, out value) ? double.Parse(x.CNTotalPTD) : 0,
+                        CNCountPTD = double.TryParse(x.CNCountPTD, out value) ? double.Parse(x.CNCountPTD) : 0,
+                        DNTotalPTD = double.TryParse(x.DNTotalPTD, out value) ? double.Parse(x.DNTotalPTD) : 0,
+                        DNCountPTD = double.TryParse(x.DNCountPTD, out value) ? double.Parse(x.DNCountPTD) : 0,
+                        DiscTotalPTD = double.TryParse(x.DiscTotalPTD, out value) ? double.Parse(x.DiscTotalPTD) : 0,
+                        DiscCountPTD = double.TryParse(x.DiscCountPTD, out value) ? double.Parse(x.DiscCountPTD) : 0,
+                        IntTotalPTD = double.TryParse(x.IntTotalPTD, out value) ? double.Parse(x.IntTotalPTD) : 0,
+                        IntCountPTD = double.TryParse(x.IntCountPTD, out value) ? double.Parse(x.IntCountPTD) : 0,
+                        InvTotalYTD = double.TryParse(x.InvTotalYTD, out value) ? double.Parse(x.InvTotalYTD) : 0,
+                        InvCountYTD = double.TryParse(x.InvCountYTD, out value) ? double.Parse(x.InvCountYTD) : 0,
+                        PaymentTotalYTD = double.TryParse(x.PaymentTotalYTD, out value) ? double.Parse(x.PaymentTotalYTD) : 0,
+                        PaymentCountYTD = double.TryParse(x.PaymentCountYTD, out value) ? double.Parse(x.PaymentCountYTD) : 0,
+                        CNTotalYTD = double.TryParse(x.CNTotalYTD, out value) ? double.Parse(x.CNTotalYTD) : 0,
+                        CNCountYTD = double.TryParse(x.CNCountYTD, out value) ? double.Parse(x.CNCountYTD) : 0,
+                        DNTotalYTD = double.TryParse(x.DNTotalYTD, out value) ? double.Parse(x.DNTotalYTD) : 0,
+                        DNCountYTD = double.TryParse(x.DNCountYTD, out value) ? double.Parse(x.DNCountYTD) : 0,
+                        DiscTotalYTD = double.TryParse(x.DiscTotalYTD, out value) ? double.Parse(x.DiscTotalYTD) : 0,
+                        DiscCountYTD = double.TryParse(x.DiscCountYTD, out value) ? double.Parse(x.DiscCountYTD) : 0,
+                        IntTotalYTD = double.TryParse(x.IntTotalYTD, out value) ? double.Parse(x.IntTotalYTD) : 0,
+                        IntCountYTD = double.TryParse(x.IntCountYTD, out value) ? double.Parse(x.IntCountYTD) : 0,
+                        InvTotalLY = double.TryParse(x.InvTotalLY, out value) ? double.Parse(x.InvTotalLY) : 0,
+                        InvCountLY = double.TryParse(x.InvCountLY, out value) ? double.Parse(x.InvCountLY) : 0,
+                        PaymentTotalLY = double.TryParse(x.PaymentTotalLY, out value) ? double.Parse(x.PaymentTotalLY) : 0,
+                        PaymentCountLY = double.TryParse(x.PaymentCountLY, out value) ? double.Parse(x.PaymentCountLY) : 0,
+                        CNTotalLY = double.TryParse(x.CNTotalLY, out value) ? double.Parse(x.CNTotalLY) : 0,
+                        CNCountLY = double.TryParse(x.CNCountLY, out value) ? double.Parse(x.CNCountLY) : 0,
+                        DNTotalLY = double.TryParse(x.DNTotalLY, out value) ? double.Parse(x.DNTotalLY) : 0,
+                        DNCountLY = double.TryParse(x.DNCountLY, out value) ? double.Parse(x.DNCountLY) : 0,
+                        DiscTotalLY = double.TryParse(x.DiscTotalLY, out value) ? double.Parse(x.DiscTotalLY) : 0,
+                        DiscCountLY = double.TryParse(x.DiscCountLY, out value) ? double.Parse(x.DiscCountLY) : 0,
+                        IntTotalLY = double.TryParse(x.IntTotalLY, out value) ? double.Parse(x.IntTotalLY) : 0,
+                        IntCountLY = double.TryParse(x.IntCountLY, out value) ? double.Parse(x.IntCountLY) : 0,
+                        LastAdjDate = DateTime.TryParse(x.LastAdjDate, out dValue) ? DateTime.Parse(x.LastAdjDate) : DateTime.Now,
+                        LastPostedDate = DateTime.TryParse(x.LastPostedDate, out dValue) ? DateTime.Parse(x.LastPostedDate) : DateTime.Now,
+                        LastIntDate = x.LastIntDate,
+                        LastPurgeDate = DateTime.TryParse(x.LastPurgeDate, out dValue) ? DateTime.Parse(x.LastPurgeDate) : DateTime.Now,
+                        LastStmtDate = x.LastStmtDate,
+                        LastRevalueDate = x.LastRevalueDate,
+                        HighInvAmt = double.TryParse(x.HighInvAmt, out value) ? double.Parse(x.HighInvAmt) : 0,
+                        HighInvDate = DateTime.TryParse(x.HighInvDate, out dValue) ? DateTime.Parse(x.HighInvDate) : DateTime.Now,
+                        HighBalanceAmt = double.TryParse(x.HighBalanceAmt, out value) ? double.Parse(x.HighBalanceAmt) : 0,
+                        HighBalanceDate = DateTime.TryParse(x.HighBalanceDate, out dValue) ? DateTime.Parse(x.HighBalanceDate) : DateTime.Now,
+                        LastInvAmt = double.TryParse(x.LastInvAmt, out value) ? double.Parse(x.LastInvAmt) : 0,
+                        LastInvDate = DateTime.TryParse(x.LastInvDate, out dValue) ? DateTime.Parse(x.LastInvDate) : DateTime.Now,
+                        LastPaymentAmt = double.TryParse(x.LastPaymentAmt, out value) ? double.Parse(x.LastPaymentAmt) : 0,
+                        LastPaymentDate = DateTime.TryParse(x.LastPaymentDate, out dValue) ? DateTime.Parse(x.LastPaymentDate) : DateTime.Now,
+                        LastCNAmt = double.TryParse(x.LastCNAmt, out value) ? double.Parse(x.LastCNAmt) : 0,
+                        LastCNDate = DateTime.TryParse(x.LastCNDate, out dValue) ? DateTime.Parse(x.LastCNDate) : DateTime.Now,
+                        HighInvAmtLY = double.TryParse(x.HighInvAmtLY, out value) ? double.Parse(x.HighInvAmtLY) : 0,
+                        HighInvDateLY = DateTime.TryParse(x.HighInvDateLY, out dValue) ? DateTime.Parse(x.HighInvDateLY) : DateTime.Now,
+                        HighBalanceAmtLY = double.TryParse(x.HighBalanceAmtLY, out value) ? double.Parse(x.HighBalanceAmtLY) : 0,
+                        HighBalanceDateLY = DateTime.TryParse(x.HighBalanceDateLY, out dValue) ? DateTime.Parse(x.HighBalanceDateLY) : DateTime.Now,
+                        TotalDaystoPay = double.TryParse(x.TotalDaystoPay, out value) ? double.Parse(x.TotalDaystoPay) : 0,
+                        TotalInvsPaid = double.TryParse(x.TotalInvsPaid, out value) ? double.Parse(x.TotalInvsPaid) : 0,
+                        AvgTimetoPayLY = double.TryParse(x.AvgTimetoPayLY, out value) ? double.Parse(x.AvgTimetoPayLY) : 0,
+                        LatestDate = DateTime.TryParse(x.LatestDate, out dValue) ? DateTime.Parse(x.LatestDate) : DateTime.Now,
+                        LatestDateDue = DateTime.TryParse(x.LatestDateDue, out dValue) ? DateTime.Parse(x.LatestDateDue) : DateTime.Now,
+                        PriceList = x.PriceList,
+                        ContactEmail = x.ContactEmail,
+                        InvoicesEmail = x.InvoicesEmail,
+                        StatementsEmail = x.StatementsEmail,
+                        InvoicesContact = x.InvoicesContact,
+                        StatementsContact = x.StatementsContact,
+                        Website = x.Website,
+                        Creditcardnumber1 = x.Creditcardnumber1,
+                        ExpiryDate1 = x.ExpiryDate1,
+                        NameonCard1 = x.NameonCard1,
+                        Creditcardnumber2 = x.Creditcardnumber2,
+                        ExpiryDate2 = x.ExpiryDate2,
+                        NameonCard2 = x.NameonCard2,
+                        //PrintStatementMethod = x.PrintStatementMethod,
+                        //FaxStatementMethod = x.FaxStatementMethod,
+                        //EmailStatementMethod = x.EmailStatementMethod,
+                        //PrintInvoiceMethod = x.PrintInvoiceMethod,
+                        //FaxInvoiceMethod = x.FaxInvoiceMethod,
+                        //EmailInvoiceMethod = x.EmailInvoiceMethod,
+                        StatementPrintSpec = x.StatementPrintSpec,
+                        StatementFaxSpec = x.StatementFaxSpec,
+                        StatementEmailSpec = x.StatementEmailSpec,
+                        StatementEmailCoverCode = x.StatementEmailCoverCode,
+                        CustOptionalText1 = x.CustOptionalText1,
+                        CustOptionalText2 = x.CustOptionalText2,
+                        CustOptionalText3 = x.CustOptionalText3,
+                        CustOptionalDate1 = x.CustOptionalDate1,
+                        CustOptionalDate2 = x.CustOptionalDate2,
+                        //CustOptionalAmount1 = x.CustOptionalAmount1,
+                        //CustOptionalAmount2 = x.CustOptionalAmount2,
+                        //CustOptionalUnits1 = x.CustOptionalUnits1,
+                        //CustOptionalUnits2 = x.CustOptionalUnits2,
+                        OEShipFromLocation = x.OEShipFromLocation,
+                        OEShiptoCode = x.OEShiptoCode,
+                        OEFOBPoint = x.OEFOBPoint,
+                        OEOrderConfEmailCover = x.OEOrderConfEmailCover,
+                        OEInvoiceEmailCover = x.OEInvoiceEmailCover,
+                        OECreditNoteEmailCover = x.OECreditNoteEmailCover,
+                        OEOrderConfPrintSpec = x.OEOrderConfPrintSpec,
+                        OEInvoicePrintSpec = x.OEInvoicePrintSpec,
+                        OECreditNotePrintSpec = x.OECreditNotePrintSpec,
+                        OEPickingSlipPrintSpec = x.OEPickingSlipPrintSpec,
+                        OEOrderConfFaxSpec = x.OEOrderConfFaxSpec,
+                        OEInvoiceFaxSpec = x.OEInvoiceFaxSpec,
+                        OECreditNoteFaxSpec = x.OECreditNoteFaxSpec,
+                        OEOrderConfEmailSpec = x.OEOrderConfEmailSpec,
+                        OEInvoiceEmailSpec = x.OEInvoiceEmailSpec,
+                        OECreditNoteEmailSpec = x.OECreditNoteEmailSpec,
+                        INTextCode = x.INTextCode,
+                        INFOBPoint = x.INFOBPoint,
+                        INInvoiceEmailCover = x.INInvoiceEmailCover,
+                        INCreditNoteEmailCover = x.INCreditNoteEmailCover,
+                        INShipFromLocation = x.INShipFromLocation,
+                        INInvoicePrintSpec = x.INInvoicePrintSpec,
+                        INCreditNotePrintSpec = x.INCreditNotePrintSpec,
+                        INinvoiceFaxSpec = x.INinvoiceFaxSpec,
+                        INCreditNoteFaxSpec = x.INCreditNoteFaxSpec,
+                        INInvoiceEmailSpec = x.INInvoiceEmailSpec,
+                        INCreditNoteEmailSpec = x.INCreditNoteEmailSpec,
+                        Agingtype_T = x.Agingtype_T,
+                        AgedasofDate = DateTime.TryParse(x.AgedasofDate, out dValue) ? DateTime.Parse(x.AgedasofDate) : DateTime.Now,
+                        AgedCurrent = double.TryParse(x.AgedCurrent, out value) ? double.Parse(x.AgedCurrent) : 0,
+                        AgedBucket1 = double.TryParse(x.AgedBucket1, out value) ? double.Parse(x.AgedBucket1) : 0,
+                        AgedBucket2 = double.TryParse(x.AgedBucket2, out value) ? double.Parse(x.AgedBucket2) : 0,
+                        AgedBucket3 = double.TryParse(x.AgedBucket3, out value) ? double.Parse(x.AgedBucket3) : 0,
+                        AgedBucket4 = double.TryParse(x.AgedBucket4, out value) ? double.Parse(x.AgedBucket4) : 0,
+                        AgedDays1 = double.TryParse(x.AgedDays1, out value) ? double.Parse(x.AgedDays1) : 0,
+                        AgedDays2 = double.TryParse(x.AgedDays2, out value) ? double.Parse(x.AgedDays2) : 0,
+                        AgedDays3 = double.TryParse(x.AgedDays3, out value) ? double.Parse(x.AgedDays3) : 0,
+                        DefaultPaymentCode = x.DefaultPaymentCode,
+                        CC1PaymentCode = x.CC1PaymentCode,
+                        CC2PaymentCode = x.CC2PaymentCode,
+                        //PADEnabled = x.PADEnabled,
+                        PADAccountNumber = x.PADAccountNumber,
+                        PADbranchnumber = x.PADbranchnumber,
+                        PADTransitNumber = x.PADTransitNumber,
+                        //LastMaintenanceDate = x.LastMaintenanceDate,
+                        //LastMaintenanceTime = x.LastMaintenanceTime,
+                        LastMaintenanceUser = x.LastMaintenanceUser,
+                        CustomerNameIndexUppercase = x.CustomerNameIndexUppercase,
+                        Prospectcode = x.Prospectcode,
+                        PayablesVendorcode = x.PayablesVendorcode,
+                        DUNS = x.DUNS,
+                        //DefaultOEDiscount = x.DefaultOEDiscount,
+                        INShiptoCode = x.INShiptoCode,
+                        ManualStyleCode = x.ManualStyleCode,
+                        AutomaticStyleCode = x.AutomaticStyleCode,
+                        //Payablesuseaddress = x.Payablesuseaddress,
+                        Payablesusecontactcode = x.Payablesusecontactcode,
+                        //Autoattachunpaidinvoices = x.Autoattachunpaidinvoices,
+                        Preferredstatementmethod_T = x.Preferredstatementmethod_T,
+                        Preferredinvoicemethod_T = x.Preferredinvoicemethod_T,
+                        Oldestunpaidinvoicedate = x.Oldestunpaidinvoicedate,
+                        RNumAR90ACST = double.TryParse(x.RNumAR90ACST, out value) ? double.Parse(x.RNumAR90ACST) : 0
+
+                    }).ToList();
+
+                    db.AdagioCustomers.AddRange(castedResults);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+
+        [HttpGet]
+        public HttpResponseMessage GetAdagioOrdersForToday()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            List<Adagio_O_OrderHeaderDTO> results = new List<Adagio_O_OrderHeaderDTO>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetAdagioOrdersForToday", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                json_serializer.MaxJsonLength = Int32.MaxValue;
+                Adagio_O_OrderHeaderDTO[] resultsArray = json_serializer.Deserialize<Adagio_O_OrderHeaderDTO[]>(response.Content.ReadAsStringAsync().Result);
+                results = resultsArray.ToList();
+                if (results.Count() > 0)
+                {
+                    double value = 0;
+                    DateTime dValue = DateTime.Now;
+                    db.Database.ExecuteSqlCommand("DELETE FROM AdagioTodayOrders");
+                    List<AdagioTodayOrder> castedResults = results.Select(x => new AdagioTodayOrder
+                    {
+                        CustPrefix = x.CustPrefix,
+                        Cust = double.TryParse(x.Cust, out value) ? double.Parse(x.Cust) : 0,
+                        OrderKey = x.OrderKey,
+                        DocType_T = x.DocType_T,
+                        Doc = double.TryParse(x.Doc, out value) ? double.Parse(x.Doc) : 0,
+                        Order_2 = double.TryParse(x.Order_2, out value) ? double.Parse(x.Order_2) : 0,
+                        Inv = double.TryParse(x.Inv, out value) ? double.Parse(x.Inv) : 0,
+                        OrderType_T = x.OrderType_T,
+                        OrderRelease = double.TryParse(x.OrderRelease, out value) ? double.Parse(x.OrderRelease) : 0,
+                        PrintStatus_T = x.PrintStatus_T,
+                        CostedStatus = double.TryParse(x.CostedStatus, out value) ? double.Parse(x.CostedStatus) : 0,
+                        OnHold = double.TryParse(x.OnHold, out value) ? double.Parse(x.OnHold) : 0,
+                        Posting = double.TryParse(x.Posting, out value) ? double.Parse(x.Posting) : 0,
+                        InventoryUpdated = double.TryParse(x.InventoryUpdated, out value) ? double.Parse(x.InventoryUpdated) : 0,
+                        OrderComplete = double.TryParse(x.OrderComplete, out value) ? double.Parse(x.OrderComplete) : 0,
+                        OrderDate = DateTime.TryParse(x.OrderDate, out dValue) ? DateTime.Parse(x.OrderDate) : DateTime.Now,
+                        InvDate = x.InvDate,
+                        ShipmentDate = x.ShipmentDate,
+                        ExpectedShipDate = DateTime.TryParse(x.ExpectedShipDate, out dValue) ? DateTime.Parse(x.ExpectedShipDate) : DateTime.Now,
+                        ShipVia = x.ShipVia,
+                        Comment1 = x.Comment1,
+                        Comment2 = x.Comment2,
+                        Loc = double.TryParse(x.Loc, out value) ? double.Parse(x.Loc) : 0,
+                        CreditApprovalPerson = x.CreditApprovalPerson,
+                        FOBPoint = x.FOBPoint,
+                        TaxGroup = x.TaxGroup,
+                        TotalOrderValueHome = double.TryParse(x.TotalOrderValueHome, out value) ? double.Parse(x.TotalOrderValueHome) : 0,
+                        LinesinOrder = double.TryParse(x.LinesinOrder, out value) ? double.Parse(x.LinesinOrder) : 0,
+                        InvDisc = double.TryParse(x.InvDisc, out value) ? double.Parse(x.InvDisc) : 0,
+                        Reference = x.Reference,
+                        Contact = x.Contact,
+                        TaxExempt1 = x.TaxExempt1,
+                        TaxExempt2 = x.TaxExempt2,
+                        Terms = x.Terms,
+                        Salesperson = double.TryParse(x.Salesperson, out value) ? double.Parse(x.Salesperson) : 0,
+                        CustTaxStatus = double.TryParse(x.CustTaxStatus, out value) ? double.Parse(x.CustTaxStatus) : 0,
+                        PreAR90Territory = x.PreAR90Territory,
+                        CustDiscLevel = x.CustDiscLevel,
+                        Name = x.Name,
+                        BillingAddress1 = x.BillingAddress1,
+                        BillingAddress2 = x.BillingAddress2,
+                        BillingAddress3 = x.BillingAddress3,
+                        BillingAddress4 = x.BillingAddress4,
+                        BillingZipPostal = x.BillingZipPostal,
+                        ShipName = x.ShipName,
+                        ShipAddress1 = x.ShipAddress1,
+                        ShipAddress2 = x.ShipAddress2,
+                        ShipAddress3 = x.ShipAddress3,
+                        ShipAddress4 = x.ShipAddress4,
+                        ShipZipPostal = x.ShipZipPostal,
+                        LabelsCount = double.TryParse(x.LabelsCount, out value) ? double.Parse(x.LabelsCount) : 0,
+                        GLPosting = double.TryParse(x.GLPosting, out value) ? double.Parse(x.GLPosting) : 0,
+                        ARPosting = double.TryParse(x.ARPosting, out value) ? double.Parse(x.ARPosting) : 0,
+                        TermsCode = x.TermsCode,
+                        Bank = x.Bank,
+                        CashAcct = double.TryParse(x.CashAcct, out value) ? double.Parse(x.CashAcct) : 0,
+                        CashDept = x.CashDept,
+                        Cheque = x.Cheque,
+                        DateDue = DateTime.TryParse(x.DateDue, out dValue) ? DateTime.Parse(x.DateDue) : DateTime.Now,
+                        DateDisc = x.DateDisc,
+                        TermsDisc = double.TryParse(x.TermsDisc, out value) ? double.Parse(x.TermsDisc) : 0,
+                        SourceDecimals = double.TryParse(x.SourceDecimals, out value) ? double.Parse(x.SourceDecimals) : 0,
+                        HomeCurr = x.HomeCurr,
+                        RateType = x.RateType,
+                        SourceCurr = x.SourceCurr,
+                        RateDate = DateTime.TryParse(x.RateDate, out dValue) ? DateTime.Parse(x.RateDate) : DateTime.Now,
+                        ExchgRate = double.TryParse(x.ExchgRate, out value) ? double.Parse(x.ExchgRate) : 0,
+                        ExchgSpread = double.TryParse(x.ExchgSpread, out value) ? double.Parse(x.ExchgSpread) : 0,
+                        RateRep = x.RateRep,
+                        DateMatching = x.DateMatching,
+                        BillingTelephone = x.BillingTelephone,
+                        BillingFax = x.BillingFax,
+                        ShipTelephone = x.ShipTelephone,
+                        ShipFax = x.ShipFax,
+                        PriceList = x.PriceList,
+                        CashDisc = double.TryParse(x.CashDisc, out value) ? double.Parse(x.CashDisc) : 0,
+                        ForeignHomeCurr = x.ForeignHomeCurr,
+                        ForeignRateType = x.ForeignRateType,
+                        ForeignSourceCurr = x.ForeignSourceCurr,
+                        ForeignRateDate = DateTime.TryParse(x.ForeignRateDate, out dValue) ? DateTime.Parse(x.ForeignRateDate) : DateTime.Now,
+                        ForeignRate = double.TryParse(x.ForeignRate, out value) ? double.Parse(x.ForeignRate) : 0,
+                        ForeignSpread = double.TryParse(x.ForeignSpread, out value) ? double.Parse(x.ForeignSpread) : 0,
+                        ForeignRateRep = x.ForeignRateRep,
+                        ForeignDateMatching = x.ForeignDateMatching,
+                        RateOverride = double.TryParse(x.RateOverride, out value) ? double.Parse(x.RateOverride) : 0,
+                        ForeignRateOverride = double.TryParse(x.ForeignRateOverride, out value) ? double.Parse(x.ForeignRateOverride) : 0,
+                        ForeignDecimals = double.TryParse(x.ForeignDecimals, out value) ? double.Parse(x.ForeignDecimals) : 0,
+                        DiscAcct = double.TryParse(x.DiscAcct, out value) ? double.Parse(x.DiscAcct) : 0,
+                        DiscDept = x.DiscDept,
+                        RoundAcct = x.RoundAcct,
+                        RoundDept = x.RoundDept,
+                        TaxByInv = double.TryParse(x.TaxByInv, out value) ? double.Parse(x.TaxByInv) : 0,
+                        TotalOrderValue = double.TryParse(x.TotalOrderValue, out value) ? double.Parse(x.TotalOrderValue) : 0,
+                        TotalDollarValue = double.TryParse(x.TotalDollarValue, out value) ? double.Parse(x.TotalDollarValue) : 0,
+                        InvDiscAmt = double.TryParse(x.InvDiscAmt, out value) ? double.Parse(x.InvDiscAmt) : 0,
+                        Tax1 = double.TryParse(x.Tax1, out value) ? double.Parse(x.Tax1) : 0,
+                        Tax2 = double.TryParse(x.Tax2, out value) ? double.Parse(x.Tax2) : 0,
+                        Tax3 = double.TryParse(x.Tax3, out value) ? double.Parse(x.Tax3) : 0,
+                        Tax4 = double.TryParse(x.Tax4, out value) ? double.Parse(x.Tax4) : 0,
+                        Tax5 = double.TryParse(x.Tax5, out value) ? double.Parse(x.Tax5) : 0,
+                        TotalCostValue = double.TryParse(x.TotalCostValue, out value) ? double.Parse(x.TotalCostValue) : 0,
+                        CashPayment = double.TryParse(x.CashPayment, out value) ? double.Parse(x.CashPayment) : 0,
+                        DiscBase = double.TryParse(x.DiscBase, out value) ? double.Parse(x.DiscBase) : 0,
+                        ForeignAmt = double.TryParse(x.ForeignAmt, out value) ? double.Parse(x.ForeignAmt) : 0,
+                        MovedtoHistory = double.TryParse(x.MovedtoHistory, out value) ? double.Parse(x.MovedtoHistory) : 0,
+                        RNumAO80AHED = x.RNumAO80AHED
+
+                    }).ToList();
+                    db.AdagioTodayOrders.AddRange(castedResults);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+
+        [HttpGet]
+        public HttpResponseMessage GetAdagioOrderDetails()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            List<Adagio_O_OrderDetailDTO> results = new List<Adagio_O_OrderDetailDTO>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetAdagioOrderDetails", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                json_serializer.MaxJsonLength = Int32.MaxValue;
+                Adagio_O_OrderDetailDTO[] resultsArray = json_serializer.Deserialize<Adagio_O_OrderDetailDTO[]>(response.Content.ReadAsStringAsync().Result);
+                results = resultsArray.ToList();
+                if (results.Count() > 0)
+                {
+                    double value = 0;
+                    DateTime dValue = DateTime.Now;
+                    db.Database.ExecuteSqlCommand("DELETE FROM AdagioOrderDetails");
+                    List<AdagioOrderDetail> castedResults = results.Select(x => new AdagioOrderDetail
+                    {
+                        OrderKey = x.OrderKey,
+                        Line = double.TryParse(x.Line, out value) ? double.Parse(x.Line) : 0,
+                        DDocType_T = x.DDocType_T,
+                        DDoc = double.TryParse(x.DDoc, out value) ? double.Parse(x.DDoc) : 0,
+                        LineType_T = x.LineType_T,
+                        Item = double.TryParse(x.Item, out value) ? double.Parse(x.Item) : 0,
+                        Description = x.Description,
+                        Unit = x.Unit,
+                        PickingSeq = x.PickingSeq,
+                        DiscLevel = x.DiscLevel,
+                        DCategory = x.DCategory,
+                        PriceUnit = x.PriceUnit,
+                        PriceOverride = double.TryParse(x.PriceOverride, out value) ? double.Parse(x.PriceOverride) : 0,
+                        ExtensionOverride = double.TryParse(x.ExtensionOverride, out value) ? double.Parse(x.ExtensionOverride) : 0,
+                        ReturntoInventory = double.TryParse(x.ReturntoInventory, out value) ? double.Parse(x.ReturntoInventory) : 0,
+                        SerialCount = double.TryParse(x.SerialCount, out value) ? double.Parse(x.SerialCount) : 0,
+                        TaxStatus = double.TryParse(x.TaxStatus, out value) ? double.Parse(x.TaxStatus) : 0,
+                        Commissionable = double.TryParse(x.Commissionable, out value) ? double.Parse(x.Commissionable) : 0,
+                        UnitFactor = double.TryParse(x.UnitFactor, out value) ? double.Parse(x.UnitFactor) : 0,
+                        UnitWeight = double.TryParse(x.UnitWeight, out value) ? double.Parse(x.UnitWeight) : 0,
+                        QtyOriginalOrdered = double.TryParse(x.QtyOriginalOrdered, out value) ? double.Parse(x.QtyOriginalOrdered) : 0,
+                        QtyOrdered = double.TryParse(x.QtyOrdered, out value) ? double.Parse(x.QtyOrdered) : 0,
+                        QtyShippedtoDate = double.TryParse(x.QtyShippedtoDate, out value) ? double.Parse(x.QtyShippedtoDate) : 0,
+                        QtyShipped = double.TryParse(x.QtyShipped, out value) ? double.Parse(x.QtyShipped) : 0,
+                        QtyBackordered = double.TryParse(x.QtyBackordered, out value) ? double.Parse(x.QtyBackordered) : 0,
+                        ExtWeight = double.TryParse(x.ExtWeight, out value) ? double.Parse(x.ExtWeight) : 0,
+                        ShipStockingUnits = double.TryParse(x.ShipStockingUnits, out value) ? double.Parse(x.ShipStockingUnits) : 0,
+                        Loc = double.TryParse(x.Loc, out value) ? double.Parse(x.Loc) : 0,
+                        Complete = double.TryParse(x.Complete, out value) ? double.Parse(x.Complete) : 0,
+                        Curr = x.Curr,
+                        Decimals = double.TryParse(x.Decimals, out value) ? double.Parse(x.Decimals) : 0,
+                        PriceList = x.PriceList,
+                        OrderedInPO = double.TryParse(x.OrderedInPO, out value) ? double.Parse(x.OrderedInPO) : 0,
+                        UnitDecimals = double.TryParse(x.UnitDecimals, out value) ? double.Parse(x.UnitDecimals) : 0,
+                        UnitPrice = double.TryParse(x.UnitPrice, out value) ? double.Parse(x.UnitPrice) : 0,
+                        UnitCost = double.TryParse(x.UnitCost, out value) ? double.Parse(x.UnitCost) : 0,
+                        ExtPrice = double.TryParse(x.ExtPrice, out value) ? double.Parse(x.ExtPrice) : 0,
+                        ExtCost = double.TryParse(x.ExtCost, out value) ? double.Parse(x.ExtCost) : 0,
+                        TaxAmt = double.TryParse(x.TaxAmt, out value) ? double.Parse(x.TaxAmt) : 0,
+                        DTax1 = double.TryParse(x.DTax1, out value) ? double.Parse(x.DTax1) : 0,
+                        DTax2 = double.TryParse(x.DTax2, out value) ? double.Parse(x.DTax2) : 0,
+                        DTax3 = double.TryParse(x.DTax3, out value) ? double.Parse(x.DTax3) : 0,
+                        DTax4 = double.TryParse(x.DTax4, out value) ? double.Parse(x.DTax4) : 0,
+                        DTax5 = double.TryParse(x.DTax5, out value) ? double.Parse(x.DTax5) : 0,
+                        DBase1 = double.TryParse(x.DBase1, out value) ? double.Parse(x.DBase1) : 0,
+                        DBase2 = double.TryParse(x.DBase2, out value) ? double.Parse(x.DBase2) : 0,
+                        DBase3 = double.TryParse(x.DBase3, out value) ? double.Parse(x.DBase3) : 0,
+                        DBase4 = double.TryParse(x.DBase4, out value) ? double.Parse(x.DBase4) : 0,
+                        DBase5 = double.TryParse(x.DBase5, out value) ? double.Parse(x.DBase5) : 0,
+                        DiscAmt = double.TryParse(x.DiscAmt, out value) ? double.Parse(x.DiscAmt) : 0,
+                        DiscExtension = double.TryParse(x.DiscExtension, out value) ? double.Parse(x.DiscExtension) : 0,
+                        BasePrice = double.TryParse(x.BasePrice, out value) ? double.Parse(x.BasePrice) : 0,
+                        ExtOrderPrice = double.TryParse(x.ExtOrderPrice, out value) ? double.Parse(x.ExtOrderPrice) : 0,
+                        PriceFactor = double.TryParse(x.PriceFactor, out value) ? double.Parse(x.PriceFactor) : 0,
+                        //Serial1 = double.Parse(x.Serial1),
+                        //Serial2 = double.Parse(x.Serial2),
+                        //Serial3 = double.Parse(x.Serial3),
+                        //Serial4 = double.Parse(x.Serial4),
+                        //Serial5 = double.Parse(x.Serial5),
+                        DExpectedShipDate = DateTime.TryParse(x.DExpectedShipDate, out dValue) ? DateTime.Parse(x.DExpectedShipDate) : DateTime.Now,
+                        MiscAmount = double.TryParse(x.MiscAmount, out value) ? double.Parse(x.MiscAmount) : 0,
+                        MiscBasePrice = double.TryParse(x.MiscBasePrice, out value) ? double.Parse(x.MiscBasePrice) : 0,
+                        MiscShortDescription = x.MiscShortDescription,
+                        MiscQuantity = double.TryParse(x.MiscQuantity, out value) ? double.Parse(x.MiscQuantity) : 0,
+                        MiscFiller = x.MiscFiller,
+                        RNumAO80ALIN = x.RNumAO80ALIN
+
+                    }).ToList();
+                    db.AdagioOrderDetails.AddRange(castedResults);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetAdagioOrderHeaders()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            List<Adagio_O_OrderHeaderDTO> results = new List<Adagio_O_OrderHeaderDTO>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetAdagioOrderHeaders", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                json_serializer.MaxJsonLength = Int32.MaxValue;
+                Adagio_O_OrderHeaderDTO[] resultsArray = json_serializer.Deserialize<Adagio_O_OrderHeaderDTO[]>(response.Content.ReadAsStringAsync().Result);
+                results = resultsArray.ToList();
+                if (results.Count() > 0)
+                {
+                    double value = 0;
+                    DateTime dValue = DateTime.Now;
+                    db.Database.ExecuteSqlCommand("DELETE FROM AdagioOrderHeaders");
+                    List<AdagioOrderHeader> castedResults = results.Select(x => new AdagioOrderHeader
+                    {
+                        CustPrefix = x.CustPrefix,
+                        Cust = double.TryParse(x.Cust, out value) ? double.Parse(x.Cust) : 0,
+                        OrderKey = x.OrderKey,
+                        DocType_T = x.DocType_T,
+                        Doc = double.TryParse(x.Doc, out value) ? double.Parse(x.Doc) : 0,
+                        Order_2 = double.TryParse(x.Order_2, out value) ? double.Parse(x.Order_2) : 0,
+                        Inv = double.TryParse(x.Inv, out value) ? double.Parse(x.Inv) : 0,
+                        OrderType_T = x.OrderType_T,
+                        OrderRelease = double.TryParse(x.OrderRelease, out value) ? double.Parse(x.OrderRelease) : 0,
+                        PrintStatus_T = x.PrintStatus_T,
+                        CostedStatus = double.TryParse(x.CostedStatus, out value) ? double.Parse(x.CostedStatus) : 0,
+                        OnHold = double.TryParse(x.OnHold, out value) ? double.Parse(x.OnHold) : 0,
+                        Posting = double.TryParse(x.Posting, out value) ? double.Parse(x.Posting) : 0,
+                        InventoryUpdated = double.TryParse(x.InventoryUpdated, out value) ? double.Parse(x.InventoryUpdated) : 0,
+                        OrderComplete = double.TryParse(x.OrderComplete, out value) ? double.Parse(x.OrderComplete) : 0,
+                        OrderDate = DateTime.TryParse(x.OrderDate, out dValue) ? DateTime.Parse(x.OrderDate) : DateTime.Now,
+                        InvDate = x.InvDate,
+                        ShipmentDate = x.ShipmentDate,
+                        ExpectedShipDate = DateTime.TryParse(x.ExpectedShipDate, out dValue) ? DateTime.Parse(x.ExpectedShipDate) : DateTime.Now,
+                        ShipVia = x.ShipVia,
+                        Comment1 = x.Comment1,
+                        Comment2 = x.Comment2,
+                        Loc = double.TryParse(x.Loc, out value) ? double.Parse(x.Loc) : 0,
+                        CreditApprovalPerson = x.CreditApprovalPerson,
+                        FOBPoint = x.FOBPoint,
+                        TaxGroup = x.TaxGroup,
+                        TotalOrderValueHome = double.TryParse(x.TotalOrderValueHome, out value) ? double.Parse(x.TotalOrderValueHome) : 0,
+                        LinesinOrder = double.TryParse(x.LinesinOrder, out value) ? double.Parse(x.LinesinOrder) : 0,
+                        InvDisc = double.TryParse(x.InvDisc, out value) ? double.Parse(x.InvDisc) : 0,
+                        Reference = x.Reference,
+                        Contact = x.Contact,
+                        TaxExempt1 = x.TaxExempt1,
+                        TaxExempt2 = x.TaxExempt2,
+                        Terms = x.Terms,
+                        Salesperson = double.TryParse(x.Salesperson, out value) ? double.Parse(x.Salesperson) : 0,
+                        CustTaxStatus = double.TryParse(x.CustTaxStatus, out value) ? double.Parse(x.CustTaxStatus) : 0,
+                        PreAR90Territory = x.PreAR90Territory,
+                        CustDiscLevel = x.CustDiscLevel,
+                        Name = x.Name,
+                        BillingAddress1 = x.BillingAddress1,
+                        BillingAddress2 = x.BillingAddress2,
+                        BillingAddress3 = x.BillingAddress3,
+                        BillingAddress4 = x.BillingAddress4,
+                        BillingZipPostal = x.BillingZipPostal,
+                        ShipName = x.ShipName,
+                        ShipAddress1 = x.ShipAddress1,
+                        ShipAddress2 = x.ShipAddress2,
+                        ShipAddress3 = x.ShipAddress3,
+                        ShipAddress4 = x.ShipAddress4,
+                        ShipZipPostal = x.ShipZipPostal,
+                        LabelsCount = double.TryParse(x.LabelsCount, out value) ? double.Parse(x.LabelsCount) : 0,
+                        GLPosting = double.TryParse(x.GLPosting, out value) ? double.Parse(x.GLPosting) : 0,
+                        ARPosting = double.TryParse(x.ARPosting, out value) ? double.Parse(x.ARPosting) : 0,
+                        TermsCode = x.TermsCode,
+                        Bank = x.Bank,
+                        CashAcct = double.TryParse(x.CashAcct, out value) ? double.Parse(x.CashAcct) : 0,
+                        CashDept = x.CashDept,
+                        Cheque = x.Cheque,
+                        DateDue = DateTime.TryParse(x.DateDue, out dValue) ? DateTime.Parse(x.DateDue) : DateTime.Now,
+                        DateDisc = x.DateDisc,
+                        TermsDisc = double.TryParse(x.TermsDisc, out value) ? double.Parse(x.TermsDisc) : 0,
+                        SourceDecimals = double.TryParse(x.SourceDecimals, out value) ? double.Parse(x.SourceDecimals) : 0,
+                        HomeCurr = x.HomeCurr,
+                        RateType = x.RateType,
+                        SourceCurr = x.SourceCurr,
+                        RateDate = DateTime.TryParse(x.RateDate, out dValue) ? DateTime.Parse(x.RateDate) : DateTime.Now,
+                        ExchgRate = double.TryParse(x.ExchgRate, out value) ? double.Parse(x.ExchgRate) : 0,
+                        ExchgSpread = double.TryParse(x.ExchgSpread, out value) ? double.Parse(x.ExchgSpread) : 0,
+                        RateRep = x.RateRep,
+                        DateMatching = x.DateMatching,
+                        BillingTelephone = x.BillingTelephone,
+                        BillingFax = x.BillingFax,
+                        ShipTelephone = x.ShipTelephone,
+                        ShipFax = x.ShipFax,
+                        PriceList = x.PriceList,
+                        CashDisc = double.TryParse(x.CashDisc, out value) ? double.Parse(x.CashDisc) : 0,
+                        ForeignHomeCurr = x.ForeignHomeCurr,
+                        ForeignRateType = x.ForeignRateType,
+                        ForeignSourceCurr = x.ForeignSourceCurr,
+                        ForeignRateDate = DateTime.TryParse(x.ForeignRateDate, out dValue) ? DateTime.Parse(x.ForeignRateDate) : DateTime.Now,
+                        ForeignRate = double.TryParse(x.ForeignRate, out value) ? double.Parse(x.ForeignRate) : 0,
+                        ForeignSpread = double.TryParse(x.ForeignSpread, out value) ? double.Parse(x.ForeignSpread) : 0,
+                        ForeignRateRep = x.ForeignRateRep,
+                        ForeignDateMatching = x.ForeignDateMatching,
+                        RateOverride = double.TryParse(x.RateOverride, out value) ? double.Parse(x.RateOverride) : 0,
+                        ForeignRateOverride = double.TryParse(x.ForeignRateOverride, out value) ? double.Parse(x.ForeignRateOverride) : 0,
+                        ForeignDecimals = double.TryParse(x.ForeignDecimals, out value)? double.Parse(x.ForeignDecimals) : 0,
+                        DiscAcct = double.TryParse(x.DiscAcct, out value) ? double.Parse(x.DiscAcct) : 0,
+                        DiscDept = x.DiscDept,
+                        RoundAcct = x.RoundAcct,
+                        RoundDept = x.RoundDept,
+                        TaxByInv = double.TryParse(x.TaxByInv, out value) ? double.Parse(x.TaxByInv) : 0,
+                        TotalOrderValue = double.TryParse(x.TotalOrderValue, out value) ? double.Parse(x.TotalOrderValue) : 0,
+                        TotalDollarValue = double.TryParse(x.TotalDollarValue, out value) ? double.Parse(x.TotalDollarValue) : 0,
+                        InvDiscAmt = double.TryParse(x.InvDiscAmt, out value) ? double.Parse(x.InvDiscAmt) : 0,
+                        Tax1 = double.TryParse(x.Tax1, out value) ? double.Parse(x.Tax1) : 0,
+                        Tax2 = double.TryParse(x.Tax2, out value) ? double.Parse(x.Tax2) : 0,
+                        Tax3 = double.TryParse(x.Tax3, out value) ? double.Parse(x.Tax3) : 0,
+                        Tax4 = double.TryParse(x.Tax4, out value) ? double.Parse(x.Tax4) : 0,
+                        Tax5 = double.TryParse(x.Tax5, out value) ? double.Parse(x.Tax5) : 0,
+                        TotalCostValue = double.TryParse(x.TotalCostValue, out value) ? double.Parse(x.TotalCostValue) : 0,
+                        CashPayment = double.TryParse(x.CashPayment, out value) ? double.Parse(x.CashPayment) : 0,
+                        DiscBase = double.TryParse(x.DiscBase, out value) ? double.Parse(x.DiscBase) : 0,
+                        ForeignAmt = double.TryParse(x.ForeignAmt, out value) ? double.Parse(x.ForeignAmt) : 0,
+                        MovedtoHistory = double.TryParse(x.MovedtoHistory, out value) ? double.Parse(x.MovedtoHistory) : 0,
+                        RNumAO80AHED = x.RNumAO80AHED
+                    }).ToList();
+                    db.AdagioOrderHeaders.AddRange(castedResults);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
         }
     }
 

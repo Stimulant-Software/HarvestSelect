@@ -8,6 +8,12 @@ using System.Configuration;
 using InnovaServiceHost.DTOs;
 using System.Globalization;
 using InnovaService;
+using System.Linq.Dynamic;
+using System.Data.SqlClient;
+using System.Data;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 
 
 namespace InnovaServiceHost.Controllers {
@@ -55,6 +61,85 @@ namespace InnovaServiceHost.Controllers {
 
 
         #endregion
+        [HttpGet]
+        public object UpdateSalesData()
+        {
+            SqlConnection con = new SqlConnection("data source=localhost;initial catalog=StimulantStage;persist security info=True;user id=StimulantUpdateSvc;password=Stimulant123!;MultipleActiveResultSets=True;");
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            cmd = new SqlCommand("GetSalesDailyUpdate", con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.Parameters.AddWithValue("@SuperID", id);//if you have parameters.
+            da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            con.Close();
+            return ds;
+        }
+
+        [HttpGet]
+        public object UpdateAdagioFile()
+        {
+            var dic = Request.GetQueryNameValuePairs().ToDictionary(x => x.Key, x => x.Value, StringComparer.OrdinalIgnoreCase);
+            var fileToUpdate = dic.First().Value;
+            SqlConnection con = new SqlConnection("data source=localhost;initial catalog=StimulantStage;persist security info=True;user id=StimulantUpdateSvc;password=Stimulant123!;MultipleActiveResultSets=True;");
+            SqlCommand cmd = new SqlCommand();
+            SqlDataAdapter da = new SqlDataAdapter();
+            DataSet ds = new DataSet();
+            string sp = "";
+            switch (fileToUpdate)
+            {
+                case "AN81CITM":
+                    sp = "GetAdagioItems";
+                    break;
+                case "AN81CILO":
+                    sp = "GetAdagioItemLocations";
+                    break;
+                case "AO80AHED":
+                    sp = "GetAdagioOrderHeaders";
+                    break;
+                case "AO80ALIN":
+                    sp = "GetAdagioOrderDetails";
+                    break;
+
+            }
+            cmd = new SqlCommand(sp, con);
+            cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.Parameters.AddWithValue("@SuperID", id);//if you have parameters.
+            da = new SqlDataAdapter(cmd);
+            da.Fill(ds);
+            con.Close();
+            return ds;
+        }
+
+        [HttpPost]
+        public object GetCurrentShipping([FromBody] InnovaDto dto)
+        {
+
+            var context = new innova01Entities();
+            var startDate = DateTime.Now.Date;
+            var endDate = startDate.AddDays(5);
+            return (from a in context.proc_orders.Where(x => x.dispatchtime >= startDate && x.dispatchtime <= endDate)
+                    join b in context.proc_orderl
+                    on a.order equals b.order
+                    join p in context.proc_invstatus.Where(x => x.regtime >= startDate)
+                    on b.material equals p.material
+                    join l in context.proc_materials
+                    on b.material equals l.material
+                    join bc in context.base_companies
+                    on a.customer equals bc.company
+
+                    select new
+                    {
+                        CustomerName = bc.name,
+                        ItemDescription = l.name,
+                        ItemCode = l.code,
+                        OrderAmount = b.maxamount,
+                        QuantityOnHand = p.units,
+                        OrderDate = a.dispatchtime
+                    }
+                    );
+        }
 
         [HttpPost]
         public object GetKeithsData([FromBody] InnovaDto dto) {
@@ -72,8 +157,8 @@ namespace InnovaServiceHost.Controllers {
                 //var startDate = new DateTime(2015,7,1);
                 //var endDate = new DateTime(2015,7,2);
                 var startDate = dto.StartDate;
-                var endDate = dto.EndDate;
-                return (from m in context.proc_materials
+                var endDate = dto.StartDate.AddDays(1);
+            return (from m in context.proc_materials
                                         .Where(x => x.shname == "Sample")                                        
                         join p in context.proc_packs.Where(x => x.rtype != 4
                                                             && x.regtime >= startDate
@@ -152,7 +237,8 @@ namespace InnovaServiceHost.Controllers {
                         CustomerState = p.CustomerState,
                         CustomerZip = p.CustomerZip,
                         CustomerPhone = p.CustomerPhone,
-                        Terms = p.Terms
+                        Terms = p.Terms,
+                        CWItem = p.CWItem
                     });
 
             
@@ -182,6 +268,77 @@ namespace InnovaServiceHost.Controllers {
                         Nominal = g.Sum(x => x.nominal),
                         Weight = g.Sum(x => x.weight)
                     });
+
+        }
+        [HttpPost]
+        public object GetTodaysProductionTotal([FromBody] InnovaDto dto)
+        {
+            var context = new innova01Entities();
+            var startDate = DateTime.Now.Date;
+
+            return (from p in context.proc_packs.Where(x => x.prday >= startDate && x.conum != null)
+                    group p by p.device into g
+                    select new
+                    {
+                        Station = g.Key,
+                        Nominal = g.Sum(x => x.nominal),
+                        Weight = g.Sum(x => x.weight)
+                    });
+
+        }
+
+        [HttpPost]
+        public object GetAdagioItems([FromBody] AdagioItemsImport dto)
+        {
+            var db = new StimulantStageEntities();
+            var retVal = db.Database.SqlQuery<AdagioItemsImport>("execute GetAdagioItems");
+            
+            return retVal;
+
+        }
+
+        [HttpPost]
+        public object GetAdagioOrderDetails([FromBody] OrderDetailsImport dto)
+        {
+            var db = new StimulantStageEntities();
+            var retVal = db.Database.SqlQuery<OrderDetailsImport>("execute GetAdagioOrderDetails").ToArray();
+            return retVal;
+
+        }
+
+        [HttpPost]
+        public object GetAdagioOrdersForToday([FromBody] OrderHeadersImport dto)
+        {
+            var db = new StimulantStageEntities();
+            var retVal = db.Database.SqlQuery<OrderHeadersImport>("execute GetAdagioOrdersForToday").ToArray();
+            return retVal;
+
+        }
+
+        [HttpPost]
+        public object GetAdagioOrderHeaders([FromBody] OrderHeadersImport dto)
+        {
+            var db = new StimulantStageEntities();
+            var retVal = db.Database.SqlQuery<OrderHeadersImport>("execute GetAdagioOrderHeaders").ToArray();
+            return retVal;
+
+        }
+
+        [HttpPost]
+        public object GetAdagioSalesTransactions([FromBody] SalesTransactionsImport dto)
+        {
+            var db = new StimulantStageEntities();
+            var retVal = db.Database.SqlQuery<SalesTransactionsImport>("execute GetDailySalesUpdate").ToArray();
+            return retVal;
+
+        }
+
+        [HttpPost]
+        public object GetAdagioCustomers([FromBody] CustomersImport dto)
+        {
+            var db = new StimulantStageEntities();
+            var retVal = db.Database.SqlQuery<CustomersImport>("execute GetAdagioCustomers").ToArray();
+            return retVal;
 
         }
     }

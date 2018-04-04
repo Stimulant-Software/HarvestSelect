@@ -41,6 +41,8 @@ namespace SGApp.Controllers
                     dic.Add("PondId", item.PondId.ToString());
                     dic.Add("PondName", item.PondName);
                     dic.Add("StatusId", item.StatusId.ToString());
+                    dic.Add("InnovaName", item.InnovaName != null ? item.InnovaName : "");
+                    dic.Add("InnovaCode", item.InnovaCode != null ? item.InnovaCode : "");
                     dic.Add("Size", item.Size.ToString());
                     dic.Add("NoFeed", item.NoFeed.ToString());
                     int poundsfedsinceharvest = 0;
