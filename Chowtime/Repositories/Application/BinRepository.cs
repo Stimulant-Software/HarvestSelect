@@ -37,7 +37,12 @@ namespace SGApp.Repository.Application {
 			return DbContext.Bins.OrderBy(x => x.BinName).ToList();
 		}
 
-		internal Bin GetNewBinRecord() {
+        internal List<Bin> GetFarmBins(int FarmID)
+        {
+            return DbContext.Bins.Where(x => x.FarmID == FarmID).OrderBy(x => x.BinName).ToList();
+        }
+
+        internal Bin GetNewBinRecord() {
 			var rec = DbContext.Bins.Create();
 			DbContext.Bins.Add(rec);
 			return rec;

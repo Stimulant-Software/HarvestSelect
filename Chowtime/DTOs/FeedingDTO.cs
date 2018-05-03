@@ -44,7 +44,9 @@ namespace SGApp.DTOs
         }
 
 
-		public int BinID { get; set; }
+		public int? BinID { get; set; }
+
+        public int FarmID { get; set; }
 
 
 

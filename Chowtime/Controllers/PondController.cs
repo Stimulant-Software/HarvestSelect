@@ -495,6 +495,7 @@ namespace SGApp.Controllers
                 int thisfarm = pr.GetById(int.Parse(uDto.PondId)).FarmId;
                 int UsersFarmId = thisuser.UserFarms.Where(x => x.FarmId == thisfarm).SingleOrDefault().UserFarmId;
                 uDto.UsersFarmId = UsersFarmId.ToString();
+                uDto.FarmID = thisfarm;
                 
                 var feed = new Feeding();
                 var errors = ValidateDtoData(uDto, feed);
@@ -715,32 +716,42 @@ namespace SGApp.Controllers
             //  no validation errors... 
             //Pond.CompanyId = companyId;
             o2 = ur.Save(o2);
+            var farmid = uDto.FarmID;
+
 			var br = new BinRepository();
-	        var binDisb = br.GetNewBinDisbursementRecord();
-	        binDisb.DateCreated = DateTime.Now;
-	        var disbType = br.GetDisbursementType("Routine Feeding");
-	        var ticketNbr = br.GetLastBinLoadTicketNumber(uDto.BinID);
-	        if (ticketNbr == 0) {
-		        return request.CreateErrorResponse(HttpStatusCode.InternalServerError,
-			        string.Format("{0}{1}", "There are no Tickets in BinLoads for BinID ", uDto.BinID));
-	        }
-			var dto = new BinDisbursementDto() {
-				BinID = uDto.BinID,
-				TicketNumber = ticketNbr,				
-				Pounds = int.Parse(uDto.PoundsFed),
-				Note = "Record created from daily feed disbursement input screen",
-				DisbursementType = disbType,
-				DisbursementDate = DateTime.Now,
-				CreatedDate = DateTime.Now,
-				UserID = UserId,
-				FeedID = o2.FeedingId
-			};
-	        validationErrors = GetBinDisbursementErrors(br, binDisb, dto, companyId, UserId);
-	        if (validationErrors.Any()) {
-		        return ProcessValidationErrors(request, validationErrors, key);
-	        }			
-	        br.SaveChanges();
-	        br.UpdateBinCurrentPounds(null, binDisb);
+            var binCount = br.GetFarmBins(farmid).Count();
+            if (binCount > 0)
+            {
+                var binDisb = br.GetNewBinDisbursementRecord();
+                binDisb.DateCreated = DateTime.Now;
+                var disbType = br.GetDisbursementType("Routine Feeding");
+                var ticketNbr = br.GetLastBinLoadTicketNumber(uDto.BinID.Value);
+                if (ticketNbr == 0)
+                {
+                    return request.CreateErrorResponse(HttpStatusCode.InternalServerError,
+                        string.Format("{0}{1}", "There are no Tickets in BinLoads for BinID ", uDto.BinID));
+                }
+                var dto = new BinDisbursementDto()
+                {
+                    BinID = uDto.BinID.Value,
+                    TicketNumber = ticketNbr,
+                    Pounds = int.Parse(uDto.PoundsFed),
+                    Note = "Record created from daily feed disbursement input screen",
+                    DisbursementType = disbType,
+                    DisbursementDate = DateTime.Now,
+                    CreatedDate = DateTime.Now,
+                    UserID = UserId,
+                    FeedID = o2.FeedingId
+                };
+                validationErrors = GetBinDisbursementErrors(br, binDisb, dto, companyId, UserId);
+                if (validationErrors.Any())
+                {
+                    return ProcessValidationErrors(request, validationErrors, key);
+                }
+                br.SaveChanges();
+                br.UpdateBinCurrentPounds(null, binDisb);
+            }
+	        
 			uDto.Key = key;
             var response = request.CreateResponse(HttpStatusCode.Created, uDto);
             response.Headers.Location = new Uri(Url.Link("Default", new {

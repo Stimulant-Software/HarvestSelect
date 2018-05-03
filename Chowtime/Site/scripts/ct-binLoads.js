@@ -157,9 +157,8 @@
 					alertError("Please enter a value for 'Date Loaded' and try again");
 					return;
 				}
-				if ($binLoads_poundsLoaded.val().length == 0
-					|| parseInt($binLoads_poundsLoaded.val()) <= 0) {
-					alertError("Please enter a value for 'Pounds Loaded' greater than 0 and try again");
+				if ($binLoads_poundsLoaded.val().length == 0) {
+					alertError("Please enter a value for 'Pounds Loaded'.");
 					return;
 				}
 				var binId = parseInt($binLoads_currentBin.val());				

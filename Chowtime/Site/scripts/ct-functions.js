@@ -1,4 +1,5 @@
 showProgress('body', 'loadCTEntryPage');
+var hasBins = false;
 $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
 	var farmID, selectedDate;	
     if ($('body').hasClass('entry')) {
@@ -15,8 +16,18 @@ $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
                 success: function (msg) {
                     startTimer(msg['Key']);
 					pondList = msg['ReturnData'];
-					bins = msg["Bins"];
-	                load_binSelectDDL(bins);
+                    bins = msg["Bins"];
+                    if (bins.length > 0) {
+                        hasBins = true;
+                        load_binSelectDDL(bins);
+                        $('#binSelect').show();
+                        $('#binSelectLabel').show();
+                    }
+                    else {
+                        $('#binSelect').hide();
+                        $('#binSelectLabel').hide();
+                    }
+	                
                 }
             }), $.ajax('../api/Farm/FarmLast7Feeds', {
                 // also available: ../api/Farm/FarmFeedLast7Days
@@ -379,20 +390,23 @@ function bindButtons(){
         });
     });
 
-	$('.submit-feed').unbind().click(function (e) {
+    $('.submit-feed').unbind().click(function (e) {
+        debugger;
 		e.preventDefault();
 	    var $binSelect = $("#binSelect");
 	    var currentSection = $(this).parent().parent().parent('.pond'),
-		    feedAmount = $(this).prev('.feed-amount').val();			
-		if ($binSelect.val() === "Select Bin") {
-			alertError("Please Select a Bin and try again");
-		} else if (feedAmount <= 0) {
+            feedAmount = $(this).prev('.feed-amount').val();
+        if ($binSelect.val() === "Select Bin" && hasBins) {
+                alertError("Please Select a Bin and try again");
+        }
+		
+		else if (feedAmount <= 0) {
 			alertError("Please enter an amount greater than zero and try again");
 		} else {
 			var pondID = $(this).data('pondid'), now = new Date();
 			var pondInfo = {},
 				feedInfo = {},
-				binId = $binSelect.val();
+				binId = hasBins ? $binSelect.val() : null;
 			numberOfDays = $(this).parent().parent().prev('section').hasClass('five-day') ? 5 : 7;
 			showProgress(currentSection, 'submitCTEntry');
 			var searchQuery = {

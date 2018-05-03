@@ -163,7 +163,19 @@ namespace SGApp.Controllers
 		    var aur1 = new AppUserRoleRepository();
 		    if (UserId > 0 && aur1.IsInRole(UserId, "User")) {
 			    var br = new BinRepository();
-			    var binLoad = br.GetNewBinLoadRecord();
+                var binLoadrec = br.GetNewBinLoadRecord();
+                binLoadrec.BinID = dto.BinID;
+                //binLoadrec.TicketNumber = dto.TicketNumber;
+                binLoadrec.DateLoaded = dto.DateLoaded;
+                var currPounds = br.GetBinData(dto.BinID).CurrentPounds;
+                binLoadrec.PoundsLoaded = currPounds != null ? -currPounds.Value : 0;
+                binLoadrec.Vendor = "---";
+                binLoadrec.Note = "RECONCILIATION";
+                binLoadrec.CreatedDate = DateTime.Now;
+                binLoadrec.UserID = UserId;
+                br.SaveChanges();
+                br.UpdateBinCurrentPounds(binLoadrec, null);
+                var binLoad = br.GetNewBinLoadRecord();
 			    binLoad.BinID = dto.BinID;
 			    binLoad.TicketNumber = dto.TicketNumber;
 			    binLoad.DateLoaded = dto.DateLoaded;
