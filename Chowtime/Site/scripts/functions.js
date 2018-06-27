@@ -56,6 +56,8 @@ function loginControls() {
                             window.location.href = "at-entry.html";
                         } else if (userRoles.indexOf('Operations') > -1 || userRoles.indexOf('OP') > -1) {
                             window.location.href = "op-production.html";
+                        } else if (userRoles.indexOf('BOL') > -1) {
+                            window.location.href = "op-bol-reports.html";
                         } else if (userRoles.length < 1) {
                             alertError("Your user permissions are not defined. Please contact your manager.");
                         } else {
