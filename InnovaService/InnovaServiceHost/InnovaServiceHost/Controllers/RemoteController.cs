@@ -118,14 +118,20 @@ namespace InnovaServiceHost.Controllers {
 
             var context = new innova01Entities();
             var startDate = DateTime.Now.Date;
-            var endDate = startDate.AddDays(5);
-            return (from a in context.proc_orders.Where(x => x.dispatchtime >= startDate && x.dispatchtime <= endDate)
+            var pl = from r in context.proc_packs.Where(x => x.regtime >= startDate)
+                     orderby r.material
+                     group r by r.material into grp
+                     select new { key = grp.Key, cnt = grp.Count() };
+            //var endDate = startDate.AddDays(5);
+            return (from a in context.proc_orders.Where(x => x.dispatchtime >= startDate)
                     join b in context.proc_orderl
                     on a.order equals b.order
                     join p in context.proc_invstatus.Where(x => x.regtime >= startDate)
                     on b.material equals p.material
                     join l in context.proc_materials
                     on b.material equals l.material
+                    from tp in pl.Where(x => x.key == b.material).DefaultIfEmpty()
+                    //on b.material equals tp.key
                     join bc in context.base_companies
                     on a.customer equals bc.company
 
@@ -136,7 +142,9 @@ namespace InnovaServiceHost.Controllers {
                         ItemCode = l.code,
                         OrderAmount = b.maxamount,
                         QuantityOnHand = p.units,
-                        OrderDate = a.dispatchtime
+                        OrderDate = a.dispatchtime,
+                        ShippedAmount = b.curamount,
+                        TodayUnits = tp != null ? tp.cnt : 0
                     }
                     );
         }

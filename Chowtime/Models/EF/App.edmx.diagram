@@ -75,7 +75,6 @@
         <AssociationConnector Association="AppModel.FK_BinDisbursements_Bins" />
         <AssociationConnector Association="AppModel.FK_BinLoads_Bins" />
         <EntityTypeShape EntityType="AppModel.Adagio_O_OrderHeader" Width="1.5" PointX="17.375" PointY="0.75" />
-        <EntityTypeShape EntityType="AppModel.CurrentShipping" Width="1.5" PointX="12.375" PointY="12.75" />
         <EntityTypeShape EntityType="AppModel.Sampling" Width="1.5" PointX="3.375" PointY="13.75" />
         <EntityTypeShape EntityType="AppModel.Adagio_N_Item" Width="1.5" PointX="19.375" PointY="0.75" />
         <EntityTypeShape EntityType="AppModel.Adagio_N_ItemLocation" Width="1.5" PointX="14.375" PointY="0.75" />
@@ -88,6 +87,7 @@
         <EntityTypeShape EntityType="AppModel.AdagioTodayOrder" Width="1.5" PointX="25.375" PointY="13.75" />
         <EntityTypeShape EntityType="AppModel.TodaysProductionTotal" Width="1.5" PointX="7.375" PointY="11.75" />
         <EntityTypeShape EntityType="AppModel.TodaySampling" Width="1.5" PointX="14.375" PointY="9.75" />
+        <EntityTypeShape EntityType="AppModel.CurrentShipping" Width="1.5" PointX="12.375" PointY="13.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -1204,6 +1204,8 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
           <Property Name="OrderAmount" Type="decimal" Precision="9" Scale="2" />
           <Property Name="QuantityOnHand" Type="decimal" Precision="9" Scale="2" />
           <Property Name="OrderDate" Type="datetime" />
+          <Property Name="ShippedAmount" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="TodayUnits" Type="decimal" Precision="9" Scale="2" />
         </EntityType>
         <EntityType Name="Departments">
           <Key>
@@ -2529,7 +2531,6 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
             <End Role="BinLoad" EntitySet="BinLoads" />
           </AssociationSet>
           <EntitySet Name="Adagio_O_OrderHeader" EntityType="AppModel.Adagio_O_OrderHeader" />
-          <EntitySet Name="CurrentShippings" EntityType="AppModel.CurrentShipping" />
           <EntitySet Name="Samplings" EntityType="AppModel.Sampling" />
           <EntitySet Name="Adagio_N_Item" EntityType="AppModel.Adagio_N_Item" />
           <EntitySet Name="Adagio_N_ItemLocation" EntityType="AppModel.Adagio_N_ItemLocation" />
@@ -2542,6 +2543,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <EntitySet Name="AdagioTodayOrders" EntityType="AppModel.AdagioTodayOrder" />
           <EntitySet Name="TodaysProductionTotals" EntityType="AppModel.TodaysProductionTotal" />
           <EntitySet Name="TodaySamplings" EntityType="AppModel.TodaySampling" />
+          <EntitySet Name="CurrentShippings" EntityType="AppModel.CurrentShipping" />
           </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -3545,18 +3547,6 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <Property Name="MovedtoHistory" Type="Int16" />
           <Property Name="RNumAO80AHED" Type="Int16" />
         </EntityType>
-        <EntityType Name="CurrentShipping">
-          <Key>
-            <PropertyRef Name="AppID" />
-          </Key>
-          <Property Name="AppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ItemDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="OrderAmount" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="QuantityOnHand" Type="Decimal" Precision="9" Scale="2" />
-          <Property Name="OrderDate" Type="DateTime" Precision="3" />
-        </EntityType>
         <EntityType Name="Sampling">
           <Key>
             <PropertyRef Name="AppID" />
@@ -4538,6 +4528,20 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <Property Name="weight" Type="Double" />
           <Property Name="pondid" Type="Int32" />
         </EntityType>
+        <EntityType Name="CurrentShipping">
+          <Key>
+            <PropertyRef Name="AppID" />
+          </Key>
+          <Property Name="AppID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemDescription" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ItemCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OrderAmount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="QuantityOnHand" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="ShippedAmount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="TodayUnits" Type="Decimal" Precision="9" Scale="2" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5088,19 +5092,6 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
                 <ScalarProperty Name="Cust" ColumnName="Cust" />
                 <ScalarProperty Name="CustPrefix" ColumnName="CustPrefix" />
                 <ScalarProperty Name="AppId" ColumnName="AppId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CurrentShippings">
-            <EntityTypeMapping TypeName="AppModel.CurrentShipping">
-              <MappingFragment StoreEntitySet="CurrentShipping">
-                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
-                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
-                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
-                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
-                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
-                <ScalarProperty Name="AppID" ColumnName="AppID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -6093,6 +6084,21 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
                 <ScalarProperty Name="shname" ColumnName="shname" />
                 <ScalarProperty Name="farmname" ColumnName="farmname" />
                 <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="AppID" ColumnName="AppID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CurrentShippings">
+            <EntityTypeMapping TypeName="AppModel.CurrentShipping">
+              <MappingFragment StoreEntitySet="CurrentShipping">
+                <ScalarProperty Name="TodayUnits" ColumnName="TodayUnits" />
+                <ScalarProperty Name="ShippedAmount" ColumnName="ShippedAmount" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="QuantityOnHand" ColumnName="QuantityOnHand" />
+                <ScalarProperty Name="OrderAmount" ColumnName="OrderAmount" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="AppID" ColumnName="AppID" />
               </MappingFragment>
             </EntityTypeMapping>

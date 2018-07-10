@@ -1914,7 +1914,9 @@ namespace SGApp.Controllers
                         ItemDescription = x.ItemDescription,
                         QuantityOnHand = x.QuantityOnHand,
                         OrderAmount = x.OrderAmount,
-                        OrderDate = DateTime.Parse(x.OrderDate)
+                        OrderDate = DateTime.Parse(x.OrderDate),
+                        ShippedAmount = x.ShippedAmount,
+                        TodayUnits = x.TodayUnits
                     });
                     db.CurrentShippings.AddRange(dbShippings);
                     db.SaveChanges();

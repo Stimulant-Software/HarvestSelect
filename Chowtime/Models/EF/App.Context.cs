@@ -61,7 +61,6 @@ namespace SGApp.Models.EF
         public DbSet<BinDisbursement> BinDisbursements { get; set; }
         public DbSet<BinLoad> BinLoads { get; set; }
         public DbSet<Adagio_O_OrderHeader> Adagio_O_OrderHeader { get; set; }
-        public DbSet<CurrentShipping> CurrentShippings { get; set; }
         public DbSet<Sampling> Samplings { get; set; }
         public DbSet<Adagio_N_Item> Adagio_N_Item { get; set; }
         public DbSet<Adagio_N_ItemLocation> Adagio_N_ItemLocation { get; set; }
@@ -74,5 +73,6 @@ namespace SGApp.Models.EF
         public DbSet<AdagioTodayOrder> AdagioTodayOrders { get; set; }
         public DbSet<TodaysProductionTotal> TodaysProductionTotals { get; set; }
         public DbSet<TodaySampling> TodaySamplings { get; set; }
+        public DbSet<CurrentShipping> CurrentShippings { get; set; }
     }
 }

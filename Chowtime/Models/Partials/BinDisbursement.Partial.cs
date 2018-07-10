@@ -34,7 +34,7 @@ namespace SGApp.Models.EF {
 					new[] { "DisbursementDate" }
 				);
 			}
-			if (Pounds < 1) {
+			if (Pounds < 0) {
 				yield return new ValidationResult(
 					"Pounds disbursed must be greater than zero.",
 					new[] { "Pounds" }

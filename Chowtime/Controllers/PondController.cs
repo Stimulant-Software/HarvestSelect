@@ -731,6 +731,7 @@ namespace SGApp.Controllers
                     return request.CreateErrorResponse(HttpStatusCode.InternalServerError,
                         string.Format("{0}{1}", "There are no Tickets in BinLoads for BinID ", uDto.BinID));
                 }
+
                 var dto = new BinDisbursementDto()
                 {
                     BinID = uDto.BinID.Value,

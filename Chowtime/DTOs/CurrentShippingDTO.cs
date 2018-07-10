@@ -15,5 +15,7 @@ namespace SGApp.DTOs
         public Nullable<decimal> OrderAmount { get; set; }
         public Nullable<decimal> QuantityOnHand { get; set; }
         public string OrderDate { get; set; }
+        public Nullable<decimal> ShippedAmount { get; set; }
+        public Nullable<decimal> TodayUnits { get; set; }
     }
 }

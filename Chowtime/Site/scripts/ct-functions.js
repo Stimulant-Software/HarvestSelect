@@ -400,9 +400,10 @@ function bindButtons(){
                 alertError("Please Select a Bin and try again");
         }
 		
-		else if (feedAmount <= 0) {
-			alertError("Please enter an amount greater than zero and try again");
-		} else {
+		//else if (feedAmount < 0) {
+		//	alertError("Please enter an amount greater than zero and try again");
+        //} 
+        else {
 			var pondID = $(this).data('pondid'), now = new Date();
 			var pondInfo = {},
 				feedInfo = {},
