@@ -649,6 +649,7 @@
     <None Include="Site\scripts\_references.js" />
     <Content Include="Site\op-shift-times.html" />
     <Content Include="Site\op-weigh-backs.html" />
+    <Content Include="Site\Tester.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

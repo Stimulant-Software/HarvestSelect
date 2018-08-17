@@ -2873,6 +2873,25 @@ namespace SGApp.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
         }
+
+        [HttpPost]
+        public HttpResponseMessage TestPDFer([FromBody] UtilityDTO utilityDto)
+        {
+            string body = utilityDto.OrderCode;
+            var pdfGen = new NReco.PdfGenerator.HtmlToPdfConverter();
+            var pdfMargins = new NReco.PdfGenerator.PageMargins();
+            pdfMargins.Top = 10;
+            pdfMargins.Bottom = 10;
+            pdfGen.Margins = pdfMargins;
+            var pdfBytes = pdfGen.GeneratePdf(body);
+            HttpResponseMessage result = new HttpResponseMessage(HttpStatusCode.OK);
+            result.Content = new StringContent(System.Convert.ToBase64String(pdfBytes));
+            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
+            result.Content.Headers.Add("Content-Disposition", "inline; filename=Shipping.pdf");
+            return result;
+
+
+        }
     }
 
 }

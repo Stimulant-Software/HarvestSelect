@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    	<script type="text/javascript">
+		if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+	</script>
+</head>
+<body>
+    <input type="button" id="clicker" value="Click" />
+    <input type="text" id="html"/>
+</body>
+<script>
+    //alert("yeah right");
+    //debugger;
+    if (!data) { var data; }
+    $.support.cors = true;
+    $.ajaxSetup({ contentType: 'application/json; charset=utf-8', data: data, error: function () { hideProgress(); alertError("Error contacting the server."); }, statusCode: { 400: function (msg) { hideProgress(); alertError("Oops... Something went wrong!"); console.log(msg); }, 404: function (msg) { if (msg.responseJSON == "validation failed") { hideProgress(); alertError("Validation failed. Please login again."); window.location.href = "login.html"; } else { hideProgress(); alertError("Oops - there was an error..."); /*window.location.href = "login.html";*/ } }, 500: function () { hideProgress(); alertError("AJAX FAIL: 500 Internal Server Error"); } } });
+    $('#clicker').unbind().click(function (e) {
+        e.preventDefault();
+        openBolReport();
+    }
+    );
+    function openBolReport() {
+
+        orderNumber = $('#html').val();
+        var searchQuery = { "OrderCode": orderNumber };
+        data = JSON.stringify(searchQuery);
+
+        $.ajax('../api/Utilities/TestPDFer', {
+            type: 'POST',
+            data: data,
+            success: function (msg) {
+                var uri = 'data:application/pdf;charset=utf-8;base64,' + msg;
+                var downloadLink = document.createElement("a");
+                downloadLink.href = uri;
+                downloadLink.target = "_blank";
+                downloadLink.download = "BillOfLading.pdf";
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+
+            }
+        });
+    }
+</script>
+</html>
