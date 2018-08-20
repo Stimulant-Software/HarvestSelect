@@ -22,11 +22,13 @@ using System.Text;
 using System.Data;
 using System.Xml;
 using System.IO;
+using System.Web.Http.Cors;
 
 
 
 namespace SGApp.Controllers
 {
+    [EnableCors(origins: "http://reports.harvestselect.com", headers: "*", methods: "*")]
     public class UtilitiesController: BaseApiController {
     
 
