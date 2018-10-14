@@ -249,6 +249,9 @@
     <Compile Include="Models\EF\AdagioOrderDetail.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\AdagioOrderDetailsForToday.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\AdagioOrderHeader.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>

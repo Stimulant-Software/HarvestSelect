@@ -820,6 +820,78 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
           <Property Name="RNumAO80ALIN" Type="nvarchar" MaxLength="50" />
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
+        <EntityType Name="AdagioOrderDetailsForToday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="OrderKey" Type="nvarchar" MaxLength="255" />
+          <Property Name="Line" Type="float" />
+          <Property Name="DDocType_T" Type="nvarchar" MaxLength="255" />
+          <Property Name="DDoc" Type="float" />
+          <Property Name="LineType_T" Type="nvarchar" MaxLength="255" />
+          <Property Name="Item" Type="float" />
+          <Property Name="Description" Type="nvarchar" MaxLength="255" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="255" />
+          <Property Name="PickingSeq" Type="nvarchar" MaxLength="255" />
+          <Property Name="DiscLevel" Type="nvarchar" MaxLength="255" />
+          <Property Name="DCategory" Type="nvarchar" MaxLength="50" />
+          <Property Name="PriceUnit" Type="nvarchar" MaxLength="255" />
+          <Property Name="PriceOverride" Type="float" />
+          <Property Name="ExtensionOverride" Type="float" />
+          <Property Name="ReturntoInventory" Type="float" />
+          <Property Name="SerialCount" Type="float" />
+          <Property Name="TaxStatus" Type="float" />
+          <Property Name="Commissionable" Type="float" />
+          <Property Name="UnitFactor" Type="float" />
+          <Property Name="UnitWeight" Type="float" />
+          <Property Name="QtyOriginalOrdered" Type="float" />
+          <Property Name="QtyOrdered" Type="float" />
+          <Property Name="QtyShippedtoDate" Type="float" />
+          <Property Name="QtyShipped" Type="float" />
+          <Property Name="QtyBackordered" Type="float" />
+          <Property Name="ExtWeight" Type="float" />
+          <Property Name="ShipStockingUnits" Type="float" />
+          <Property Name="Loc" Type="float" />
+          <Property Name="Complete" Type="float" />
+          <Property Name="Curr" Type="nvarchar" MaxLength="255" />
+          <Property Name="Decimals" Type="float" />
+          <Property Name="PriceList" Type="nvarchar" MaxLength="255" />
+          <Property Name="OrderedInPO" Type="float" />
+          <Property Name="UnitDecimals" Type="float" />
+          <Property Name="UnitPrice" Type="float" />
+          <Property Name="UnitCost" Type="float" />
+          <Property Name="ExtPrice" Type="float" />
+          <Property Name="ExtCost" Type="float" />
+          <Property Name="TaxAmt" Type="float" />
+          <Property Name="DTax1" Type="float" />
+          <Property Name="DTax2" Type="float" />
+          <Property Name="DTax3" Type="float" />
+          <Property Name="DTax4" Type="float" />
+          <Property Name="DTax5" Type="float" />
+          <Property Name="DBase1" Type="float" />
+          <Property Name="DBase2" Type="float" />
+          <Property Name="DBase3" Type="float" />
+          <Property Name="DBase4" Type="float" />
+          <Property Name="DBase5" Type="float" />
+          <Property Name="DiscAmt" Type="float" />
+          <Property Name="DiscExtension" Type="float" />
+          <Property Name="BasePrice" Type="float" />
+          <Property Name="ExtOrderPrice" Type="float" />
+          <Property Name="PriceFactor" Type="float" />
+          <Property Name="Serial1" Type="nvarchar" MaxLength="255" />
+          <Property Name="Serial2" Type="nvarchar" MaxLength="255" />
+          <Property Name="Serial3" Type="nvarchar" MaxLength="255" />
+          <Property Name="Serial4" Type="nvarchar" MaxLength="255" />
+          <Property Name="Serial5" Type="nvarchar" MaxLength="255" />
+          <Property Name="DExpectedShipDate" Type="datetime" />
+          <Property Name="MiscAmount" Type="float" />
+          <Property Name="MiscBasePrice" Type="float" />
+          <Property Name="MiscShortDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="MiscQuantity" Type="float" />
+          <Property Name="MiscFiller" Type="nvarchar" MaxLength="255" />
+          <Property Name="RNumAO80ALIN" Type="nvarchar" MaxLength="50" />
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="AdagioOrderHeaders">
           <Key>
             <PropertyRef Name="ID" />
@@ -1947,6 +2019,7 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
           <EntitySet Name="AdagioCustomers" EntityType="Self.AdagioCustomers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdagioItems" EntityType="Self.AdagioItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdagioOrderDetails" EntityType="Self.AdagioOrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AdagioOrderDetailsForToday" EntityType="Self.AdagioOrderDetailsForToday" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdagioOrderHeaders" EntityType="Self.AdagioOrderHeaders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ADAGIOSalesStatitics" EntityType="Self.ADAGIOSalesStatitics" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdagioSalesTransactions" EntityType="Self.AdagioSalesTransactions" Schema="dbo" store:Type="Tables" />
@@ -2544,6 +2617,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <EntitySet Name="TodaysProductionTotals" EntityType="AppModel.TodaysProductionTotal" />
           <EntitySet Name="TodaySamplings" EntityType="AppModel.TodaySampling" />
           <EntitySet Name="CurrentShippings" EntityType="AppModel.CurrentShipping" />
+          <EntitySet Name="AdagioOrderDetailsForTodays" EntityType="AppModel.AdagioOrderDetailsForToday" />
           </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -4542,6 +4616,78 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <Property Name="ShippedAmount" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="TodayUnits" Type="Decimal" Precision="9" Scale="2" />
         </EntityType>
+        <EntityType Name="AdagioOrderDetailsForToday">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="OrderKey" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Line" Type="Double" />
+          <Property Name="DDocType_T" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DDoc" Type="Double" />
+          <Property Name="LineType_T" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Item" Type="Double" />
+          <Property Name="Description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PickingSeq" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DiscLevel" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DCategory" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PriceUnit" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PriceOverride" Type="Double" />
+          <Property Name="ExtensionOverride" Type="Double" />
+          <Property Name="ReturntoInventory" Type="Double" />
+          <Property Name="SerialCount" Type="Double" />
+          <Property Name="TaxStatus" Type="Double" />
+          <Property Name="Commissionable" Type="Double" />
+          <Property Name="UnitFactor" Type="Double" />
+          <Property Name="UnitWeight" Type="Double" />
+          <Property Name="QtyOriginalOrdered" Type="Double" />
+          <Property Name="QtyOrdered" Type="Double" />
+          <Property Name="QtyShippedtoDate" Type="Double" />
+          <Property Name="QtyShipped" Type="Double" />
+          <Property Name="QtyBackordered" Type="Double" />
+          <Property Name="ExtWeight" Type="Double" />
+          <Property Name="ShipStockingUnits" Type="Double" />
+          <Property Name="Loc" Type="Double" />
+          <Property Name="Complete" Type="Double" />
+          <Property Name="Curr" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Decimals" Type="Double" />
+          <Property Name="PriceList" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="OrderedInPO" Type="Double" />
+          <Property Name="UnitDecimals" Type="Double" />
+          <Property Name="UnitPrice" Type="Double" />
+          <Property Name="UnitCost" Type="Double" />
+          <Property Name="ExtPrice" Type="Double" />
+          <Property Name="ExtCost" Type="Double" />
+          <Property Name="TaxAmt" Type="Double" />
+          <Property Name="DTax1" Type="Double" />
+          <Property Name="DTax2" Type="Double" />
+          <Property Name="DTax3" Type="Double" />
+          <Property Name="DTax4" Type="Double" />
+          <Property Name="DTax5" Type="Double" />
+          <Property Name="DBase1" Type="Double" />
+          <Property Name="DBase2" Type="Double" />
+          <Property Name="DBase3" Type="Double" />
+          <Property Name="DBase4" Type="Double" />
+          <Property Name="DBase5" Type="Double" />
+          <Property Name="DiscAmt" Type="Double" />
+          <Property Name="DiscExtension" Type="Double" />
+          <Property Name="BasePrice" Type="Double" />
+          <Property Name="ExtOrderPrice" Type="Double" />
+          <Property Name="PriceFactor" Type="Double" />
+          <Property Name="Serial1" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Serial2" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Serial3" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Serial4" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Serial5" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="DExpectedShipDate" Type="DateTime" Precision="3" />
+          <Property Name="MiscAmount" Type="Double" />
+          <Property Name="MiscBasePrice" Type="Double" />
+          <Property Name="MiscShortDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiscQuantity" Type="Double" />
+          <Property Name="MiscFiller" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RNumAO80ALIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6100,6 +6246,79 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
                 <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="AppID" ColumnName="AppID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AdagioOrderDetailsForTodays">
+            <EntityTypeMapping TypeName="AppModel.AdagioOrderDetailsForToday">
+              <MappingFragment StoreEntitySet="AdagioOrderDetailsForToday">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="RNumAO80ALIN" ColumnName="RNumAO80ALIN" />
+                <ScalarProperty Name="MiscFiller" ColumnName="MiscFiller" />
+                <ScalarProperty Name="MiscQuantity" ColumnName="MiscQuantity" />
+                <ScalarProperty Name="MiscShortDescription" ColumnName="MiscShortDescription" />
+                <ScalarProperty Name="MiscBasePrice" ColumnName="MiscBasePrice" />
+                <ScalarProperty Name="MiscAmount" ColumnName="MiscAmount" />
+                <ScalarProperty Name="DExpectedShipDate" ColumnName="DExpectedShipDate" />
+                <ScalarProperty Name="Serial5" ColumnName="Serial5" />
+                <ScalarProperty Name="Serial4" ColumnName="Serial4" />
+                <ScalarProperty Name="Serial3" ColumnName="Serial3" />
+                <ScalarProperty Name="Serial2" ColumnName="Serial2" />
+                <ScalarProperty Name="Serial1" ColumnName="Serial1" />
+                <ScalarProperty Name="PriceFactor" ColumnName="PriceFactor" />
+                <ScalarProperty Name="ExtOrderPrice" ColumnName="ExtOrderPrice" />
+                <ScalarProperty Name="BasePrice" ColumnName="BasePrice" />
+                <ScalarProperty Name="DiscExtension" ColumnName="DiscExtension" />
+                <ScalarProperty Name="DiscAmt" ColumnName="DiscAmt" />
+                <ScalarProperty Name="DBase5" ColumnName="DBase5" />
+                <ScalarProperty Name="DBase4" ColumnName="DBase4" />
+                <ScalarProperty Name="DBase3" ColumnName="DBase3" />
+                <ScalarProperty Name="DBase2" ColumnName="DBase2" />
+                <ScalarProperty Name="DBase1" ColumnName="DBase1" />
+                <ScalarProperty Name="DTax5" ColumnName="DTax5" />
+                <ScalarProperty Name="DTax4" ColumnName="DTax4" />
+                <ScalarProperty Name="DTax3" ColumnName="DTax3" />
+                <ScalarProperty Name="DTax2" ColumnName="DTax2" />
+                <ScalarProperty Name="DTax1" ColumnName="DTax1" />
+                <ScalarProperty Name="TaxAmt" ColumnName="TaxAmt" />
+                <ScalarProperty Name="ExtCost" ColumnName="ExtCost" />
+                <ScalarProperty Name="ExtPrice" ColumnName="ExtPrice" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="UnitDecimals" ColumnName="UnitDecimals" />
+                <ScalarProperty Name="OrderedInPO" ColumnName="OrderedInPO" />
+                <ScalarProperty Name="PriceList" ColumnName="PriceList" />
+                <ScalarProperty Name="Decimals" ColumnName="Decimals" />
+                <ScalarProperty Name="Curr" ColumnName="Curr" />
+                <ScalarProperty Name="Complete" ColumnName="Complete" />
+                <ScalarProperty Name="Loc" ColumnName="Loc" />
+                <ScalarProperty Name="ShipStockingUnits" ColumnName="ShipStockingUnits" />
+                <ScalarProperty Name="ExtWeight" ColumnName="ExtWeight" />
+                <ScalarProperty Name="QtyBackordered" ColumnName="QtyBackordered" />
+                <ScalarProperty Name="QtyShipped" ColumnName="QtyShipped" />
+                <ScalarProperty Name="QtyShippedtoDate" ColumnName="QtyShippedtoDate" />
+                <ScalarProperty Name="QtyOrdered" ColumnName="QtyOrdered" />
+                <ScalarProperty Name="QtyOriginalOrdered" ColumnName="QtyOriginalOrdered" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="UnitFactor" ColumnName="UnitFactor" />
+                <ScalarProperty Name="Commissionable" ColumnName="Commissionable" />
+                <ScalarProperty Name="TaxStatus" ColumnName="TaxStatus" />
+                <ScalarProperty Name="SerialCount" ColumnName="SerialCount" />
+                <ScalarProperty Name="ReturntoInventory" ColumnName="ReturntoInventory" />
+                <ScalarProperty Name="ExtensionOverride" ColumnName="ExtensionOverride" />
+                <ScalarProperty Name="PriceOverride" ColumnName="PriceOverride" />
+                <ScalarProperty Name="PriceUnit" ColumnName="PriceUnit" />
+                <ScalarProperty Name="DCategory" ColumnName="DCategory" />
+                <ScalarProperty Name="DiscLevel" ColumnName="DiscLevel" />
+                <ScalarProperty Name="PickingSeq" ColumnName="PickingSeq" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Item" ColumnName="Item" />
+                <ScalarProperty Name="LineType_T" ColumnName="LineType_T" />
+                <ScalarProperty Name="DDoc" ColumnName="DDoc" />
+                <ScalarProperty Name="DDocType_T" ColumnName="DDocType_T" />
+                <ScalarProperty Name="Line" ColumnName="Line" />
+                <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -2625,7 +2625,110 @@ namespace SGApp.Controllers
             }
             return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
         }
+        [HttpGet]
+        public HttpResponseMessage GetAdagioOrderDetailsForToday()
+        {
+            SGApp.DTOs.GenericDTO dto = new GenericDTO();
+            var db = new AppEntities();
+            var client = new HttpClient
+            {
+                BaseAddress = new Uri("http://64.139.95.243:7846/")
+            };
+            List<Adagio_O_OrderDetailDTO> results = new List<Adagio_O_OrderDetailDTO>();
+            try
+            {
+                var response = client.PostAsJsonAsync("api/Remote/GetAdagioOrderDetailsForToday", dto).Result;
+                response.EnsureSuccessStatusCode();
+                JavaScriptSerializer json_serializer = new JavaScriptSerializer();
+                json_serializer.MaxJsonLength = Int32.MaxValue;
+                Adagio_O_OrderDetailDTO[] resultsArray = json_serializer.Deserialize<Adagio_O_OrderDetailDTO[]>(response.Content.ReadAsStringAsync().Result);
+                results = resultsArray.ToList();
+                if (results.Count() > 0)
+                {
+                    double value = 0;
+                    DateTime dValue = DateTime.Now;
+                    db.Database.ExecuteSqlCommand("DELETE FROM AdagioOrderDetailsForToday");
+                    List<AdagioOrderDetailsForToday> castedResults = results.Select(x => new AdagioOrderDetailsForToday
+                    {
+                        OrderKey = x.OrderKey,
+                        Line = double.TryParse(x.Line, out value) ? double.Parse(x.Line) : 0,
+                        DDocType_T = x.DDocType_T,
+                        DDoc = double.TryParse(x.DDoc, out value) ? double.Parse(x.DDoc) : 0,
+                        LineType_T = x.LineType_T,
+                        Item = double.TryParse(x.Item, out value) ? double.Parse(x.Item) : 0,
+                        Description = x.Description,
+                        Unit = x.Unit,
+                        PickingSeq = x.PickingSeq,
+                        DiscLevel = x.DiscLevel,
+                        DCategory = x.DCategory,
+                        PriceUnit = x.PriceUnit,
+                        PriceOverride = double.TryParse(x.PriceOverride, out value) ? double.Parse(x.PriceOverride) : 0,
+                        ExtensionOverride = double.TryParse(x.ExtensionOverride, out value) ? double.Parse(x.ExtensionOverride) : 0,
+                        ReturntoInventory = double.TryParse(x.ReturntoInventory, out value) ? double.Parse(x.ReturntoInventory) : 0,
+                        SerialCount = double.TryParse(x.SerialCount, out value) ? double.Parse(x.SerialCount) : 0,
+                        TaxStatus = double.TryParse(x.TaxStatus, out value) ? double.Parse(x.TaxStatus) : 0,
+                        Commissionable = double.TryParse(x.Commissionable, out value) ? double.Parse(x.Commissionable) : 0,
+                        UnitFactor = double.TryParse(x.UnitFactor, out value) ? double.Parse(x.UnitFactor) : 0,
+                        UnitWeight = double.TryParse(x.UnitWeight, out value) ? double.Parse(x.UnitWeight) : 0,
+                        QtyOriginalOrdered = double.TryParse(x.QtyOriginalOrdered, out value) ? double.Parse(x.QtyOriginalOrdered) : 0,
+                        QtyOrdered = double.TryParse(x.QtyOrdered, out value) ? double.Parse(x.QtyOrdered) : 0,
+                        QtyShippedtoDate = double.TryParse(x.QtyShippedtoDate, out value) ? double.Parse(x.QtyShippedtoDate) : 0,
+                        QtyShipped = double.TryParse(x.QtyShipped, out value) ? double.Parse(x.QtyShipped) : 0,
+                        QtyBackordered = double.TryParse(x.QtyBackordered, out value) ? double.Parse(x.QtyBackordered) : 0,
+                        ExtWeight = double.TryParse(x.ExtWeight, out value) ? double.Parse(x.ExtWeight) : 0,
+                        ShipStockingUnits = double.TryParse(x.ShipStockingUnits, out value) ? double.Parse(x.ShipStockingUnits) : 0,
+                        Loc = double.TryParse(x.Loc, out value) ? double.Parse(x.Loc) : 0,
+                        Complete = double.TryParse(x.Complete, out value) ? double.Parse(x.Complete) : 0,
+                        Curr = x.Curr,
+                        Decimals = double.TryParse(x.Decimals, out value) ? double.Parse(x.Decimals) : 0,
+                        PriceList = x.PriceList,
+                        OrderedInPO = double.TryParse(x.OrderedInPO, out value) ? double.Parse(x.OrderedInPO) : 0,
+                        UnitDecimals = double.TryParse(x.UnitDecimals, out value) ? double.Parse(x.UnitDecimals) : 0,
+                        UnitPrice = double.TryParse(x.UnitPrice, out value) ? double.Parse(x.UnitPrice) : 0,
+                        UnitCost = double.TryParse(x.UnitCost, out value) ? double.Parse(x.UnitCost) : 0,
+                        ExtPrice = double.TryParse(x.ExtPrice, out value) ? double.Parse(x.ExtPrice) : 0,
+                        ExtCost = double.TryParse(x.ExtCost, out value) ? double.Parse(x.ExtCost) : 0,
+                        TaxAmt = double.TryParse(x.TaxAmt, out value) ? double.Parse(x.TaxAmt) : 0,
+                        DTax1 = double.TryParse(x.DTax1, out value) ? double.Parse(x.DTax1) : 0,
+                        DTax2 = double.TryParse(x.DTax2, out value) ? double.Parse(x.DTax2) : 0,
+                        DTax3 = double.TryParse(x.DTax3, out value) ? double.Parse(x.DTax3) : 0,
+                        DTax4 = double.TryParse(x.DTax4, out value) ? double.Parse(x.DTax4) : 0,
+                        DTax5 = double.TryParse(x.DTax5, out value) ? double.Parse(x.DTax5) : 0,
+                        DBase1 = double.TryParse(x.DBase1, out value) ? double.Parse(x.DBase1) : 0,
+                        DBase2 = double.TryParse(x.DBase2, out value) ? double.Parse(x.DBase2) : 0,
+                        DBase3 = double.TryParse(x.DBase3, out value) ? double.Parse(x.DBase3) : 0,
+                        DBase4 = double.TryParse(x.DBase4, out value) ? double.Parse(x.DBase4) : 0,
+                        DBase5 = double.TryParse(x.DBase5, out value) ? double.Parse(x.DBase5) : 0,
+                        DiscAmt = double.TryParse(x.DiscAmt, out value) ? double.Parse(x.DiscAmt) : 0,
+                        DiscExtension = double.TryParse(x.DiscExtension, out value) ? double.Parse(x.DiscExtension) : 0,
+                        BasePrice = double.TryParse(x.BasePrice, out value) ? double.Parse(x.BasePrice) : 0,
+                        ExtOrderPrice = double.TryParse(x.ExtOrderPrice, out value) ? double.Parse(x.ExtOrderPrice) : 0,
+                        PriceFactor = double.TryParse(x.PriceFactor, out value) ? double.Parse(x.PriceFactor) : 0,
+                        //Serial1 = double.Parse(x.Serial1),
+                        //Serial2 = double.Parse(x.Serial2),
+                        //Serial3 = double.Parse(x.Serial3),
+                        //Serial4 = double.Parse(x.Serial4),
+                        //Serial5 = double.Parse(x.Serial5),
+                        DExpectedShipDate = DateTime.TryParse(x.DExpectedShipDate, out dValue) ? DateTime.Parse(x.DExpectedShipDate) : DateTime.Now,
+                        MiscAmount = double.TryParse(x.MiscAmount, out value) ? double.Parse(x.MiscAmount) : 0,
+                        MiscBasePrice = double.TryParse(x.MiscBasePrice, out value) ? double.Parse(x.MiscBasePrice) : 0,
+                        MiscShortDescription = x.MiscShortDescription,
+                        MiscQuantity = double.TryParse(x.MiscQuantity, out value) ? double.Parse(x.MiscQuantity) : 0,
+                        MiscFiller = x.MiscFiller,
+                        RNumAO80ALIN = x.RNumAO80ALIN
 
+                    }).ToList();
+                    db.AdagioOrderDetailsForTodays.AddRange(castedResults);
+                    db.SaveChanges();
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw new HttpException("Error occurred: " + e.Message);
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, "Update Successful");
+        }
 
         [HttpGet]
         public HttpResponseMessage GetAdagioOrderDetails()

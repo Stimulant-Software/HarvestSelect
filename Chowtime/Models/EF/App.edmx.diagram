@@ -88,6 +88,7 @@
         <EntityTypeShape EntityType="AppModel.TodaysProductionTotal" Width="1.5" PointX="7.375" PointY="11.75" />
         <EntityTypeShape EntityType="AppModel.TodaySampling" Width="1.5" PointX="14.375" PointY="9.75" />
         <EntityTypeShape EntityType="AppModel.CurrentShipping" Width="1.5" PointX="12.375" PointY="13.75" />
+        <EntityTypeShape EntityType="AppModel.AdagioOrderDetailsForToday" Width="1.5" PointX="27.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

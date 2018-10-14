@@ -74,5 +74,6 @@ namespace SGApp.Models.EF
         public DbSet<TodaysProductionTotal> TodaysProductionTotals { get; set; }
         public DbSet<TodaySampling> TodaySamplings { get; set; }
         public DbSet<CurrentShipping> CurrentShippings { get; set; }
+        public DbSet<AdagioOrderDetailsForToday> AdagioOrderDetailsForTodays { get; set; }
     }
 }

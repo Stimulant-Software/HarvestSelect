@@ -316,6 +316,14 @@ namespace InnovaServiceHost.Controllers {
         }
 
         [HttpPost]
+        public object GetAdagioOrderDetailsForToday([FromBody] OrderDetailsImport dto)
+        {
+            var db = new StimulantStageEntities();
+            var retVal = db.Database.SqlQuery<OrderDetailsImport>("execute GetAdagioOrderDetailsForToday").ToArray();
+            return retVal;
+
+        }
+        [HttpPost]
         public object GetAdagioOrdersForToday([FromBody] OrderHeadersImport dto)
         {
             var db = new StimulantStageEntities();
