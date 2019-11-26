@@ -1,0 +1,375 @@
+﻿<!doctype html>
+<html lang="en">
+    <head>
+        <title>Harvest Select Dashboards</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.1/fullcalendar.min.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="content/HarvestSelectDashboards.css">
+        <link href="content/global.css" rel="stylesheet" type="text/css">
+        <style>
+body {
+  padding: 20px;
+  font-family: Helvetica;
+}
+
+ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-gap: 10px;
+  list-style-type: none;
+}
+
+li {
+  border-radius: 3px;
+  padding: 10px;
+  font-size: 14px;
+  min-width: 150px;
+}
+
+.info {
+  text-align: center;
+  font-size: 13px;
+  padding-top: 20px;
+  color: #fff;
+}
+div {
+    border: 1px solid #bbb
+}
+</style
+    </head>
+    <body class="op op-report">
+        <nav  style="background-color: rgb(124, 181, 236);">
+            <ol>
+                <li class="bol"><a href="op-production.html">Production Weights</a></li>
+                <li class="bol"><a href="op-shift-times.html">Shift-end Times</a></li>
+                <li class="bol"><a href="op-glance.html">At A Glance</a></li>
+                <li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+            </ol>
+        </nav>
+<ul>
+    <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+   WTD Sale Lbs
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+  <h2 style="color: rgb(124, 181, 236); padding: 10px;" class="text-center" id="wtdsalelbs"></h2> 
+  </div></li>
+  <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+   WTD Sale Dollars
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+    <h2 style="color: rgb(124, 181, 236); padding: 10px;" class="text-center" id="wtdsaledollars"></h2>
+  </div></li>
+  <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+   Average Selling Price
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+ 
+      <h2 style="color: rgb(124, 181, 236); padding: 10px;" class="text-center" id="wtdasp"></h2>
+   
+  </div></li>
+    </ul>
+            <ul>
+  <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+   Total Production
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+ 
+      <h2 style="color: rgb(124, 181, 236); padding: 10px;" class="text-center" id="todaytotalproduction"></h2>
+   
+  </div></li>
+  <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+   WTD Total Production
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+  <h2 class="" style="color: rgb(124, 181, 236); padding: 10px;" id="wtdtotalproduction"></h2>
+   
+  </div></li>
+  <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+ Fresh Production
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+<h2 style="color: rgb(124, 181, 236); padding: 10px;" class="text-center" id="todayprodfresh"></h2>
+   
+  </div></li>
+      <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+WTD Fresh Production
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+ <h2 style="color: rgb(124, 181, 236); padding: 10px;" class="" id="wtdprodfresh"></h2>
+      </div>
+   </li>
+  <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+IQF Production
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+<h2 style="color: rgb(124, 181, 236); padding: 10px;" class="text-center" id="todayprodiqf"></h2>
+      </div>
+   </li>
+      <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+WTD IQF Production
+  </div>
+  <div style=" background-color: white; color: rgb(124, 181, 236);  font-size: 28px; padding: 10px; text-align: center;">
+<h2 style="color: rgb(124, 181, 236); padding: 10px;" class="" id="wtdprodiqf"></h2>
+      </div>
+   </li>
+</ul>
+<ul><li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+   Today Samplings
+  </div><div id="hctodaysamplings2" style="height:350px;"></div></li>
+        <li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+   WTD Samplings
+  </div><div id="hcwtdsamplings2" style="height:350px;"></div></li>
+</ul>
+        <ul><li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+  Today Samplings By Pond
+  </div><div id="hctodaysamplingsbypond" style="height:350px;"></div></li></ul>
+        
+        <ul><li><div style="height:35px; font-size: 20px;  background-color: rgba(0,0,0,.08); padding: 10px; text-align: center;">
+  Today Plant Weights By Pond
+  </div><div id="hctodayplantweightsbypond" style="height:350px;"></div></li></ul>
+
+       <footer></footer>
+        
+        <!--<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">-->
+        <script src="scripts/underscore.min.js"></script>
+        <script src="scripts/moment.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+        <script src="http://code.highcharts.com/modules/data.js"></script>
+        <script src="scripts/moment.js"></script>
+        <script type="text/javascript" src="scripts/functions.js"></script>
+        <script>
+            
+            
+            var authorized = false, superAuthorized = false, userRoles = localStorage['CTuserRole'].split(' ');
+            if (userRoles.indexOf('Operations') > -1) authorized = true;
+            if (userRoles.indexOf('Operations') > -1) { authorized = true; superAuthorized = true; }
+            if (!authorized) window.location.href = "login.html";
+            $.when(checkKey(), pageLabel()).then(function () {
+                loadAtAGlance();
+                    
+            });
+            
+                //loadAtAGlance();
+
+            
+            function loadAtAGlance() {
+                searchQuery = { }, data = JSON.stringify(searchQuery);
+                $.when($.ajax('../api/Reports/GetAtAGlanceEmail', {
+                    type: 'POST',
+                    data: data,
+                    success: function (msg) {
+
+                        $('#wtdsalelbs').html(msg.WTDSaleLbs);
+                        $('#wtdsaledollars').html(msg.WTDSaleDollars.toFixed(2));
+                        $('#wtdasp').html(msg.WTDASP.toFixed(2));
+                        $('#wtdprodfresh').html(msg.WTDFreshLbs.toFixed(0));
+                        $('#todayprodfresh').html(msg.TodayFreshLbs.toFixed(0));
+                        $('#wtdprodiqf').html(msg.WTDIQFLbs.toFixed(0));
+                        $('#todayprodiqf').html(msg.TodayIQFLbs.toFixed(0));
+                        $('#wtdtotalproduction').html(msg.WTDProductionLbs.toFixed(0));
+                        $('#todaytotalproduction').html(msg.TodayProductionLbs.toFixed(0));
+                        $('#wtdordercount').html(msg.WTDOrderCount);
+
+                        Highcharts.chart('hctodayplantweightsbypond', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: ''
+                            },
+                            subtitle: {
+                                text: ''
+                            },
+                            xAxis: {
+                                categories: msg.PondsforWeights,
+                                crosshair: true
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Weight (Lbs)'
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} lbs</b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                column: {
+                                    pointPadding: 0.2,
+                                    borderWidth: 0,
+                                    dataLabels: {
+                                            enabled: true
+                                        },
+                                }
+                            },
+                            series: [{
+                                name: 'Weight',
+                                data: msg.Weights
+
+                            }]
+                        });
+
+                        Highcharts.chart('hctodaysamplingsbypond', {
+                            chart: {
+                                type: 'column'
+                            },
+                            title: {
+                                text: ''
+                            },
+                            subtitle: {
+                                text: ''
+                            },
+                            xAxis: {
+                                categories: msg.PondsForSamplings,
+                                crosshair: true
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: '% of Weight'
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                column: {
+                                    pointPadding: 0.2,
+                                    borderWidth: 0
+                                }
+                            },
+                            series: msg.PondSamplings
+                        });
+
+                        Highcharts.chart('hctodaysamplings2', {
+                            chart: {
+                                type: 'bar'
+                            },
+                            title: {
+                                text: 'Percent of Weight'
+                            },
+                            subtitle: {
+                                text: ''
+                            },
+                            xAxis: {
+                                categories: msg.WeightCategories,
+                                title: {
+                                    text: null
+                                }
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Weight (%)',
+                                    align: 'high'
+                                },
+                                labels: {
+                                    overflow: 'justify'
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                bar: {
+                                    dataLabels: {
+                                        enabled: false
+                                    }
+                                }
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            series: [{
+                                name: "Weight (%)",
+                                data: msg.TodaySamplingTotals
+                            }]
+                        });
+
+
+                        Highcharts.chart('hcwtdsamplings2', {
+                            chart: {
+                                type: 'bar'
+                            },
+                            title: {
+                                text: 'Percent of Weight'
+                            },
+                            subtitle: {
+                                text: ''
+                            },
+                            xAxis: {
+                                categories: msg.WeightCategories,
+                                title: {
+                                    text: null
+                                }
+                            },
+                            yAxis: {
+                                min: 0,
+                                title: {
+                                    text: 'Weight (%)',
+                                    align: 'high'
+                                },
+                                labels: {
+                                    overflow: 'justify'
+                                }
+                            },
+                            tooltip: {
+                                headerFormat: '<table>',
+                                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                                    '<td style="padding:0"><b>{point.y:.1f} %</b></td></tr>',
+                                footerFormat: '</table>',
+                                shared: true,
+                                useHTML: true
+                            },
+                            plotOptions: {
+                                bar: {
+                                    dataLabels: {
+                                        enabled: false
+                                    }
+                                }
+                            },
+
+                            credits: {
+                                enabled: false
+                            },
+                            series: [{
+                                name: "Weight (%)",
+                                data: msg.WTDSamplingTotals
+                            }]
+                        });
+                        hideProgress();
+                    }
+
+                })).then(function () {
+                    
+                    //alert("loaded");
+                });            
+
+
+
+            }
+        </script>
+
+    </body>
+</html>

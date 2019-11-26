@@ -19,6 +19,7 @@ namespace SGApp.Models.EF
             this.Feedings = new HashSet<Feeding>();
             this.BinDisbursements = new HashSet<BinDisbursement>();
             this.BinLoads = new HashSet<BinLoad>();
+            this.BinFarms = new HashSet<BinFarm>();
         }
     
         public int BinID { get; set; }
@@ -33,5 +34,6 @@ namespace SGApp.Models.EF
         public virtual ICollection<Feeding> Feedings { get; set; }
         public virtual ICollection<BinDisbursement> BinDisbursements { get; set; }
         public virtual ICollection<BinLoad> BinLoads { get; set; }
+        public virtual ICollection<BinFarm> BinFarms { get; set; }
     }
 }

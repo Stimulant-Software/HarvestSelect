@@ -12,5 +12,6 @@ namespace SGApp.DTOs {
 		public DateTime? LastLoaded { get; set; }
 		public string Key { get; set; }
 		public int? Reconciliation { get; set; }
-	}
+        public int[] BinFarms { get; set; }
+    }
 }

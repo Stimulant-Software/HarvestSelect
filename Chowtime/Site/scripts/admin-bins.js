@@ -17,7 +17,9 @@
 	var $adminBins_noActiveBins;
 	var farmList = [];
 	var binList = [];
-	var bin = {};
+    var bin = {};
+    var $farmSelectHTML;
+    var $addNewFarmSelect;
 
 	function centerModal($addNewBinModal) {
 		var windowHeight = window.innerHeight, windowWidth = window.innerWidth,
@@ -31,7 +33,26 @@
 	function editBin() {
 		$adminBins_modalHeader.text("Edit Bin");
 		$binName.val(bin.BinName);
-		$adminBins_farmSelect.val(bin.FarmID);
+        $adminBins_farmSelect.empty();
+        var farmIds = bin.FarmIDs;
+        farmIds = farmIds.substring(1);
+        farmIds = farmIds.substring(0, farmIds.length - 1);
+        var res = farmIds.split(",");
+
+        var arrayLength = res.length;
+        for (var i = 0; i < arrayLength; i++) {
+            var selHTML = '<select class="farmSelect" style="padding: 3px; margin: 8px auto;" id=fselect' + res[i] + '>';
+            selHTML += $farmSelectHTML;
+            selHTML += '</select>';
+
+
+            $adminBins_farmSelect.append('<br />');
+
+
+            $adminBins_farmSelect.append(selHTML);
+            $('#fselect' + res[i]).val(res[i]);
+
+        }
 		$adminBins_currentTicket.val(bin.CurrentTicket);
 		$adminBins_currentPounds.val(bin.CurrentPounds).attr("readonly", true);
 		$adminBins_lastDisbursement.val(bin.LastDisbursement);
@@ -85,7 +106,29 @@
 		});
 		return farmName;
 	}
+    function getFarmNameList(farmIds) {
+        var farmName = "";
+        farmIds = farmIds.substring(1);
+        farmIds = farmIds.substring(0, farmIds.length - 1);
+        var res = farmIds.split(",");
 
+        var arrayLength = res.length;
+        for (var i = 0; i < arrayLength; i++) {
+            _(farmList).find(function (value) {
+                if (value.FarmId.toString() === res[i].toString()) {
+                    if (farmName == "") {
+                        farmName = value.FarmName;
+                    }
+                    else {
+                        farmName += ", " + value.FarmName;
+                    }
+
+                }
+            });
+        }
+
+        return farmName;
+    }
 	function loadBins() {
 		var data = JSON.stringify({
 			"Key": localStorage.getItem("CT_key"),
@@ -157,7 +200,7 @@
 				_(farmList).each(function (value) {
 					html += '<option value="' + value.FarmId + '">' + value.FarmName + '</option>';
 				});
-				$adminBins_farmSelect.empty().html(html);
+                $farmSelectHTML = html;
 				wireUpEvents();
 				loadBins();
 			});
@@ -166,7 +209,7 @@
 			_(farmList).each(function (value) {
 				html += '<option value="' + value.FarmId + '">' + value.FarmName + '</option>';
 			});
-			$adminBins_farmSelect.empty().html(html);
+            $farmSelectHTML = html;
 		}
 	}
 
@@ -181,12 +224,12 @@
 			}
 		});
 		var html = '';
-		_(binList).each(function (value) {
-			html += '<li data-binid="' + value.BinID + '">';
-			html += '<span>' + value.BinName + '</span>';
-			html += '<span style="margin-left:10px;width:250px;">' + "Assigned to Farm:  " + getFarmName(value.FarmID) + '</span>';
-			html += '<input data-binid="' + value.BinID + '" type="button" value="Edit" /></li>';
-		});
+        _(binList).each(function (value) {
+            html += '<li data-binid="' + value.BinID + '">';
+            html += '<span>' + value.BinName + '</span>';
+            html += '<span style="margin-left:10px;width:250px; overflow:auto; max-height: 100px;">' + getFarmNameList(value.FarmIDs) + '</span>';
+            html += '<input data-binid="' + value.BinID + '" type="button" value="Edit" /></li>';
+        });
 		$('ol.active').append(html);
 		$('ol.active').find("input").each(function () {
 			var $this = $(this);
@@ -231,14 +274,30 @@
 				$adminBins_currentPounds.attr("readonly", false);
 				showBin();				
 			}
-		);
+        );
+        $addNewFarmSelect.off().on("click",
+            function (e) {
+                e.preventDefault();
+                var selHTML = '<select class="farmSelect" style="padding: 3px; margin: 8px auto;">';
+                selHTML += $farmSelectHTML;
+                selHTML += '</select>';
+                $adminBins_farmSelect.append(selHTML);
+            }
+        );
 		$submitBin.off().on("click",
 			function(e) {
-				e.preventDefault();
+                e.preventDefault();
+                var binFarms = [];
+                $('.farmSelect').each(function (e) {
+                    if ($(this).val() != "0") {
+                        binFarms.push($(this).val());
+                    }
+                });
 				var qry = JSON.stringify({
 					"Key": localStorage.getItem("CT_key"),
 					"BinID": -1,
-					"BinName": $binName.val(),
+                    "BinName": $binName.val(),
+                    "BinFarms": binFarms,
 					"FarmID": $adminBins_farmSelect.val() > 0 ? parseInt($adminBins_farmSelect.val()) : null,
 					"CurrentTicket": $adminBins_currentTicket.val().length > 0 ? parseInt($adminBins_currentTicket.val()) : null,
 					"CurrentPounds": $adminBins_currentPounds.val().length > 0 ? parseInt($adminBins_currentPounds.val()) : null,
@@ -252,14 +311,15 @@
 						localStorage['CT_key'] = msg['Key'];
 						startTimer(msg['Key']);
 						farmList = msg['ReturnData'];
-						debugger;
 					}
 				})).then(function () {
 					var html = '<option value="0">Select Farm</option>';
 					_(farmList).each(function (value) {
 						html += '<option value="' + value.FarmId + '">' + value.FarmName + '</option>';
 					});
-					$adminBins_farmSelect.empty().html(html);
+                    $farmSelectHTML = html;
+                    closeAdminModal();
+                    reloadBinListItems();
 				});
 			}
 		);
@@ -272,7 +332,8 @@
 		$addNewBin = $("#addNewBin");
 		$addNewBinModal = $("#addNewBinModal");
 		$binName = $("#binName");
-		$adminBins_farmSelect = $("#adminBins_farmSelect");
+        //$adminBins_farmSelect = $("#adminBins_farmSelect");
+        $adminBins_farmSelect = $("#farmSelects");
 		$adminBins_currentTicket = $("#adminBins_currentTicket");
 		$adminBins_currentPounds = $("#adminBins_currentPounds");
 		$adminBins_lastDisbursement = $("#adminBins_lastDisbursement");
@@ -280,7 +341,8 @@
 		$adminBins_reconciliation = $("#adminBins_reconciliation");
 		$binReconciliation = $("#binReconciliation");
 		$binReconciliation.hide();
-		$submitBin = $("#submitBin");
+        $submitBin = $("#submitBin");
+        $addNewFarmSelect = $('#addAnotherFarm');
 		$adminBins_cancelBinCreation = $("#adminBins_cancelBinCreation");
 		$adminBins_noActiveBins = $("#adminBins_noActiveBins");
 		loadFarms();

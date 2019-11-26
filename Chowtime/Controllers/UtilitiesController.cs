@@ -24,6 +24,8 @@ using System.Xml;
 using System.IO;
 using System.Web.Http.Cors;
 
+using System.Net.Mime;
+
 
 
 namespace SGApp.Controllers
@@ -786,6 +788,49 @@ namespace SGApp.Controllers
 
         }
 
+        [HttpPost]
+        public HttpResponseMessage EmailAtAGlance([FromBody] HTMLDTO HTMLDto)
+        {
+
+            //, danielw@harvestselect.com
+            string elist = "danielw@harvestselect.com, ";
+            elist += "bnorth@harvestselect.com, ";
+            elist += "randy@harvestselect.com, ";
+            elist += "shane@steelcityseafood.com, ";
+            elist += "joe@harvestselect.com, ";
+            elist += "mark@harvestselect.com, ";
+            elist += "johnny@harvestselect.com, ";
+            elist += "christie@harvestselect.com, ";
+            elist += "sissy@harvestselect.com, ";
+            elist += "shirley@harvestselect.com ";
+            elist += "rhonda@harvestselect.com, ";
+            elist += "rt@harvestselect.com";
+            //EmailRepository er = new EmailRepository();
+            //List<Email> emails = er.GetEmails();
+            //            Daniel Watts
+            //Brian North
+            //Randy Rhodes
+            //Shane Gaut
+            //Joe Connor
+            //Mark Hasty
+            //Johnny Price
+            //Christie Wilborn
+            //Sissy Compton
+            //Shirley Samples
+            //Rhonda Harper
+            //RT Floyd
+
+            //foreach (Email em in emails)
+            //{
+            //    elist += em.EmailAddress + ", ";
+            //}
+            //elist = elist.Substring(0, elist.Length - 2);
+            //SendMail("harper@stimulantgroup.com", subject, body);// danielw@harvestselect.com, RobertL@HarvestSelect.com, Alice@HarvestSelect.com, Betsya@HarvestSelect.com, Bobby@HarvestSelect.com, Brenda@harvestselect.com, ChrisH@HarvestSelect.com, cory@harvestselect.com, daniel@harvestselect.com, Debi@HarvestSelect.com, jimbo@harvestselect.com, johnny@harvestselect.com, leec@harvestselect.com, lee@harvestselect.com, Mark@HarvestSelect.com, Michael@harvestselect.com, Mike@HarvestSelect.com, Randy@HarvestSelect.com, reed@harvestselect.com, rhonda@harvestselect.com, Ryan@HarvestSelect.com, Shirley@HarvestSelect.com, tammy@harvestselect.com, tom@harvestselect.com, trey@harvestselect.com, sam@harvestselect.com", subject, body);
+            SendMailWithPDFAttachFromHTML(elist, "At A Glance - " + DateTime.Now.ToShortDateString(), HTMLDto.body);
+
+            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
         [HttpGet]
         public HttpResponseMessage EmailWeeklyReport()
         {
@@ -1379,6 +1424,90 @@ namespace SGApp.Controllers
                 mm.Subject = subject;
                 mm.Body = body;
                 mm.IsBodyHtml = true;
+
+                //(3) Create the SmtpClient object
+                SmtpClient smtp = new SmtpClient();
+
+
+                //(4) Send the MailMessage (will use the Web.config settings)
+                smtp.Send(mm);
+                return true;
+                //lblContactSent.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                //tbComments.Text = ex.Message;
+            }
+        }
+
+
+        public bool SendMailWithPDFAttachFromHTML(string emailto, string subject, string body)
+        {
+            try
+            {
+                MailMessage mm = new MailMessage();
+                mm.From = new MailAddress("emailharper@gmail.com");
+                //mm.From = new MailAddress("harper@stimulantgroup.com");
+                string[] emails = emailto.Split(',');
+                foreach (string addy in emails)
+                {
+                    mm.To.Add(new MailAddress(addy));
+                }
+                //(2) Assign the MailMessage's properties
+                //MailAddress copy = new MailAddress("support@rcginc.net");
+                //mm.CC.Add(copy);
+                mm.Subject = subject;
+                mm.Body = "Report Attached.";
+                mm.IsBodyHtml = true;
+                body = "<html><head><link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'></head><body>" + body + "</body></html>";
+                var pdfGen = new NReco.PdfGenerator.HtmlToPdfConverter();
+                var retVal = pdfGen.GeneratePdf(body, null);
+                string fileName = subject + ".pdf";
+                MemoryStream stream = new MemoryStream(retVal);
+                Attachment thisAttach = new Attachment(stream, fileName, MediaTypeNames.Application.Pdf);
+                mm.Attachments.Add(thisAttach);
+
+                //(3) Create the SmtpClient object
+                SmtpClient smtp = new SmtpClient();
+
+
+                //(4) Send the MailMessage (will use the Web.config settings)
+                smtp.Send(mm);
+                return true;
+                //lblContactSent.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+                //tbComments.Text = ex.Message;
+            }
+        }
+        public bool SendMailLocalHostTest(string emailto, string subject, string body)
+        {
+            try
+            {
+                MailMessage mm = new MailMessage();
+                mm.From = new MailAddress("emailharper@gmail.com");
+                //mm.From = new MailAddress("harper@stimulantgroup.com");
+                string[] emails = emailto.Split(',');
+                foreach (string addy in emails)
+                {
+                    mm.To.Add(new MailAddress(addy));
+                }
+                //(2) Assign the MailMessage's properties
+                //MailAddress copy = new MailAddress("support@rcginc.net");
+                //mm.CC.Add(copy);
+                mm.Subject = subject;
+                mm.Body = "Report Attached.";
+                mm.IsBodyHtml = true;
+                body = "<html><head><link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'></head><body>" + body + "</body></html>";
+                var pdfGen = new NReco.PdfGenerator.HtmlToPdfConverter();
+                var retVal = pdfGen.GeneratePdf(body, null);
+                string fileName = subject + ".pdf";
+                MemoryStream stream = new MemoryStream(retVal);
+                Attachment thisAttach = new Attachment(stream, fileName, MediaTypeNames.Application.Pdf);
+                mm.Attachments.Add(thisAttach);
 
                 //(3) Create the SmtpClient object
                 SmtpClient smtp = new SmtpClient();

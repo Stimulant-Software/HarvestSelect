@@ -202,6 +202,7 @@
     <Compile Include="DTOs\dtoAdagioCustomer.cs" />
     <Compile Include="DTOs\dtoAdagioItem.cs" />
     <Compile Include="DTOs\dtoAdagioSalesTransaction.cs" />
+    <Compile Include="DTOs\dtoAtAGlance.cs" />
     <Compile Include="DTOs\EmailDTO.cs" />
     <Compile Include="DTOs\FarmDTO.cs" />
     <Compile Include="DTOs\FarmFeedDTO.cs" />
@@ -209,10 +210,12 @@
     <Compile Include="DTOs\FarmYieldDTO.cs" />
     <Compile Include="DTOs\FarmYieldHeaderDTO.cs" />
     <Compile Include="DTOs\FeedingDTO.cs" />
+    <Compile Include="DTOs\FeedReportDTO.cs" />
     <Compile Include="DTOs\FilletScaleReadingDTO.cs" />
     <Compile Include="DTOs\FinishTimeDTO.cs" />
     <Compile Include="DTOs\GenericDTO.cs" />
     <Compile Include="DTOs\HarvestDTO.cs" />
+    <Compile Include="DTOs\HTMLDTO.cs" />
     <Compile Include="DTOs\InnovaDto.cs" />
     <Compile Include="DTOs\KeyDTO.cs" />
     <Compile Include="DTOs\LoginDTO.cs" />
@@ -306,6 +309,9 @@
     <Compile Include="Models\EF\BinDisbursement.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EF\BinFarm.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EF\BinLoad.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
@@ -343,6 +349,9 @@
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\Feeding.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\FeedingsArchive.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\FilletScaleReading.cs">
@@ -394,6 +403,9 @@
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\UserRole.cs">
+      <DependentUpon>App.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EF\usp_FeedTotalsByPondMonth_Result.cs">
       <DependentUpon>App.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EF\WeighBack.cs">
@@ -571,6 +583,13 @@
     </Content>
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Site\admin-bins.html" />
+    <Content Include="Site\ct-reports2.html" />
+    <Content Include="Site\ct_reports2.html" />
+    <Content Include="Site\dashboards.html" />
+    <Content Include="Site\emailAtAGlance.html" />
+    <Content Include="Site\op-at-a-glance.html" />
+    <Content Include="Site\op-glance.html" />
+    <Content Include="Site\op-shipping-reports.html" />
     <Content Include="Site\scripts\admin-bins.js" />
     <Content Include="Site\scripts\ct-binLoads.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -642,6 +661,7 @@
     <Content Include="Site\scripts\at-functions.js" />
     <Content Include="Site\scripts\bol-functions.js" />
     <Content Include="Site\scripts\ct-functions.js" />
+    <Content Include="Site\scripts\dash-functions.js" />
     <Content Include="Site\scripts\drilldown.js" />
     <Content Include="Site\scripts\exporting.js" />
     <Content Include="Site\scripts\functions.js" />

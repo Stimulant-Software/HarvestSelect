@@ -103,6 +103,7 @@ function loadFarmsDDL(userID, currentFarm){
                 }
 			}
             $('#changeFarm').empty().html(ddlHtml);
+            $('#changeFarm2').empty().html(ddlHtml);
             if ($('#changePonds').length)
                 $('#changePonds').removeAttr('disabled');
         }

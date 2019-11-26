@@ -23,6 +23,7 @@ namespace SGApp.Models.EF
             this.PlantPondWeights = new HashSet<PlantPondWeight>();
             this.WeighBacks = new HashSet<WeighBack>();
             this.ProductionTotals = new HashSet<ProductionTotal>();
+            this.FeedingsArchives = new HashSet<FeedingsArchive>();
         }
     
         public int PondId { get; set; }
@@ -47,5 +48,6 @@ namespace SGApp.Models.EF
         public virtual Status Status { get; set; }
         public virtual ICollection<WeighBack> WeighBacks { get; set; }
         public virtual ICollection<ProductionTotal> ProductionTotals { get; set; }
+        public virtual ICollection<FeedingsArchive> FeedingsArchives { get; set; }
     }
 }

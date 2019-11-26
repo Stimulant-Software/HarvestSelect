@@ -34,8 +34,28 @@ namespace SGApp.Controllers
                 var predicate = ur.GetPredicate(cqDTO, u, companyId);
                 var data = ur.GetByPredicate(predicate);
                 var col = new Collection<Dictionary<string, string>>();
-	            var bins = new Collection<Dictionary<string, string>>();
-				var farmCol = new Collection<Tuple<int, int>>();
+                var bins = new Collection<Dictionary<string, string>>();
+                if (cqDTO.FarmId != null)
+                {
+                    var br = new BinRepository();
+                    var binList = br.GetFarmBinList(int.Parse(cqDTO.FarmId));
+                    foreach (var bin in binList)
+                    {
+                        bins.Add(
+                            new Dictionary<string, string>() {
+                                {"BinID", bin.BinID.ToString()},
+                                {"BinName", bin.BinName},
+                                {"FarmID", bin.FarmID.HasValue ? bin.FarmID.Value.ToString() : ""},
+                                {"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
+                                {"CurrentPounds", bin.CurrentPounds.HasValue ? bin.CurrentPounds.Value.ToString() : ""},
+                                {"LastDispersement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : ""},
+                                {"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : ""}
+                            }
+                        );
+                    }
+
+                }
+                var farmCol = new Collection<Tuple<int, int>>();
 				foreach (var item in data) {
                     var dic = new Dictionary<string, string>();
                     dic.Add("PondId", item.PondId.ToString());
@@ -62,23 +82,6 @@ namespace SGApp.Controllers
                     dic.Add("SalesPoundsSinceHarvest", salepounds.ToString());
                     dic.Add("HealthStatus", item.HealthStatus.ToString());
                     col.Add(dic);
-					foreach (var bin in item.Farm.Bins) {
-						var match = farmCol.SingleOrDefault(x => x.Item1 == bin.FarmID && x.Item2 == bin.BinID);
-						if (match == null) {
-							farmCol.Add(new Tuple<int, int>(bin.FarmID.Value, bin.BinID));
-							bins.Add(
-								new Dictionary<string, string>() {
-									{"BinID", bin.BinID.ToString()},
-									{"BinName", bin.BinName},
-									{"FarmID", bin.FarmID.HasValue ? bin.FarmID.Value.ToString() : ""},
-									{"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
-									{"CurrentPounds", bin.CurrentPounds.HasValue ? bin.CurrentPounds.Value.ToString() : ""},
-									{"LastDispersement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : ""},
-									{"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : ""}
-								}
-							);
-						}						
-					}
                 }
 
                 var retVal = new GenericDTO
@@ -719,7 +722,7 @@ namespace SGApp.Controllers
             var farmid = uDto.FarmID;
 
 			var br = new BinRepository();
-            var binCount = br.GetFarmBins(farmid).Count();
+            var binCount = br.GetFarmBinList(farmid).Count();
             if (binCount > 0)
             {
                 var binDisb = br.GetNewBinDisbursementRecord();

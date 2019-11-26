@@ -1,0 +1,59 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Airtime</title>
+    <link href="content/global.css" rel="stylesheet" type="text/css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='/scripts/jquery-1.10.2.min.js' type='text/javascript'%3E%3C/script%3E")); }
+    </script>
+</head>
+<body>
+	<header>
+		<h1>ChowTime</h1>
+		<nav>
+			<ol>
+				<li><a href="ct-entry.html">Enter Feed Data</a></li>
+				<li><a href="ct-reports.html">Reports</a></li>
+                <li><a href="ct-reports2.html">Yearly Feed</a></li>
+				<li><a href="ct-binLoads.html">Enter Bin Data</a></li>
+				<li class="username">Logged in as <span id="userName"></span> (<a id="logoutButton">logout</a>)</li>
+			</ol>
+		</nav>
+	</header>
+
+	<section id="main_content">
+		<header class="farm">
+			<h2>Current Farm: <span id="currentFarm"></span></h2>
+			<label>Farm: </label><select id="changeFarm2"></select>
+			<label>Year: </label><select id="changeYear2"></select>
+			<p><a href="#" id="exportYearFeed">Export</a></p>
+		</header>
+
+		<section id="tablePrintOnly">
+			<h2>Farm: <span id="currentFarmPrint"></span></h2>
+            <h2>Year: <span id="currentYearPrint"></span></h2>
+			<table>
+				<thead><tr><th>Year</th><th>Month Number</th><th>Month Name</th><th>Pond Name</th><th>Pounds Fed</th></tr></thead>
+				<tbody id="exportRows"></tbody>
+			</table>
+		</section>
+	</section>
+
+	<footer></footer>
+
+	<section id="alertBox" class="modal">
+		<i class="fa fa-exclamation-circle"></i>
+		<div id="alertMessage"></div>
+		<fieldset class="buttons"><button id="closeAlert">OK</button></fieldset>
+	</section>
+
+	<script src="scripts/underscore.min.js"></script>
+	<script type="text/javascript" src="scripts/functions.js"></script>
+	<script type="text/javascript" src="scripts/ct-functions.js"></script>
+	<script type="text/javascript" src="scripts/highcharts.js"></script>
+	<script type="text/javascript" src="scripts/exporting.js"></script>
+</body>
+</html>

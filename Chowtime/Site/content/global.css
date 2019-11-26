@@ -200,6 +200,9 @@ nav {
 .at nav { background-color: #156f23; }
 .op nav { background-color: #6F5015; }
 .bol nav { background-color: #a94442; }
+.dash nav {
+    background-color: #666666;
+}
 
 .login nav {display: none; }
 

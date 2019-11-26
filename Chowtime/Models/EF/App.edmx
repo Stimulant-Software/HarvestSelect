@@ -1226,6 +1226,14 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
           <Property Name="FeedID" Type="int" />
           <Property Name="UserID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="BinFarms">
+          <Key>
+            <PropertyRef Name="BinFarmID" />
+          </Key>
+          <Property Name="BinFarmID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinID" Type="int" Nullable="false" />
+          <Property Name="FarmID" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="BinLoads">
           <Key>
             <PropertyRef Name="BinTicketID" />
@@ -1376,6 +1384,17 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
           <Property Name="PoundsFed" Type="int" Nullable="false" />
           <Property Name="UsersFarmId" Type="int" Nullable="false" />
           <Property Name="BinID" Type="int" />
+        </EntityType>
+        <EntityType Name="FeedingsArchive">
+          <Key>
+            <PropertyRef Name="FeedingId" />
+          </Key>
+          <Property Name="FeedingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PondId" Type="int" Nullable="false" />
+          <Property Name="FeedDate" Type="datetime" Nullable="false" />
+          <Property Name="PoundsFed" Type="int" Nullable="false" />
+          <Property Name="UsersFarmId" Type="int" Nullable="false" />
+          <Property Name="FeedLot" Type="int" />
         </EntityType>
         <EntityType Name="FilletScaleReadings">
           <Key>
@@ -1614,6 +1633,30 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__BinFarms__BinID__57A801BA">
+          <End Role="Bins" Type="Self.Bins" Multiplicity="1" />
+          <End Role="BinFarms" Type="Self.BinFarms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bins">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="BinFarms">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BinFarms__FarmID__56B3DD81">
+          <End Role="Farms" Type="Self.Farms" Multiplicity="1" />
+          <End Role="BinFarms" Type="Self.BinFarms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Farms">
+              <PropertyRef Name="FarmId" />
+            </Principal>
+            <Dependent Role="BinFarms">
+              <PropertyRef Name="FarmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Absences_Departments">
           <End Role="Departments" Type="Self.Departments" Multiplicity="1" />
           <End Role="Absences" Type="Self.Absences" Multiplicity="*" />
@@ -1802,6 +1845,30 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
               <PropertyRef Name="UserFarmId" />
             </Principal>
             <Dependent Role="Feedings">
+              <PropertyRef Name="UsersFarmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedingsArchive_Ponds">
+          <End Role="Ponds" Type="Self.Ponds" Multiplicity="1" />
+          <End Role="FeedingsArchive" Type="Self.FeedingsArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ponds">
+              <PropertyRef Name="PondId" />
+            </Principal>
+            <Dependent Role="FeedingsArchive">
+              <PropertyRef Name="PondId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedingsArchive_UserFarms">
+          <End Role="UserFarms" Type="Self.UserFarms" Multiplicity="1" />
+          <End Role="FeedingsArchive" Type="Self.FeedingsArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserFarms">
+              <PropertyRef Name="UserFarmId" />
+            </Principal>
+            <Dependent Role="FeedingsArchive">
               <PropertyRef Name="UsersFarmId" />
             </Dependent>
           </ReferentialConstraint>
@@ -2010,6 +2077,10 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="usp_FeedTotalsByPondMonth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="year" Type="int" Mode="In" />
+          <Parameter Name="farmid" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="AppModelStoreContainer">
           <EntitySet Name="Absences" EntityType="Self.Absences" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AD_Groups" EntityType="Self.AD_Groups" Schema="dbo" store:Type="Tables" />
@@ -2025,6 +2096,7 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
           <EntitySet Name="AdagioSalesTransactions" EntityType="Self.AdagioSalesTransactions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AdagioTodayOrders" EntityType="Self.AdagioTodayOrders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BinDisbursements" EntityType="Self.BinDisbursements" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BinFarms" EntityType="Self.BinFarms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BinLoads" EntityType="Self.BinLoads" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Bins" EntityType="Self.Bins" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Companies" EntityType="Self.Companies" Schema="dbo" store:Type="Tables" />
@@ -2039,6 +2111,7 @@ warning 6002: The table/view 'HarvestSelect.dbo.Adagio_O_OrderDetail' does not h
           <EntitySet Name="FarmYieldHeaders" EntityType="Self.FarmYieldHeaders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FarmYields" EntityType="Self.FarmYields" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedings" EntityType="Self.Feedings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FeedingsArchive" EntityType="Self.FeedingsArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FilletScaleReadings" EntityType="Self.FilletScaleReadings" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FinishTimes" EntityType="Self.FinishTimes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Harvests" EntityType="Self.Harvests" Schema="dbo" store:Type="Tables" />
@@ -2291,6 +2364,14 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
             <End Role="Feedings" EntitySet="Feedings" />
             <End Role="BinDisbursements" EntitySet="BinDisbursements" />
           </AssociationSet>
+          <AssociationSet Name="FK__BinFarms__BinID__57A801BA" Association="Self.FK__BinFarms__BinID__57A801BA">
+            <End Role="Bins" EntitySet="Bins" />
+            <End Role="BinFarms" EntitySet="BinFarms" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BinFarms__FarmID__56B3DD81" Association="Self.FK__BinFarms__FarmID__56B3DD81">
+            <End Role="Farms" EntitySet="Farms" />
+            <End Role="BinFarms" EntitySet="BinFarms" />
+          </AssociationSet>
           <AssociationSet Name="FK_Absences_Departments" Association="Self.FK_Absences_Departments">
             <End Role="Departments" EntitySet="Departments" />
             <End Role="Absences" EntitySet="Absences" />
@@ -2354,6 +2435,14 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <AssociationSet Name="FK_Feedings_UserFarms" Association="Self.FK_Feedings_UserFarms">
             <End Role="UserFarms" EntitySet="UserFarms" />
             <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedingsArchive_Ponds" Association="Self.FK_FeedingsArchive_Ponds">
+            <End Role="Ponds" EntitySet="Ponds" />
+            <End Role="FeedingsArchive" EntitySet="FeedingsArchive" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedingsArchive_UserFarms" Association="Self.FK_FeedingsArchive_UserFarms">
+            <End Role="UserFarms" EntitySet="UserFarms" />
+            <End Role="FeedingsArchive" EntitySet="FeedingsArchive" />
           </AssociationSet>
           <AssociationSet Name="FK_FinishTimes_Departments" Association="Self.FK_FinishTimes_Departments">
             <End Role="Departments" EntitySet="Departments" />
@@ -2618,6 +2707,28 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <EntitySet Name="TodaySamplings" EntityType="AppModel.TodaySampling" />
           <EntitySet Name="CurrentShippings" EntityType="AppModel.CurrentShipping" />
           <EntitySet Name="AdagioOrderDetailsForTodays" EntityType="AppModel.AdagioOrderDetailsForToday" />
+          <EntitySet Name="FeedingsArchives" EntityType="AppModel.FeedingsArchive" />
+          <AssociationSet Name="FK_FeedingsArchive_Ponds" Association="AppModel.FK_FeedingsArchive_Ponds">
+            <End Role="Pond" EntitySet="Ponds" />
+            <End Role="FeedingsArchive" EntitySet="FeedingsArchives" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FeedingsArchive_UserFarms" Association="AppModel.FK_FeedingsArchive_UserFarms">
+            <End Role="UserFarm" EntitySet="UserFarms" />
+            <End Role="FeedingsArchive" EntitySet="FeedingsArchives" />
+          </AssociationSet>
+          <FunctionImport Name="usp_FeedTotalsByPondMonth" ReturnType="Collection(AppModel.usp_FeedTotalsByPondMonth_Result)">
+            <Parameter Name="year" Mode="In" Type="Int32" />
+            <Parameter Name="farmid" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <EntitySet Name="BinFarms" EntityType="AppModel.BinFarm" />
+          <AssociationSet Name="FK__BinFarms__BinID__57A801BA" Association="AppModel.FK__BinFarms__BinID__57A801BA">
+            <End Role="Bin" EntitySet="Bins" />
+            <End Role="BinFarm" EntitySet="BinFarms" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BinFarms__FarmID__56B3DD81" Association="AppModel.FK__BinFarms__FarmID__56B3DD81">
+            <End Role="Farm" EntitySet="Farms" />
+            <End Role="BinFarm" EntitySet="BinFarms" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Company">
           <Key>
@@ -2714,6 +2825,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <NavigationProperty Name="User" Relationship="AppModel.FK_UserFarms_Users" FromRole="UserFarm" ToRole="User" />
           <NavigationProperty Name="O2Readings" Relationship="AppModel.FK_O2Readings_UsersFarms" FromRole="UserFarm" ToRole="O2Readings" />
           <NavigationProperty Name="Farm" Relationship="AppModel.FK_UserFarms_Farms" FromRole="UserFarm" ToRole="Farm" />
+          <NavigationProperty Name="FeedingsArchives" Relationship="AppModel.FK_FeedingsArchive_UserFarms" FromRole="UserFarm" ToRole="FeedingsArchive" />
         </EntityType>
         <Association Name="FK_Feedings_UserFarms">
           <End Type="AppModel.UserFarm" Role="UserFarm" Multiplicity="1" />
@@ -2902,6 +3014,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <NavigationProperty Name="UserFarms" Relationship="AppModel.FK_UserFarms_Farms" FromRole="Farm" ToRole="UserFarm" />
           <NavigationProperty Name="Ponds" Relationship="AppModel.FK_Ponds_Farms" FromRole="Farm" ToRole="Pond" />
           <NavigationProperty Name="Bins" Relationship="AppModel.FK_Bins_Farms" FromRole="Farm" ToRole="Bin" />
+          <NavigationProperty Name="BinFarms" Relationship="AppModel.FK__BinFarms__FarmID__56B3DD81" FromRole="Farm" ToRole="BinFarm" />
         </EntityType>
         <Association Name="FK_Farms_Companies">
           <End Type="AppModel.Company" Role="Company" Multiplicity="1" />
@@ -2998,6 +3111,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <NavigationProperty Name="Status" Relationship="AppModel.FK_Ponds_Statuses" FromRole="Pond" ToRole="Status" />
           <NavigationProperty Name="WeighBacks" Relationship="AppModel.FK_WeighBacks_Ponds" FromRole="Pond" ToRole="WeighBack" />
           <NavigationProperty Name="ProductionTotals" Relationship="AppModel.FK_ProductionTotals_Ponds" FromRole="Pond" ToRole="ProductionTotal" />
+          <NavigationProperty Name="FeedingsArchives" Relationship="AppModel.FK_FeedingsArchive_Ponds" FromRole="Pond" ToRole="FeedingsArchive" />
         </EntityType>
         <Association Name="FK_Ponds_Farms">
           <End Type="AppModel.Farm" Role="Farm" Multiplicity="1" />
@@ -3395,6 +3509,7 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <NavigationProperty Name="Feedings" Relationship="AppModel.FK_Feedings_Bins" FromRole="Bin" ToRole="Feeding" />
           <NavigationProperty Name="BinDisbursements" Relationship="AppModel.FK_BinDisbursements_Bins" FromRole="Bin" ToRole="BinDisbursement" />
           <NavigationProperty Name="BinLoads" Relationship="AppModel.FK_BinLoads_Bins" FromRole="Bin" ToRole="BinLoad" />
+          <NavigationProperty Name="BinFarms" Relationship="AppModel.FK__BinFarms__BinID__57A801BA" FromRole="Bin" ToRole="BinFarm" />
         </EntityType>
         <Association Name="FK_Bins_Farms">
           <End Type="AppModel.Farm" Role="Farm" Multiplicity="0..1" />
@@ -4688,6 +4803,84 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
           <Property Name="RNumAO80ALIN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
+        <EntityType Name="FeedingsArchive">
+          <Key>
+            <PropertyRef Name="FeedingId" />
+          </Key>
+          <Property Name="FeedingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PondId" Type="Int32" Nullable="false" />
+          <Property Name="FeedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PoundsFed" Type="Int32" Nullable="false" />
+          <Property Name="UsersFarmId" Type="Int32" Nullable="false" />
+          <Property Name="FeedLot" Type="Int32" />
+          <NavigationProperty Name="Pond" Relationship="AppModel.FK_FeedingsArchive_Ponds" FromRole="FeedingsArchive" ToRole="Pond" />
+          <NavigationProperty Name="UserFarm" Relationship="AppModel.FK_FeedingsArchive_UserFarms" FromRole="FeedingsArchive" ToRole="UserFarm" />
+        </EntityType>
+        <Association Name="FK_FeedingsArchive_Ponds">
+          <End Type="AppModel.Pond" Role="Pond" Multiplicity="1" />
+          <End Type="AppModel.FeedingsArchive" Role="FeedingsArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pond">
+              <PropertyRef Name="PondId" />
+            </Principal>
+            <Dependent Role="FeedingsArchive">
+              <PropertyRef Name="PondId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FeedingsArchive_UserFarms">
+          <End Type="AppModel.UserFarm" Role="UserFarm" Multiplicity="1" />
+          <End Type="AppModel.FeedingsArchive" Role="FeedingsArchive" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserFarm">
+              <PropertyRef Name="UserFarmId" />
+            </Principal>
+            <Dependent Role="FeedingsArchive">
+              <PropertyRef Name="UsersFarmId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="usp_FeedTotalsByPondMonth_Result">
+          <Property Type="Int32" Name="PoundsFed" Nullable="true" />
+          <Property Type="String" Name="PondName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MonthName" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="Month" Nullable="true" />
+          <Property Type="Int32" Name="Year" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="BinFarm">
+          <Key>
+            <PropertyRef Name="BinFarmID" />
+          </Key>
+          <Property Name="BinFarmID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinID" Type="Int32" Nullable="false" />
+          <Property Name="FarmID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bin" Relationship="AppModel.FK__BinFarms__BinID__57A801BA" FromRole="BinFarm" ToRole="Bin" />
+          <NavigationProperty Name="Farm" Relationship="AppModel.FK__BinFarms__FarmID__56B3DD81" FromRole="BinFarm" ToRole="Farm" />
+        </EntityType>
+        <Association Name="FK__BinFarms__BinID__57A801BA">
+          <End Type="AppModel.Bin" Role="Bin" Multiplicity="1" />
+          <End Type="AppModel.BinFarm" Role="BinFarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bin">
+              <PropertyRef Name="BinID" />
+            </Principal>
+            <Dependent Role="BinFarm">
+              <PropertyRef Name="BinID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BinFarms__FarmID__56B3DD81">
+          <End Type="AppModel.Farm" Role="Farm" Multiplicity="1" />
+          <End Type="AppModel.BinFarm" Role="BinFarm" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Farm">
+              <PropertyRef Name="FarmId" />
+            </Principal>
+            <Dependent Role="BinFarm">
+              <PropertyRef Name="FarmID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6319,6 +6512,38 @@ FROM [dbo].[Adagio_O_OrderDetail] AS [Adagio_O_OrderDetail]</DefiningQuery>
                 <ScalarProperty Name="DDocType_T" ColumnName="DDocType_T" />
                 <ScalarProperty Name="Line" ColumnName="Line" />
                 <ScalarProperty Name="OrderKey" ColumnName="OrderKey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FeedingsArchives">
+            <EntityTypeMapping TypeName="AppModel.FeedingsArchive">
+              <MappingFragment StoreEntitySet="FeedingsArchive">
+                <ScalarProperty Name="FeedLot" ColumnName="FeedLot" />
+                <ScalarProperty Name="UsersFarmId" ColumnName="UsersFarmId" />
+                <ScalarProperty Name="PoundsFed" ColumnName="PoundsFed" />
+                <ScalarProperty Name="FeedDate" ColumnName="FeedDate" />
+                <ScalarProperty Name="PondId" ColumnName="PondId" />
+                <ScalarProperty Name="FeedingId" ColumnName="FeedingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_FeedTotalsByPondMonth" FunctionName="AppModel.Store.usp_FeedTotalsByPondMonth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AppModel.usp_FeedTotalsByPondMonth_Result">
+                <ScalarProperty Name="PoundsFed" ColumnName="PoundsFed" />
+                <ScalarProperty Name="PondName" ColumnName="PondName" />
+                <ScalarProperty Name="MonthName" ColumnName="MonthName" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="BinFarms">
+            <EntityTypeMapping TypeName="AppModel.BinFarm">
+              <MappingFragment StoreEntitySet="BinFarms">
+                <ScalarProperty Name="FarmID" ColumnName="FarmID" />
+                <ScalarProperty Name="BinID" ColumnName="BinID" />
+                <ScalarProperty Name="BinFarmID" ColumnName="BinFarmID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

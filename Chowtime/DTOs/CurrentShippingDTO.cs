@@ -1,10 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
+using SGApp.Models.Common;
+using System;
 
 namespace SGApp.DTOs
 {
+    public class ShippingReportDTO : IKey
+    {
+        public string Key { get; set; }
+        public List<CurrentShippingDTO> ShippingTotals { get; set; }
+    }
 
     public class CurrentShippingDTO
     {

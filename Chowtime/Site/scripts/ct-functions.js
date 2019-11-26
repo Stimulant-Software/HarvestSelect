@@ -48,7 +48,7 @@ $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
             selectedDate = $(this).val() == "" ? new Date() : $(this).val();
             if (typeof farmID == "string" && farmID != "") {
                 var searchQueryPonds = { "key": _key, "userID": userID, "FarmId": farmID, "StatusId": "1" }, dataPonds = JSON.stringify(searchQueryPonds), searchQueryFeeds = { "key": _key, "userID": userID, "FarmId": farmID, "CurrentTime": selectedDate }, dataFeeds = JSON.stringify(searchQueryFeeds), pondList = {}, feedlist = {};
-				debugger;
+				
 	            $.when($.ajax('../api/Pond/PondList', {
                     type: 'POST',
                     data: dataPonds,
@@ -112,6 +112,100 @@ $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
             });
         });
 
+
+        if ($('body').hasClass('reports2')) {
+            var yearHTML = "";
+            var dt = new Date();
+            var thisyear = dt.getYear() + 1900;
+            var i;
+            for (i = 2012; i <= thisyear; i++) {
+                yearHTML += '<option value="' + i + '">' + i + '</option>';
+            }
+            $('#changeYear2').html(yearHTML).val(thisyear);
+
+            
+            $('#changeFarm2').change(function () {
+                showProgress('body', 'farmRepeater');
+                farmID = $('option:selected', this).val();
+                farmName = $('option:selected', this).text();
+                $('#currentFarm').empty().text(farmName);
+                $('#currentFarmPrint').empty().text(farmName);
+                $('#currentYearPrint').empty().text($('#changeYear2').val());
+                $('#main_content').toggleClass('tableview');
+                var searchQuery = {
+                    "key": _key,
+                    "userID": userID,
+                    "FarmId": farmID,
+                    "Year": $('#changeYear2').val()
+                };
+                var dataFeeds = JSON.stringify(searchQuery);
+                $.ajax('../api/Farm/YearlyFeedByPondAndMonth', {
+                    type: 'POST',
+                    data: dataFeeds,
+                    success: function (msg) {
+                        startTimer(msg['Key']);
+                        yearReportRepeater(msg.MonthPondTotals);
+                    }
+                });
+
+            });
+            $('#changeYear2').change(function () {
+                if ($('#changeFarm2').val() == "Select Farm") {
+                    return;
+                }
+                showProgress('body', 'farmRepeater');
+                farmID = $('#changeFarm2').val();
+                farmName = $('#changeFarm2 option:selected').text();
+                $('#currentFarm').empty().text(farmName);
+                $('#currentFarmPrint').empty().text(farmName);
+                $('#currentYearPrint').empty().text($('#changeYear2').val());
+                $('#main_content').toggleClass('tableview');
+                var searchQuery = {
+                    "key": _key,
+                    "userID": userID,
+                    "FarmId": farmID,
+                    "Year": $('#changeYear2').val()
+                };
+                var dataFeeds = JSON.stringify(searchQuery);
+                $.ajax('../api/Farm/YearlyFeedByPondAndMonth', {
+                    type: 'POST',
+                    data: dataFeeds,
+                    success: function (msg) {
+                        startTimer(msg['Key']);
+                        yearReportRepeater(msg.MonthPondTotals);
+                    }
+                });
+            });
+
+            $('#exportYearFeed').click(function (e) {
+                e.preventDefault();
+                var myTableArray = [];
+
+                $("#exportRows tr").each(function () {
+                    var arrayOfThisRow = [];
+                    var tableData = $(this).find('td');
+                    if (tableData.length > 0) {
+                        tableData.each(function () { arrayOfThisRow.push($(this).text()); });
+                        myTableArray.push(arrayOfThisRow);
+                    }
+                });
+                let csvContent = "data:text/csv;charset=utf-8,";
+                myTableArray.forEach(function (rowArray) {
+                    let row = rowArray.join(",");
+                    csvContent += row + "\r\n";
+                });
+                var encodedUri = encodeURI(csvContent);
+                var downloadLink = document.createElement("a");
+                downloadLink.href = encodedUri;
+                downloadLink.download = "Feed Report - " + $('#changeFarm2 option:selected').text() + " - " + $('#changeFarm2').val() + ".csv";
+
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            });
+        }
+         
+
         $('#viewSwitch').click(function (e) {
             e.preventDefault();
             $('#main_content').toggleClass('tableview');
@@ -121,6 +215,22 @@ $.when(checkKey(), pageLabel(), loadFarmsDDL(userID)).then(function () {
 });
 
 // BEGIN REPORT CODE
+function yearReportRepeater(records) {
+    $('#tablePrintOnly tbody').empty();
+    var repHTML = "";
+    records.forEach(function (item) {
+        repHTML += '<tr>';
+        repHTML += '<td>' + item.Year + '</td>';
+        repHTML += '<td>' + item.Month + '</td>';
+        repHTML += '<td>' + item.MonthName + '</td>';
+        repHTML += '<td>' + item.Pond + '</td>';
+        repHTML += '<td>' + item.PoundsFed + '</td>';
+        repHTML += '</tr>';
+    });
+    $('#tablePrintOnly tbody').html(repHTML);
+    hideProgress('farmRepeater');
+}
+ 
 function farmReportRepeater(numberOfDays, farmID, pondList, feedList, endDate) {
     if (!endDate) { endDate = new Date() }
     var farmPondsHtml = '', classDays = numberOfDays == 5 ? 'five-day' : 'seven-day', searchQuery = { "key": _key, "FarmId": farmID, "currentTime": endDate }, data = JSON.stringify(searchQuery), headerFeedList = {};

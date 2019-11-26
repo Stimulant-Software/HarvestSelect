@@ -13,6 +13,9 @@ namespace SGApp.Models.EF
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Core.Objects.DataClasses;
+    using System.Linq;
     
     public partial class AppEntities : DbContext
     {
@@ -75,5 +78,20 @@ namespace SGApp.Models.EF
         public DbSet<TodaySampling> TodaySamplings { get; set; }
         public DbSet<CurrentShipping> CurrentShippings { get; set; }
         public DbSet<AdagioOrderDetailsForToday> AdagioOrderDetailsForTodays { get; set; }
+        public DbSet<FeedingsArchive> FeedingsArchives { get; set; }
+        public DbSet<BinFarm> BinFarms { get; set; }
+    
+        public virtual ObjectResult<usp_FeedTotalsByPondMonth_Result> usp_FeedTotalsByPondMonth(Nullable<int> year, Nullable<int> farmid)
+        {
+            var yearParameter = year.HasValue ?
+                new ObjectParameter("year", year) :
+                new ObjectParameter("year", typeof(int));
+    
+            var farmidParameter = farmid.HasValue ?
+                new ObjectParameter("farmid", farmid) :
+                new ObjectParameter("farmid", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_FeedTotalsByPondMonth_Result>("usp_FeedTotalsByPondMonth", yearParameter, farmidParameter);
+        }
     }
 }

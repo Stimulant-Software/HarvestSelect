@@ -18,6 +18,7 @@ namespace SGApp.Models.EF
         {
             this.Feedings = new HashSet<Feeding>();
             this.O2Readings = new HashSet<O2Reading>();
+            this.FeedingsArchives = new HashSet<FeedingsArchive>();
         }
     
         public int UserFarmId { get; set; }
@@ -30,5 +31,6 @@ namespace SGApp.Models.EF
         public virtual User User { get; set; }
         public virtual ICollection<O2Reading> O2Readings { get; set; }
         public virtual Farm Farm { get; set; }
+        public virtual ICollection<FeedingsArchive> FeedingsArchives { get; set; }
     }
 }

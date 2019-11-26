@@ -28,8 +28,8 @@ namespace SGApp.Controllers
 				binCol.Add(new Dictionary<string, string>() {
 					{"BinID", bin.BinID.ToString()},
 					{"BinName", bin.BinName},
-					{"FarmID", bin.FarmID.HasValue ? bin.FarmID.Value.ToString() : ""},
-					{"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
+                    {"FarmIDs",  "[" + string.Join(",", bin.BinFarms.Select(x => x.FarmID).ToArray()) + "]"},
+                    {"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
 					{"CurrentPounds", bin.CurrentPounds.HasValue ?bin.CurrentPounds.Value.ToString() : ""},
 					{"LastDisbursement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : ""},
 					{"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : ""}
@@ -89,8 +89,8 @@ namespace SGApp.Controllers
 				    binCol.Add(new Dictionary<string, string>() {
 					    {"BinID", bin.BinID.ToString()},
 					    {"BinName", bin.BinName},
-					    {"FarmID", bin.FarmID.HasValue ? bin.FarmID.Value.ToString() : ""},
-					    {"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
+                        {"FarmIDs", "[" + string.Join(",", bin.BinFarms.Select(x => x.FarmID).ToArray()) + "]"},
+                        {"CurrentTicket", bin.CurrentTicket.HasValue ? bin.CurrentTicket.Value.ToString() : ""},
 					    {"CurrentPounds", bin.CurrentPounds.HasValue ?bin.CurrentPounds.Value.ToString() : ""},
 					    {"LastDisbursement", bin.LastDisbursement.HasValue ? bin.LastDisbursement.Value.ToShortDateString() : ""},
 					    {"LastLoaded", bin.LastLoaded.HasValue ? bin.LastLoaded.Value.ToShortDateString() : ""}
@@ -142,7 +142,8 @@ namespace SGApp.Controllers
 				    binDisb.UserID = UserId;
 			    }
 			    br.SaveChanges();
-			    if (binDisb.BinDisbursementID > 0) {
+                br.UpdateBinFarms(dto.BinFarms, bin.BinID);
+                if (binDisb.BinDisbursementID > 0) {
 				    br.UpdateBinCurrentPounds(null, binDisb);
 				    bin = br.GetById(binId);
 				    dto.CurrentPounds = bin.CurrentPounds;
@@ -742,9 +743,43 @@ namespace SGApp.Controllers
 			return GetBinInfo(Request, dto);
 		}
 
-		
+        [HttpPost]
+        public HttpResponseMessage YearlyFeedByPondAndMonth([FromBody] FeedReportDTO dto)
+        {
+            return YearlyFeedByPondAndMonth(Request, dto);
+        }
 
-		[HttpPost]
+        private HttpResponseMessage YearlyFeedByPondAndMonth(HttpRequestMessage request, FeedReportDTO dto)
+        {
+            string key;
+            var aur = new AppUserRepository();
+            var companyId = 0;
+            var UserId = aur.ValidateUser(dto.Key, out key, ref companyId);
+            var aur1 = new AppUserRoleRepository();
+            if (UserId > 0 && aur1.IsInRole(UserId, "User"))
+            {
+                var db = new AppEntities();
+                var currentFeeds = db.usp_FeedTotalsByPondMonth(dto.Year, dto.FarmId).Select(x => new MonthPondTotalDTO
+                {
+                    Month = x.Month,
+                    MonthName = x.MonthName,
+                    Pond = x.PondName,
+                    PoundsFed = x.PoundsFed,
+                    Year = x.Year
+                }).ToList();
+
+                var retVal = new FeedReportDTO
+                {
+                    Key = key,
+                    MonthPondTotals = currentFeeds
+                };
+                return request.CreateResponse(HttpStatusCode.OK, retVal);
+            }
+            var message = "validation failed";
+            return request.CreateResponse(HttpStatusCode.NotFound, message);
+        }
+
+        [HttpPost]
         public HttpResponseMessage FarmDetail([FromBody] FarmDTO cqDTO)
         {
             return Farms(Request, cqDTO);

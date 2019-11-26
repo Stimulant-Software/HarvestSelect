@@ -48,4 +48,9 @@ namespace SGApp.DTOs
         public string ReportDate { get; set; }
 
     }
+
+    public class EmailContentDTO
+    {
+        public string Content { get; set; }
+    }
 }

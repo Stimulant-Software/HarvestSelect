@@ -42,6 +42,12 @@ namespace SGApp.Repository.Application {
             return DbContext.Bins.Where(x => x.FarmID == FarmID).OrderBy(x => x.BinName).ToList();
         }
 
+        internal List<Bin> GetFarmBinList(int FarmID)
+        {
+            var binArray = DbContext.BinFarms.Where(x => x.FarmID == FarmID).Select(x => x.BinID).ToArray();
+            return DbContext.Bins.Where(x => binArray.Contains(x.BinID)).OrderBy(x => x.BinName).ToList();
+        }
+
         internal Bin GetNewBinRecord() {
 			var rec = DbContext.Bins.Create();
 			DbContext.Bins.Add(rec);
@@ -121,5 +127,24 @@ namespace SGApp.Repository.Application {
 		public Bin GetBinData(int binId) {
 			return DbContext.Bins.Single(x => x.BinID == binId);
 		}
-	}
+
+        public bool UpdateBinFarms(int[] farmBins, int BinID)
+        {
+            var removeFarmList = DbContext.BinFarms.Where(x => x.BinID == BinID);
+            DbContext.BinFarms.RemoveRange(removeFarmList);
+            var farmBinList = new List<BinFarm>();
+
+            foreach (int farmid in farmBins)
+            {
+                BinFarm bf = new BinFarm();
+                bf.BinID = BinID;
+                bf.FarmID = farmid;
+                farmBinList.Add(bf);
+            }
+            DbContext.BinFarms.AddRange(farmBinList);
+            DbContext.SaveChanges();
+
+            return true;
+        }
+    }
 }
